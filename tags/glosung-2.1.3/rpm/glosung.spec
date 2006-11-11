@@ -1,0 +1,124 @@
+%define name glosung
+%define version 2.1.3
+%define release 1
+
+Summary:        Gnome Version of watch words (german: Losung)
+Name:           %{name}
+Version:        %{version}
+Release:        %{release}
+Source0:        %{name}-%{version}.tar.bz2
+Group:          Applications/Productivity
+Vendor:         Eicke Godehardt <eicke@godehardt.org>
+Packager:       Eicke Godehardt <eicke@godehardt.org>
+URL:            http://www.godehardt.org/losung.html
+BuildRoot:      %{_tmppath}/%{name}-buildroot
+Requires:       libgnomeui >= 2.4
+Requires:       gtk2 >= 2.4
+Requires:       libxml >= 2.0
+#BuildRequires:  libgnomeui-devel >= 2.0
+#BuildRequires:  libxml-devel >= 2.0
+#BuildRequires:  libgtk2-devel >= 2.4
+Prefix:         %{_prefix}
+BuildArchitectures: i386
+Copyright:      Eicke Godehardt
+#License:       GPL
+
+%description
+This program shows the watch words (german: Losungen) for each day.
+The `Losungen' are words out of the bible, one from the Old
+and one from the New Testament.
+
+%prep
+%setup -q
+
+%build
+scons
+
+%install
+rm -rf $RPM_BUILD_ROOT
+scons install DESTDIR=$RPM_BUILD_ROOT
+#mkdir -p $RPM_BUILD_ROOT/usr/man/man1
+#gzip -c glosung.1 > $RPM_BUILD_ROOT/usr/man/man1/glosung.1.gz
+
+%clean
+rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
+
+%files
+%defattr(-,root,root)
+/usr/bin/glosung
+/usr/share/glosung/cs_los06.xml
+/usr/share/glosung/cs_los05.xml
+/usr/share/glosung/de_los06.xml
+/usr/share/glosung/de_los05.xml
+/usr/share/glosung/en_los06.xml
+/usr/share/glosung/en_los05.xml
+/usr/share/glosung/es_los06.xml
+/usr/share/glosung/es_los05.xml
+/usr/share/glosung/fr_los06.xml
+/usr/share/glosung/fr_los05.xml
+/usr/share/glosung/zh-CN_los06.xml
+/usr/share/glosung/zh-CN_los05.xml
+/usr/share/glosung/zh-TW_los06.xml
+/usr/share/glosung/zh-TW_los05.xml
+/usr/share/applications/glosung.desktop
+/usr/share/pixmaps/glosung.png
+/usr/share/pixmaps/glosung-big.png
+/usr/share/locale/cs/LC_MESSAGES/glosung.mo
+/usr/share/locale/de/LC_MESSAGES/glosung.mo
+/usr/share/locale/fr/LC_MESSAGES/glosung.mo
+/usr/share/locale/sw/LC_MESSAGES/glosung.mo
+#%doc /usr/man/man1/glosung.1.gz
+#%doc README AUTHORS COPYING ChangeLog NEWS TODO
+#%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
+#%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
+
+/usr/share/doc/glosung-%{version}/AUTHORS
+/usr/share/doc/glosung-%{version}/COPYING
+/usr/share/doc/glosung-%{version}/ChangeLog
+/usr/share/doc/glosung-%{version}/INSTALL
+/usr/share/doc/glosung-%{version}/README
+
+/usr/share/doc/glosung-%{version}/ENdist.txt
+/usr/share/doc/glosung-%{version}/ENhhut.txt
+/usr/share/doc/glosung-%{version}/ENhist.txt
+/usr/share/doc/glosung-%{version}/ENintro.txt
+/usr/share/doc/glosung-%{version}/ENlicens.txt
+ 
+
+%changelog
+* Fri Dec 09 2005 Eicke Godehardt <eicke@godehardt.org>
+- move sword flag from compile flag into runtime changable property
+- fixed debian package issue
+- add texts for 2006
+- add swahili localization
+- bump to 2.1.3
+
+* Sat Feb 04 2005 Eicke Godehardt <eicke@godehardt-online.de>
+- support french for texts and GUI
+- fixed compilation bug in SConstruct when PKG_CONFIG_PATH is not defined
+- bump to 2.1.2
+
+* Thu Jan 04 2005 Eicke Godehardt <eicke@godehardt-online.de>
+- up to date texts for chinese
+- bump to 2.1.1
+
+* Thu Dec 23 2004 Eicke Godehardt <eicke@godehardt-online.de>
+- texts for 2005
+- make ready for gtk+-2.4
+- bump to 2.1.0
+
+* Sat Jan 10 2004 Eicke Godehardt <eicke@godehardt-online.de>
+- add languages: es, zh-CN, zh-TW
+- bump to 2.0.4
+
+* Mon Jan 05 2004 Eicke Godehardt <eicke@godehardt-online.de>
+- small bugfixes
+
+* Mon Dec 22 2003 Eicke Godehardt <eicke@godehardt-online.de>
+- 2004 update
+
+* Wed Oct  8 2003 Eicke Godehardt <eicke.godehardt@igd.fhg.de>
+- small fixes
+
+* Thu Apr  7 2002 Matej Cepl <cepl.m@neu.edu>
+- initial RPM
