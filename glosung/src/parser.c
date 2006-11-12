@@ -18,13 +18,14 @@
  */
 /* $Id:$ */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 
-#include "glosung.h"
+#include "parser.h"
 
 /****************************\
    Variables & Definitions
@@ -95,7 +96,12 @@ static gboolean switch_state (const xmlChar  *name,
                               State           newState);
 static void pop_state        (void);
 static gchar* pop_string     (GString *string);
-static const gchar* sword_book_title (const xmlChar* book);
+
+static const gchar* sword_book_title (const xmlChar *book);
+static gchar* check_file             (gchar         *directory,
+                                      guint          year,
+                                      gchar         *lang,
+                                      gchar         *prefix);
 
 /*
  * public function that frees the Losung allocated by get_losung.
@@ -122,22 +128,18 @@ losung_free (const Losung *ww)
  * public function that parses the xml file and return required Losung.
  */
 const Losung*
-get_losung (GDate *date)
+get_losung (GDate *date, gchar *lang)
 {
         xmlSAXHandlerPtr  sax;
         gchar            *filename;
         guint             year;
 
         year = g_date_get_year (date) % 100;
-        if (year < 10) {
-                filename = g_strdup_printf (GLOSUNG_DATA_DIR "/%s_los0%d.xml",
-                                            lang, year);
-        } else {
-                filename = g_strdup_printf (GLOSUNG_DATA_DIR "/%s_los%d.xml",
-                                            lang, year);
+        filename = check_file ("/.glosung", year, lang, getenv ("HOME"));
+        if (! filename) {
+                filename = check_file (GLOSUNG_DATA_DIR, year, lang, "");
         }
-
-        if (access (filename, F_OK | R_OK) != 0) {
+        if (! filename) {
                 return NULL;
         }
 
@@ -157,6 +159,31 @@ get_losung (GDate *date)
         g_free (sax);
         return ww;
 } /* get_losung */
+
+
+/*
+ * This function will check, if the watch word file exists in given
+ * directory
+ */
+static gchar*
+check_file (gchar *directory, guint year, gchar *lang, gchar *prefix)
+{
+        gchar *filename;
+
+        if (year < 10) {
+                filename = g_strdup_printf
+                        ("%s%s/%s_los0%d.xml", prefix, directory, lang, year);
+        } else {
+                filename = g_strdup_printf
+                        ("%s%s/%s_los%d.xml", prefix, directory, lang, year);
+        }
+
+        if (access (filename, F_OK | R_OK) != 0) {
+                g_free (filename);
+                return NULL;
+        }
+        return filename;
+} /* check_file */
 
 
 /*
@@ -292,10 +319,10 @@ character (void *ctx, const xmlChar *ch, int len)
         case STATE_IL:
         case STATE_EM:
         case STATE_L:
-                g_string_append_len (string, ch, len);
+                g_string_append_len (string, (gchar *) ch, len);
                 break;
         case STATE_SL:
-                g_string_append_len (location, ch, len);
+                g_string_append_len (location, (gchar *) ch, len);
                 break;
         default:
                 break;
@@ -306,7 +333,7 @@ character (void *ctx, const xmlChar *ch, int len)
 static gboolean
 switch_state (const xmlChar *name, State newState) 
 {
-        if (strcmp (name, states [newState]) != 0) {
+        if (strcmp ((char *) name, states [newState]) != 0) {
                 return FALSE;
         }
         stack = g_slist_prepend (stack, GINT_TO_POINTER (state));
@@ -411,7 +438,7 @@ sword_book_title (const xmlChar* book)
 {
         int i = 0;
         while (books [i] != NULL) {
-                if (strcmp (books [i], book) == 0) {
+                if (strcmp ((char *) books [i], (char *) book) == 0) {
                         return books [i + 1];
                 }
                 i += 2;
