@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2005 Eicke Godehardt
+ * Copyright (C) 1999-2006 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
  */
 /* $Id:$ */
 
-#include "glosung.h"
+#include "parser.h"
+
 
 #include <string.h>
 #include <time.h>
@@ -50,6 +51,13 @@
 #include <libgnomeui/gnome-href.h>
 #include <libgnomeui/gnome-ui-init.h>
 #include <libgnomeui/gnome-uidefs.h>
+
+
+#define ENABLE_NLS
+
+#define PACKAGE "glosung"
+#define APPNAME "GLosung"
+
 
 /****************************\
    Variables & Definitions
@@ -104,6 +112,9 @@ static struct {
 };
 static guint langs;
 
+gchar          *lang;
+
+
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
 
 /****************************\
@@ -117,35 +128,39 @@ static void       show_text             (void);
 static void       create_app            (void);
 static GtkWidget *create_property_table (void);
 
-static void about_cb      (GtkWidget *w, gpointer data);
-static void exit_cb       (GtkWidget *w, gpointer data);
-static void calendar_cb   (GtkWidget *w, gpointer data);
-static void today_cb      (GtkWidget *w, gpointer data);
-static void next_day_cb   (GtkWidget *w, gpointer data);
-static void prev_day_cb   (GtkWidget *w, gpointer data);
-static void next_month_cb (GtkWidget *w, gpointer data);
-static void prev_month_cb (GtkWidget *w, gpointer data);
-static void property_cb   (GtkWidget *w, gpointer data);
-
+static void about_cb             (GtkWidget *w, gpointer data);
+static void apply_cb             (void);
+static void calendar_cb          (GtkWidget *w, gpointer data);
+static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
+static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
+static void exit_cb              (GtkWidget *w, gpointer data);
+static void font_sel_cb          (GtkWidget *button,   gpointer data);
+static void lang_changed_cb      (GtkWidget *item,     gpointer data);
+static void lang_manager_cb      (GtkWidget *w, gpointer data);
+static void next_day_cb          (GtkWidget *w, gpointer data);
+static void next_month_cb        (GtkWidget *w, gpointer data);
+static void prev_day_cb          (GtkWidget *w, gpointer data);
+static void prev_month_cb        (GtkWidget *w, gpointer data);
+static void property_cb          (GtkWidget *w, gpointer data);
 static void property_response_cb (GtkDialog *dialog,
                                   gint       arg1,
                                   gpointer   user_data);
-static void apply_cb             (void);
-static void lang_cb              (GtkWidget *item,     gpointer data);
-static void font_sel_cb          (GtkWidget *button,   gpointer data);
-static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
 static void readings_cb          (GtkWidget *toggle,   gpointer data);
 static void sword_cb             (GtkWidget *toggle,   gpointer data);
-static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
+static void today_cb             (GtkWidget *w, gpointer data);
+
 
 /******************************\
        Set up the GUI
 \******************************/
 
-static GnomeUIInfo date_menu[] = {
+static GnomeUIInfo losung_menu[] = {
+        GNOMEUIINFO_ITEM_NONE (N_("Calendar"),
+                               N_("Open a calendar-widget"),
+                               calendar_cb),
         GNOMEUIINFO_ITEM_STOCK (N_("Today"),
                                 N_("Show losung of today"),
-                                today_cb, GTK_STOCK_STOP),
+                                today_cb, GTK_STOCK_REFRESH),
         GNOMEUIINFO_ITEM_STOCK (N_("Next Day"),
                                 N_("Show losung of next day"),
                                 next_day_cb, GTK_STOCK_GO_FORWARD),
@@ -154,27 +169,22 @@ static GnomeUIInfo date_menu[] = {
                                 prev_day_cb, GTK_STOCK_GO_BACK),
         GNOMEUIINFO_ITEM_STOCK (N_("Next Month"),
                                 N_("Show losung of next month"),
-                                next_month_cb, GTK_STOCK_GO_FORWARD),
+                                next_month_cb, GTK_STOCK_GOTO_LAST),
         GNOMEUIINFO_ITEM_STOCK (N_("Prev Month"),
                                 N_("Show losung of previous month"),
-                                prev_month_cb, GTK_STOCK_GO_BACK),
-        GNOMEUIINFO_END
-}; /* date_menu */
-
-static GnomeUIInfo losung_menu[] = {
-        GNOMEUIINFO_ITEM_NONE (N_("Calendar"),
-                               N_("Open a calendar-widget"),
-                               calendar_cb),
-        GNOMEUIINFO_SUBTREE   (N_("Date"), date_menu),
+                                prev_month_cb, GTK_STOCK_GOTO_FIRST),
         GNOMEUIINFO_SEPARATOR,
         GNOMEUIINFO_MENU_EXIT_ITEM (exit_cb, NULL),
         GNOMEUIINFO_END
 }; /* losung_menu */
 
 static GnomeUIInfo settings_menu[] = {
-        GNOMEUIINFO_ITEM_STOCK (N_("Preferences"),
+        GNOMEUIINFO_ITEM_STOCK (N_("Preferences..."),
                                 N_("To edit the preferences"),
                                 property_cb, GTK_STOCK_PREFERENCES),
+        GNOMEUIINFO_ITEM_NONE (N_("Languages..."),
+                                N_("To update/install language files"),
+                                lang_manager_cb),
         GNOMEUIINFO_END
 }; /* settings_menu */
 
@@ -201,7 +211,7 @@ static GnomeUIInfo toolbar[] = {
                                 prev_day_cb, GTK_STOCK_GO_BACK),
         GNOMEUIINFO_ITEM_STOCK (N_("Today"),
                                 N_("Show losung of today"),
-                                today_cb, GTK_STOCK_STOP),
+                                today_cb, GTK_STOCK_REFRESH),
         GNOMEUIINFO_ITEM_STOCK (N_("Next Day"),
                                 N_("Show losung of next day"),
                                 next_day_cb, GTK_STOCK_GO_FORWARD),
@@ -215,8 +225,6 @@ static GnomeUIInfo toolbar[] = {
 int 
 main (int argc, char **argv)
 {
-        GtkWidget *error;
-
         /* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, "/usr/share/locale");
         textdomain (PACKAGE);
@@ -225,6 +233,8 @@ main (int argc, char **argv)
         /* Initialize gnome and argument stuff */
         gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
                             argc, argv, GNOME_PARAM_NONE);
+        gtk_window_set_default_icon_from_file
+                (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
         client = gconf_client_get_default ();
 
         scan_for_languages ();
@@ -267,10 +277,11 @@ main (int argc, char **argv)
 
         create_app ();
         if (langs == 0) {
-                error = gtk_message_dialog_new
+                GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                         _("No text files found!\nPlease contact your administrator."));
+                         _("No text files found!\n"
+                           "Please contact your administrator."));
                 g_signal_connect (G_OBJECT (error), "response",
                                   G_CALLBACK (exit_cb), NULL);
                 gtk_widget_show (error);
@@ -406,7 +417,8 @@ get_time (void)
 
         t = time (NULL);
         zeit = *localtime (&t);
-        date = g_date_new_dmy (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
+        date = g_date_new_dmy
+                (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
 } /* get_time */
 
 
@@ -419,7 +431,7 @@ show_text (void)
         const Losung *ww;
         guint i;
 
-        ww = get_losung (date);
+        ww = get_losung (date, lang);
         if (ww == NULL) {
                 GtkWidget *error;
                 gchar *text = NULL;
@@ -513,58 +525,27 @@ show_text (void)
 static void 
 about_cb (GtkWidget *w, gpointer data)
 {
-        static GtkWidget *about = NULL;
-   
-        if (about != NULL) {
-                g_assert (GTK_WIDGET_REALIZED (about));
+        const gchar *authors [] = {
+                "Eicke Godehardt",
+                NULL
+        };
+        gchar *translators = "Nikolas\nMarek Drápal\nEicke Godehardt";
 
-                gdk_window_show  (about->window);
-                gdk_window_raise (about->window);
-        } else {
-                const gchar *authors [] = {
-                        "Eicke Godehardt",
-                        NULL
-                };
-                gchar *translators = "Nikolas\nMarek Drápal\nEicke Godehardt";
+        GError *error = NULL;
+        GdkPixbuf *logo =  gdk_pixbuf_new_from_file
+                (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
 
-                /*
-                about = gnome_about_new (APPNAME, VERSION, 
-                                         "(C) 1999-2005 Eicke Godehardt",
-                                         _("Herrnhuter Losungstext"),
-                                         authors, NULL, translators, NULL);
-                */
-                about = gtk_about_dialog_new ();
-                gtk_about_dialog_set_name
-                        (GTK_ABOUT_DIALOG (about), APPNAME);
-                gtk_about_dialog_set_version
-                        (GTK_ABOUT_DIALOG (about), VERSION);
-                gtk_about_dialog_set_copyright
-                        (GTK_ABOUT_DIALOG (about),
-                         "(C) 1999-2005 Eicke Godehardt");
-                gtk_about_dialog_set_comments
-                        (GTK_ABOUT_DIALOG (about),
-                         _("gods word for every day"));
-                /*
-                gtk_about_dialog_set_license
-                        (GTK_ABOUT_DIALOG (about), "GPL for program");
-                */
-                gtk_about_dialog_set_website
-                        (GTK_ABOUT_DIALOG (about),
-                         "www.godehardt.org/losung.html");
-                gtk_about_dialog_set_authors
-                        (GTK_ABOUT_DIALOG (about), authors);
-                gtk_about_dialog_set_translator_credits
-                        (GTK_ABOUT_DIALOG (about), translators);
-                GError *error = NULL;
-                GdkPixbuf *logo =  gdk_pixbuf_new_from_file
-                        (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
-                gtk_about_dialog_set_logo
-                        (GTK_ABOUT_DIALOG (about), logo);
-
-                g_signal_connect (G_OBJECT (about), "destroy",
-                                  G_CALLBACK (gtk_widget_destroyed), &about);
-                gtk_widget_show (about);
-        }
+        gtk_show_about_dialog (GTK_WINDOW (app),
+                 "authors", authors,
+                 "comments", _("Gods word for every day"),
+                 "copyright", "(C) 1999-2006 Eicke Godehardt",
+                 // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
+                 "logo", logo,
+                 "name", APPNAME,
+                 "translator-credits", translators,
+                 "version", VERSION,
+                 "website", "http://www.godehardt.org/losung.html",
+                 NULL);
 } /* about_cb */
 
 
@@ -607,13 +588,13 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_dialog_set_response_sensitive (
                         GTK_DIALOG (property), GTK_RESPONSE_APPLY, FALSE);
 
-                gtk_container_add (GTK_CONTAINER (GTK_DIALOG(property)->vbox),
+                gtk_container_add (GTK_CONTAINER (GTK_DIALOG (property)->vbox),
                                    create_property_table ());
 
                 g_signal_connect (G_OBJECT (property), "response",
                                   G_CALLBACK (property_response_cb), NULL);
                 g_signal_connect (G_OBJECT (property), "destroy",
-                                  G_CALLBACK (gtk_widget_destroyed), &property);
+                                 G_CALLBACK (gtk_widget_destroyed), &property);
 
                 gtk_widget_show_all (property);
                 }
@@ -729,7 +710,8 @@ create_property_table ()
         gint       i;
 
         table = gtk_table_new (5, 2, FALSE);
-        gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
+        // gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
         
         label = gtk_label_new (_("Choose displayed language:"));
         gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
@@ -749,7 +731,7 @@ create_property_table ()
                 i++;
         }
         g_signal_connect (G_OBJECT (combo), "changed",
-                          G_CALLBACK (lang_cb), NULL);
+                          G_CALLBACK (lang_changed_cb), NULL);
         gtk_widget_show (combo);
         gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
@@ -802,13 +784,13 @@ create_property_table ()
  * callback function for options menu.
  */
 static void 
-lang_cb (GtkWidget *combo, gpointer data)
+lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
         new_lang = (gchar*) languages [num].lang;
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
-} /* lang_cb */
+} /* lang_changed_cb */
 
 
 /*
@@ -1040,3 +1022,78 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
                 gtk_widget_destroy (GTK_WIDGET (data));
         }
 } /* calendar_select_cb */
+
+
+static void
+lang_manager_cb (GtkWidget *w, gpointer data) 
+{
+        GtkWidget    *dialog;
+        GtkWidget    *add_button;
+        GtkListStore *store;
+        GtkWidget    *list;
+        GtkTreeIter   iter1;
+        GtkWidget    *hbox;
+        GtkWidget    *vbox;
+        GtkCellRenderer   *renderer;
+        GtkTreeViewColumn *column;
+
+
+        dialog = gtk_dialog_new_with_buttons
+                (_("Languages"),
+                 GTK_WINDOW (app),
+                 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                 GTK_STOCK_OK,
+                 GTK_RESPONSE_NONE,
+                 NULL);
+
+        hbox = gtk_hbox_new (FALSE, 0);
+        gtk_widget_show (hbox);
+        gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD);
+
+        store = gtk_list_store_new (1, G_TYPE_STRING);
+
+        gtk_list_store_append (store, &iter1);
+        gtk_list_store_set (store, &iter1, 0, "Deutsch", -1);
+        gtk_list_store_append (store, &iter1);
+        gtk_list_store_set (store, &iter1, 0, "Englisch", -1);
+        gtk_list_store_append (store, &iter1);
+        gtk_list_store_set (store, &iter1, 0, "fsadfa", -1);
+
+
+        list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+
+        renderer = gtk_cell_renderer_text_new ();
+        column = gtk_tree_view_column_new_with_attributes
+                (NULL,
+                 renderer,
+                 "text", 0,
+                 NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
+        gtk_widget_show (list);
+        gtk_container_add (GTK_CONTAINER (hbox), list);
+
+
+
+
+        vbox = gtk_vbutton_box_new ();
+        gtk_button_box_set_layout
+                (GTK_BUTTON_BOX (vbox),
+                 GTK_BUTTONBOX_SPREAD);
+        gtk_widget_show (vbox);
+        gtk_container_add (GTK_CONTAINER (hbox), vbox);
+
+        add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
+        gtk_widget_show (add_button);
+        gtk_container_add (GTK_CONTAINER (vbox), add_button);
+
+        add_button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
+        gtk_widget_show (add_button);
+        gtk_container_add (GTK_CONTAINER (vbox), add_button);
+
+        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), hbox);
+        
+        g_signal_connect (G_OBJECT (dialog), "response",
+                          G_CALLBACK (gtk_widget_destroy), NULL);
+        gtk_widget_show (dialog);
+} /* lang_manager_cb */
