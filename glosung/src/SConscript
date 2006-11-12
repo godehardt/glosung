@@ -18,5 +18,8 @@
 
 Import ('env install_dir')
 
-prog = env.Program ('glosung', ['glosung.c', 'parser.c'])
+prog = env.Program ('glosung', ['glosung.c', 'parser.c',
+                                'download.c', 'losunglist.c'])
+prog = env.Program ('losung', ['losung.c', 'parser.c'])
+#prog = env.Program ('download', ['downloadTest.c', 'download.c', 'losunglist.c'])
 env.Install (dir = install_dir + '/bin', source = prog)
