@@ -18,7 +18,7 @@
 
 import os
 
-version = '2.1.3'
+version = '3.0\ Beta'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -39,12 +39,12 @@ doc_dir     = '/share/doc/glosung-' + version
 BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = '-Wall -Werror -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
-            `pkg-config --cflags libgnome-2.0 libgnomeui-2.0 gconf-2.0` \
+ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
+            `pkg-config --cflags libgnome-2.0 libgnomeui-2.0 gconf-2.0 libcurl` \
             -DVERSION=\\"' + version + '\\"  \
             -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
 linkflags = '-Wl,--export-dynamic  -L/usr/lib \
-             `pkg-config --libs libgnome-2.0 libgnomeui-2.0 gconf-2.0`'
+             `pkg-config --libs libgnome-2.0 libgnomeui-2.0 gconf-2.0 libcurl`'
 
 if ARGUMENTS.get ('profile'):
     ccflags   += ' -pg -fprofile-arcs'
@@ -52,7 +52,7 @@ if ARGUMENTS.get ('profile'):
 
 #if not (ARGUMENTS.get ('dev')):
 if (ARGUMENTS.get ('dev')):
-    ccflags   += ' -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED'
+    ccflags   += ' -Werror -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED'
 
 env = Environment (
   platform  = 'posix',
@@ -69,20 +69,11 @@ SConscript ('build/SConscript')
 SConscript ('po/SConscript')
 
 env.Alias ('install', install_dir)
-env.Install (dir = install_dir + '/share/glosung',
-     source = ['data/en_los06.xml', 'data/es_los06.xml',
-               'data/de_los06.xml', 'data/cs_los06.xml',
-               'data/zh-CN_los06.xml', 'data/zh-TW_los06.xml',
-               'data/fr_los06.xml', 'data/fr_los05.xml',
-               'data/en_los05.xml', 'data/es_los05.xml',
-               'data/de_los05.xml', 'data/cs_los05.xml',
-               'data/zh-CN_los05.xml', 'data/zh-TW_los05.xml'])
 
 env.Install (dir = install_dir + doc_dir,
           source = ['AUTHORS', 'COPYING', 'ChangeLog', 'INSTALL', 'README'])
 env.Install (dir = install_dir + doc_dir,
-          source = ['data/ENdist.txt', 'data/ENhhut.txt', 'data/ENhist.txt',
-                    'data/ENintro.txt', 'data/ENlicens.txt'])
+          source = ['ENhhut.txt', 'ENhist.txt', 'ENintro.txt', 'ENlicens.txt'])
 
 env.Install (dir = install_dir + '/share/applications',
           source = 'glosung.desktop')
