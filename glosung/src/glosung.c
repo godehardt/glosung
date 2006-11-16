@@ -18,8 +18,6 @@
  */
 /* $Id:$ */
 
-#include "parser.h"
-
 
 #include <string.h>
 #include <time.h>
@@ -51,6 +49,9 @@
 #include <libgnomeui/gnome-href.h>
 #include <libgnomeui/gnome-ui-init.h>
 #include <libgnomeui/gnome-uidefs.h>
+
+#include "parser.h"
+#include "download.h"
 
 
 #define ENABLE_NLS
@@ -1036,6 +1037,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         GtkWidget    *vbox;
         GtkCellRenderer   *renderer;
         GtkTreeViewColumn *column;
+        LosungList* losung_list;
+        int i;
 
 
         dialog = gtk_dialog_new_with_buttons
@@ -1047,18 +1050,19 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                  NULL);
 
         hbox = gtk_hbox_new (FALSE, 0);
+        gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
         gtk_widget_show (hbox);
         gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD);
 
         store = gtk_list_store_new (1, G_TYPE_STRING);
 
-        gtk_list_store_append (store, &iter1);
-        gtk_list_store_set (store, &iter1, 0, "Deutsch", -1);
-        gtk_list_store_append (store, &iter1);
-        gtk_list_store_set (store, &iter1, 0, "Englisch", -1);
-        gtk_list_store_append (store, &iter1);
-        gtk_list_store_set (store, &iter1, 0, "fsadfa", -1);
-
+        losung_list = get_list ();
+        for (i = 0; i < losung_list->languages->len; i++) {
+                gtk_list_store_append (store, &iter1);
+                gtk_list_store_set
+                        (store, &iter1, 0,
+                         g_ptr_array_index (losung_list->languages, i), -1);
+        }
 
         list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
 
@@ -1071,8 +1075,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
         gtk_widget_show (list);
-        gtk_container_add (GTK_CONTAINER (hbox), list);
-
+        gtk_box_pack_start (GTK_BOX (hbox), list, TRUE, TRUE, GNOME_PAD);
 
 
 
@@ -1081,7 +1084,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                 (GTK_BUTTON_BOX (vbox),
                  GTK_BUTTONBOX_SPREAD);
         gtk_widget_show (vbox);
-        gtk_container_add (GTK_CONTAINER (hbox), vbox);
+        gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, GNOME_PAD);
 
         add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
         gtk_widget_show (add_button);
