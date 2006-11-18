@@ -29,7 +29,7 @@ static gint str_comp (gconstpointer a, gconstpointer b);
 
 
 LosungList*
-losunglist_init ()
+losunglist_new ()
 {
         LosungList *list = g_new (LosungList, 1);
         list->hash_table = g_hash_table_new (g_str_hash, g_str_equal);
