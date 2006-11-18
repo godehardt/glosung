@@ -129,7 +129,7 @@ WriteMemoryCallback (void *ptr, size_t size, size_t nmemb, void *data)
 LosungList*
 analyse (Memory chunk)
 {
-        LosungList* list = losunglist_init ();
+        LosungList* list = losunglist_new ();
         int    start;
         int    end = -1;
         gint   year;

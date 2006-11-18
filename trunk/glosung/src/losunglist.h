@@ -32,7 +32,7 @@ struct _LosungList
         GPtrArray  *languages;
 };
 
-LosungList* losunglist_init      ();
+LosungList* losunglist_new       ();
 void        losunglist_add       (LosungList *list, gchar *lang, gint year);
 void        losunglist_finialize (LosungList *list);
 
