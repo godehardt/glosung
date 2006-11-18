@@ -147,13 +147,20 @@ analyse (Memory chunk)
                 case '#':
                         break;
                 case 'F':
-                        year =  (chunk.memory [++start] - 48) * 1000;
-                        year += (chunk.memory [++start] - 48) * 100;
-                        year += (chunk.memory [++start] - 48) * 10;
-                        year += (chunk.memory [++start] - 48);
-                        start += 2;
-                        lang = g_strndup (chunk.memory + start, end - start - 1);
-                        losunglist_add (list, lang, year);
+                        if (isdigit (chunk.memory [start + 1]) &&
+                            isdigit (chunk.memory [start + 2]) &&
+                            isdigit (chunk.memory [start + 3]) &&
+                            isdigit (chunk.memory [start + 4]))
+                        {
+                                year =  (chunk.memory [++start] - 48) * 1000;
+                                year += (chunk.memory [++start] - 48) * 100;
+                                year += (chunk.memory [++start] - 48) * 10;
+                                year += (chunk.memory [++start] - 48);
+                                start += 2;
+                                lang = g_strndup (chunk.memory + start,
+                                                  end - start - 1);
+                                losunglist_add (list, lang, year);
+                        }
                         break;
                 }
         } while (chunk.memory [end] != '\0');
@@ -172,8 +179,8 @@ get_list ()
         LosungList* list = NULL;
 
 
-        chunk.memory=NULL; /* we expect realloc(NULL, size) to work */
-        chunk.size = 0;    /* no data at this point */
+        chunk.memory = NULL; /* we expect realloc(NULL, size) to work */
+        chunk.size   = 0;    /* no data at this point */
 
         curl_global_init (CURL_GLOBAL_ALL);
         /* init the curl session */
