@@ -16,9 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  * MA 02111-1307, USA.
  */
-/* $Id:$ */
 
 
+#include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
@@ -96,24 +97,10 @@ static gboolean   show_readings_new;
 static gboolean   show_sword;
 static gboolean   show_sword_new;
 
-static struct {
-        const gchar *lang;
-        guint        length;    /* length of lang */
-        const gchar *name;
-        gboolean     found;
-} languages [] = {
-        {"de",    2, N_("german"),  FALSE},
-        {"cs",    2, N_("czech"),   FALSE},
-        {"en",    2, N_("english"), FALSE},
-        {"es",    2, N_("spanish"), FALSE},
-        {"fr",    2, N_("french"), FALSE},
-        {"zh-CN", 5, N_("simplified chinese"),  FALSE},
-        {"zh-TW", 5, N_("traditional chinese"), FALSE},
-        {NULL, -1, NULL, FALSE}
-};
-static guint langs;
 
-gchar          *lang;
+static LosungList *languages;
+static gchar      *lang;
+static GHashTable *lang_translations;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -122,7 +109,10 @@ gchar          *lang;
       Function prototypes
 \****************************/
 
-static void scan_for_languages          (void);
+static GHashTable *init_languages            (void);
+static LosungList *scan_for_languages        (void);
+static void        scan_for_languages_in_dir (gchar      *dirname,
+                                              LosungList *list);
 
 static void       get_time              (void);
 static void       show_text             (void);
@@ -238,34 +228,23 @@ main (int argc, char **argv)
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
         client = gconf_client_get_default ();
 
-        scan_for_languages ();
+        lang_translations = init_languages ();
+        languages         = scan_for_languages ();
+
         lang = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/language", NULL);
-        if (lang == NULL && langs > 0) {
-                guint i;
+        if (lang == NULL && languages->languages->len > 0) {
                 /* should be translated to corresponding language, e.g. 'de' */
                 lang = _("en");
 
                 /* is requested language available,
                    if not use first available language instead */
-                i = 0;
-                while (languages [i].lang != NULL) {
-                        if (0 == strcmp (lang, languages [i].lang)) {
-                                break;
-                        }
-                        i++;
-                }
-                if (languages [i].lang == NULL) {
-                        i = 0;
-                        while (languages [i].lang != NULL) {
-                                if (languages [i].found == TRUE) {
-                                        lang = (gchar*)languages [i].lang;
-                                        break;
-                                }
-                                i++;
-                        }
+
+                if (! g_hash_table_lookup (languages->hash_table, lang)) {
+                        lang = g_ptr_array_index (languages->languages, 0);
                 }
         }
+        printf ("Choosen language: %s\n", lang);
         calendar_close = calendar_close_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
@@ -277,7 +256,7 @@ main (int argc, char **argv)
                                         NULL);
 
         create_app ();
-        if (langs == 0) {
+        if (languages->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
@@ -298,42 +277,88 @@ main (int argc, char **argv)
 } /* main */
 
 
-static void
-scan_for_languages (void) 
+static GHashTable *
+init_languages (void)
 {
-        guint i;
-        langs = 0;
-        if (access (GLOSUNG_DATA_DIR, F_OK | R_OK) != 0) {
+        GHashTable *ht = g_hash_table_new (g_str_hash, g_str_equal);
+        g_hash_table_insert (ht, "af", _("afrikaans"));
+        g_hash_table_insert (ht, "ar", _("arabic"));
+        g_hash_table_insert (ht, "cs", _("czech"));
+        g_hash_table_insert (ht, "de", _("german"));
+        g_hash_table_insert (ht, "en", _("english"));
+        g_hash_table_insert (ht, "es", _("spanish"));
+        g_hash_table_insert (ht, "fr", _("french"));
+        g_hash_table_insert (ht, "he", _("hebrew"));
+        g_hash_table_insert (ht, "hu", _("hungarian"));
+        g_hash_table_insert (ht, "it", _("italian"));
+        g_hash_table_insert (ht, "nl", _("dutch"));
+        g_hash_table_insert (ht, "no", _("norwegian"));
+        g_hash_table_insert (ht, "pt", _("portuguese"));
+        g_hash_table_insert (ht, "ro", _("romanian"));
+        g_hash_table_insert (ht, "ru", _("russian"));
+        g_hash_table_insert (ht, "ta", _("tamil"));
+        g_hash_table_insert (ht, "tr", _("turkish"));
+        g_hash_table_insert (ht, "vi", _("vietnamese"));
+        g_hash_table_insert (ht, "zh-CN", _("chinese simplified"));
+        g_hash_table_insert (ht, "zh-TW", _("chinese traditional"));
+
+        return ht;
+} /* init_languages */
+
+
+static LosungList *
+scan_for_languages (void)
+{
+        gchar *dirname;
+        LosungList *list = losunglist_new ();
+
+        scan_for_languages_in_dir (GLOSUNG_DATA_DIR, list);
+        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
+        scan_for_languages_in_dir (dirname, list);
+        g_free (dirname);
+        losunglist_finialize (list);
+
+        printf ("Found languages: ");
+        guint i = 0;
+        for (i = 0; i < (list->languages)->len; i++) {
+                printf ("%s ", (gchar*) (g_ptr_array_index (list->languages, i)));
+        }
+        printf ("\n");
+
+        return list;
+} /* scan_for_languages */
+
+
+static void
+scan_for_languages_in_dir (gchar *dirname, LosungList *list) 
+{
+        if (access (dirname, F_OK | R_OK) != 0) {
                 return;
         }
-        GDir  *dir = g_dir_open (GLOSUNG_DATA_DIR, 0, NULL);
+        GDir  *dir = g_dir_open (dirname, 0, NULL);
         const  gchar *name;
 
         while ((name = g_dir_read_name (dir)) != NULL) {
-                i = 0;
-                while (languages [i].lang != NULL) {
-                        if ((0 == strncmp (name, languages [i].lang,
-                                           languages [i].length))
-                            && (0 == strncmp (name + languages [i].length,
-                                              "_los", 4))
-                            && (0 == strncmp (name + strlen (name) - 4,
-                                              ".xml", 4))) {
-                                languages [i].found = TRUE;
-                                langs++;
-                                break;
-                        }
-                        i++;
+                int len = strlen (name);
+                if ((len != 12 && len != 15)
+                    || (strncmp (name + len - 4, ".xml", 4)) != 0
+                    || (strncmp (name + len - 10, "_los", 4)) != 0
+                    || ! isdigit (name [len - 6])
+                    || ! isdigit (name [len - 5])) {
+                        continue;
                 }
-        }
-        i = 0;
-        while (languages [i].lang != NULL) {
-                if (languages [i].found) {
-                        g_message ("found language %s",
-                                   languages [i].name);
+                gchar *langu = g_strndup (name, len - 10);
+                int year = 1900
+                        + (name [len - 6] - 48) * 10
+                        + (name [len - 5] - 48);
+                if (year < 1970) {
+                        year += 100;
                 }
-                i++;
+                losunglist_add (list, langu, year);
+
+                // g_message ("%s - %d - %s", langu, year, g_hash_table_lookup (lang_translations, langu));
         }
-} /* scan_for_languages */
+} /* scan_for_languages_in_dir */
 
 
 /*
@@ -430,24 +455,16 @@ static void
 show_text (void)
 {
         const Losung *ww;
-        guint i;
 
         ww = get_losung (date, lang);
         if (ww == NULL) {
                 GtkWidget *error;
                 gchar *text = NULL;
 
-                i = 0;
-                while (languages [i].lang != NULL) {
-                        if (0 == strcmp (lang, languages [i].lang)) {
-                                text = g_strdup_printf
-                                        (_("No %s texts found for %d!"),
-                                         languages [i].name,
-                                         g_date_get_year (date));
-                                break;
-                        }
-                        i++;
-                }
+                text = g_strdup_printf
+                        (_("No %s texts found for %d!"),
+                         (gchar*)g_hash_table_lookup (lang_translations, lang),
+                         g_date_get_year (date));
                 error = gtk_message_dialog_new (
                         GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, text);
@@ -511,6 +528,7 @@ show_text (void)
                 g_free (text);
         }
 
+        gint i;
         for (i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
                         gtk_label_set_use_markup (GTK_LABEL (label [i]), TRUE);
@@ -719,17 +737,15 @@ create_property_table ()
 
         combo = gtk_combo_box_new_text ();
 
-        i = 0;
-        while (languages [i].lang != NULL) {
-                if (languages [i].found == TRUE) {
-                        gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                                                   _(languages [i].name));
-                        if (strcmp (lang, languages [i].lang) == 0) {
-                                gtk_combo_box_set_active
-                                        (GTK_COMBO_BOX (combo), i);
-                        }
+        for (i = 0; i < (languages->languages)->len; i++) {
+                gchar *langu = g_ptr_array_index (languages->languages, i);
+                gtk_combo_box_append_text
+                        (GTK_COMBO_BOX (combo),
+                         g_hash_table_lookup (lang_translations, langu));
+                if (strcmp (lang, langu) == 0) {
+                        gtk_combo_box_set_active
+                                (GTK_COMBO_BOX (combo), i);
                 }
-                i++;
         }
         g_signal_connect (G_OBJECT (combo), "changed",
                           G_CALLBACK (lang_changed_cb), NULL);
@@ -788,7 +804,7 @@ static void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-        new_lang = (gchar*) languages [num].lang;
+        new_lang = (gchar*) g_ptr_array_index (languages->languages, num);
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
 } /* lang_changed_cb */
@@ -1037,7 +1053,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         GtkWidget    *vbox;
         GtkCellRenderer   *renderer;
         GtkTreeViewColumn *column;
-        LosungList* losung_list;
         int i;
 
 
@@ -1056,12 +1071,12 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         store = gtk_list_store_new (1, G_TYPE_STRING);
 
-        losung_list = get_list ();
-        for (i = 0; i < losung_list->languages->len; i++) {
+        for (i = 0; i < languages->languages->len; i++) {
                 gtk_list_store_append (store, &iter1);
+                gchar *langu = g_ptr_array_index (languages->languages, i);
                 gtk_list_store_set
                         (store, &iter1, 0,
-                         g_ptr_array_index (losung_list->languages, i), -1);
+                         g_hash_table_lookup (lang_translations, langu), -1);
         }
 
         list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -1100,3 +1115,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
+
+
+
+// for download dialog:
+// losung_list = get_list ();
