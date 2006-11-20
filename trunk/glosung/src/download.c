@@ -163,6 +163,17 @@ analyse (Memory chunk)
                                 losunglist_add (list, lang, year);
                         }
                         break;
+                case 'D':
+                        chunk.memory += start + 1;
+                        chunk.size -= start + 1;
+
+                        LozHeader     *header = get_header (& chunk);
+                        unsigned char *data   = get_data   (& chunk);
+                        data = unloz (header, data);
+                        to_file (header, data);
+                        return NULL;
+
+                        break;
                 }
         } while (chunk.memory [end] != '\0');
 
@@ -218,8 +229,7 @@ download_list (void)
 int
 download (gchar *lang, guint year)
 {
-        gchar *url = "file://de_los06.loz";
-        // gchar *url = g_strdup_printf (LOZ_URL "?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
+        gchar *url = g_strdup_printf (LOZ_URL "?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
         CURL     *curl_handle;
         CURLcode  res;
         Memory    chunk;
@@ -231,12 +241,6 @@ download (gchar *lang, guint year)
         /* init the curl session */
         curl_handle = curl_easy_init ();
         if (curl_handle) {
-                /*
-                FILE *file;
-                file = fopen ("download.loz", "wb");
-                curl_easy_setopt (curl_handle, CURLOPT_WRITEDATA, file);
-                */
-
                 /* specify URL to get */
                 curl_easy_setopt (curl_handle, CURLOPT_URL, url);
 
@@ -260,10 +264,7 @@ download (gchar *lang, guint year)
                 /* cleanup curl stuff */
                 curl_easy_cleanup (curl_handle);
 
-                LozHeader     *header = get_header (& chunk);
-                unsigned char *data   = get_data   (& chunk);
-                data = unloz (header, data);
-                to_file (header, data);
+                analyse (chunk);
         }
         return 0;
 }
@@ -299,7 +300,7 @@ to_file (LozHeader *header, unsigned char *data)
 {
         gchar *filename = g_strdup_printf
                 ("%s/.glosung/%s", getenv ("HOME"), header->file_name);
-        g_message (filename);
+        /* g_message (filename); */
 
         FILE *file = fopen (filename, "wb");
         if (file) {
