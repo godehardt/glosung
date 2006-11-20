@@ -126,10 +126,11 @@ static void apply_cb             (void);
 static void calendar_cb          (GtkWidget *w, gpointer data);
 static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
+static GString* create_years_string (gchar *langu);
 static void exit_cb              (GtkWidget *w, gpointer data);
 static void font_sel_cb          (GtkWidget *button,   gpointer data);
 static void lang_changed_cb      (GtkWidget *item,     gpointer data);
-static void lang_download_select_cb (GtkWidget *w, gpointer data);
+static void update_years (GtkWidget *w, gpointer data);
 static void lang_manager_cb      (GtkWidget *w, gpointer data);
 static void next_day_cb          (GtkWidget *w, gpointer data);
 static void next_month_cb        (GtkWidget *w, gpointer data);
@@ -551,7 +552,7 @@ about_cb (GtkWidget *w, gpointer data)
                 "Eicke Godehardt",
                 NULL
         };
-        gchar *translators = "Nikolas\nMarek Drápal\nEicke Godehardt";
+        gchar *translators = "Marek Drápal\nEicke Godehardt\nNikolas\nEmanuel Feruzi";
 
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
@@ -1057,7 +1058,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         GtkListStore *store;
         GtkWidget    *list;
         GtkTreeIter   iter1;
-        GtkWidget    *hbox;
         GtkWidget    *vbox;
         GtkCellRenderer   *renderer;
         GtkTreeViewColumn *column;
@@ -1072,19 +1072,23 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                  GTK_RESPONSE_NONE,
                  NULL);
 
-        hbox = gtk_hbox_new (FALSE, 0);
-        gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
-        gtk_widget_show (hbox);
-        gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD);
+        vbox = gtk_vbox_new (FALSE, 0);
+        // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
+        gtk_widget_show (vbox);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
 
-        store = gtk_list_store_new (1, G_TYPE_STRING);
+        store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
 
         for (i = 0; i < languages->languages->len; i++) {
                 gtk_list_store_append (store, &iter1);
                 gchar *langu = g_ptr_array_index (languages->languages, i);
+                GString *years = create_years_string (langu);
                 gtk_list_store_set
-                        (store, &iter1, 0,
-                         g_hash_table_lookup (lang_translations, langu), -1);
+                        (store, &iter1,
+                         0, g_hash_table_lookup (lang_translations, langu),
+                         1, years->str,
+                         -1);
+                g_string_free (years, TRUE);
         }
 
         list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -1093,6 +1097,10 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         column = gtk_tree_view_column_new_with_attributes
                 (NULL, renderer, "text", 0, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
+        renderer = gtk_cell_renderer_text_new ();
+        column = gtk_tree_view_column_new_with_attributes
+                (NULL, renderer, "text", 1, NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
         gtk_widget_show (list);
 
@@ -1100,14 +1108,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_widget_show (lang_frame);
         gtk_container_add (GTK_CONTAINER (lang_frame), list);
 
-        gtk_box_pack_start (GTK_BOX (hbox), lang_frame, TRUE, TRUE, GNOME_PAD);
-
-        vbox = gtk_vbutton_box_new ();
-        gtk_button_box_set_layout
-                (GTK_BUTTON_BOX (vbox),
-                 GTK_BUTTONBOX_SPREAD);
-        gtk_widget_show (vbox);
-        gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, GNOME_PAD);
+        gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, GNOME_PAD);
 
         add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
         g_signal_connect (G_OBJECT (add_button), "clicked",
@@ -1115,11 +1116,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_widget_show (add_button);
         gtk_container_add (GTK_CONTAINER (vbox), add_button);
 
-        add_button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
-        gtk_widget_show (add_button);
-        gtk_container_add (GTK_CONTAINER (vbox), add_button);
-
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), hbox);
+        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
         
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
@@ -1144,7 +1141,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 (_("Add Languages"),
                  GTK_WINDOW (data),
                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                 "Download",
+                 _("Download"),
                  GTK_RESPONSE_ACCEPT,
                  GTK_STOCK_CANCEL,
                  GTK_RESPONSE_REJECT,
@@ -1189,7 +1186,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_widget_show (year_combo);
 
         g_signal_connect (G_OBJECT (lang_combo), "changed",
-                          G_CALLBACK (lang_download_select_cb), year_combo);
+                          G_CALLBACK (update_years), year_combo);
         
 
         gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
@@ -1216,7 +1213,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
 
 static void
-lang_download_select_cb (GtkWidget *w, gpointer data)
+update_years (GtkWidget *w, gpointer data)
 {
         GtkComboBox    *combo = GTK_COMBO_BOX (year_combo);
         while (gtk_combo_box_get_active (combo) != -1) {
@@ -1235,4 +1232,23 @@ lang_download_select_cb (GtkWidget *w, gpointer data)
                 gtk_combo_box_append_text (combo, year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
-}
+} /* update_years */
+
+
+static GString*
+create_years_string (gchar *langu)
+{
+        GPtrArray *years = g_hash_table_lookup (languages->hash_table, langu);
+        GString *result = g_string_new ("");
+        g_string_printf (result, "%d",
+                         GPOINTER_TO_INT (g_ptr_array_index (years, 0)));
+
+        gint i;
+        for (i = 1; i < years->len; i++) {
+                g_string_append_printf
+                        (result, ", %d",
+                         GPOINTER_TO_INT (g_ptr_array_index (years, i)));
+        }
+
+        return result;
+} /* create_years_string */
