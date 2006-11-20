@@ -18,6 +18,7 @@
  */
 
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,9 +40,9 @@
 #define COMPRESS_VERSION  1
 #define FILENAMELEN      63
 
-//#define LOZ_LIST_URL "http://www.losung.de/cgi-bin/langpack.pl?cmd=list&dlgLang=de"
-#define LOZ_LIST_URL "file://list"
-
+#define LOZ_URL "http://www.losung.de/cgi-bin/langpack.pl"
+#define LOZ_LIST_URL LOZ_URL "?cmd=list&dlgLang=de"
+// #define LOZ_LIST_URL "file://list"
 
 
 typedef struct Memory {
@@ -62,13 +63,13 @@ typedef struct _LozHeader
 } LozHeader;
 
 
-unsigned char * unloz   (LozHeader *header, unsigned char *data);
-int             to_file (LozHeader *header, unsigned char *data);
+static unsigned char * unloz   (LozHeader *header, unsigned char *data);
+static int             to_file (LozHeader *header, unsigned char *data);
 
 
 
 
-LozHeader *
+static LozHeader *
 get_header (Memory *mem)
 {
         LozHeader *header = (LozHeader *) (mem->memory);
@@ -89,14 +90,14 @@ get_header (Memory *mem)
 }
 
 
-unsigned char *
+static unsigned char *
 get_data (Memory *mem)
 {
         return (unsigned char *) mem->memory + sizeof (LozHeader);
 }
 
 
-void *
+static void *
 myrealloc (void *ptr, size_t size)
 {
         /* There might be a realloc() out there that doesn't like reallocing
@@ -109,7 +110,7 @@ myrealloc (void *ptr, size_t size)
 }
 
 
-size_t
+static size_t
 WriteMemoryCallback (void *ptr, size_t size, size_t nmemb, void *data)
 {
         size_t realsize = size * nmemb;
@@ -126,7 +127,7 @@ WriteMemoryCallback (void *ptr, size_t size, size_t nmemb, void *data)
 }
 
 
-LosungList*
+static LosungList*
 analyse (Memory chunk)
 {
         LosungList* list = losunglist_new ();
@@ -171,7 +172,7 @@ analyse (Memory chunk)
 
 
 LosungList*
-get_list ()
+download_list (void)
 {
         CURL     *curl_handle;
         CURLcode  res;
@@ -215,11 +216,10 @@ get_list ()
 
 
 int
-download (guint year, gchar *lang)
+download (gchar *lang, guint year)
 {
-        // gchar *url = "file://de_los06.loz";
-        gchar *url = g_strdup_printf ("http://www.losung.de/cgi-bin/langpack.pl?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
-
+        gchar *url = "file://de_los06.loz";
+        // gchar *url = g_strdup_printf (LOZ_URL "?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
         CURL     *curl_handle;
         CURLcode  res;
         Memory    chunk;
@@ -278,7 +278,7 @@ download (guint year, gchar *lang)
 
 
 
-unsigned char
+static unsigned char
 compute_xor_seed (const char *filename)
 {
         unsigned int sum = 0;
@@ -294,7 +294,7 @@ compute_xor_seed (const char *filename)
 }
 
 
-int
+static int
 to_file (LozHeader *header, unsigned char *data)
 {
         gchar *filename = g_strdup_printf
@@ -316,7 +316,7 @@ to_file (LozHeader *header, unsigned char *data)
 }
 
 
-unsigned char *
+static unsigned char *
 unloz (LozHeader *header, unsigned char *data)
 {
         unsigned char xor_seed = compute_xor_seed (header->file_name);
