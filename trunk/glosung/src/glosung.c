@@ -788,7 +788,7 @@ create_property_table ()
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
         
         widget = gtk_check_button_new_with_label
-                (_("Link texts to gnomesword"));
+                (_("Link location to gnomesword"));
         if (show_sword) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
                                               TRUE);
