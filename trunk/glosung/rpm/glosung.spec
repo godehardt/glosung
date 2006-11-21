@@ -1,5 +1,5 @@
 %define name glosung
-%define version 2.1.3
+%define version 3.0
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -46,20 +46,6 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 %files
 %defattr(-,root,root)
 /usr/bin/glosung
-/usr/share/glosung/cs_los06.xml
-/usr/share/glosung/cs_los05.xml
-/usr/share/glosung/de_los06.xml
-/usr/share/glosung/de_los05.xml
-/usr/share/glosung/en_los06.xml
-/usr/share/glosung/en_los05.xml
-/usr/share/glosung/es_los06.xml
-/usr/share/glosung/es_los05.xml
-/usr/share/glosung/fr_los06.xml
-/usr/share/glosung/fr_los05.xml
-/usr/share/glosung/zh-CN_los06.xml
-/usr/share/glosung/zh-CN_los05.xml
-/usr/share/glosung/zh-TW_los06.xml
-/usr/share/glosung/zh-TW_los05.xml
 /usr/share/applications/glosung.desktop
 /usr/share/pixmaps/glosung.png
 /usr/share/pixmaps/glosung-big.png
