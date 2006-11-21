@@ -1,6 +1,6 @@
 # This is the czech translation for glosung.
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# Marek Drápal <drapal@email.cz>, 2002.
+# Marek Drápal <marek@drapal.org>, 2006.
 # 
 msgid ""
 msgstr ""
@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-21 01:38+0100\n"
 "PO-Revision-Date: 2002-11-13 16:36+0100\n"
-"Last-Translator: Marek Drápal <drapal@email.cz>\n"
+"Last-Translator: Marek Drápal <marek@drapal.org>\n"
 "Language-Team: czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -41,13 +41,13 @@ msgstr "Ukázat dne¹ní hesla"
 # File: src/glosung.c, line: 127
 # File: src/glosung.c, line: 183
 msgid "Next Day"
-msgstr "Pøí¹tí den"
+msgstr "Následující den"
 #
 # src/glosung.c:78 src/glosung.c:134
 # File: src/glosung.c, line: 128
 # File: src/glosung.c, line: 184
 msgid "Show losung of next day"
-msgstr "Zobrazit hesla na pøí¹tí den"
+msgstr "Zobrazit hesla na následující den"
 #
 # src/glosung.c:80 src/glosung.c:127
 # File: src/glosung.c, line: 130
@@ -64,12 +64,12 @@ msgstr "Zobrazit hesla na pøedchozí den"
 # src/glosung.c:83
 # File: src/glosung.c, line: 133
 msgid "Next Month"
-msgstr "Pøí¹tí mìsíc"
+msgstr "Následující mìsíc"
 #
 # src/glosung.c:84
 # File: src/glosung.c, line: 134
 msgid "Show losung of next month"
-msgstr "Zobrazit hesla na pøí¹tí mìsíc"
+msgstr "Zobrazit hesla na následující mìsíc"
 #
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
@@ -86,25 +86,25 @@ msgstr "Zobrazit hesla na pøedchozí mìsíc"
 # File: src/glosung.c, line: 429
 #, fuzzy
 msgid "Preferences..."
-msgstr "Nastavení"
+msgstr "Nastavení..."
 #
 # src/glosung.c:104
 # File: src/glosung.c, line: 154
 msgid "To edit the preferences"
-msgstr "Zmìnit nastavení\""
+msgstr "Zmìnit nastavení"
 #
 # File: src/glosung.c, line: 180
 msgid "Languages..."
-msgstr ""
+msgstr "Jazyky..."
 #
 # File: src/glosung.c, line: 181
 msgid "To update/install language files"
-msgstr ""
+msgstr "Aktualizovat/instalovat jazykové soubory"
 #
 # src/glosung.c:116
 # File: src/glosung.c, line: 166
 msgid "_Losung"
-msgstr ""
+msgstr "Hes_la"
 #
 # src/glosung.c:123
 # File: src/glosung.c, line: 173
@@ -126,14 +126,16 @@ msgid ""
 "No text files found!\n"
 "Please contact your administrator."
 msgstr ""
+"®ádné textové soubory nebyly nalezeny!\n"
+"Kontaktujte, prosím, svého administrátora."
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
-msgstr ""
+msgstr "afrikánsky"
 #
 # File: src/glosung.c, line: 289
 msgid "arabic"
-msgstr ""
+msgstr "arabsky"
 #
 # src/glosung.c:25
 # File: src/glosung.c, line: 79
@@ -152,72 +154,72 @@ msgstr "anglicky"
 #
 # File: src/glosung.c, line: 293
 msgid "spanish"
-msgstr ""
+msgstr "¹panìlsky"
 #
 # File: src/glosung.c, line: 294
 msgid "french"
-msgstr ""
+msgstr "francouzsky"
 #
 # File: src/glosung.c, line: 295
 msgid "hebrew"
-msgstr ""
+msgstr "hebrejsky"
 #
 # File: src/glosung.c, line: 296
 msgid "hungarian"
-msgstr ""
+msgstr "maïarsky"
 #
 # File: src/glosung.c, line: 297
 msgid "italian"
-msgstr ""
+msgstr "italsky"
 #
 # File: src/glosung.c, line: 298
 msgid "dutch"
-msgstr ""
+msgstr "nizozemsky"
 #
 # File: src/glosung.c, line: 299
 msgid "norwegian"
-msgstr ""
+msgstr "norsky"
 #
 # File: src/glosung.c, line: 300
 msgid "portuguese"
-msgstr ""
+msgstr "portugalsky"
 #
 # File: src/glosung.c, line: 301
 msgid "romanian"
-msgstr ""
+msgstr "rumunsky"
 #
 # File: src/glosung.c, line: 302
 msgid "russian"
-msgstr ""
+msgstr "rusky"
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
-msgstr ""
+msgstr "tamilsky"
 #
 # File: src/glosung.c, line: 304
 msgid "turkish"
-msgstr ""
+msgstr "turecky"
 #
 # File: src/glosung.c, line: 305
 msgid "vietnamese"
-msgstr ""
+msgstr "vietnamsky"
 #
 # File: src/glosung.c, line: 306
 msgid "chinese simplified"
-msgstr ""
+msgstr "èínsky (zjednodu¹enì)"
 #
 # File: src/glosung.c, line: 307
 msgid "chinese traditional"
-msgstr ""
+msgstr "èínsky (tradiènì)"
 #
 # File: src/glosung.c, line: 316
 #, c-format
 msgid "No %s texts found for %d!"
-msgstr ""
+msgstr "Nebyl nalezen text %s pro %d"
 #
 # File: src/glosung.c, line: 563
 msgid "Gods word for every day"
-msgstr ""
+msgstr "Bo¾í slovo pro ka¾dý den"
 #
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
@@ -229,7 +231,7 @@ msgstr "Nastavení"
 # File: src/glosung.c, line: 557
 #. gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
 msgid "Choose displayed language:"
-msgstr "Výbìr jazyku:"
+msgstr "Výbìr jazyka:"
 #
 # src/glosung.c:500
 # File: src/glosung.c, line: 581
@@ -244,35 +246,35 @@ msgstr "Zavøení kalendáøe pomocí dvojkliku"
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 msgid "Show selective and continuing reading"
-msgstr "Uka¾ návod ke ètení"
+msgstr "Uka¾ výbìrové a souvislé ètení"
 #
 # File: src/glosung.c, line: 791
 msgid "Link location to gnomesword"
-msgstr ""
+msgstr "Odkaz na gnomesword"
 #
 # File: src/glosung.c, line: 1068
 msgid "Languages"
-msgstr ""
+msgstr "Jazyky"
 #
 # File: src/glosung.c, line: 1107
 msgid "Installed Languages"
-msgstr ""
+msgstr "Instalované jazyky"
 #
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
-msgstr ""
+msgstr "Pøidej jazyk"
 #
 # File: src/glosung.c, line: 1144
 msgid "Download"
-msgstr ""
+msgstr "Stáhnout"
 #
 # File: src/glosung.c, line: 1150
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
-msgstr ""
+msgstr "Rok"
 #
 #
 #
