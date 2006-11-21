@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-21 00:55+0100\n"
-"PO-Revision-Date: 2006-11-21 01:11+0100\n"
+"POT-Creation-Date: 2006-11-21 01:38+0100\n"
+"PO-Revision-Date: 2006-11-21 01:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,8 +234,8 @@ msgstr "Zeige Lesehinweise"
 
 #
 # File: src/glosung.c, line: 791
-msgid "Link texts to gnomesword"
-msgstr ""
+msgid "Link location to gnomesword"
+msgstr "Verbinde Stellenangaben mit Gnomesword"
 
 #
 # File: src/glosung.c, line: 1068
