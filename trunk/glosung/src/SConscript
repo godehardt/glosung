@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2005 Eicke Godehardt
+# Copyright (C) 1999-2006 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +18,7 @@
 
 Import ('env install_dir')
 
-prog = env.Program ('glosung', ['glosung.c', 'parser.c',
+glosung = env.Program ('glosung', ['glosung.c', 'parser.c',
                                 'download.c', 'losunglist.c'])
-prog = env.Program ('losung', ['losung.c', 'parser.c'])
-prog = env.Program ('download', ['downloadTest.c', 'download.c', 'losunglist.c'])
-env.Install (dir = install_dir + '/bin', source = prog)
+losung  = env.Program ('losung', ['losung.c', 'parser.c'])
+env.Install (dir = install_dir + '/bin', source = [losung, glosung])
