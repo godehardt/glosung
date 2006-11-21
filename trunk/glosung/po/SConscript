@@ -25,8 +25,9 @@ languages = ['de', 'cs', 'fr', 'sw']
 env.Command ('glosung.pot', '#/src/glosung.c',
              "/usr/bin/xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
+    env.Execute (action = "/usr/bin/msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
     env.Command (lang + '.mo', lang + '.po',
-                 "/usr/bin/msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
+            "/usr/bin/msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
     env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
