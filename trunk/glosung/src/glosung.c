@@ -17,6 +17,10 @@
  * MA 02111-1307, USA.
  */
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -265,15 +269,18 @@ main (int argc, char **argv)
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                          _("No text files found!\n"
-                           "Please contact your administrator."));
+                           "Please install your prefered languages\n"
+                           "under Settings->Languages."));
                 g_signal_connect (G_OBJECT (error), "response",
-                                  G_CALLBACK (exit_cb), NULL);
+                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                               // G_CALLBACK (lang_manager_cb), NULL);
+                               // CALLBACK (exit_cb), NULL);
                 gtk_widget_show (error);
         } else {
-                get_time ();
                 show_text ();
         }
 
+        get_time ();
         gtk_main ();
 
         /* exit (EXIT_SUCCESS); */
