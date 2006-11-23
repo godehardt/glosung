@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <zlib.h>
+#include <errno.h>
 
 //#include <curl/types.h>
 //#include <curl/easy.h>
@@ -298,8 +299,18 @@ compute_xor_seed (const char *filename)
 static int
 to_file (LozHeader *header, unsigned char *data)
 {
+        gchar *losungdir = g_strdup_printf
+                ("%s/.glosung", getenv ("HOME"));
+        struct stat buf;
+        if (stat (losungdir, &buf) == -1 && errno == ENOENT) {
+                int error = mkdir (losungdir, 0750);
+                if (error == -1) {
+                        g_message ("Error: Could not create directory %s!",
+                                   losungdir);
+                }
+        }
         gchar *filename = g_strdup_printf
-                ("%s/.glosung/%s", getenv ("HOME"), header->file_name);
+                ("%s/%s", losungdir, header->file_name);
         /* g_message (filename); */
 
         FILE *file = fopen (filename, "wb");
