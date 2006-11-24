@@ -138,6 +138,7 @@ static void update_years (GtkWidget *w, gpointer data);
 static void lang_manager_cb      (GtkWidget *w, gpointer data);
 static void next_day_cb          (GtkWidget *w, gpointer data);
 static void next_month_cb        (GtkWidget *w, gpointer data);
+static void no_languages_cb      (GtkWidget *w, gpointer data);
 static void prev_day_cb          (GtkWidget *w, gpointer data);
 static void prev_month_cb        (GtkWidget *w, gpointer data);
 static void property_cb          (GtkWidget *w, gpointer data);
@@ -269,18 +270,18 @@ main (int argc, char **argv)
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                          _("No text files found!\n"
-                           "Please install your prefered languages\n"
-                           "under Settings->Languages."));
+                           "Please install your prefered languages."));
                 g_signal_connect (G_OBJECT (error), "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                                  G_CALLBACK (no_languages_cb), error);
+                               // G_CALLBACK (gtk_widget_destroy), NULL);
                                // G_CALLBACK (lang_manager_cb), NULL);
                                // CALLBACK (exit_cb), NULL);
                 gtk_widget_show (error);
         } else {
+                get_time ();
                 show_text ();
         }
 
-        get_time ();
         gtk_main ();
 
         /* exit (EXIT_SUCCESS); */
@@ -1109,6 +1110,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                 (NULL, renderer, "text", 1, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
+        gtk_widget_set_size_request (list, -1, 80);
         gtk_widget_show (list);
 
         GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
@@ -1137,12 +1139,12 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 static GtkWidget *lang_combo;
 static GtkWidget *year_combo;
 
+
 static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
         GtkWidget    *vbox;
-
 
         dialog = gtk_dialog_new_with_buttons
                 (_("Add Languages"),
@@ -1217,6 +1219,14 @@ add_lang_cb (GtkWidget *w, gpointer data)
         }
         gtk_widget_destroy (dialog);
 } /* add_lang_cb */
+
+
+static void
+no_languages_cb (GtkWidget *w, gpointer data)
+{
+        gtk_widget_destroy (w);
+        lang_manager_cb (app, data);
+} /* no_languages_cb */
 
 
 static void
