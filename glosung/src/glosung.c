@@ -148,6 +148,7 @@ static void property_response_cb (GtkDialog *dialog,
 static void readings_cb          (GtkWidget *toggle,   gpointer data);
 static void sword_cb             (GtkWidget *toggle,   gpointer data);
 static void today_cb             (GtkWidget *w, gpointer data);
+static void update_language_store ();
 
 
 /******************************\
@@ -1058,18 +1059,20 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
+static GtkWidget    *lang_combo;
+static GtkWidget    *year_combo;
+static GtkListStore *store;
+
+
 static void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
         GtkWidget    *add_button;
-        GtkListStore *store;
         GtkWidget    *list;
-        GtkTreeIter   iter1;
         GtkWidget    *vbox;
         GtkCellRenderer   *renderer;
         GtkTreeViewColumn *column;
-        int i;
 
 
         dialog = gtk_dialog_new_with_buttons
@@ -1086,18 +1089,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
 
         store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-
-        for (i = 0; i < languages->languages->len; i++) {
-                gtk_list_store_append (store, &iter1);
-                gchar *langu = g_ptr_array_index (languages->languages, i);
-                GString *years = create_years_string (langu);
-                gtk_list_store_set
-                        (store, &iter1,
-                         0, g_hash_table_lookup (lang_translations, langu),
-                         1, years->str,
-                         -1);
-                g_string_free (years, TRUE);
-        }
+        update_language_store (store);
 
         list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
 
@@ -1134,10 +1126,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
 
 
-
-
-static GtkWidget *lang_combo;
-static GtkWidget *year_combo;
 
 
 static void
@@ -1216,6 +1204,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 download (langu, year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
+                update_language_store ();
         }
         gtk_widget_destroy (dialog);
 } /* add_lang_cb */
@@ -1269,3 +1258,24 @@ create_years_string (gchar *langu)
 
         return result;
 } /* create_years_string */
+
+
+static void
+update_language_store ()
+{
+        GtkTreeIter   iter1;
+        int i;
+
+        gtk_list_store_clear (store);
+        for (i = 0; i < languages->languages->len; i++) {
+                gtk_list_store_append (store, &iter1);
+                gchar *langu = g_ptr_array_index (languages->languages, i);
+                GString *years = create_years_string (langu);
+                gtk_list_store_set
+                        (store, &iter1,
+                         0, g_hash_table_lookup (lang_translations, langu),
+                         1, years->str,
+                         -1);
+                g_string_free (years, TRUE);
+        }
+} /* update_language_store */
