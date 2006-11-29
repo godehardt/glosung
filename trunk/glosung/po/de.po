@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-21 01:38+0100\n"
-"PO-Revision-Date: 2006-11-21 01:39+0100\n"
+"POT-Creation-Date: 2006-11-24 20:18+0100\n"
+"PO-Revision-Date: 2006-11-29 22:19+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,15 +100,15 @@ msgstr "de"
 #
 msgid ""
 "No text files found!\n"
-"Please contact your administrator."
+"Please install your prefered languages."
 msgstr ""
 "Keine Text-Dateien gefunden!\n"
-"Bitte kontaktieren sie ihren Administrator."
+"Bitte installieren Sie Ihre bevorzugte Sprache."
 
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
-msgstr ""
+msgstr "afrikaans"
 
 #
 # File: src/glosung.c, line: 289
@@ -179,7 +179,7 @@ msgstr "russisch"
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
-msgstr ""
+msgstr "tamilisch"
 
 #
 # File: src/glosung.c, line: 304
