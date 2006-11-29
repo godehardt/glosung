@@ -45,6 +45,14 @@ losunglist_add (LosungList *list, gchar *lang, gint year)
                 years = g_ptr_array_new ();
                 g_hash_table_insert (list->hash_table, lang, years);
         }
+
+        int i;
+        for (i = 0; i < years->len; i++) {
+                if (year == GPOINTER_TO_INT (g_ptr_array_index (years, i))) {
+                        return;
+                }
+        }
+
         g_ptr_array_add (years, GINT_TO_POINTER (year));
 }
 
