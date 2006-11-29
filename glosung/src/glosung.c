@@ -87,6 +87,7 @@ enum {
 static GConfClient *client;
 static GtkWidget *app;
 static GDate     *date;
+static GDate     *new_date;
 static GtkWidget *calendar;
 static GtkWidget *label [NUMBER_OF_LABELS];
 static GtkWidget *property = NULL;
@@ -279,7 +280,9 @@ main (int argc, char **argv)
                                // CALLBACK (exit_cb), NULL);
                 gtk_widget_show (error);
         } else {
+                date = g_date_new ();
                 get_time ();
+                new_date = g_date_new_julian (g_date_get_julian (date));
                 show_text ();
         }
 
@@ -368,8 +371,6 @@ scan_for_languages_in_dir (gchar *dirname, LosungList *list)
                         year += 100;
                 }
                 losunglist_add (list, langu, year);
-
-                // g_message ("%s - %d - %s", langu, year, g_hash_table_lookup (lang_translations, langu));
         }
 } /* scan_for_languages_in_dir */
 
@@ -456,8 +457,8 @@ get_time (void)
 
         t = time (NULL);
         zeit = *localtime (&t);
-        date = g_date_new_dmy
-                (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
+        g_date_set_dmy (date,
+                        zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
 } /* get_time */
 
 
@@ -469,7 +470,7 @@ show_text (void)
 {
         const Losung *ww;
 
-        ww = get_losung (date, lang);
+        ww = get_losung (new_date, lang);
         if (ww == NULL) {
                 GtkWidget *error;
                 gchar *text = NULL;
@@ -477,7 +478,7 @@ show_text (void)
                 text = g_strdup_printf
                         (_("No %s texts found for %d!"),
                          (gchar*)g_hash_table_lookup (lang_translations, lang),
-                         g_date_get_year (date));
+                         g_date_get_year (new_date));
                 error = gtk_message_dialog_new (
                         GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, text);
@@ -485,8 +486,11 @@ show_text (void)
                                   G_CALLBACK (gtk_widget_destroy), NULL);
                 gtk_widget_show (error);
                 g_free (text);
+                new_date = g_date_new_julian (g_date_get_julian (date));
                 return;
         }
+
+        date = g_date_new_julian (g_date_get_julian (new_date));
 
         gtk_label_set_text (GTK_LABEL (label [TITLE]), ww->title);
         if (ww->ot.say != NULL) {
@@ -950,6 +954,7 @@ static void
 today_cb (GtkWidget *w, gpointer data)
 {
         get_time ();
+        show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
                                            g_date_get_month (date) - 1,
@@ -957,7 +962,6 @@ today_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
                                            g_date_get_day (date));
         }
-        show_text ();
 } /* today_cb */
 
 
@@ -967,7 +971,8 @@ today_cb (GtkWidget *w, gpointer data)
 static void 
 next_day_cb (GtkWidget *w, gpointer data)
 {
-        g_date_add_days (date, 1);
+        g_date_add_days (new_date, 1);
+        show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
                                            g_date_get_month (date) - 1,
@@ -975,7 +980,6 @@ next_day_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
                                            g_date_get_day (date));
         }
-        show_text ();
 } /* next_day_cb */
 
 
@@ -985,7 +989,8 @@ next_day_cb (GtkWidget *w, gpointer data)
 static void 
 prev_day_cb (GtkWidget *w, gpointer data)
 {
-        g_date_subtract_days (date, 1);
+        g_date_subtract_days (new_date, 1);
+        show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
                                            g_date_get_month (date) - 1,
@@ -993,7 +998,6 @@ prev_day_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
                                            g_date_get_day (date));
         }
-        show_text ();
 } /* prev_day_cb */
 
 
@@ -1003,7 +1007,8 @@ prev_day_cb (GtkWidget *w, gpointer data)
 static void 
 next_month_cb (GtkWidget *w, gpointer data)
 {
-        g_date_add_months (date, 1);
+        g_date_add_months (new_date, 1);
+        show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
                                            g_date_get_month (date) - 1,
@@ -1011,7 +1016,6 @@ next_month_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
                                            g_date_get_day (date));
         }
-        show_text ();
 } /* next_month_cb */
 
 
@@ -1021,7 +1025,8 @@ next_month_cb (GtkWidget *w, gpointer data)
 static void 
 prev_month_cb (GtkWidget *w, gpointer data)
 {
-        g_date_subtract_months (date, 1);
+        g_date_subtract_months (new_date, 1);
+        show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
                                            g_date_get_month (date) - 1,
@@ -1029,7 +1034,6 @@ prev_month_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
                                            g_date_get_day (date));
         }
-        show_text ();
 } /* prev_month_cb */
 
 
@@ -1043,9 +1047,9 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
         gtk_calendar_get_date (GTK_CALENDAR (calendar), &y, &m, &d);
 
-        g_date_set_day (date, d);
-        g_date_set_month (date, m + 1);
-        g_date_set_year (date, y);
+        g_date_set_day (new_date, d);
+        g_date_set_month (new_date, m + 1);
+        g_date_set_year (new_date, y);
         show_text ();
 
         if (calendar_close) {
@@ -1123,9 +1127,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
-
-
-
 
 
 static void
