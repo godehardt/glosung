@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-24 20:18+0100\n"
-"PO-Revision-Date: 2006-11-29 22:31+0100\n"
+"PO-Revision-Date: 2006-11-30 21:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -142,13 +142,12 @@ msgstr "cs"
 
 #
 # File: src/glosung.c, line: 267
-#, fuzzy
 msgid ""
 "No text files found!\n"
 "Please install your prefered languages."
 msgstr ""
 "®ádné textové soubory nebyly nalezeny!\n"
-"Kontaktujte, prosím, svého administrátora."
+"Nainstalujte si, prosím, pøíslu¹né jazykové soubory."
 
 #
 # File: src/glosung.c, line: 288
