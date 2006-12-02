@@ -14,7 +14,8 @@ URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       libgnomeui >= 2.4
 Requires:       gtk2 >= 2.4
-Requires:       libxml >= 2.0
+Requires:       libxml2 >= 2.0
+#Requires:       libcurl
 #BuildRequires:  libgnomeui-devel >= 2.0
 #BuildRequires:  libxml-devel >= 2.0
 #BuildRequires:  libgtk2-devel >= 2.4
@@ -53,7 +54,6 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
 /usr/share/locale/sw/LC_MESSAGES/glosung.mo
-#%doc /usr/man/man1/glosung.1.gz
 #%doc README AUTHORS COPYING ChangeLog NEWS TODO
 #%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
 #%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
@@ -72,6 +72,10 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
  
 
 %changelog
+* Sat Dec 02 2006 Eicke Godehardt <eicke@godehardt.org>
+- add libcurl for downloading language files from www.losung.de
+- bump to 3.0
+
 * Fri Dec 09 2005 Eicke Godehardt <eicke@godehardt.org>
 - move sword flag from compile flag into runtime changable property
 - fixed debian package issue
