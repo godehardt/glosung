@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2006 Eicke Godehardt
+ * Copyright (C) 1999-2007 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
