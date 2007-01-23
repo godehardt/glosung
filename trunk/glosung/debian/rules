@@ -19,9 +19,10 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	scons DESTDIR=`pwd`/debian/tmp install
+	scons DESTDIR=`pwd`/debian/glosung install
+#	scons DESTDIR=`pwd`/debian/tmp install
 #	$(MAKE) DESTDIR=`pwd`/debian/tmp $@
-	dh_movefiles
+#	dh_movefiles
 
 # Build architecture-independent files here.
 binary-indep: install
