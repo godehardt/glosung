@@ -1,0 +1,94 @@
+                -= Watchwords - license agreements =-
+
+License agreements 
+
+Watchwords bible text selection 
+  The freeware watchwords programs use the watchwords i.e. the special
+  selection of Old and New Testament texts, with kind permission of
+  the "Evangelische Brüder-Unität" (another name for the
+  Moravian Church), Herrnhut and Bad Boll (Germany;
+  http://www.ebu.de), and "Friedrich Reinhardt Verlag"
+  (http://www.reinhardt.ch). 
+Accompanying texts, bible readings 
+  The permission allows usage of the bible readings given in the
+  watchwords booklet, but forbids usage of the accompanying texts
+  (song verses or prayers). 
+Form of distribution 
+  You may distribute the content of the program package only in
+  unmodified form. You must not remove, modify, or pass along any
+  files separately. Especially, distribution of the watchwords texts
+  of the current year without their respective display programs is not
+  permitted. You must not alter the content of the texts. Watchwords
+  texts of previous years may be distributed without the display
+  programs. 
+Non-commercial 
+  The programs may only be distributed free of charge. Commercial
+  advertisement, distribution for profit, and distribution through
+  commercial companies is prohibited. 
+German "Losung" 
+  The German word "Losung" in connection with these programs is
+  protected by copyright. The German watchwords may be used
+  exclusively by the name "Losung". 
+Text usage in programs 
+  You must use or incorporate the watchwords texts in any software
+  program only if the sole function of the program is to display the
+  watchwords text on the screen. A widespread general purpose program
+  (e.g. an Internet browser or a database engine) may also be used.
+  The watchwords texts must not be used to enrich the functionality of
+  an application program (e.g. an organizer program). 
+Bible text copyright 
+  For any of the languages supported by the freeware watchwords
+  programs, the above stated permission to use the watchwords (i.e.
+  the special selection of bible verses) may but need not include
+  permission by the respective bible society to use the bible text
+  (edition, translation) it contains. Copyright notices for the bible
+  editions may be found in the respective watchwords texts or in an
+  additional text, they must be available for any user. 
+Copyright for the freeware watchwords programs 
+  The programs themselves are copyrighted (German "Urheberrecht") for
+  the benefit of their program authors, see the license conditions in
+  the respective program. 
+Availability of license agreements 
+  The license agreements must be availabe for the user. 
+Copyright Information regarding the English Bible Texts 
+  The Text of the "AUTHORIZED VERSION" (popularly known as the "King
+    James Version") is in the Public Domain. 
+  
+    The NEW INTERNATIONAL VERSION (often abbreviated as "NIV")
+    "Scripture taken from the HOLY BIBLE, NEW INTERNATIONAL VERSION
+    (R)
+    Copyright (C) 1973, 1978, 1984
+    by International Bible Society.
+    Used by permission of Zondervan Publishing House.
+    All rights reserved."
+
+    The NEW AMERICAN STANDARD BIBLE - update (R) (often abbreviated as
+    NASB-up) 
+    "Scripture taken from the NEW AMERICAN STANDARD BIBLE - update
+    (R),
+    (C) Copyright The Lockman Foundation
+    1960, 1962, 1963, 1968, 1971, 1972, 1973, 1975, 1977, 1995
+    Used by permission"
+    
+  NOTE: The NEW AMERICAN STANDARD BIBLE - update (R) text is the
+  version normally offered to English-speaking users. NIV and KJV upon
+  request from Roland Freischlad (see www.losung.de). 
+
+In agreement with the licensee, an appeal for donations for the
+benefit of the "Brüder-Unität" (another name for the Moravian
+Church -literally: "Brethren Unity"-) and its missionary activities in
+Germany and abroad is made. Please send your donations to: 
+Ev. Kreditgenossenschaft e.G., Stuttgart, 
+Account Number: 41 59 28 "Losungsspende" (the account identifier) 
+Bank Routing Number: 600 606 06 
+
+This ministry is hereby recommended to you for special consideration. 
+
+Be thankful in all circumstances and give glory to our God! 
+
+Sincerely, 
+
+                           Reinhold Willnat
+
+ENlicense.htm,v 1.23 2002/08/07 19:05:18 
+---------------------------------------------------------------------
