@@ -244,14 +244,15 @@ main (int argc, char **argv)
 
         lang = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/language", NULL);
-        if (lang == NULL && languages->languages->len > 0) {
+        if (lang == NULL) {
                 /* should be translated to corresponding language, e.g. 'de' */
                 lang = _("en");
 
                 /* is requested language available,
                    if not use first available language instead */
 
-                if (! g_hash_table_lookup (languages->hash_table, lang)) {
+                if (languages->languages->len > 0 &&
+                    ! g_hash_table_lookup (languages->hash_table, lang)) {
                         lang = g_ptr_array_index (languages->languages, 0);
                 }
         }
@@ -337,7 +338,8 @@ scan_for_languages (void)
         printf ("Found languages: ");
         guint i = 0;
         for (i = 0; i < (list->languages)->len; i++) {
-                printf ("%s ", (gchar*) (g_ptr_array_index (list->languages, i)));
+                printf ("%s ",
+                        (gchar*) g_ptr_array_index (list->languages, i));
         }
         printf ("\n");
 
@@ -1165,7 +1167,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gtk_combo_box_append_text
                         (GTK_COMBO_BOX (lang_combo),
                          g_hash_table_lookup (lang_translations, langu));
-                if (strcmp (lang, langu) == 0) {
+                if (lang != NULL && strcmp (lang, langu) == 0) {
                         gtk_combo_box_set_active
                                 (GTK_COMBO_BOX (lang_combo), i);
                 }
