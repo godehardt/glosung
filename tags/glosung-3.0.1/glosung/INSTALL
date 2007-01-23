@@ -1,0 +1,18 @@
+Installation instruction
+========================
+
+To install glosung you basically have to:
+
+scons install
+
+This will install glosung und /usr.  If you prefer to install under a
+different directory for example /usr/local try:
+
+scons PREFIX=/usr/local install
+
+For package maintainers to install in a different location, e.g. a
+sandbox environment, use DESTDIR option:
+
+scons DESTDIR=`pwd`/tmp
+
+It is also possible to combine both options.
