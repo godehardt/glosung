@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.0
+%define version 3.0.1
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -72,6 +72,11 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
  
 
 %changelog
+* Tue Jan 23 2007 Eicke Godehardt <eicke@godehardt.org>
+- fix the crash-at-very-first-startup
+- fix handle years for download
+- bump to 3.0.1
+
 * Sat Dec 02 2006 Eicke Godehardt <eicke@godehardt.org>
 - add libcurl for downloading language files from www.losung.de
 - bump to 3.0
