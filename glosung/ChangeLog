@@ -1,3 +1,9 @@
+2007-01-23 Eicke Godehardt <eicke@godehardt.org>
+
+	* fix the crash-at-very-first-startup
+	* fix handle years for download
+	* Version bump to 3.0.1
+
 2006-12-02 Eicke Godehardt <eicke@godehardt.org>
 
 	* Version bump to 3.0
