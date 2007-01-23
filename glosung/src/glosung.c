@@ -1068,6 +1068,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 static GtkWidget    *lang_combo;
 static GtkWidget    *year_combo;
 static GtkListStore *store;
+static GPtrArray    *years;
 
 
 static void
@@ -1175,7 +1176,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_widget_show (lang_combo);
 
         year_combo = gtk_combo_box_new_text ();
-        GPtrArray *years = g_hash_table_lookup (server_list->hash_table, lang);
+        years = g_hash_table_lookup (server_list->hash_table, lang);
         for (i = 0; i < years->len; i++) {
                 gchar *year = g_strdup_printf
                         ("%d", GPOINTER_TO_INT (g_ptr_array_index (years, i)));
@@ -1233,7 +1234,7 @@ update_years (GtkWidget *w, gpointer data)
         gchar *langu = g_ptr_array_index
                 (server_list->languages,
                  gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
-        GPtrArray *years = g_hash_table_lookup (server_list->hash_table,langu);
+        years = g_hash_table_lookup (server_list->hash_table,langu);
         gint i;
         for (i = 0; i < years->len; i++) {
                 gchar *year = g_strdup_printf
