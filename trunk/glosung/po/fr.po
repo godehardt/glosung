@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: glosung 2.0\n"
+"Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-24 20:18+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
-"Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
+"Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,12 +73,12 @@ msgstr "Modifier les préférences"
 #
 # File: src/glosung.c, line: 180
 msgid "Languages..."
-msgstr ""
+msgstr "Traductions"
 
 #
 # File: src/glosung.c, line: 181
 msgid "To update/install language files"
-msgstr ""
+msgstr "Mettre à jour/ajouter de nouvelles traductions"
 
 #
 msgid "_Losung"
@@ -98,23 +98,22 @@ msgid "en"
 msgstr "fr"
 
 #
-#, fuzzy
 msgid ""
 "No text files found!\n"
 "Please install your prefered languages."
 msgstr ""
 "Aucuns fichiers de versets trouvés !\n"
-"Veuillez contacter votre administrateur."
+"Veuillez installer les traductions correspondantes."
 
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
-msgstr ""
+msgstr "Afrikaans"
 
 #
 # File: src/glosung.c, line: 289
 msgid "arabic"
-msgstr ""
+msgstr "Arabe"
 
 #
 msgid "czech"
@@ -135,82 +134,82 @@ msgstr "Espagnol"
 #
 # File: src/glosung.c, line: 294
 msgid "french"
-msgstr ""
+msgstr "Français"
 
 #
 # File: src/glosung.c, line: 295
 msgid "hebrew"
-msgstr ""
+msgstr "Hébreu"
 
 #
 # File: src/glosung.c, line: 296
 msgid "hungarian"
-msgstr ""
+msgstr "Hongrois"
 
 #
 # File: src/glosung.c, line: 297
 msgid "italian"
-msgstr ""
+msgstr "Italien"
 
 #
 # File: src/glosung.c, line: 298
 msgid "dutch"
-msgstr ""
+msgstr "Hollandais"
 
 #
 # File: src/glosung.c, line: 299
 msgid "norwegian"
-msgstr ""
+msgstr "Norvégien"
 
 #
 # File: src/glosung.c, line: 300
 msgid "portuguese"
-msgstr ""
+msgstr "Portuguais"
 
 #
 # File: src/glosung.c, line: 301
 msgid "romanian"
-msgstr ""
+msgstr "Roumain"
 
 #
 # File: src/glosung.c, line: 302
 msgid "russian"
-msgstr ""
+msgstr "Russe"
 
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
-msgstr ""
+msgstr "Tamoul"
 
 #
 # File: src/glosung.c, line: 304
 msgid "turkish"
-msgstr ""
+msgstr "Turc"
 
 #
 # File: src/glosung.c, line: 305
 msgid "vietnamese"
-msgstr ""
+msgstr "Vietnamien"
 
 #
 # File: src/glosung.c, line: 306
 msgid "chinese simplified"
-msgstr ""
+msgstr "Chinois simplifié"
 
 #
 # File: src/glosung.c, line: 307
 msgid "chinese traditional"
-msgstr ""
+msgstr "Chinois traditionnel"
 
 #
 #, c-format
 msgid "No %s texts found for %d!"
-msgstr "Aucuns textes %s trouvés pour l'année %d !"
+msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
 
 #
 # File: src/glosung.c, line: 563
 msgid "Gods word for every day"
-msgstr ""
+msgstr "La Parole de Dieu au quotidien"
 
 #
 msgid "Preferences"
@@ -227,7 +226,7 @@ msgstr "Police :"
 
 #
 msgid "Close calendar by double click"
-msgstr "Fermer le calendrier avec un double-clic"
+msgstr "Fermer le calendrier en double-cliquant"
 
 #
 msgid "Show selective and continuing reading"
@@ -236,35 +235,35 @@ msgstr "Afficher les suggestions de lecture suivie"
 #
 # File: src/glosung.c, line: 791
 msgid "Link location to gnomesword"
-msgstr ""
+msgstr "Liens vers gnomesword"
 
 #
 # File: src/glosung.c, line: 1068
 msgid "Languages"
-msgstr ""
+msgstr "Traductions"
 
 #
 # File: src/glosung.c, line: 1107
 msgid "Installed Languages"
-msgstr ""
+msgstr "Traductions installées"
 
 #
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
-msgstr ""
+msgstr "Ajouter de nouvelles traductions"
 
 #
 # File: src/glosung.c, line: 1144
 msgid "Download"
-msgstr ""
+msgstr "Télécharger"
 
 #
 # File: src/glosung.c, line: 1150
 msgid "Language"
-msgstr ""
+msgstr "Traduction"
 
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
