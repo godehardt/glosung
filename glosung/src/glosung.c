@@ -268,6 +268,9 @@ main (int argc, char **argv)
                                         NULL);
 
         create_app ();
+        date = g_date_new ();
+        get_time ();
+        new_date = g_date_new_julian (g_date_get_julian (date));
         if (languages->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -281,9 +284,6 @@ main (int argc, char **argv)
                                // CALLBACK (exit_cb), NULL);
                 gtk_widget_show (error);
         } else {
-                date = g_date_new ();
-                get_time ();
-                new_date = g_date_new_julian (g_date_get_julian (date));
                 show_text ();
         }
 
@@ -567,7 +567,8 @@ about_cb (GtkWidget *w, gpointer data)
                 "Eicke Godehardt",
                 NULL
         };
-        gchar *translators = "Marek Drápal\nEicke Godehardt\nNikolas\nEmanuel Feruzi";
+        gchar *translators =
+                "Marek Drápal\nEicke Godehardt\nNikolas\nEmanuel Feruzi";
 
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
@@ -1211,6 +1212,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
                 update_language_store ();
+                show_text ();
         }
         gtk_widget_destroy (dialog);
 } /* add_lang_cb */
