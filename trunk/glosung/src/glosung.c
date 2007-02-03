@@ -955,7 +955,9 @@ calendar_cb (GtkWidget *w, gpointer data)
 static void 
 today_cb (GtkWidget *w, gpointer data)
 {
+        date = g_date_new ();
         get_time ();
+        new_date = g_date_new_julian (g_date_get_julian (date));
         show_text ();
         if (calendar != NULL) {
                 gtk_calendar_select_month (GTK_CALENDAR (calendar), 
