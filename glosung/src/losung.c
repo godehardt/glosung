@@ -24,8 +24,14 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include <gconf/gconf-client.h>
+
 #include <glib/gi18n.h>
 #include <glib/goption.h>
+
+#define PACKAGE "glosung"
+#define APPNAME "losung"
+
 
 /****************************\
    Variables & Definitions
@@ -41,11 +47,13 @@ static void       get_time              (void);
 static void       show_text             (void);
 
 gchar *lang;
+gchar *date_param = NULL;
 
 
 static GOptionEntry entries[] = 
 {
-  { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "set language", "de" },
+  { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "language of watch word", "de" },
+  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "date to show watch word for", "2007-02-06" },
   { NULL }
 };
 
@@ -66,7 +74,12 @@ main (int argc, char **argv)
         GError *error = NULL;
         GOptionContext *context;
 
-        lang = "de";
+        GConfClient *client = gconf_client_get_default ();
+        lang = gconf_client_get_string
+                (client, "/apps/" PACKAGE "/language", NULL);
+        if (lang == NULL) {
+                lang = "de";
+        }
 
         context = g_option_context_new ("- watch word program");
         g_option_context_add_main_entries (context, entries, NULL);
@@ -85,6 +98,14 @@ main (int argc, char **argv)
 static void 
 get_time (void)
 {
+        if (date_param != NULL) {
+                date = g_date_new ();
+                g_date_set_parse (date, date_param);
+                if (g_date_valid (date)) {
+                        return;
+                }
+        }
+
         time_t     t;
         struct tm  zeit;
 
