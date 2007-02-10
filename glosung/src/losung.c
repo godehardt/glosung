@@ -113,6 +113,25 @@ get_time (void)
         zeit = *localtime (&t);
         date = g_date_new_dmy
                 (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
+        if (date_param [0] == '+' || date_param [0] == '-') {
+                int offset = 0;
+                int result = sscanf (date_param, "%d", &offset);
+                if (date_param [strlen (date_param) - 1] == 'm' ||
+                    date_param [strlen (date_param) - 1] == 'M')
+                {
+                        if (offset > 0) {
+                                g_date_add_months (date, offset);
+                        } else {
+                                g_date_subtract_months (date, -offset);
+                        }
+                } else {
+                        if (offset > 0) {
+                                g_date_add_days (date, offset);
+                        } else {
+                                g_date_subtract_days (date, -offset);
+                        }
+                }
+        }
 } /* get_time */
 
 
