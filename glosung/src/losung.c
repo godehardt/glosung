@@ -30,14 +30,16 @@
 #include <glib/goption.h>
 
 #define PACKAGE "glosung"
-#define APPNAME "losung"
 
 
 /****************************\
    Variables & Definitions
 \****************************/
 
-static GDate     *date;
+static GDate *date;
+static gchar *lang;
+static gchar *date_param = NULL;
+
 
 /****************************\
       Function prototypes
@@ -46,14 +48,10 @@ static GDate     *date;
 static void       get_time              (void);
 static void       show_text             (void);
 
-gchar *lang;
-gchar *date_param = NULL;
 
-
-static GOptionEntry entries[] = 
-{
+static GOptionEntry entries[] = {
   { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "language of watch word", "de" },
-  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or as offset, e.g., +1, -2m", "2007-02-06" },
+  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or relative, e.g., +1, -2m", "2007-08-05" },
   { NULL }
 };
 
@@ -139,20 +137,7 @@ show_text (void)
 
         ww = get_losung (date, lang);
         if (ww == NULL) {
-                /*
-                i = 0;
-                while (languages [i].lang != NULL) {
-                        if (0 == strcmp (lang, languages [i].lang)) {
-                                text = g_strdup_printf
-                                        (_("No %s texts found for %d!"),
-                                         languages [i].name,
-                                         g_date_get_year (date));
-                                break;
-                        }
-                        i++;
-                }
-                */
-                printf (_("No %s texts found for %d!\n"),
+                printf (_("No '%s' texts found for %d!\n"),
                         lang, g_date_get_year (date));
                 return;
         }
