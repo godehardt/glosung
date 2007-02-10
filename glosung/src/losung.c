@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 #include <glib/gi18n.h>
+#include <glib/goption.h>
 
 /****************************\
    Variables & Definitions
@@ -42,6 +43,13 @@ static void       show_text             (void);
 gchar *lang;
 
 
+static GOptionEntry entries[] = 
+{
+  { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "set language", "de" },
+  { NULL }
+};
+
+
 /*
  * the one and only main function :-)
  */
@@ -55,7 +63,14 @@ main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         */
 
+        GError *error = NULL;
+        GOptionContext *context;
+
         lang = "de";
+
+        context = g_option_context_new ("- watch word program");
+        g_option_context_add_main_entries (context, entries, NULL);
+        g_option_context_parse (context, &argc, &argv, &error);
 
         get_time ();
         show_text ();
