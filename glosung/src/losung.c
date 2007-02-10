@@ -53,7 +53,7 @@ gchar *date_param = NULL;
 static GOptionEntry entries[] = 
 {
   { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "language of watch word", "de" },
-  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "date to show watch word for", "2007-02-06" },
+  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or as offset, e.g., +1, -2m", "2007-02-06" },
   { NULL }
 };
 
@@ -64,13 +64,6 @@ static GOptionEntry entries[] =
 int 
 main (int argc, char **argv)
 {
-        /* Initialize the i18n stuff */
-        /*
-        bindtextdomain (PACKAGE, "/usr/share/locale");
-        textdomain (PACKAGE);
-        bind_textdomain_codeset (PACKAGE, "UTF-8");
-        */
-
         GError *error = NULL;
         GOptionContext *context;
 
