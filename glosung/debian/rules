@@ -20,6 +20,7 @@ install: build
 	dh_clean -k
 	dh_installdirs
 	scons DESTDIR=`pwd`/debian/glosung install
+	mv `pwd`/debian/glosung/usr/share/doc/glosung-* `pwd`/debian/glosung/usr/share/doc/glosung
 #	scons DESTDIR=`pwd`/debian/tmp install
 #	$(MAKE) DESTDIR=`pwd`/debian/tmp $@
 #	dh_movefiles
