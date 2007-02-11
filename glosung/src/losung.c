@@ -106,7 +106,7 @@ get_time (void)
                 (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
         if (date_param [0] == '+' || date_param [0] == '-') {
                 int offset = 0;
-                int result = sscanf (date_param, "%d", &offset);
+                sscanf (date_param, "%d", &offset);
                 if (date_param [strlen (date_param) - 1] == 'm' ||
                     date_param [strlen (date_param) - 1] == 'M')
                 {
