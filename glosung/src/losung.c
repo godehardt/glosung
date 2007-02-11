@@ -104,7 +104,9 @@ get_time (void)
         zeit = *localtime (&t);
         date = g_date_new_dmy
                 (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
-        if (date_param [0] == '+' || date_param [0] == '-') {
+        if (date_param != NULL &&
+            (date_param [0] == '+' || date_param [0] == '-'))
+        {
                 int offset = 0;
                 sscanf (date_param, "%d", &offset);
                 if (date_param [strlen (date_param) - 1] == 'm' ||
