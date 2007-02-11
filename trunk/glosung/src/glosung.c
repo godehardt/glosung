@@ -1212,6 +1212,11 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
                 update_language_store ();
+                if (languages->languages->len == 1) {
+                        lang = langu;
+                        gconf_client_set_string
+                            (client, "/apps/" PACKAGE "/language", lang, NULL);
+                }
                 show_text ();
         }
         gtk_widget_destroy (dialog);
