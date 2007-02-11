@@ -1,3 +1,11 @@
+glosung (3.0.2) stable; urgency=low
+
+  * add better language handling for first time users
+  * add command line arguments to losung
+  * bump to 3.0.2
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Tue, 01 Feb 2007 17:55:19 +0200
+
 glosung (3.0.1) stable; urgency=low
 
   * fix the crash-at-very-first-startup
