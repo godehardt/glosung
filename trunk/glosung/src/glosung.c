@@ -101,7 +101,8 @@ static gboolean   show_readings;
 static gboolean   show_readings_new;
 static gboolean   show_sword;
 static gboolean   show_sword_new;
-
+static gchar     *losung_simple_text;
+static guint      losung_simple_text_len;
 
 static LosungList *languages;
 static gchar      *lang;
@@ -150,6 +151,7 @@ static void readings_cb          (GtkWidget *toggle,   gpointer data);
 static void sword_cb             (GtkWidget *toggle,   gpointer data);
 static void today_cb             (GtkWidget *w, gpointer data);
 static void update_language_store ();
+static void clipboard_cb         (GtkWidget *w, gpointer data);
 
 
 /******************************\
@@ -190,6 +192,13 @@ static GnomeUIInfo settings_menu[] = {
         GNOMEUIINFO_END
 }; /* settings_menu */
 
+static GnomeUIInfo edit_menu[] = {
+        GNOMEUIINFO_ITEM_STOCK (N_("Copy Watch Word"),
+                                N_("To "),
+                                clipboard_cb, GTK_STOCK_COPY),
+        GNOMEUIINFO_END
+}; /* edit_menu */
+
 static GnomeUIInfo help_menu[] = {
         /* GNOMEUIINFO_HELP ("glosung"), */
         GNOMEUIINFO_MENU_ABOUT_ITEM (about_cb, NULL),
@@ -198,6 +207,7 @@ static GnomeUIInfo help_menu[] = {
 
 static GnomeUIInfo main_menu[] = {
         GNOMEUIINFO_SUBTREE            (N_("_Losung"), losung_menu),
+        GNOMEUIINFO_MENU_EDIT_TREE     (edit_menu),
         GNOMEUIINFO_MENU_SETTINGS_TREE (settings_menu),
         GNOMEUIINFO_MENU_HELP_TREE     (help_menu),
         GNOMEUIINFO_END
@@ -553,6 +563,31 @@ show_text (void)
                         gtk_label_set_use_markup (GTK_LABEL (label [i]), TRUE);
                 }
         }
+
+        GString* string = g_string_new ("");
+        g_string_append (string, ww->title);
+        g_string_append (string, "\n\n");
+        if (ww->ot.say != NULL) {
+                g_string_append (string, ww->ot.say);
+                g_string_append (string, "\n");
+        }
+        g_string_append (string, ww->ot.text);
+        g_string_append (string, "\n");
+        g_string_append (string, ww->ot.location);
+        g_string_append (string, "\n\n");
+
+        if (ww->nt.say != NULL) {
+                g_string_append (string, ww->nt.say);
+                g_string_append (string, "\n");
+        }
+        g_string_append (string, ww->nt.text);
+        g_string_append (string, "\n");
+        g_string_append (string, ww->nt.location);
+        g_string_append (string, "\n");
+
+        losung_simple_text_len = string->len;
+        losung_simple_text = g_string_free (string, FALSE);
+
         losung_free (ww);
 } /* show_text */
 
@@ -1299,3 +1334,15 @@ update_language_store ()
                 g_string_free (years, TRUE);
         }
 } /* update_language_store */
+
+
+static void
+clipboard_cb (GtkWidget *w, gpointer data) 
+{
+        GtkClipboard* clipboard = gtk_clipboard_get (GDK_SELECTION_PRIMARY);
+        gtk_clipboard_set_text (clipboard,
+                                losung_simple_text, losung_simple_text_len);
+        clipboard = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
+        gtk_clipboard_set_text (clipboard,
+                                losung_simple_text, losung_simple_text_len);
+} /* clipboard_cb */
