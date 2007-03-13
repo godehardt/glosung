@@ -1078,6 +1078,7 @@ static void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
+        GtkWidget    *scroll;
         GtkWidget    *add_button;
         GtkWidget    *list;
         GtkWidget    *vbox;
@@ -1117,7 +1118,12 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
         gtk_widget_show (lang_frame);
-        gtk_container_add (GTK_CONTAINER (lang_frame), list);
+
+        scroll = gtk_scrolled_window_new (NULL, NULL);
+        gtk_widget_show (scroll);
+
+        gtk_container_add (GTK_CONTAINER (lang_frame), scroll);
+        gtk_container_add (GTK_CONTAINER (scroll), list);
 
         gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, GNOME_PAD);
 
@@ -1125,9 +1131,10 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (add_button), "clicked",
                           G_CALLBACK (add_lang_cb), dialog);
         gtk_widget_show (add_button);
-        gtk_container_add (GTK_CONTAINER (vbox), add_button);
+        gtk_box_pack_start (GTK_BOX (vbox), add_button,
+                            FALSE, FALSE, GNOME_PAD);
 
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
+        gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
         
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
