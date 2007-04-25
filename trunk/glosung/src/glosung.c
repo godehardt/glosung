@@ -183,15 +183,15 @@ static GnomeUIInfo losung_menu[] = {
 }; /* losung_menu */
 
 static GnomeUIInfo edit_menu[] = {
-        GNOMEUIINFO_ITEM_STOCK (N_("Copy Watch Word"),
-                                N_("To "),
+        GNOMEUIINFO_ITEM_STOCK (N_("_Copy Watchword"),
+                                N_("copy the Watchword to clipboard"),
                                 clipboard_cb, GTK_STOCK_COPY),
         GNOMEUIINFO_SEPARATOR,
-        GNOMEUIINFO_ITEM_NONE (N_("Organize Watchwords..."),
-                                N_("To update/install language files"),
+        GNOMEUIINFO_ITEM_NONE (N_("_Organize Watchwords..."),
+                                N_("update/install watchword files"),
                                 lang_manager_cb),
-        GNOMEUIINFO_ITEM_STOCK (N_("Preferences..."),
-                                N_("To edit the preferences"),
+        GNOMEUIINFO_ITEM_STOCK (N_("_Preferences..."),
+                                N_("edit the preferences"),
                                 property_cb, GTK_STOCK_PREFERENCES),
         GNOMEUIINFO_END
 }; /* edit_menu */
@@ -208,6 +208,7 @@ static GnomeUIInfo main_menu[] = {
         GNOMEUIINFO_MENU_HELP_TREE     (help_menu),
         GNOMEUIINFO_END
 }; /* main_menu */
+
 
 static GnomeUIInfo toolbar[] = {
         GNOMEUIINFO_ITEM_STOCK (N_("Exit"),
