@@ -182,20 +182,17 @@ static GnomeUIInfo losung_menu[] = {
         GNOMEUIINFO_END
 }; /* losung_menu */
 
-static GnomeUIInfo settings_menu[] = {
-        GNOMEUIINFO_ITEM_STOCK (N_("Preferences..."),
-                                N_("To edit the preferences"),
-                                property_cb, GTK_STOCK_PREFERENCES),
-        GNOMEUIINFO_ITEM_NONE (N_("Languages..."),
-                                N_("To update/install language files"),
-                                lang_manager_cb),
-        GNOMEUIINFO_END
-}; /* settings_menu */
-
 static GnomeUIInfo edit_menu[] = {
         GNOMEUIINFO_ITEM_STOCK (N_("Copy Watch Word"),
                                 N_("To "),
                                 clipboard_cb, GTK_STOCK_COPY),
+        GNOMEUIINFO_SEPARATOR,
+        GNOMEUIINFO_ITEM_NONE (N_("Organize Watchwords..."),
+                                N_("To update/install language files"),
+                                lang_manager_cb),
+        GNOMEUIINFO_ITEM_STOCK (N_("Preferences..."),
+                                N_("To edit the preferences"),
+                                property_cb, GTK_STOCK_PREFERENCES),
         GNOMEUIINFO_END
 }; /* edit_menu */
 
@@ -208,7 +205,6 @@ static GnomeUIInfo help_menu[] = {
 static GnomeUIInfo main_menu[] = {
         GNOMEUIINFO_SUBTREE            (N_("_Losung"), losung_menu),
         GNOMEUIINFO_MENU_EDIT_TREE     (edit_menu),
-        GNOMEUIINFO_MENU_SETTINGS_TREE (settings_menu),
         GNOMEUIINFO_MENU_HELP_TREE     (help_menu),
         GNOMEUIINFO_END
 }; /* main_menu */
