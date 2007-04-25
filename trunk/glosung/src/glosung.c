@@ -214,6 +214,9 @@ static GnomeUIInfo toolbar[] = {
                                 N_("Exit the Program"), 
                                 exit_cb, GTK_STOCK_QUIT),
         GNOMEUIINFO_SEPARATOR,
+        GNOMEUIINFO_ITEM_STOCK (N_("Prev Month"),
+                                N_("Show losung of previous month"),
+                                prev_month_cb, GTK_STOCK_GOTO_FIRST),
         GNOMEUIINFO_ITEM_STOCK (N_("Prev Day"),
                                 N_("Show losung of previous day"),
                                 prev_day_cb, GTK_STOCK_GO_BACK),
@@ -223,6 +226,9 @@ static GnomeUIInfo toolbar[] = {
         GNOMEUIINFO_ITEM_STOCK (N_("Next Day"),
                                 N_("Show losung of next day"),
                                 next_day_cb, GTK_STOCK_GO_FORWARD),
+        GNOMEUIINFO_ITEM_STOCK (N_("Next Month"),
+                                N_("Show losung of next month"),
+                                next_month_cb, GTK_STOCK_GOTO_LAST),
         GNOMEUIINFO_END
 }; /* toolbar */
 
