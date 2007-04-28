@@ -36,24 +36,26 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkcalendar.h>
 #include <gtk/gtkcheckbutton.h>
+#include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtkclipboard.h>
 #include <gtk/gtkcombobox.h>
 #include <gtk/gtkdialog.h>
 #include <gtk/gtkfontbutton.h>
+#include <gtk/gtkframe.h>
+#include <gtk/gtkhbbox.h>
+#include <gtk/gtklinkbutton.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmessagedialog.h>
+#include <gtk/gtkmenubar.h>
 #include <gtk/gtkmenuitem.h>
+#include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtktogglebutton.h>
+#include <gtk/gtktoolbar.h>
+#include <gtk/gtkuimanager.h>
 #include <gtk/gtkvbox.h>
-
-#include <libgnome/gnome-program.h>
-#include <libgnomeui/gnome-app.h>
-#include <libgnomeui/gnome-app-helper.h>
-#include <libgnomeui/gnome-href.h>
-#include <libgnomeui/gnome-ui-init.h>
-#include <libgnomeui/gnome-uidefs.h>
 
 #include "parser.h"
 #include "download.h"
@@ -126,112 +128,115 @@ static void       show_text             (void);
 static void       create_app            (void);
 static GtkWidget *create_property_table (void);
 
-static void add_lang_cb          (GtkWidget *w, gpointer data);
-static void about_cb             (GtkWidget *w, gpointer data);
+static void add_lang_cb          (GtkWidget *w,   gpointer data);
+static void about_cb             (GtkWidget *w,   gpointer data);
 static void apply_cb             (void);
-static void calendar_cb          (GtkWidget *w, gpointer data);
+static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
 static GString* create_years_string (gchar *langu);
-static void exit_cb              (GtkWidget *w, gpointer data);
 static void font_sel_cb          (GtkWidget *button,   gpointer data);
 static void lang_changed_cb      (GtkWidget *item,     gpointer data);
-static void update_years (GtkWidget *w, gpointer data);
-static void lang_manager_cb      (GtkWidget *w, gpointer data);
-static void next_day_cb          (GtkWidget *w, gpointer data);
-static void next_month_cb        (GtkWidget *w, gpointer data);
-static void no_languages_cb      (GtkWidget *w, gpointer data);
-static void prev_day_cb          (GtkWidget *w, gpointer data);
-static void prev_month_cb        (GtkWidget *w, gpointer data);
-static void property_cb          (GtkWidget *w, gpointer data);
+static void update_years         (GtkWidget *w,   gpointer data);
+static void lang_manager_cb      (GtkWidget *w,   gpointer data);
+static void link_execute         (GtkWidget *widget,
+                                  gchar     *uri, gpointer data);
+static void next_day_cb          (GtkWidget *w,   gpointer data);
+static void next_month_cb        (GtkWidget *w,   gpointer data);
+static void no_languages_cb      (GtkWidget *w,   gpointer data);
+static void prev_day_cb          (GtkWidget *w,   gpointer data);
+static void prev_month_cb        (GtkWidget *w,   gpointer data);
+static void property_cb          (GtkWidget *w,   gpointer data);
 static void property_response_cb (GtkDialog *dialog,
                                   gint       arg1,
                                   gpointer   user_data);
 static void readings_cb          (GtkWidget *toggle,   gpointer data);
 static void sword_cb             (GtkWidget *toggle,   gpointer data);
-static void today_cb             (GtkWidget *w, gpointer data);
+static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
-static void clipboard_cb         (GtkWidget *w, gpointer data);
+static void clipboard_cb         (GtkWidget *w,   gpointer data);
 
 
 /******************************\
        Set up the GUI
 \******************************/
 
-static GnomeUIInfo losung_menu[] = {
-        GNOMEUIINFO_ITEM_NONE (N_("Calendar"),
-                               N_("Open a calendar-widget"),
-                               calendar_cb),
-        GNOMEUIINFO_ITEM_STOCK (N_("Today"),
-                                N_("Show losung of today"),
-                                today_cb, GTK_STOCK_REFRESH),
-        GNOMEUIINFO_ITEM_STOCK (N_("Next Day"),
-                                N_("Show losung of next day"),
-                                next_day_cb, GTK_STOCK_GO_FORWARD),
-        GNOMEUIINFO_ITEM_STOCK (N_("Prev Day"),
-                                N_("Show losung of previous day"),
-                                prev_day_cb, GTK_STOCK_GO_BACK),
-        GNOMEUIINFO_ITEM_STOCK (N_("Next Month"),
-                                N_("Show losung of next month"),
-                                next_month_cb, GTK_STOCK_GOTO_LAST),
-        GNOMEUIINFO_ITEM_STOCK (N_("Prev Month"),
-                                N_("Show losung of previous month"),
-                                prev_month_cb, GTK_STOCK_GOTO_FIRST),
-        GNOMEUIINFO_SEPARATOR,
-        GNOMEUIINFO_MENU_EXIT_ITEM (exit_cb, NULL),
-        GNOMEUIINFO_END
-}; /* losung_menu */
-
-static GnomeUIInfo edit_menu[] = {
-        GNOMEUIINFO_ITEM_STOCK (N_("_Copy Watchword"),
-                                N_("copy the Watchword to clipboard"),
-                                clipboard_cb, GTK_STOCK_COPY),
-        GNOMEUIINFO_SEPARATOR,
-        GNOMEUIINFO_ITEM_NONE (N_("_Organize Watchwords..."),
-                                N_("update/install watchword files"),
-                                lang_manager_cb),
-        GNOMEUIINFO_ITEM_STOCK (N_("_Preferences..."),
-                                N_("edit the preferences"),
-                                property_cb, GTK_STOCK_PREFERENCES),
-        GNOMEUIINFO_END
-}; /* edit_menu */
-
-static GnomeUIInfo help_menu[] = {
-        /* GNOMEUIINFO_HELP ("glosung"), */
-        GNOMEUIINFO_MENU_ABOUT_ITEM (about_cb, NULL),
-        GNOMEUIINFO_END
-}; /* help_menu */
-
-static GnomeUIInfo main_menu[] = {
-        GNOMEUIINFO_SUBTREE            (N_("_Losung"), losung_menu),
-        GNOMEUIINFO_MENU_EDIT_TREE     (edit_menu),
-        GNOMEUIINFO_MENU_HELP_TREE     (help_menu),
-        GNOMEUIINFO_END
-}; /* main_menu */
+#define MY_PAD 5
 
 
-static GnomeUIInfo toolbar[] = {
-        GNOMEUIINFO_ITEM_STOCK (N_("Exit"),
-                                N_("Exit the Program"), 
-                                exit_cb, GTK_STOCK_QUIT),
-        GNOMEUIINFO_SEPARATOR,
-        GNOMEUIINFO_ITEM_STOCK (N_("Prev Month"),
-                                N_("Show losung of previous month"),
-                                prev_month_cb, GTK_STOCK_GOTO_FIRST),
-        GNOMEUIINFO_ITEM_STOCK (N_("Prev Day"),
-                                N_("Show losung of previous day"),
-                                prev_day_cb, GTK_STOCK_GO_BACK),
-        GNOMEUIINFO_ITEM_STOCK (N_("Today"),
-                                N_("Show losung of today"),
-                                today_cb, GTK_STOCK_REFRESH),
-        GNOMEUIINFO_ITEM_STOCK (N_("Next Day"),
-                                N_("Show losung of next day"),
-                                next_day_cb, GTK_STOCK_GO_FORWARD),
-        GNOMEUIINFO_ITEM_STOCK (N_("Next Month"),
-                                N_("Show losung of next month"),
-                                next_month_cb, GTK_STOCK_GOTO_LAST),
-        GNOMEUIINFO_END
-}; /* toolbar */
+static gchar* uistring =
+        "<ui>"
+        "  <menubar name='MenuBar'>"
+        "    <menu action='MenuFile'>"
+        "      <menuitem action='Calendar'/>"
+        "      <separator/>"
+        "      <menuitem action='Today'/>"
+        "      <menuitem action='NextDay'/>"
+        "      <menuitem action='PrevDay'/>"
+        "      <menuitem action='NextMonth'/>"
+        "      <menuitem action='PrevMonth'/>"
+        "      <separator/>"
+        "      <menuitem action='Quit'/>"
+        "    </menu>"
+        "    <menu action='MenuEdit'>"
+        "      <menuitem action='Copy'/>"
+        "      <separator/>"
+        "      <menuitem action='Copy'/>"
+        "      <menuitem action='Organize'/>"
+        "      <menuitem action='Preferences'/>"
+        "    </menu>"
+        "    <menu action='MenuHelp'>"
+        "      <menuitem action='About'/>"
+        "    </menu>"
+        "  </menubar>"
+        "  <toolbar name='ToolBar'>"
+        "    <toolitem action='Quit'/>"
+        "    <toolitem action='PrevMonth'/>"
+        "    <toolitem action='PrevDay'/>"
+        "    <toolitem action='Today'/>"
+        "    <toolitem action='NextDay'/>"
+        "    <toolitem action='NextMonth'/>"
+        "  </toolbar>"
+        "</ui>";
+
+static GtkActionEntry entries[] = {
+        { "MenuFile", NULL, "_File" },
+        { "MenuEdit", NULL, "_Edit" },
+        { "MenuHelp", NULL, "_Help" },
+
+        { "Calendar", GTK_STOCK_COPY, N_("_Calendar"), "<control>D",
+          N_("select date from calendar"), G_CALLBACK (calendar_cb) },
+        { "Today", GTK_STOCK_REFRESH, N_("_Today"), "Home",
+          N_("Show losung of today"), G_CALLBACK (today_cb) },
+        { "NextDay", GTK_STOCK_GO_FORWARD, N_("_Next Day"), "Page_Down",
+          N_("Show losung of next day"), G_CALLBACK (next_day_cb) },
+        { "PrevDay", GTK_STOCK_GO_BACK, N_("_Previous Day"), "Page_Up",
+          N_("Show losung of previous day"), G_CALLBACK (prev_day_cb) },
+        { "NextMonth", GTK_STOCK_GOTO_LAST, N_("_Next Month"),
+          "<control>Page_Down",
+          N_("Show losung of next month"), G_CALLBACK (next_month_cb) },
+        { "PrevMonth", GTK_STOCK_GOTO_FIRST, N_("_Previous Month"),
+          "<control>Page_Up",
+          N_("Show losung of previous month"), G_CALLBACK (prev_month_cb) },
+        { "Quit", GTK_STOCK_QUIT,  NULL, "<control>Q",
+          "Quit the application", G_CALLBACK (gtk_main_quit) },
+
+        { "Copy", GTK_STOCK_COPY, N_("_Copy Watchword"), "<control>C",
+          N_("copy the Watchword to clipboard"), G_CALLBACK (clipboard_cb) },
+        { "Organize", NULL, N_("_Organize Watchwords..."), NULL,
+          N_("update/install watchword files"), G_CALLBACK (lang_manager_cb) },
+        { "Preferences", GTK_STOCK_PREFERENCES, N_("_Preferences..."), NULL,
+          N_("Edit the preferences"), G_CALLBACK (property_cb) },
+
+        { "About", GTK_STOCK_ABOUT, N_("_About"), NULL,
+          N_("about GLosung"), G_CALLBACK (about_cb) },
+}
+
+;
+static guint n_entries = G_N_ELEMENTS (entries);
+
+
+
 
 
 /*
@@ -245,9 +250,9 @@ main (int argc, char **argv)
         textdomain (PACKAGE);
         bind_textdomain_codeset (PACKAGE, "UTF-8");
 
-        /* Initialize gnome and argument stuff */
-        gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
-                            argc, argv, GNOME_PARAM_NONE);
+        /* Initialize GTK */
+        gtk_init (&argc, &argv);
+ 
         gtk_window_set_default_icon_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
         client = gconf_client_get_default ();
@@ -294,7 +299,7 @@ main (int argc, char **argv)
                                   G_CALLBACK (no_languages_cb), error);
                                // G_CALLBACK (gtk_widget_destroy), NULL);
                                // G_CALLBACK (lang_manager_cb), NULL);
-                               // CALLBACK (exit_cb), NULL);
+                               // CALLBACK (gtk_main_quit), NULL);
                 gtk_widget_show (error);
         } else {
                 show_text ();
@@ -396,20 +401,45 @@ scan_for_languages_in_dir (gchar *dirname, LosungList *list)
 static void
 create_app (void)
 {
+        GtkActionGroup *action;
+        GtkUIManager  *uiman;
         GtkWidget *vbox;
+        GtkWidget *menubar;
+        GtkWidget *toolbar;
         gint       i;
         PangoFontDescription *font_desc;
 
-        app = gnome_app_new (PACKAGE, APPNAME);
-        g_signal_connect (G_OBJECT (app), "delete_event",
-                          G_CALLBACK (exit_cb), NULL);
-
-        gnome_app_create_menus_with_data   (GNOME_APP (app), main_menu, app);
-        gnome_app_create_toolbar_with_data (GNOME_APP (app), toolbar, app);
+        /* Make a window */
+        app = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+        g_signal_connect (G_OBJECT (app), "destroy",
+                          G_CALLBACK (gtk_main_quit),
+                          NULL);
+        gtk_window_set_title (GTK_WINDOW (app), APPNAME);
+        // gtk_widget_set_size_request (GTK_WIDGET (app), 300, 200);
 
         vbox = gtk_vbox_new (FALSE, 0);
-        gnome_app_set_contents (GNOME_APP (app), vbox);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
+        gtk_container_add (GTK_CONTAINER (app), vbox);
+
+        action = gtk_action_group_new ("GLosungActions");
+        gtk_action_group_add_actions (action, entries, n_entries, NULL);
+
+        uiman = gtk_ui_manager_new ();
+        gtk_ui_manager_insert_action_group (uiman, action, 0);
+        gtk_window_add_accel_group (GTK_WINDOW (app), 
+                                    gtk_ui_manager_get_accel_group (uiman));
+
+        GError *error;
+        if (! gtk_ui_manager_add_ui_from_string (uiman, uistring, -1, &error))
+        {
+                g_message ("building menus failed: %s", error->message);
+                g_error_free (error);
+        }
+        menubar = gtk_ui_manager_get_widget (uiman, "/MenuBar");
+        gtk_box_pack_start (GTK_BOX (vbox), menubar, FALSE, TRUE, 0);
+
+        toolbar = gtk_ui_manager_get_widget (uiman, "/ToolBar");
+        gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, TRUE, 0);
 
         for (i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
@@ -418,7 +448,10 @@ create_app (void)
                         gtk_button_box_set_layout
                                 (GTK_BUTTON_BOX (widget),
                                  GTK_BUTTONBOX_SPREAD);
-                        label [i] = gnome_href_new ("", "");
+                        label [i] = gtk_link_button_new ("");
+                        gtk_link_button_set_uri_hook
+                                ((GtkLinkButtonUriFunc) link_execute,
+                                 NULL, NULL);
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
                         gtk_widget_show (label [i]);
 
@@ -456,8 +489,8 @@ create_app (void)
                 gtk_widget_hide (label [NT_LOC_SWORD]);
                 gtk_widget_show (label [NT_LOC]);
         }
-        gtk_widget_show (vbox);
-        gtk_widget_show (app);
+
+        gtk_widget_show_all (app);
 } /* create_app */
 
 
@@ -517,10 +550,11 @@ show_text (void)
         } else {
                 gtk_label_set_text (GTK_LABEL (label [OT_TEXT]), ww->ot.text);
         }
-        gnome_href_set_text (GNOME_HREF (label [OT_LOC_SWORD]),
+
+        gtk_button_set_label (GTK_BUTTON (label [OT_LOC_SWORD]),
                              ww->ot.location);
-        gnome_href_set_url  (GNOME_HREF (label [OT_LOC_SWORD]),
-                             ww->ot.location_sword);
+        gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
+                                  ww->ot.location_sword);
         gtk_label_set_text (GTK_LABEL (label [OT_LOC]), ww->ot.location);
 
         if (ww->nt.say != NULL) {
@@ -532,10 +566,10 @@ show_text (void)
         } else {
                 gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), ww->nt.text);
         }
-        gnome_href_set_text (GNOME_HREF (label [NT_LOC_SWORD]),
+        gtk_button_set_label (GTK_BUTTON (label [NT_LOC_SWORD]),
                              ww->nt.location);
-        gnome_href_set_url  (GNOME_HREF (label [NT_LOC_SWORD]),
-                             ww->nt.location_sword);
+        gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
+                                  ww->nt.location_sword);
         gtk_label_set_text (GTK_LABEL (label [NT_LOC]), ww->nt.location);
 
         if (ww->comment) {
@@ -593,6 +627,36 @@ show_text (void)
 
         losung_free (ww);
 } /* show_text */
+
+
+/*
+ * callback function for linkbutton to open gnomesword
+ */
+static void
+link_execute (GtkWidget *widget, gchar *uri, gpointer data)
+{
+        char *argv [3];
+        argv [0] = "gnomesword2";
+        argv [1] = uri;
+        argv [2] = NULL;
+
+        GError *error = NULL;
+        if (! g_spawn_async (NULL, argv, NULL,
+                       G_SPAWN_STDOUT_TO_DEV_NULL
+                        | G_SPAWN_STDERR_TO_DEV_NULL
+                        | G_SPAWN_SEARCH_PATH,
+                       NULL, NULL, NULL, &error)) {
+                GtkWidget *msg = gtk_message_dialog_new
+                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                         error->message);
+                //_("No text files found!\n");
+                g_signal_connect (G_OBJECT (msg), "response",
+                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                gtk_widget_show (msg);
+                g_error_free (error);
+        }
+}
 
 
 /*
@@ -787,7 +851,7 @@ create_property_table ()
         gint       i;
 
         table = gtk_table_new (5, 2, FALSE);
-        gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (table), MY_PAD);
         // gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
         
         label = gtk_label_new (_("Choose displayed language:"));
@@ -926,16 +990,6 @@ sword_cb (GtkWidget *toggle, gpointer data)
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
 } /* readings_cb */
-
-
-/*
- * callback function for exiting the application.
- */
-static void 
-exit_cb (GtkWidget *w, gpointer data)
-{
-        gtk_main_quit ();
-} /* exit_cb */
 
 
 /*
@@ -1135,7 +1189,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         vbox = gtk_vbox_new (FALSE, 0);
         // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
         gtk_widget_show (vbox);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
 
         store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
         update_language_store (store);
@@ -1151,7 +1205,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                 (NULL, renderer, "text", 1, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
-        gtk_widget_set_size_request (list, -1, 80);
+        gtk_widget_set_size_request (list, 200, 140);
         gtk_widget_show (list);
 
         GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
@@ -1163,14 +1217,14 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (lang_frame), scroll);
         gtk_container_add (GTK_CONTAINER (scroll), list);
 
-        gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, GNOME_PAD);
+        gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, MY_PAD);
 
         add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
         g_signal_connect (G_OBJECT (add_button), "clicked",
                           G_CALLBACK (add_lang_cb), dialog);
         gtk_widget_show (add_button);
         gtk_box_pack_start (GTK_BOX (vbox), add_button,
-                            FALSE, FALSE, GNOME_PAD);
+                            FALSE, FALSE, MY_PAD);
 
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
         
@@ -1202,7 +1256,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_widget_show (year_frame);
 
         vbox = gtk_vbox_new (FALSE, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
         gtk_widget_show (vbox);
 
         lang_combo = gtk_combo_box_new_text ();
@@ -1241,7 +1295,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
         gtk_container_add (GTK_CONTAINER (lang_frame), lang_combo);
         gtk_box_pack_start (GTK_BOX (vbox), year_frame,
-                            FALSE, FALSE, GNOME_PAD);
+                            FALSE, FALSE, MY_PAD);
         // gtk_container_add (GTK_CONTAINER (vbox), year_frame);
         gtk_container_add (GTK_CONTAINER (year_frame), year_combo);
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);

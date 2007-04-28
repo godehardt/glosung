@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.0.2'
+version = '3.0.3'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -44,7 +44,7 @@ ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" 
             -DVERSION=\\"' + version + '\\"  \
             -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
 linkflags = '-Wl,--export-dynamic  -L/usr/lib \
-             `pkg-config --libs libgnome-2.0 libgnomeui-2.0 gconf-2.0 libcurl`'
+             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`'
 
 if ARGUMENTS.get ('profile'):
     ccflags   += ' -pg -fprofile-arcs'
