@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-24 20:18+0100\n"
-"PO-Revision-Date: 2006-11-29 22:19+0100\n"
+"POT-Creation-Date: 2007-04-28 20:25+0200\n"
+"PO-Revision-Date: 2007-08-16 22:57+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,82 +15,203 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #
-msgid "Calendar"
-msgstr "Kalender"
+msgid "_Calendar"
+msgstr "_Kalender"
 
 #
-msgid "Open a calendar-widget"
-msgstr "Öffnet den Kalender"
+# File: src/glosung.c, line: 194
+# File: src/glosung.c, line: 196
+msgid "select date from calendar"
+msgstr "wähle Datum aus dem Kalender heraus"
 
 #
-msgid "Today"
-msgstr "Heute"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "_Today"
+msgstr "_Heute"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 msgid "Show losung of today"
 msgstr "Zeigt die Losung von heute"
 
 #
-msgid "Next Day"
-msgstr "Nächster Tag"
+#
+#
+#
+#
+#
+msgid "_Next Day"
+msgstr "_Nächster Tag"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 msgid "Show losung of next day"
 msgstr "Zeigt die Losung des nächsten Tages"
 
 #
-msgid "Prev Day"
-msgstr "Voriger Tag"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "_Previous Day"
+msgstr "_Voriger Tag"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 msgid "Show losung of previous day"
 msgstr "Zeigt die Losung des vorigen Tages"
 
 #
-msgid "Next Month"
-msgstr "Nächster Monat"
+#
+#
+#
+#
+#
+msgid "_Next Month"
+msgstr "_Nächster Monat"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 msgid "Show losung of next month"
 msgstr "Zeigt die Losung des nächsten Monats"
 
 #
-msgid "Prev Month"
-msgstr "Vorheriger Monat"
+#
+#
+#
+#
+#
+msgid "_Previous Month"
+msgstr "_Voriger Monat"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 msgid "Show losung of previous month"
 msgstr "Zeigt die Losung des vorigen Monats"
 
 #
-msgid "Preferences..."
-msgstr "Einstellungen..."
+# File: src/glosung.c, line: 193
+msgid "_Copy Watchword"
+msgstr "Losung _kopieren"
 
 #
-msgid "To edit the preferences"
-msgstr "Um die Einstellungen zu verändern"
+# File: src/glosung.c, line: 194
+msgid "copy the Watchword to clipboard"
+msgstr "Losung in die Zwischenablage kopieren"
 
 #
-# File: src/glosung.c, line: 180
-msgid "Languages..."
-msgstr "Sprachen..."
+# File: src/glosung.c, line: 222
+msgid "_Organize Watchwords..."
+msgstr "Losungstexte _organisieren"
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 # File: src/glosung.c, line: 181
-msgid "To update/install language files"
-msgstr "aktualisieren/installieren von Sprach-Dateien"
+msgid "update/install watchword files"
+msgstr "aktualisieren/installieren von Losungstexten"
 
 #
-msgid "_Losung"
-msgstr "_Losung"
+msgid "_Preferences..."
+msgstr "_Einstellungen..."
 
 #
-msgid "Exit"
-msgstr "Beenden"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Edit the preferences"
+msgstr "Einstellungen ändern"
 
 #
-msgid "Exit the Program"
-msgstr "Beendet das Programm"
+# File: src/glosung.c, line: 195
+msgid "_About"
+msgstr "_Über"
+
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "about GLosung"
+msgstr "_über GLosung"
 
 #
 #. should be translated to corresponding language, e.g. 'de'
@@ -238,6 +359,10 @@ msgid "Link location to gnomesword"
 msgstr "Verbinde Stellenangaben mit Gnomesword"
 
 #
+msgid "Calendar"
+msgstr "Kalender"
+
+#
 # File: src/glosung.c, line: 1068
 msgid "Languages"
 msgstr "Sprachen"
@@ -266,4 +391,105 @@ msgstr "Sprache"
 # File: src/glosung.c, line: 1152
 msgid "Year"
 msgstr "Jahr"
+
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/File/_Calendar"
+#~ msgstr "Kalender"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/_Edit"
+#~ msgstr "Beenden"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/_Edit/_Preferences..."
+#~ msgstr "Einstellungen..."
+
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/Toolbar/_Calendar"
+#~ msgstr "Kalender"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/Toolbar/_Next Day"
+#~ msgstr "Nächster Tag"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/Toolbar/_Previous Day"
+#~ msgstr "Vorheriger Monat"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/Toolbar/_Next Month"
+#~ msgstr "Nächster Monat"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "/Toolbar/_Previous Month"
+#~ msgstr "Vorheriger Monat"
 
