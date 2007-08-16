@@ -75,6 +75,7 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 - add keyboard shortcuts
 - get rid of gnome libraries
 - other small enhancements
+- make connection to gnomesword more stable
 - Version bump to 3.1
 
 * Sun Feb 11 2007 Eicke Godehardt <eicke@godehardt.org>
