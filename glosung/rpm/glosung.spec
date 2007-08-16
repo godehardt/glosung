@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.0.2
+%define version 3.1
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -12,8 +12,7 @@ Vendor:         Eicke Godehardt <eicke@godehardt.org>
 Packager:       Eicke Godehardt <eicke@godehardt.org>
 URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
-Requires:       libgnomeui >= 2.4
-Requires:       gtk2 >= 2.4
+Requires:       gtk2 >= 2.10
 Requires:       libxml2 >= 2.0
 #Requires:       libcurl
 #BuildRequires:  libgnomeui-devel >= 2.0
@@ -72,6 +71,12 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
  
 
 %changelog
+* Thu Aug 16 2007 Eicke Godehardt <eicke@godehardt.org>
+- add keyboard shortcuts
+- get rid of gnome libraries
+- other small enhancements
+- Version bump to 3.1
+
 * Sun Feb 11 2007 Eicke Godehardt <eicke@godehardt.org>
 - add better language handling for first time users
 - add command line arguments to losung
