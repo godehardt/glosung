@@ -3,6 +3,7 @@ glosung (3.1) stable; urgency=low
   * add keyboard shortcuts
   * get rid of gnome libraries
   * other small enhancements
+  * make connection to gnomesword more stable
   * Version bump to 3.1
 
  -- Eicke Godehardt <eicke@godehardt.org>  Thu, 16 Aug 2007 22:38:31 +0200
