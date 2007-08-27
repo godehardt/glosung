@@ -478,19 +478,15 @@ create_app (void)
                 gtk_widget_hide (label [X3]);
                 gtk_widget_hide (label [READING]);
         }
-        if (show_sword) {
-                gtk_widget_hide (label [OT_LOC]);
-                gtk_widget_show (label [OT_LOC_SWORD]);
-                gtk_widget_hide (label [NT_LOC]);
-                gtk_widget_show (label [NT_LOC_SWORD]);
-        } else {
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_show (label [OT_LOC]);
-                gtk_widget_hide (label [NT_LOC_SWORD]);
-                gtk_widget_show (label [NT_LOC]);
-        }
 
         gtk_widget_show_all (app);
+        if (show_sword) {
+                gtk_widget_hide (label [OT_LOC]);
+                gtk_widget_hide (label [NT_LOC]);
+        } else {
+                gtk_widget_hide (label [OT_LOC_SWORD]);
+                gtk_widget_hide (label [NT_LOC_SWORD]);
+        }
 } /* create_app */
 
 
