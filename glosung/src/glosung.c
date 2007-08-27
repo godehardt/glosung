@@ -666,7 +666,7 @@ about_cb (GtkWidget *w, gpointer data)
                 NULL
         };
         gchar *translators =
-                "Marek Drápal\nEicke Godehardt\nNikolas\nEmanuel Feruzi";
+                "Marek Drápal\nEicke Godehardt\nNicolas\nEmanuel Feruzi";
 
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
