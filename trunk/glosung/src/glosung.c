@@ -236,6 +236,11 @@ static GtkActionEntry entries[] = {
 static guint n_entries = G_N_ELEMENTS (entries);
 
 
+static gboolean once = FALSE;
+static GOptionEntry options[] = {
+        { "once", '1', 0, G_OPTION_ARG_NONE, &once, N_("Start only once a day"), NULL },
+        { NULL }
+};
 
 
 
@@ -245,14 +250,16 @@ static guint n_entries = G_N_ELEMENTS (entries);
 int 
 main (int argc, char **argv)
 {
+        GError *error = NULL;
+
         /* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, "/usr/share/locale");
         textdomain (PACKAGE);
         bind_textdomain_codeset (PACKAGE, "UTF-8");
 
         /* Initialize GTK */
-        gtk_init (&argc, &argv);
- 
+        gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
+
         gtk_window_set_default_icon_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
         client = gconf_client_get_default ();
