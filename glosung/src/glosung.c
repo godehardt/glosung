@@ -200,9 +200,9 @@ static gchar* uistring =
         "</ui>";
 
 static GtkActionEntry entries[] = {
-        { "MenuFile", NULL, "_File" },
-        { "MenuEdit", NULL, "_Edit" },
-        { "MenuHelp", NULL, "_Help" },
+        { "MenuFile", NULL, N_("_File") },
+        { "MenuEdit", NULL, N_("_Edit") },
+        { "MenuHelp", NULL, N_("_Help") },
 
         { "Calendar", GTK_STOCK_COPY, N_("_Calendar"), "<control>D",
           N_("select date from calendar"), G_CALLBACK (calendar_cb) },
@@ -228,19 +228,12 @@ static GtkActionEntry entries[] = {
         { "Preferences", GTK_STOCK_PREFERENCES, N_("_Preferences..."), NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
-        { "About", GTK_STOCK_ABOUT, N_("_About"), NULL,
+        { "About", GTK_STOCK_ABOUT, NULL, NULL,
           N_("about GLosung"), G_CALLBACK (about_cb) },
 }
 
 ;
 static guint n_entries = G_N_ELEMENTS (entries);
-
-
-static gboolean once = FALSE;
-static GOptionEntry options[] = {
-        { "once", '1', 0, G_OPTION_ARG_NONE, &once, N_("Start only once a day"), NULL },
-        { NULL }
-};
 
 
 
@@ -254,15 +247,40 @@ main (int argc, char **argv)
 
         /* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, "/usr/share/locale");
-        textdomain (PACKAGE);
         bind_textdomain_codeset (PACKAGE, "UTF-8");
+        textdomain (PACKAGE);
 
         /* Initialize GTK */
+        gboolean once = FALSE;
+        GOptionEntry options[] = {
+                { "once", '1', 0, G_OPTION_ARG_NONE, &once,
+                  N_("Start only once a day"), NULL },
+                { NULL }
+        };
         gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
+
+        client = gconf_client_get_default ();
+        date = g_date_new ();
+        get_time ();
+        new_date = g_date_new_julian (g_date_get_julian (date));
+        if (once) {
+                gchar *last_time_str = gconf_client_get_string
+                        (client, "/apps/" PACKAGE "/last_time", NULL);
+                if (last_time_str) {
+                        GDate *last_time = g_date_new ();
+                        g_date_set_parse (last_time, last_time_str);
+                        if (g_date_compare (last_time, date) >= 0) {
+                                exit (0);
+                        }
+                }
+        }
+        gchar *time_str = g_malloc (11); /* "YYYY-MM-DD"; */
+        g_date_strftime (time_str, 11, "%Y-%m-%d", date);
+        gconf_client_set_string
+                (client, "/apps/" PACKAGE "/last_time", time_str, NULL);
 
         gtk_window_set_default_icon_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
-        client = gconf_client_get_default ();
 
         lang_translations = init_languages ();
         languages         = scan_for_languages ();
@@ -293,9 +311,6 @@ main (int argc, char **argv)
                                         NULL);
 
         create_app ();
-        date = g_date_new ();
-        get_time ();
-        new_date = g_date_new_julian (g_date_get_julian (date));
         if (languages->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -409,11 +424,11 @@ static void
 create_app (void)
 {
         GtkActionGroup *action;
-        GtkUIManager  *uiman;
-        GtkWidget *vbox;
-        GtkWidget *menubar;
-        GtkWidget *toolbar;
-        gint       i;
+        GtkUIManager   *uiman;
+        GtkWidget      *vbox;
+        GtkWidget      *menubar;
+        GtkWidget      *toolbar;
+        gint            i;
         PangoFontDescription *font_desc;
 
         /* Make a window */
@@ -504,12 +519,12 @@ static void
 get_time (void)
 {
         time_t     t;
-        struct tm  zeit;
+        struct tm  now;
 
         t = time (NULL);
-        zeit = *localtime (&t);
+        now = *localtime (&t);
         g_date_set_dmy (date,
-                        zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
+                        now.tm_mday, now.tm_mon + 1, now.tm_year + 1900);
 } /* get_time */
 
 
