@@ -19,6 +19,7 @@
 Import ('env install_dir')
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c',
-                                'download.c', 'losunglist.c'])
+                                   'download.c', 'losunglist.c',
+                                   'sword.cpp'])
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
 env.Install (dir = install_dir + '/bin', source = [losung, glosung])
