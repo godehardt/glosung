@@ -40,11 +40,11 @@ BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
 ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
-            `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl` \
+            `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl sword` \
             -DVERSION=\\"' + version + '\\"  \
             -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
 linkflags = '-Wl,--export-dynamic  -L/usr/lib \
-             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`'
+             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl sword`'
 
 if ARGUMENTS.get ('profile'):
     ccflags   += ' -pg -fprofile-arcs'
