@@ -29,6 +29,8 @@ extern "C" {
 /* get_sword_text ("GerElb", 43, 3, 16); */
 gchar * get_sword_text (gchar *name, int book, int chapter, int verse);
 
+GPtrArray *get_bibles (void);
+
 
 #ifdef __cplusplus
 }
