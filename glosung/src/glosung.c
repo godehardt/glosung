@@ -60,6 +60,8 @@
 #include "parser.h"
 #include "download.h"
 
+#include "sword.h"
+
 
 #define ENABLE_NLS
 
@@ -110,6 +112,8 @@ static LosungList *languages;
 static gchar      *lang;
 static GHashTable *lang_translations;
 static LosungList *server_list = NULL;
+static GPtrArray  *bibles;
+static gboolean    sword = FALSE;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -282,6 +286,7 @@ main (int argc, char **argv)
         gtk_window_set_default_icon_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
 
+        bibles            = get_bibles ();
         lang_translations = init_languages ();
         languages         = scan_for_languages ();
 
@@ -338,26 +343,26 @@ static GHashTable *
 init_languages (void)
 {
         GHashTable *ht = g_hash_table_new (g_str_hash, g_str_equal);
-        g_hash_table_insert (ht, "af",    _("afrikaans"));
-        g_hash_table_insert (ht, "ar",    _("arabic"));
-        g_hash_table_insert (ht, "cs",    _("czech"));
-        g_hash_table_insert (ht, "de",    _("german"));
-        g_hash_table_insert (ht, "en",    _("english"));
-        g_hash_table_insert (ht, "es",    _("spanish"));
-        g_hash_table_insert (ht, "fr",    _("french"));
-        g_hash_table_insert (ht, "he",    _("hebrew"));
-        g_hash_table_insert (ht, "hu",    _("hungarian"));
-        g_hash_table_insert (ht, "it",    _("italian"));
-        g_hash_table_insert (ht, "nl",    _("dutch"));
-        g_hash_table_insert (ht, "no",    _("norwegian"));
-        g_hash_table_insert (ht, "pt",    _("portuguese"));
-        g_hash_table_insert (ht, "ro",    _("romanian"));
-        g_hash_table_insert (ht, "ru",    _("russian"));
-        g_hash_table_insert (ht, "ta",    _("tamil"));
-        g_hash_table_insert (ht, "tr",    _("turkish"));
-        g_hash_table_insert (ht, "vi",    _("vietnamese"));
-        g_hash_table_insert (ht, "zh-CN", _("chinese simplified"));
-        g_hash_table_insert (ht, "zh-TW", _("chinese traditional"));
+        g_hash_table_insert (ht, "af",    _("Afrikaans"));
+        g_hash_table_insert (ht, "ar",    _("Arabic"));
+        g_hash_table_insert (ht, "cs",    _("Czech"));
+        g_hash_table_insert (ht, "de",    _("German"));
+        g_hash_table_insert (ht, "en",    _("English"));
+        g_hash_table_insert (ht, "es",    _("Spanish"));
+        g_hash_table_insert (ht, "fr",    _("French"));
+        g_hash_table_insert (ht, "he",    _("Hebrew"));
+        g_hash_table_insert (ht, "hu",    _("Hungarian"));
+        g_hash_table_insert (ht, "it",    _("Italian"));
+        g_hash_table_insert (ht, "nl",    _("Dutch"));
+        g_hash_table_insert (ht, "no",    _("Norwegian"));
+        g_hash_table_insert (ht, "pt",    _("Portuguese"));
+        g_hash_table_insert (ht, "ro",    _("Romanian"));
+        g_hash_table_insert (ht, "ru",    _("Russian"));
+        g_hash_table_insert (ht, "ta",    _("Tamil"));
+        g_hash_table_insert (ht, "tr",    _("Turkish"));
+        g_hash_table_insert (ht, "vi",    _("Vietnamese"));
+        g_hash_table_insert (ht, "zh-CN", _("Chinese simplified"));
+        g_hash_table_insert (ht, "zh-TW", _("Chinese traditional"));
 
         return ht;
 } /* init_languages */
@@ -537,6 +542,16 @@ show_text (void)
         const Losung *ww;
 
         ww = get_losung (new_date, lang);
+
+        
+
+        // g_message (get_sword_text ("Aleppo", 3, 3, 16));
+        // gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), TRUE);
+        // gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), get_sword_text ("GerLut1545", 43, 3, 16));
+        ww->nt.say  = "";
+        ww->nt.text = get_sword_text ("GerLut1545", 43, 3, 16);
+
+
         if (ww == NULL) {
                 GtkWidget *error;
                 gchar *text = NULL;
@@ -584,6 +599,7 @@ show_text (void)
         } else {
                 gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), ww->nt.text);
         }
+
         gtk_button_set_label (GTK_BUTTON (label [NT_LOC_SWORD]),
                              ww->nt.location);
         gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
@@ -756,7 +772,7 @@ property_cb (GtkWidget *w, gpointer data)
                                  G_CALLBACK (gtk_widget_destroyed), &property);
 
                 gtk_widget_show_all (property);
-                }
+        }
 } /* property_cb */
 
 
@@ -887,6 +903,11 @@ create_property_table ()
                                 (GTK_COMBO_BOX (combo), i);
                 }
         }
+        for (i = 0; i < bibles->len; i++) {
+                gchar *bible = g_ptr_array_index (bibles, i);
+                gtk_combo_box_append_text (GTK_COMBO_BOX (combo), bible);
+        }
+
         g_signal_connect (G_OBJECT (combo), "changed",
                           G_CALLBACK (lang_changed_cb), NULL);
         gtk_widget_show (combo);
@@ -944,7 +965,15 @@ static void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-        new_lang = (gchar*) g_ptr_array_index (languages->languages, num);
+        if (num < languages->languages->len) {
+                new_lang =
+                        (gchar*) g_ptr_array_index (languages->languages, num);
+                sword = FALSE;
+        } else {
+                num -= languages->languages->len;
+                g_message ("XXXX %s", g_ptr_array_index (bibles, num));
+                sword = TRUE;
+        }
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
 } /* lang_changed_cb */
