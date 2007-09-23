@@ -33,6 +33,7 @@ losunglist_new ()
 {
         LosungList *list = g_new (LosungList, 1);
         list->hash_table = g_hash_table_new (g_str_hash, g_str_equal);
+        list->all_years  = g_hash_table_new (g_direct_hash, g_direct_equal);
         return list;
 }
 
@@ -54,6 +55,7 @@ losunglist_add (LosungList *list, gchar *lang, gint year)
         }
 
         g_ptr_array_add (years, GINT_TO_POINTER (year));
+        g_hash_table_insert (list->all_years, GINT_TO_POINTER (year), lang);
 }
 
 
