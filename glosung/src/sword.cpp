@@ -41,9 +41,12 @@ using sword::ListKey;
 using std::string;
 
 
+static SWMgr *swMgr = new SWMgr (new EncodingFilterMgr (sword::ENC_UTF8));
+
+
 gchar *
-get_sword_text (gchar *name, int book, int chapter, int verse) {
-	SWMgr *swMgr = new SWMgr(new EncodingFilterMgr (sword::ENC_UTF8));
+get_sword_text (gchar *name, int book, int chapter, int verse)
+{
 	ModMap::iterator it;
 	SectionMap::iterator sit;
 	SWModule *mod = NULL;
@@ -67,9 +70,9 @@ get_sword_text (gchar *name, int book, int chapter, int verse) {
 	for (it = swMgr->Modules.begin (); it != swMgr->Modules.end (); it++) {
                 SWModule *curMod = (*it).second;
 		if (! strcmp (curMod->Type (), "Biblical Texts")) {
-                        // g_message ("module name: %s", curMod->Name ());
                         if (! strcmp (curMod->Name (), name)) {
                                 mod = curMod;
+                                break;
                         }
 		}
 	}
@@ -92,4 +95,20 @@ get_sword_text (gchar *name, int book, int chapter, int verse) {
         // g_message ("text: %s", text);
 
         return text;
+}
+
+
+GPtrArray *
+get_bibles (void)
+{
+	ModMap::iterator it;
+        GPtrArray *bibles = g_ptr_array_new ();
+
+	for (it = swMgr->Modules.begin (); it != swMgr->Modules.end (); it++) {
+                SWModule *curMod = (*it).second;
+		if (! strcmp (curMod->Type (), "Biblical Texts")) {
+                        g_ptr_array_add (bibles, curMod->Name ());
+		}
+	}
+        return bibles;
 }
