@@ -28,8 +28,12 @@ typedef struct _LosungList LosungList;
 
 struct _LosungList
 {
+        /* hash table: "en" -> [2007, 2006, 1999 ...] */
         GHashTable *hash_table;
+        /* list containing pointer to "en", "de" etc */
         GPtrArray  *languages;
+        /* 2007 -> "de" */
+        GHashTable *all_years;        
 };
 
 LosungList* losunglist_new       ();
