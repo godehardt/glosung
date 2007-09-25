@@ -23,21 +23,24 @@
 #include <glib.h>
 
 
-typedef struct _Passage Passage;
+typedef struct _Scripture Scripture;
 typedef struct _Losung Losung;
 
-/* represents a scriptural passage */
-struct _Passage {
+
+struct _Scripture {
         gchar   *say;           /* e.g. "David said:" */
         gchar   *text;          /* e.g. "Shout to the Lord, all the earth." */
         gchar   *location;      /* e.g. "Psalm 100,1" */
         gchar   *location_sword;/* e.g. "Psalms 100,1" */
+        gint     book;
+        gint     chapter;
+        gint     verse;
 };
 
 struct _Losung {
         gchar   *title;         /* e.g. "Losung for Tuesday, August 5, 1975" */
-        Passage  ot;            /* passage from old testament */
-        Passage  nt;            /* passage from new testament */
+        Scripture  ot;          /* scripture from old testament */
+        Scripture  nt;          /* scripture from new testament */
         gchar   *comment;       /* e.g. "*** watch for glosung 1.0 ***" */
         gchar   *selective_reading;  /* e.g. "Genesis 2,1-10" */
         gchar   *continuing_reading; /* e.g. "Luke 3,1-6" */
@@ -48,7 +51,7 @@ struct _Losung {
       Function prototypes
 \****************************/
 
-void          losung_free (const Losung *ww);
-const Losung *get_losung  (GDate *date, gchar *lang);
+void    losung_free (Losung *ww);
+Losung *get_losung  (GDate *date, gchar *lang);
 
 #endif /* GLOSUNG_PARSER__H */
