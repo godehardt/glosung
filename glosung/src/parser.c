@@ -66,18 +66,89 @@ static gchar const * const states [] = {
           "EM",
 };
 
+static gchar const * const books [][2] = {
+        {"Gn",   "Genesis"},
+        {"Ex",   "Exodus"},
+        {"Lv",   "Leviticus"},
+        {"Nu",   "Numbers"},
+        {"Dt",   "Deuteronomy"},
+        {"Jos",  "Joshua"},
+        {"Jdc",  "Judges"},
+        {"Rth",  "Ruth"},
+        {"1Sm",  "I Samuel"},
+        {"2Sm",  "II Samuel"},
+        {"1Rg",  "I Kings"},
+        {"2Rg",  "II Kings"},
+        {"1Chr", "I Chronicles"},
+        {"2Chr", "II Chronicles"},
+        {"Esr",  "Ezra"},
+        {"Neh",  "Nehemiah"},
+        {"Esth", "Esther"},
+        {"Job",  "Job"},
+        {"Ps",   "Psalms"},
+        {"Prv",  "Proverbs"},
+        {"Eccl", "Ecclesiastes"},
+        {"Ct",   "Song of Solomon"},
+        {"Is",   "Isaiah"},
+        {"Jr",   "Jeremiah"},
+        {"Thr",  "Lamentations"},
+        {"Ez",   "Ezekiel"},
+        {"Dn",   "Daniel"},
+        {"Hos",  "Hosea"},
+        {"Joel", "Joel"},
+        {"Am",   "Amos"},
+        {"Ob",   "Obadiah"},
+        {"Jon",  "Jonah"},
+        {"Mch",  "Micah"},
+        {"Nah",  "Nahum"},
+        {"Hab",  "Habakkuk"},
+        {"Zph",  "Zephaniah"},
+        {"Hgg",  "Haggai"},
+        {"Zch",  "Zechariah"},
+        {"Ml",   "Malachi"},
+        {"Mt",   "Matthew"},
+        {"Mc",   "Mark"},
+        {"L",    "Luke"},
+        {"J",    "John"},
+        {"Act",  "Acts"},
+        {"R",    "Romans"},
+        {"1K",   "I Corinthians"},
+        {"2K",   "II Corinthians"},
+        {"G",    "Galatians"},
+        {"E",    "Ephesians"},
+        {"Ph",   "Philippians"},
+        {"Kol",  "Colossians"},
+        {"1Th",  "I Thessalonians"},
+        {"2Th",  "II Thessalonians"},
+        {"1T",   "I Timothy"},
+        {"2T",   "II Timothy"},
+        {"Tt",   "Titus"},
+        {"Phm",  "Philemon"},
+        {"H",    "Hebrews"},
+        {"Jc",   "James"},
+        {"1P",   "I Peter"},
+        {"2P",   "II Peter"},
+        {"1J",   "I John"},
+        {"2J",   "II John"},
+        {"3J",   "III John"},
+        {"Jd",   "Jude"},
+        {"Ap",   "Revelation of John"},
+        {NULL, NULL},
+};
+
+
 
 /* buf_len for the string which contains the text while parsing */
 #define LINE_LEN 80
 
-static State     state;
-static GSList   *stack;
-static gint      depth;
-static gint      day;
-static Losung   *ww = NULL;
-static Passage  *quote = NULL;
-static GString  *string;
-static GString  *location;
+static State      state;
+static GSList    *stack;
+static gint       depth;
+static gint       day;
+static Losung    *ww = NULL;
+static Scripture *quote = NULL;
+static GString   *string;
+static GString   *location;
 
 /****************************\
       Function prototypes
@@ -94,19 +165,19 @@ static void character        (void           *ctx,
 static gboolean switch_state (const xmlChar  *name,
                               State           newState);
 static void pop_state        (void);
-static gchar* pop_string     (GString *string);
+static gchar* pop_string     (GString        *string);
 
-static const gchar* sword_book_title (const xmlChar *book);
-static gchar* check_file             (gchar         *directory,
-                                      guint          year,
-                                      gchar         *lang,
-                                      gchar         *prefix);
+static gint sword_book_title (const xmlChar  *book);
+static gchar* check_file     (gchar          *directory,
+                              guint           year,
+                              gchar          *lang,
+                              gchar          *prefix);
 
 /*
  * public function that frees the Losung allocated by get_losung.
  */
 void
-losung_free (const Losung *ww)
+losung_free (Losung *ww)
 {
         g_free (ww->ot.say);
         g_free (ww->ot.text);
@@ -126,7 +197,7 @@ losung_free (const Losung *ww)
 /*
  * public function that parses the xml file and return required Losung.
  */
-const Losung*
+Losung*
 get_losung (GDate *date, gchar *lang)
 {
         xmlSAXHandlerPtr  sax;
@@ -223,9 +294,15 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         case STATE_OT:
         case STATE_NT:
                 if        (switch_state (name, STATE_S)) {
+                        gint book = sword_book_title (attrs [1]);
                         quote->location_sword = g_strconcat (
-                                "sword:///", sword_book_title (attrs [1]),
+                                "sword:///", books [book][1],
                                 attrs [3], ".", attrs [5], NULL);
+                        quote->book    = book + 1;
+                        sscanf ((const char*) attrs [3], "%d",
+                                &(quote->chapter));
+                        sscanf ((const char*) attrs [5], "%d",
+                                &(quote->verse));
                 } else if (switch_state (name, STATE_L)) {
                 } else if (switch_state (name, STATE_SL)) {
                 } else if (switch_state (name, STATE_IL)) {
@@ -362,85 +439,15 @@ pop_string (GString *string)
 } /* pop_string */
 
 
-static gchar const * const books [] = {
-        "Gn",   "Genesis",
-        "Ex",   "Exodus",
-        "Lv",   "Leviticus",
-        "Nu",   "Numbers",
-        "Dt",   "Deuteronomy",
-        "Jos",  "Joshua",
-        "Jdc",  "Judges",
-        "Rth",  "Ruth",
-        "1Sm",  "I Samuel",
-        "2Sm",  "II Samuel",
-        "1Rg",  "I Kings",
-        "2Rg",  "II Kings",
-        "1Chr", "I Chronicles",
-        "2Chr", "II Chronicles",
-        "Esr",  "Ezra",
-        "Neh",  "Nehemiah",
-        "Esth", "Esther",
-        "Job",  "Job",
-        "Ps",   "Psalms",
-        "Prv",  "Proverbs",
-        "Eccl", "Ecclesiastes",
-        "Ct",   "Song of Solomon",
-        "Is",   "Isaiah",
-        "Jr",   "Jeremiah",
-        "Thr",  "Lamentations",
-        "Ez",   "Ezekiel",
-        "Dn",   "Daniel",
-        "Hos",  "Hosea",
-        "Joel", "Joel",
-        "Am",   "Amos",
-        "Ob",   "Obadiah",
-        "Jon",  "Jonah",
-        "Mch",  "Micah",
-        "Nah",  "Nahum",
-        "Hab",  "Habakkuk",
-        "Zph",  "Zephaniah",
-        "Hgg",  "Haggai",
-        "Zch",  "Zechariah",
-        "Ml",   "Malachi",
-        "Mt",   "Matthew",
-        "Mc",   "Mark",
-        "L",    "Luke",
-        "J",    "John",
-        "Act",  "Acts",
-        "R",    "Romans",
-        "1K",   "I Corinthians",
-        "2K",   "II Corinthians",
-        "G",    "Galatians",
-        "E",    "Ephesians",
-        "Ph",   "Philippians",
-        "Kol",  "Colossians",
-        "1Th",  "I Thessalonians",
-        "2Th",  "II Thessalonians",
-        "1T",   "I Timothy",
-        "2T",   "II Timothy",
-        "Tt",   "Titus",
-        "Phm",  "Philemon",
-        "H",    "Hebrews",
-        "Jc",   "James",
-        "1P",   "I Peter",
-        "2P",   "II Peter",
-        "1J",   "I John",
-        "2J",   "II John",
-        "3J",   "III John",
-        "Jd",   "Jude",
-        "Ap",   "Revelation of John",
-        NULL};
-
-
-static const gchar*
+static gint
 sword_book_title (const xmlChar* book)
 {
-        int i = 0;
-        while (books [i] != NULL) {
-                if (strcmp ((char *) books [i], (char *) book) == 0) {
-                        return books [i + 1];
+        gint i = 0;
+        while (books [i][0] != NULL) {
+                if (strcmp ((char *) books [i][0], (char *) book) == 0) {
+                        return i;
                 }
-                i += 2;
+                i++;
         }
-        return NULL;
+        return -1;
 } /* sword_book_title */
