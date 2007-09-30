@@ -1,0 +1,249 @@
+                      -= Watchwords - History =-
+
+History of the freeware Watchwords programs
+
+Contents:
+
+The Beginning                         
+Clarification of license matters      
+A Variety of Watchwords Programs      
+Translations into foreign languages   
+Watchwords in the Internet            
+What's going on?                      
+
+---------------------------------------------------------------------
+
+The Beginning
+
+How did the Watchwords texts come to be displayed on so many computer
+screens, featuring so many platforms?
+
+1988 I (Reinhold Willnat) had the desire to be greeted by the
+Watchwords for the day before I would begin with my work. Since I do
+not possess any programming skills, I discussed this matter with my
+son-in-law, who, at that time was taking a "computer course". He very
+much welcomed this task as a helpful exercise for his course. Thus,
+the first DOS- program was completed in 1988. I have personally copied
+the actual Watchwords texts from the booklet issued by the Moravian
+Church.
+
+Late during the summer of 1988, I already began to copy the texts for
+the following year, once again. During that exercise I came upon a
+note in the booklet regarding copyright matters. I addressed the
+Directors of the Moravian Church, requesting permission to copy the
+Watchwords texts. In January 1989 I received permission to copy the
+Scripture texts of the Watchwords for each day onto diskette for
+personal use only. The word "Losung" is protected by copyright, as
+well as the combination of the scriptural texts for each day, and the
+devotional commentary for each day (as far as 70 years back).
+
+1989 Many of the daily Scripture texts became a great source of
+blessing to me because of the effect of repeated reading during the
+course of the day. I also distributed the program to my brothers
+(members of my family) and to some friends. In autumn 1989 I renamed
+the DOS program "LOSUNG" to "LESUNG" (Note: in German this is a clever
+deviation from the protected word "Losung" and yet, in the end, it
+means, to some degree, the same: "Losung" - "Watchwords"; "Lesung" -
+"Reading"). I did not copy the (protected) devotional commentary for
+each text, and passed the disk only to people that had bought the
+booklet, too.
+
+It was to be expected: after some time I received kind letters from
+people I did not even know. An increasing number of individuals (even
+a number from abroad) asked me to continue and to prepare the
+Watchwords texts for the following year! The letters were often
+heart-warming.
+
+Until end of 1992 a solid structure developed with regard to
+distribution of the Watchwords diskette. I shipped the completed
+program diskettes to the listed "main distributors", who, in turn,
+made copies of the diskettes for further distribution. During that
+time, LifeNet came to play an important role. A considerable portion
+of the distributed Watchwords programs found their way to many
+churches, and further to many computer users via connected mailboxes
+(bulletin boards). The attached file "INFO.TXT" informed users about
+the program. I regularly informed the Moravian Church of all my
+activities.
+
+Clarification of license matters
+
+In autumn 1992, I submitted my request once again in a two-page letter
+to the Moravian Church. I was informed that, because of considerable
+in-house reorganization, my request had not yet been considered. With
+a change in leadership, changes were also made with reference to
+responsibilities for (formerly) East and West Germany.
+
+After various contacts in 1993 and 1994 with the joint publishers
+Friedrich Reinhardt Verlag (Publisher) and Haenssler Verlag
+(Publisher), Mr. Ruedi Reinhardt granted permission to distribute the
+Watchwords texts for 1995 in the format used thus far. One condition:
+the program name "Lesung" had to be changed back to "Losung". No
+permission could be granted at that time for 1996, since the
+publishers were planning on issuing their own Watchwords diskette for
+that year. 
+
+What joy and what gratitude toward the Lord gripped my heart at that
+time! After approximately 7 years, 1995 would, for the first time,
+feature a licensed Watchwords diskette. For years now I had, time and
+again, declared the Watchwords on diskette to be the "business of the
+Chief Executive", and now the great God had made it clear, that He
+stands behind His Word, and that He wants this diskette distribution!
+
+I published this good news via the mailboxes (bulletin boards) on that
+same day, and, on the following day, I received many encouraging
+e-mails, which again and again expressed deep gratitude to the Lord.
+That was a great day of joy!
+
+After a short time, Mr. Markus Hé‰nssler granted a license for
+1995 and 1996 with conditions still in force today. This license was
+renewed several times for two years. In May 1999, the Moravian Church
+extended the license under the same conditions until the end of 2003,
+and gave me permission to offer watchwords texts of past years for
+free download. - As always, the future is in the hands of God! After
+all, this is the "business of the Chief Executive"!
+
+Since July 2002, Friedrich Reinhardt-Verlag is the sole publisher of
+the German watchwords, since HÅ‰nssler-Verlag is no longer
+partner of the joint publishers. In agreement with the Moravian
+Church, Friedrich Reinhardt-Verlag extends the license until the
+watchwords of 2004.
+
+---------------------------------------------------------------------
+
+A Variety of Watchwords Programs
+
+Besides the coming up of the distribution structure and the
+clarification of the license matters, there was, however, a completely
+different development:
+
+As I already mentioned, I do not possess any programming skills. I
+depend on what others are willing to do for me. I was being asked by a
+number of individuals about the Watchwords program for other
+platforms. "Unfortunately, not yet..." was my answer.
+
+Then, in short succession, I received offers from individuals, willing
+to create the following programs:
+
+  * Mr. Andreas Pollack offered a high quality DOS-program, which,
+    at the same time, could play melodies of familiar German church
+    hymns.
+    
+  * immediately following, Mr. AndrÈ Wendlandt offered to write a
+    Windows program
+    
+  * These were followed by offers to create programs for OS/2,
+    Atari, Psion, PalmPilot, for individual homepages, and for Linux.
+    
+All I could do, was looking up in utter amazement to our great God.
+Seeing, that this was Godís work, to which people were willing to
+commit themselves, filled me with deep gratitude!
+
+---------------------------------------------------------------------
+
+Translations into foreign languages
+
+1995 In 1995 a total stranger called me from the United States. All he
+wanted to do was to say "Thank You" for the Watchwords program he had
+received from one of his friends in Germany. After a brief exchange of
+ideas, followed by e-mail correspondence, he eventually offered to
+translate the attached files into English, and to incorporate English
+Scripture texts into the Watchwords program (the text is the same for
+all platforms: ASCII). Thus, in 1996, the Watchwords diskette appeared
+for the first time in German and English. How my heart rejoiced, when
+I packaged and shipped the first diskettes! My prayers went with them
+on their way. Ever since, Roland Freischlad has been a faithful and
+committed fellow laborer.
+
+The Lord has greatly blessed the selfless work of all those involved.
+Many letters from Germany and abroad bear this out!
+
+1998 is the year in which I received offers for translation into
+Dutch, Spanish, and French. I gratefully accepted!
+
+Since 2000, there is a version for Chinese, as well as versions for
+several European languages and Vietnamese. Versions for Russian and
+Afrikaans followed. As of 2001, Norwegian and Arabic are in
+preparation.
+
+---------------------------------------------------------------------
+
+Watchwords in the Internet
+
+This "stormy" development has by far exceeded the means of
+distribution on diskette. It was, therefore, only logical, to transfer
+the distribution of the Watchwords to a broader basis. I was
+especially glad to see that this need had been known to the Lord long
+before I was aware of it. HE had already made preparations to remedy
+the situation, by moving Mr. Helmut Steeb (a specialist in Information
+Technology) to offer his help and support to me!
+
+When I looked at the very structured suggestions for improvement in
+the distribution of the Watchwords programs, I was very glad about the
+new ideas to which I was introduced. I noticed that the distribution
+structure I had followed thus far, would have led very soon to a
+dead-end, making handling of the work ultimately an impossibility!
+Ever since, Helmut Steeb is largely responsible for organizational
+matters.
+
+Several individuals, meanwhile, have offered the Watchwords programs
+on their homepages, as well as the "christliche internet dienst" (cid;
+"Christian Information Service", a German web provider), and the
+"Christliche Internet Agentur" (CINA; "Christian Internet Agency",
+another German web provider). In 1999, the Haenssler Verlag
+established the domain "Losungen.de", with a selection of the freeware
+Watchwords programs.
+
+By the end of 1998 it became clear to me, that the Internet, too,
+ought to be used more intensely for the Lord. A brief exchange within
+my inner circle of friends resulted in support of this idea, and our
+own domain losung.de was established. This domain, in a way, is the
+"mother" of the freeware Watchwords programs. It furthers ministry to
+the public. Many like to pay a visit to this web page. All new
+features and additions of the Watchwords programs are published there
+and can be downloaded by those interested. Additional information and
+a guest book complete the content.
+
+Each main distributor is informed via e-mail concerning new features,
+after which download of the appropriate files from the internet pages
+is suggested. With that, the speed of the flow of information
+significantly increases, and the cost of postage and diskettes is
+reduced considerably.
+
+---------------------------------------------------------------------
+
+What's going on
+
+In the meantime, the offer of the freeware Watchwords programs has
+become very large, and it steadily increases. I myself can look at
+these ideas only in astonishment, rejoice greatly in them, and give
+thanks to the Lord for making so many gifted people willing to commit
+themselves to this task, in spite of their own heavy work load.
+
+It is unavoidable, that in this greatly increased activity of
+distributing the Word of God, costs are mounting. But, this too, is
+the Lordís concern. Time and again, He makes individuals willing,
+to contribute to offset the costs of this ministry.
+
+With extra funds from the Watchwords charitable contribution account,
+I was able to support the Computermission ("Computer Missions
+Organization", http://www.computermission.org) in Sinsheim-Reihen,
+Germany, as well as LifeNet (a Christian web page in Germany). Both
+organizations have as their main goal to reach people with the living
+Word of God by means of these new media. Thus far, all of us who have
+responded to the call of God to distribute His Word, notwithstanding
+our toilsome efforts, have experienced many blessings from God. Time
+and again, we enjoy reading the many letters that come to us, telling
+us how God blesses. 
+
+With your contribution you enable, for example, the "Computermission"
+("Computer Missions Organization"), to reach many individuals at a
+number of trade shows with the vitally important Word of God, in that
+diskettes and CDs are being distributed free of charge. Those in
+charge at LifeNet allow their infrastructure to be used for this
+ministry and take part without pay in various trade show campaigns
+
+  The time of harvest is here. Who will help through prayer and
+  through giving? 
+
+ENhistory.htm,v 1.9 2002/08/07 19:05:18 
+---------------------------------------------------------------------
