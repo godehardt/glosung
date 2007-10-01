@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.1
+%define version 3.1.1
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -15,7 +15,6 @@ BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       gtk2 >= 2.10
 Requires:       libxml2 >= 2.0
 #Requires:       libcurl
-#BuildRequires:  libgnomeui-devel >= 2.0
 #BuildRequires:  libxml-devel >= 2.0
 #BuildRequires:  libgtk2-devel >= 2.4
 Prefix:         %{_prefix}
@@ -71,6 +70,12 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
  
 
 %changelog
+* Sun Sep 30 2007 Eicke Godehardt <eicke@godehardt.org>
+- small fix for Gnomesword link
+- start only once parameter (--once)
+- czech translation update
+- version bump to 3.1.1
+
 * Thu Aug 16 2007 Eicke Godehardt <eicke@godehardt.org>
 - add keyboard shortcuts
 - get rid of gnome libraries
