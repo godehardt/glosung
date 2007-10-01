@@ -1,3 +1,8 @@
+3.1.1:
+	- czech translation update
+*Fixes:
+	- no longer location AND link to gnomesword
+
 3.1:
 	- add keyboard shortcuts 
 	- Gnome libraries no longer necessary 
