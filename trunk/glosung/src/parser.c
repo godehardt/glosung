@@ -179,11 +179,15 @@ static gchar* check_file     (gchar          *directory,
 void
 losung_free (Losung *ww)
 {
-        g_free (ww->ot.say);
+        if (ww->ot.say != NULL) {
+                g_free (ww->ot.say);
+        }
         g_free (ww->ot.text);
         g_free (ww->ot.location);
    
-        g_free (ww->nt.say);
+        if (ww->nt.say != NULL) {
+                g_free (ww->nt.say);
+        }
         g_free (ww->nt.text);
         g_free (ww->nt.location);
 
