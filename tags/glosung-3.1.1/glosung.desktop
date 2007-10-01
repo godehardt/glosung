@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=GLosung
+Name[de]=GLosung
+Comment=Losung for GNOME
+Comment[de]=Losung für GNOME
+Exec=glosung
+Icon=/usr/share/pixmaps/glosung.png
+Terminal=false
+Type=Application
+Categories=Application;Utility;X-Red-Hat-Extra;
