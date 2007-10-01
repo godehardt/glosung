@@ -113,7 +113,8 @@ static gchar      *lang;
 static GHashTable *lang_translations;
 static LosungList *server_list = NULL;
 static GPtrArray  *bibles;
-static gboolean    sword = FALSE;
+static gboolean    new_sword;
+static gboolean    sword;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -308,6 +309,8 @@ main (int argc, char **argv)
         calendar_close = calendar_close_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
+        sword = new_sword = gconf_client_get_bool
+                (client, "/apps/" PACKAGE "/use_sword", NULL);
         show_readings = show_readings_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/show_readings", NULL);
         show_sword = show_sword_new = gconf_client_get_bool
@@ -539,18 +542,38 @@ get_time (void)
 static void 
 show_text (void)
 {
-        const Losung *ww;
-
-        ww = get_losung (new_date, lang);
-
-        
+        Losung *ww;
 
         // g_message (get_sword_text ("Aleppo", 3, 3, 16));
-        // gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), TRUE);
-        // gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), get_sword_text ("GerLut1545", 43, 3, 16));
-        ww->nt.say  = "";
-        ww->nt.text = get_sword_text ("GerLut1545", 43, 3, 16);
+        if (sword) {
+                // FIXME glosung_free
+                ww = get_losung (new_date, "de");
 
+                // g_message ("JOOOOOOOOO %s %d %d %d",
+                //      lang, ww->ot.book, ww->ot.chapter, ww->ot.verse);
+                if (ww->ot.say != NULL) {
+                        g_free (ww->ot.say);
+                }
+                ww->ot.say  = NULL;
+                g_free (ww->ot.text);
+                ww->ot.text = g_strdup (get_sword_text
+                        (lang, ww->ot.book, ww->ot.chapter, ww->ot.verse));
+                if (ww->nt.say != NULL) {
+                        g_free (ww->nt.say);
+                }
+                ww->nt.say  = NULL;
+                g_free (ww->nt.text);
+                ww->nt.text = g_strdup (get_sword_text
+                        (lang, ww->nt.book, ww->nt.chapter, ww->nt.verse));
+
+                gtk_label_set_line_wrap (GTK_LABEL (label [OT_TEXT]), TRUE);
+                gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), TRUE);
+        } else {
+                ww = get_losung (new_date, lang);
+
+                gtk_label_set_line_wrap (GTK_LABEL (label [OT_TEXT]), FALSE);
+                gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), FALSE);
+        }
 
         if (ww == NULL) {
                 GtkWidget *error;
@@ -807,9 +830,12 @@ apply_cb (void)
 {
         if (new_lang != NULL) {
                 lang = new_lang;
+                sword = new_sword;
                 new_lang = NULL;
                 gconf_client_set_string
                         (client, "/apps/" PACKAGE "/language", lang, NULL);
+                gconf_client_set_bool
+                        (client, "/apps/" PACKAGE "/use_sword", sword, NULL);
                 show_text ();
         }
         if (new_font != NULL) {
@@ -906,6 +932,10 @@ create_property_table ()
         for (i = 0; i < bibles->len; i++) {
                 gchar *bible = g_ptr_array_index (bibles, i);
                 gtk_combo_box_append_text (GTK_COMBO_BOX (combo), bible);
+                if (strcmp (lang, bible) == 0) {
+                        gtk_combo_box_set_active (GTK_COMBO_BOX (combo),
+                                 i + (languages->languages)->len);
+                }
         }
 
         g_signal_connect (G_OBJECT (combo), "changed",
@@ -968,11 +998,12 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
         if (num < languages->languages->len) {
                 new_lang =
                         (gchar*) g_ptr_array_index (languages->languages, num);
-                sword = FALSE;
+                new_sword = FALSE;
         } else {
                 num -= languages->languages->len;
-                g_message ("XXXX %s", g_ptr_array_index (bibles, num));
-                sword = TRUE;
+                new_lang =
+                        (gchar*) g_ptr_array_index (bibles, num);
+                new_sword = TRUE;
         }
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
