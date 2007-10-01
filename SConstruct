@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.1'
+version = '3.1.1'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -40,11 +40,11 @@ BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
 ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
-            `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl sword` \
+            `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl` \
             -DVERSION=\\"' + version + '\\"  \
             -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
 linkflags = '-Wl,--export-dynamic  -L/usr/lib \
-             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl sword`'
+             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`'
 
 if ARGUMENTS.get ('profile'):
     ccflags   += ' -pg -fprofile-arcs'

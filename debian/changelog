@@ -1,3 +1,12 @@
+glosung (3.1.1) stable; urgency=low
+
+  * small fix for Gnomesword link
+  * start only once parameter (--once)
+  * czech translation update
+  * version bump to 3.1.1
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Sun, 30 Sep 2007 20:18:42 +0200
+
 glosung (3.1) stable; urgency=low
 
   * add keyboard shortcuts
