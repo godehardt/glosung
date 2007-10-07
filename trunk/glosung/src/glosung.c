@@ -504,10 +504,6 @@ create_app (void)
                 }
                 pango_font_description_free (font_desc);
         }
-        if (!show_readings) {
-                gtk_widget_hide (label [X3]);
-                gtk_widget_hide (label [READING]);
-        }
 
         gtk_widget_show_all (app);
         if (show_sword) {
@@ -516,6 +512,10 @@ create_app (void)
         } else {
                 gtk_widget_hide (label [OT_LOC_SWORD]);
                 gtk_widget_hide (label [NT_LOC_SWORD]);
+        }
+        if (! show_readings) {
+                gtk_widget_hide (label [X3]);
+                gtk_widget_hide (label [READING]);
         }
 } /* create_app */
 
@@ -546,6 +546,8 @@ show_text (void)
 
         // g_message (get_sword_text ("Aleppo", 3, 3, 16));
         if (sword) {
+                gchar *text;
+
                 // FIXME glosung_free
                 ww = get_losung (new_date, "de");
 
@@ -555,16 +557,24 @@ show_text (void)
                         g_free (ww->ot.say);
                 }
                 ww->ot.say  = NULL;
-                g_free (ww->ot.text);
-                ww->ot.text = g_strdup (get_sword_text
+
+                text = g_strdup (get_sword_text
                         (lang, ww->ot.book, ww->ot.chapter, ww->ot.verse));
+                if (text) {
+                        g_free (ww->ot.text);
+                        ww->ot.text = g_strdup (text);
+                }
                 if (ww->nt.say != NULL) {
                         g_free (ww->nt.say);
                 }
                 ww->nt.say  = NULL;
-                g_free (ww->nt.text);
-                ww->nt.text = g_strdup (get_sword_text
+
+                text = g_strdup (get_sword_text
                         (lang, ww->nt.book, ww->nt.chapter, ww->nt.verse));
+                if (text) {
+                        g_free (ww->nt.text);
+                        ww->nt.text = g_strdup (text);
+                }
 
                 gtk_label_set_line_wrap (GTK_LABEL (label [OT_TEXT]), TRUE);
                 gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), TRUE);
