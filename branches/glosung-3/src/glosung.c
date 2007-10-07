@@ -475,18 +475,14 @@ create_app (void)
                                 ((GtkLinkButtonUriFunc) link_execute,
                                  NULL, NULL);
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
-                        gtk_widget_show (label [i]);
-
                         gtk_box_pack_start (GTK_BOX (vbox), widget,
                                             FALSE, FALSE, 0);
-                        gtk_widget_show (widget);
                 } else {
                         label [i] = gtk_label_new ("");
                         gtk_label_set_justify (GTK_LABEL (label [i]),
                                                GTK_JUSTIFY_CENTER);
                         gtk_box_pack_start (GTK_BOX (vbox), label [i],
                                             FALSE, FALSE, 0);
-                        gtk_widget_show (label [i]);
                 }
         }
         if (font != NULL) {
