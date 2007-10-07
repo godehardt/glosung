@@ -51,22 +51,12 @@ get_sword_text (gchar *name, int book, int chapter, int verse)
 	SectionMap::iterator sit;
 	SWModule *mod = NULL;
 
-        /* First, check and see whether SWMgr found any installed
-         * books.  If not, tell the user what the problem is.  Print a
-         * short notice to stderr, for use when the program is invoked
-         * from the command line, and also put a bit longer message
-         * into the spot where bible text would otherwise show up.
-         * Then, return out of this function, because there's nothing
-         * left to do.  */
 	if (swMgr->Modules.empty () == TRUE) {
+                /* FIXME show popup message */
 		g_message ("nooooo modules found!");
 		return NULL;
 	}
 
-        /* Next, if SWMgr did find some book modules installed, hook
-         * them up to any filters needed and set up the menus to
-         * reflect them.  Pick a default module to show on startup.
-         */
 	for (it = swMgr->Modules.begin (); it != swMgr->Modules.end (); it++) {
                 SWModule *curMod = (*it).second;
 		if (! strcmp (curMod->Type (), "Biblical Texts")) {
@@ -76,6 +66,9 @@ get_sword_text (gchar *name, int book, int chapter, int verse)
                         }
 		}
 	}
+        if (! mod) {
+                return NULL;
+        }
         /*
         g_message ("found: %s - %s\n%s - %s",
                    mod->Name (), mod->Description (),
