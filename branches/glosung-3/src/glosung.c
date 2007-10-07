@@ -496,10 +496,6 @@ create_app (void)
                 }
                 pango_font_description_free (font_desc);
         }
-        if (!show_readings) {
-                gtk_widget_hide (label [X3]);
-                gtk_widget_hide (label [READING]);
-        }
 
         gtk_widget_show_all (app);
         if (show_sword) {
@@ -508,6 +504,10 @@ create_app (void)
         } else {
                 gtk_widget_hide (label [OT_LOC_SWORD]);
                 gtk_widget_hide (label [NT_LOC_SWORD]);
+        }
+        if (! show_readings) {
+                gtk_widget_hide (label [X3]);
+                gtk_widget_hide (label [READING]);
         }
 } /* create_app */
 
