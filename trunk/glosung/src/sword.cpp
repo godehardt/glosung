@@ -75,14 +75,14 @@ get_sword_text (gchar *name, int book, int chapter, int verse)
                    mod->Type (), mod->Lang ());
         */
 
-        // (const char *)*curMod;  // snap to closest locations
-
-	VerseKey *key = (VerseKey *)mod->getKey ();
-	key->Book   (book);
+        VerseKey *key = new VerseKey ();
+	key->Book    (book);
 	key->Chapter (chapter);
-	key->Verse  (verse);
+	key->Verse   (verse);
 	key->Normalize ();
         mod->setKey (key);
+        (const char *)*mod;  // snap to closest locations
+        // g_message ("key:  %d-%d.%d", book, chapter, verse);
         // g_message ("key:  %s", mod->KeyText ());
         gchar *text = (gchar *)mod->StripText ();
         // g_message ("text: %s", text);
