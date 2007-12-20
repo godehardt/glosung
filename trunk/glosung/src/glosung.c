@@ -17,8 +17,10 @@
  * MA 02111-1307, USA.
  */
 
+#include <gtk/gtkversion.h>
+
 #if GTK_MINOR_VERSION >= (10)
-#define VERSE_LINK 1
+  #define VERSE_LINK 1
 #endif
 
 
@@ -237,9 +239,9 @@ static GtkActionEntry entries[] = {
 
         { "About", GTK_STOCK_ABOUT, NULL, NULL,
           N_("about GLosung"), G_CALLBACK (about_cb) },
-}
+};
 
-;
+
 static guint n_entries = G_N_ELEMENTS (entries);
 
 
@@ -306,6 +308,7 @@ main (int argc, char **argv)
                         lang = g_ptr_array_index (languages->languages, 0);
                 }
         }
+
         printf ("Choosen language: %s\n", lang);
         calendar_close = calendar_close_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
