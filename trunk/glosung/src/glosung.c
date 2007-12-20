@@ -166,7 +166,7 @@ static void clipboard_cb         (GtkWidget *w,   gpointer data);
        Set up the GUI
 \******************************/
 
-#define MY_PAD 5
+#define MY_PAD 10
 
 
 static gchar* uistring =
@@ -434,6 +434,7 @@ create_app (void)
         GtkActionGroup *action;
         GtkUIManager   *uiman;
         GtkWidget      *vbox;
+        GtkWidget      *content;
         GtkWidget      *menubar;
         GtkWidget      *toolbar;
         gint            i;
@@ -471,6 +472,10 @@ create_app (void)
         toolbar = gtk_ui_manager_get_widget (uiman, "/ToolBar");
         gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, TRUE, 0);
 
+        content = gtk_vbox_new (FALSE, 0);
+        gtk_container_set_border_width (GTK_CONTAINER (content), MY_PAD);
+        gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, TRUE, 0);
+
         for (i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
                         GtkWidget *widget;
@@ -483,18 +488,14 @@ create_app (void)
                                 ((GtkLinkButtonUriFunc) link_execute,
                                  NULL, NULL);
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
-                        gtk_widget_show (label [i]);
-
-                        gtk_box_pack_start (GTK_BOX (vbox), widget,
+                        gtk_box_pack_start (GTK_BOX (content), widget,
                                             FALSE, FALSE, 0);
-                        gtk_widget_show (widget);
                 } else {
                         label [i] = gtk_label_new ("");
                         gtk_label_set_justify (GTK_LABEL (label [i]),
                                                GTK_JUSTIFY_CENTER);
-                        gtk_box_pack_start (GTK_BOX (vbox), label [i],
+                        gtk_box_pack_start (GTK_BOX (content), label [i],
                                             FALSE, FALSE, 0);
-                        gtk_widget_show (label [i]);
                 }
         }
         if (font != NULL) {
@@ -505,18 +506,25 @@ create_app (void)
                 pango_font_description_free (font_desc);
         }
 
-        gtk_widget_show_all (app);
+        gtk_widget_show (label [TITLE]);
+        gtk_widget_show (label [X1]);
+        gtk_widget_show (label [OT_TEXT]);
+        gtk_widget_show (label [X2]);
+        gtk_widget_show (label [NT_TEXT]);
         if (show_sword) {
-                gtk_widget_hide (label [OT_LOC]);
-                gtk_widget_hide (label [NT_LOC]);
+                gtk_widget_show (label [OT_LOC_SWORD]);
+                gtk_widget_show (label [NT_LOC_SWORD]);
         } else {
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_hide (label [NT_LOC_SWORD]);
+                gtk_widget_show (label [OT_LOC]);
+                gtk_widget_show (label [NT_LOC]);
         }
-        if (! show_readings) {
-                gtk_widget_hide (label [X3]);
-                gtk_widget_hide (label [READING]);
+        if (show_readings) {
+                gtk_widget_show (label [X3]);
+                gtk_widget_show (label [READING]);
         }
+        gtk_widget_show (content);
+        gtk_widget_show (vbox);
+        gtk_widget_show (app);
 } /* create_app */
 
 
