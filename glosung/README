@@ -1,0 +1,57 @@
+GENERAL INFORMATION
+
+    This is version 3.0 of glosung.  Its goal is to make a
+    user-friendly and powerful losungs program for GNOME.
+
+    The official web site is:
+	http://www.godehardt.org/losung.html
+
+REQUIREMENTS
+
+    glosung requires that you have installed a few working libraries:
+
+      * glib/gtk+ 2.4 or higher
+	See the GTK+ homepage (www.gtk.org) for information on how to
+	download and install GLIB and GTK+. 
+
+      * gnome-libs 2.4 (plus xml) or higher
+	See the GNOME homepage (www.gnome.org) for information on how to
+	download and install GNOME.
+
+	  * libxml2 (aka gnome-xml)
+	See homepage (www.xmlsoft.org) for more information.
+
+	  * liburl
+	See curl homepage (curl.haxx.se) for information.
+
+    glosung also makes use of the 'gettext' libraries, which
+    is included as part of the source package for those who
+    don't already have them installed.
+
+UPGRADING
+
+    Upgrading typically requires that you do the exact same procedure
+    as described in the INSTALL file.
+
+INSTALLATION
+
+    See the file 'INSTALL' for instructions.
+
+HOW TO REPORT BUGS
+
+    See 'CONTACTING THE AUTHORS' or
+    http://www.godehardt.org/
+
+CONTACTING THE AUTHORS
+
+    When sending email, please put "glosung" at the beginning of the
+    subject line, followed by what it is regarding glosung (e.g., "glosung
+    patch", "glosung comment", "glosung translation").  See the AUTHORS file
+    for contact information.
+
+URLS
+
+    glosung : http://www.godehardt.org/losung.html
+    GNOME   : http://www.gnome.org/
+    GTK+    : http://www.gtk.org/
+    FSF     : http://www.gnu.org/
