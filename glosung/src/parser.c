@@ -46,6 +46,9 @@ STATE_START,
         STATE_L,
         STATE_SL,
           STATE_EM,
+  TW_THE_WORD_FILE,
+    TW_HEAD,
+    TW_THE_WORD,
 } State;
 
 static gchar const * const states [] = {
@@ -64,6 +67,9 @@ static gchar const * const states [] = {
         "L",
         "SL",
           "EM",
+  "thewordfile",
+    "head",
+    "theword",
 };
 
 
@@ -138,6 +144,7 @@ get_losung (GDate *date, gchar *lang)
         if (! filename) {
                 filename = check_file (GLOSUNG_DATA_DIR, year, lang, "");
         }
+//        filename = "/home/icke/DEVELOP/glosung/trunk/glosung/theword/de_2008_Schlachter2000.twd";
         if (! filename) {
                 return NULL;
         }
@@ -199,9 +206,14 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         switch (state) {
         case STATE_START:
                 if (switch_state (name, STATE_LOSFILE)) {}
+                if (switch_state (name, TW_THE_WORD_FILE)) {}
                 break;
         case STATE_LOSFILE:
-                if (switch_state (name, STATE_HEAD)) {
+        case TW_THE_WORD_FILE:
+                if (switch_state (name, STATE_HEAD)
+                  || switch_state (name, TW_HEAD)
+                  || switch_state (name, TW_THE_WORD))
+                {
                         depth = 1;
                 } else if (switch_state (name, STATE_LOSUNG)) {
                         if (--day != 0) {
