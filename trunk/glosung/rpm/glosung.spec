@@ -8,8 +8,8 @@ Version:        %{version}
 Release:        %{release}
 Source0:        %{name}-%{version}.tar.bz2
 Group:          Applications/Productivity
-Vendor:         Eicke Godehardt <eicke@godehardt.org>
-Packager:       Eicke Godehardt <eicke@godehardt.org>
+Vendor:         Eicke Godehardt <eicke AT godehardt DOT org>
+Packager:       Eicke Godehardt <eicke AT godehardt DOT org>
 URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       gtk2 >= 2.10
