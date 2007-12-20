@@ -1,0 +1,132 @@
+glosung (3.1.1) stable; urgency=low
+
+  * small fix for Gnomesword link
+  * start only once parameter (--once)
+  * czech translation update
+  * version bump to 3.1.1
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Sun, 30 Sep 2007 20:18:42 +0200
+
+glosung (3.1) stable; urgency=low
+
+  * add keyboard shortcuts
+  * get rid of gnome libraries
+  * other small enhancements
+  * make connection to gnomesword more stable
+  * Version bump to 3.1
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Thu, 16 Aug 2007 22:38:31 +0200
+
+glosung (3.0.2) stable; urgency=low
+
+  * add better language handling for first time users
+  * add command line arguments to losung
+  * bump to 3.0.2
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Tue, 01 Feb 2007 17:55:19 +0200
+
+glosung (3.0.1) stable; urgency=low
+
+  * fix the crash-at-very-first-startup
+  * fix handle years for download
+  * bump to 3.0.1
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Tue, 23 Jan 2007 23:08:24 +0200
+
+glosung (3.0) stable; urgency=low
+
+  * add curl for downloading language files from www.losung.de
+  * add very simple command line interface
+  * bump to 3.0
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Sat, 02 Dec 2006 13:49:23 +0200
+
+glosung (2.1.3) stable; urgency=low
+
+  * move sword flag from compile flag into runtime changable property
+  * fixed debian package issue
+  * add texts for 2006
+  * add swahili localization
+  * bump to 2.1.3
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Fri, 09 Dec 2005 15:52:10 +0200
+
+glosung (2.1.2) stable; urgency=low
+
+  * add french texts and GUI.
+  * fixed compilation bug in SConstruct when PKG_CONFIG_PATH is not defined
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Sat, 04 Feb 2005 14:12:42 +0200
+
+glosung (2.1.1) stable; urgency=low
+
+  * up to date texts for chinese.
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Thu, 04 Jan 2005 17:18:15 +0200
+
+glosung (2.1.0) stable; urgency=low
+
+  * make ready for gtk+-2.4
+  * add files for 2005.
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Thu, 23 Dec 2004 08:16:12 +0200
+  
+glosung (2.0.4) stable; urgency=low
+
+  * add czech texts for 2004.
+  * add languages: es, zh-CN, zh-TW
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Sat, 10 Jan 2004 16:32:22 +0200
+
+glosung (2.0.3) stable; urgency=low
+
+  * fix building bugs.
+  * fix bug in debian packages
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Mon, 05 Jan 2004 19:53:42 +0200
+
+glosung (2.0.2) stable; urgency=low
+
+  * package for 2004.
+
+ -- Eicke Godehardt <eicke@godehardt-online.de>  Mon, 22 Dec 2003 13:06:01 +0200
+
+glosung (2.0.1) unstable; urgency=low
+
+  * fixed gettext encoding but.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Wed, 8 Oct 2003 21:49:21 +0200
+
+glosung (2.0) unstable; urgency=low
+
+  * switched to gnome2.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 12 Nov 2002 14:27:09 +0200
+
+glosung (1.0.2) unstable; urgency=low
+
+  * better font selector used.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 2 Apr 2002 20:49:35 +0200
+
+glosung (1.0.1) unstable; urgency=low
+
+  * add czech support.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 19 Mar 2002 21:35:26 +0200
+
+glosung (1.0) unstable; urgency=low
+
+  * new release.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue,  3 Apr 2001 20:21:51 +0200
+
+glosung (0.9.4) unstable; urgency=low
+
+  * deianized.
+
+ -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Sat, 24 Feb 2001 15:22:08 +0200
+
+Local variables:
+mode: debian-changelog
+End:
