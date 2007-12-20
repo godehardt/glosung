@@ -17,6 +17,11 @@
  * MA 02111-1307, USA.
  */
 
+#if GTK_MINOR_VERSION >= (10)
+#define VERSE_LINK 1
+#endif
+
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -43,7 +48,6 @@
 #include <gtk/gtkfontbutton.h>
 #include <gtk/gtkframe.h>
 #include <gtk/gtkhbbox.h>
-#include <gtk/gtklinkbutton.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmessagedialog.h>
@@ -56,6 +60,9 @@
 #include <gtk/gtktoolbar.h>
 #include <gtk/gtkuimanager.h>
 #include <gtk/gtkvbox.h>
+#ifdef VERSE_LINK
+  #include <gtk/gtklinkbutton.h>
+#endif
 
 #include "parser.h"
 #include "download.h"
@@ -305,8 +312,12 @@ main (int argc, char **argv)
                  NULL);
         show_readings = show_readings_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/show_readings", NULL);
+#ifdef VERSE_LINK
         show_sword = show_sword_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/link_sword", NULL);
+#else
+        show_sword = show_sword_new = FALSE;
+#endif
         font = gconf_client_get_string (client, "/apps/" PACKAGE "/font",
                                         NULL);
 
@@ -465,6 +476,7 @@ create_app (void)
 
         for (i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
+#ifdef VERSE_LINK
                         GtkWidget *widget;
                         widget = gtk_hbutton_box_new ();
                         gtk_button_box_set_layout
@@ -477,6 +489,7 @@ create_app (void)
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
                         gtk_box_pack_start (GTK_BOX (vbox), widget,
                                             FALSE, FALSE, 0);
+#endif
                 } else {
                         label [i] = gtk_label_new ("");
                         gtk_label_set_justify (GTK_LABEL (label [i]),
@@ -488,7 +501,9 @@ create_app (void)
         if (font != NULL) {
                 font_desc = pango_font_description_from_string (font);
                 for (i = 0; i < NUMBER_OF_LABELS; i++) {
-                        gtk_widget_modify_font (label [i], font_desc);
+                        if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
+                                gtk_widget_modify_font (label [i], font_desc);
+                        }
                 }
                 pango_font_description_free (font_desc);
         }
@@ -498,8 +513,10 @@ create_app (void)
                 gtk_widget_hide (label [OT_LOC]);
                 gtk_widget_hide (label [NT_LOC]);
         } else {
+#ifdef VERSE_LINK
                 gtk_widget_hide (label [OT_LOC_SWORD]);
                 gtk_widget_hide (label [NT_LOC_SWORD]);
+#endif
         }
         if (! show_readings) {
                 gtk_widget_hide (label [X3]);
@@ -565,10 +582,12 @@ show_text (void)
                 gtk_label_set_text (GTK_LABEL (label [OT_TEXT]), ww->ot.text);
         }
 
+#ifdef VERSE_LINK
         gtk_button_set_label (GTK_BUTTON (label [OT_LOC_SWORD]),
                              ww->ot.location);
         gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
                                   ww->ot.location_sword);
+#endif
         gtk_label_set_text (GTK_LABEL (label [OT_LOC]), ww->ot.location);
 
         if (ww->nt.say != NULL) {
@@ -580,10 +599,12 @@ show_text (void)
         } else {
                 gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), ww->nt.text);
         }
+#ifdef VERSE_LINK
         gtk_button_set_label (GTK_BUTTON (label [NT_LOC_SWORD]),
                              ww->nt.location);
         gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
                                   ww->nt.location_sword);
+#endif
         gtk_label_set_text (GTK_LABEL (label [NT_LOC]), ww->nt.location);
 
         if (ww->comment) {
@@ -830,6 +851,7 @@ apply_cb (void)
                         gtk_widget_hide (label [READING]);
                 }
         }
+#ifdef VERSE_LINK
         if (show_sword_new != show_sword) {
                 show_sword = show_sword_new;
                 gconf_client_set_bool (client, "/apps/" PACKAGE "/link_sword",
@@ -846,6 +868,7 @@ apply_cb (void)
                         gtk_widget_show (label [NT_LOC]);
                 }
         }
+#endif
 
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, FALSE);
@@ -919,6 +942,7 @@ create_property_table ()
                           G_CALLBACK (readings_cb), NULL);
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
         
+#ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
                 (_("Link location to gnomesword"));
         if (show_sword) {
@@ -928,6 +952,7 @@ create_property_table ()
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+#endif
 
         return table;
 } /* create_property_table */
