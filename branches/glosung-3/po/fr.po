@@ -6,97 +6,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-24 20:18+0100\n"
+"POT-Creation-Date: 2007-09-30 21:28+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 #
-msgid "Calendar"
+# File: src/glosung.c, line: 203
+msgid "_File"
+msgstr ""
+#
+#, fuzzy
+msgid "_Edit"
+msgstr "Quitter"
+#
+# File: src/glosung.c, line: 205
+msgid "_Help"
+msgstr ""
+#
+#, fuzzy
+msgid "_Calendar"
 msgstr "Calendrier"
-
 #
-msgid "Open a calendar-widget"
-msgstr "Ouvrir le calendrier"
-
+# File: src/glosung.c, line: 208
+msgid "select date from calendar"
+msgstr ""
 #
-msgid "Today"
+#, fuzzy
+msgid "_Today"
 msgstr "Aujourd'hui"
-
 #
 msgid "Show losung of today"
 msgstr "Afficher les versets d'aujourd'hui"
-
 #
-msgid "Next Day"
+#, fuzzy
+msgid "_Next Day"
 msgstr "Jour suivant"
-
 #
 msgid "Show losung of next day"
 msgstr "Afficher les versets du jour suivant"
-
 #
-msgid "Prev Day"
+#, fuzzy
+msgid "_Previous Day"
 msgstr "Jour précédent"
-
 #
 msgid "Show losung of previous day"
 msgstr "Afficher les versets du jour précédent"
-
 #
-msgid "Next Month"
+#, fuzzy
+msgid "_Next Month"
 msgstr "Mois suivant"
-
 #
 msgid "Show losung of next month"
 msgstr "Afficher les versets du mois suivant"
-
 #
-msgid "Prev Month"
+#, fuzzy
+msgid "_Previous Month"
 msgstr "Mois précédent"
-
 #
 msgid "Show losung of previous month"
 msgstr "Afficher les versets du mois précédent"
-
 #
-msgid "Preferences..."
-msgstr "Préférences..."
-
+# File: src/glosung.c, line: 224
+msgid "_Copy Watchword"
+msgstr ""
 #
-msgid "To edit the preferences"
-msgstr "Modifier les préférences"
-
+# File: src/glosung.c, line: 225
+msgid "copy the Watchword to clipboard"
+msgstr ""
 #
-# File: src/glosung.c, line: 180
-msgid "Languages..."
-msgstr "Traductions"
-
+# File: src/glosung.c, line: 226
+msgid "_Organize Watchwords..."
+msgstr ""
 #
 # File: src/glosung.c, line: 181
-msgid "To update/install language files"
+#, fuzzy
+msgid "update/install watchword files"
 msgstr "Mettre à jour/ajouter de nouvelles traductions"
-
 #
-msgid "_Losung"
+#, fuzzy
+msgid "_Preferences..."
+msgstr "Préférences..."
+#
+#, fuzzy
+msgid "Edit the preferences"
+msgstr "Modifier les préférences"
+#
+#, fuzzy
+msgid "about GLosung"
 msgstr "_Losung"
-
 #
-msgid "Exit"
-msgstr "Quitter"
-
-#
-msgid "Exit the Program"
-msgstr "Quitter le programme"
-
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr ""
 #
 #. should be translated to corresponding language, e.g. 'de'
 msgid "en"
 msgstr "fr"
-
 #
 msgid ""
 "No text files found!\n"
@@ -104,166 +112,147 @@ msgid ""
 msgstr ""
 "Aucuns fichiers de versets trouvés !\n"
 "Veuillez installer les traductions correspondantes."
-
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
 msgstr "Afrikaans"
-
 #
 # File: src/glosung.c, line: 289
 msgid "arabic"
 msgstr "Arabe"
-
 #
 msgid "czech"
 msgstr "Tchèque"
-
 #
 msgid "german"
 msgstr "Allemand"
-
 #
 msgid "english"
 msgstr "Anglais"
-
 #
 msgid "spanish"
 msgstr "Espagnol"
-
 #
 # File: src/glosung.c, line: 294
 msgid "french"
 msgstr "Français"
-
 #
 # File: src/glosung.c, line: 295
 msgid "hebrew"
 msgstr "Hébreu"
-
 #
 # File: src/glosung.c, line: 296
 msgid "hungarian"
 msgstr "Hongrois"
-
 #
 # File: src/glosung.c, line: 297
 msgid "italian"
 msgstr "Italien"
-
 #
 # File: src/glosung.c, line: 298
 msgid "dutch"
 msgstr "Hollandais"
-
 #
 # File: src/glosung.c, line: 299
 msgid "norwegian"
 msgstr "Norvégien"
-
 #
 # File: src/glosung.c, line: 300
 msgid "portuguese"
 msgstr "Portuguais"
-
 #
 # File: src/glosung.c, line: 301
 msgid "romanian"
 msgstr "Roumain"
-
 #
 # File: src/glosung.c, line: 302
 msgid "russian"
 msgstr "Russe"
-
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
 msgstr "Tamoul"
-
 #
 # File: src/glosung.c, line: 304
 msgid "turkish"
 msgstr "Turc"
-
 #
 # File: src/glosung.c, line: 305
 msgid "vietnamese"
 msgstr "Vietnamien"
-
 #
 # File: src/glosung.c, line: 306
 msgid "chinese simplified"
 msgstr "Chinois simplifié"
-
 #
 # File: src/glosung.c, line: 307
 msgid "chinese traditional"
 msgstr "Chinois traditionnel"
-
 #
 #, c-format
 msgid "No %s texts found for %d!"
 msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
-
 #
 # File: src/glosung.c, line: 563
 msgid "Gods word for every day"
 msgstr "La Parole de Dieu au quotidien"
-
 #
 msgid "Preferences"
 msgstr "Préférences"
-
 #
 #. gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
 msgid "Choose displayed language:"
 msgstr "Langue :"
-
 #
 msgid "Choose Font:"
 msgstr "Police :"
-
 #
 msgid "Close calendar by double click"
 msgstr "Fermer le calendrier en double-cliquant"
-
 #
 msgid "Show selective and continuing reading"
 msgstr "Afficher les suggestions de lecture suivie"
-
 #
 # File: src/glosung.c, line: 791
 msgid "Link location to gnomesword"
 msgstr "Liens vers gnomesword"
-
+#
+msgid "Calendar"
+msgstr "Calendrier"
 #
 # File: src/glosung.c, line: 1068
 msgid "Languages"
 msgstr "Traductions"
-
 #
 # File: src/glosung.c, line: 1107
 msgid "Installed Languages"
 msgstr "Traductions installées"
-
 #
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
 msgstr "Ajouter de nouvelles traductions"
-
 #
 # File: src/glosung.c, line: 1144
 msgid "Download"
 msgstr "Télécharger"
-
 #
 # File: src/glosung.c, line: 1150
 msgid "Language"
 msgstr "Traduction"
-
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
 msgstr "Année"
-
+#
+#
+#~ msgid "Open a calendar-widget"
+#~ msgstr "Ouvrir le calendrier"
+#
+#
+# File: src/glosung.c, line: 180
+#~ msgid "Languages..."
+#~ msgstr "Traductions"
+#
+#
+#~ msgid "Exit the Program"
+#~ msgstr "Quitter le programme"
