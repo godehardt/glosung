@@ -49,6 +49,12 @@ STATE_START,
   TW_THE_WORD_FILE,
     TW_HEAD,
     TW_THE_WORD,
+      TW_TITLE,
+      TW_PAROL,
+        TW_INTRO,
+        TW_TEXT,
+          TW_EM,
+        TW_REF,
 } State;
 
 static gchar const * const states [] = {
@@ -70,6 +76,12 @@ static gchar const * const states [] = {
   "thewordfile",
     "head",
     "theword",
+      "title",
+      "parol",
+        "intro",
+        "text",
+          "em",
+        "ref",
 };
 
 
@@ -103,6 +115,8 @@ static void pop_state        (void);
 static gchar* pop_string     (GString *string);
 
 static const gchar* sword_book_title (const xmlChar *book);
+static const gchar* sword_book_title_for_the_word
+                                     (const xmlChar* book_number);
 static gchar* check_file             (gchar         *directory,
                                       guint          year,
                                       gchar         *lang,
@@ -144,7 +158,7 @@ get_losung (GDate *date, gchar *lang)
         if (! filename) {
                 filename = check_file (GLOSUNG_DATA_DIR, year, lang, "");
         }
-//        filename = "/home/icke/DEVELOP/glosung/trunk/glosung/theword/de_2008_Schlachter2000.twd";
+        filename = g_strdup ("/home/icke/DEVELOP/glosung/trunk/glosung/theword/de_2008_Schlachter2000.twd");
         if (! filename) {
                 return NULL;
         }
@@ -163,6 +177,8 @@ get_losung (GDate *date, gchar *lang)
 
         g_free (filename);
         g_free (sax);
+        quote = NULL;
+
         return ww;
 } /* get_losung */
 
@@ -205,17 +221,18 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
 
         switch (state) {
         case STATE_START:
-                if (switch_state (name, STATE_LOSFILE)) {}
-                if (switch_state (name, TW_THE_WORD_FILE)) {}
+                if (switch_state (name, STATE_LOSFILE)) {
+                } else if (switch_state (name, TW_THE_WORD_FILE)) {}
                 break;
         case STATE_LOSFILE:
         case TW_THE_WORD_FILE:
                 if (switch_state (name, STATE_HEAD)
-                  || switch_state (name, TW_HEAD)
-                  || switch_state (name, TW_THE_WORD))
+                  || switch_state (name, TW_HEAD))
                 {
                         depth = 1;
-                } else if (switch_state (name, STATE_LOSUNG)) {
+                } else if (switch_state (name, STATE_LOSUNG)
+                  || switch_state (name, TW_THE_WORD))
+                {
                         if (--day != 0) {
                                 depth = 1;
                         }
@@ -230,6 +247,26 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 } else if (switch_state (name, STATE_SR)) {
                 } else if (switch_state (name, STATE_CR)) {
                 } else if (switch_state (name, STATE_C)) {
+                }
+                break;
+        case TW_THE_WORD:
+                if        (switch_state (name, TW_TITLE)) {
+                } else if (switch_state (name, TW_PAROL)) {
+                        if (! quote) {
+                                quote = &ww->ot;
+                        } else {
+                                quote = &ww->nt;
+                        }
+                        quote->location_sword = g_strconcat ("sword:///",
+                                sword_book_title_for_the_word (attrs [1]),
+                                attrs [3], ".", attrs [5], NULL);
+                }
+                break;
+        case TW_PAROL:
+                if        (switch_state (name, TW_INTRO)) {
+                        g_string_append (string, "<i>");
+                } else if (switch_state (name, TW_TEXT)) {
+                } else if (switch_state (name, TW_REF)) {
                 }
                 break;
         case STATE_OT:
@@ -251,8 +288,11 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         case STATE_CR:
                 if (switch_state (name, STATE_SL)) {}
                 break;
+        case TW_TEXT:
         case STATE_L:
-                if (switch_state (name, STATE_EM)) {
+                if (switch_state (name, STATE_EM)
+                    || switch_state (name, TW_EM))
+                {
                         g_string_append (string, "<b>");
                 }
                 break;
@@ -279,15 +319,16 @@ end_element (void *ctx, const xmlChar *name)
 
         switch (state) {
         case STATE_TL:
+        case TW_TITLE:
                 ww->title = pop_string (string);
                 break;
+        case TW_PAROL:
         case STATE_OT:
         case STATE_NT:
                 string->len--;
                 string->str [string->len] = '\0';
                 quote->text = pop_string (string);
                 quote->location = pop_string (location);
-                quote = NULL;
                 break;
         case STATE_SR:
                 ww->selective_reading = pop_string (location);
@@ -301,10 +342,12 @@ end_element (void *ctx, const xmlChar *name)
         case STATE_L:
                 g_string_append_c (string, '\n');
                 break;
+        case TW_INTRO:
         case STATE_IL:
                 g_string_append (string, "</i>");
                 quote->say = pop_string (string);
                 break;
+        case TW_EM:
         case STATE_EM:
                 g_string_append (string, "</b>");
                 break;
@@ -326,12 +369,17 @@ character (void *ctx, const xmlChar *ch, int len)
         }
 
         switch (state) {
+        case TW_TITLE:
+        case TW_INTRO:
+        case TW_EM:
+        case TW_TEXT:
         case STATE_TL:
         case STATE_IL:
         case STATE_EM:
         case STATE_L:
                 g_string_append_len (string, (gchar *) ch, len);
                 break;
+        case TW_REF:
         case STATE_SL:
                 g_string_append_len (location, (gchar *) ch, len);
                 break;
@@ -347,6 +395,7 @@ switch_state (const xmlChar *name, State newState)
         if (strcmp ((char *) name, states [newState]) != 0) {
                 return FALSE;
         }
+        // g_message ("switch state %s", states [newState]);
         stack = g_slist_prepend (stack, GINT_TO_POINTER (state));
         state = newState;
         return TRUE;
@@ -357,12 +406,10 @@ static void
 pop_state (void)
 {
         state = GPOINTER_TO_INT (stack->data);
-        {
-                GSList *list;
-                list = stack;
-                stack = stack->next;
-                g_slist_free_1 (list);
-        }
+        GSList *list;
+        list = stack;
+        stack = stack->next;
+        g_slist_free_1 (list);
 } /* pop_state */
 
 
@@ -456,3 +503,12 @@ sword_book_title (const xmlChar* book)
         }
         return NULL;
 } /* sword_book_title */
+
+
+static const gchar*
+sword_book_title_for_the_word (const xmlChar* book_number)
+{
+        int i = 0;
+        sscanf ((const char *) book_number, "%d", &i);
+        return books [(2 * i) - 1];
+} /* sword_book_title_for_the_word */
