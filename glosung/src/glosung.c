@@ -557,7 +557,12 @@ show_text (void)
 {
         const Losung *ww;
 
-        ww = get_losung (new_date, lang);
+        if (g_date_get_year (new_date) > 2007) {
+                ww = get_the_word (new_date, lang);
+        } else {
+                ww = get_losung (new_date, lang);
+        }
+
         if (ww == NULL) {
                 GtkWidget *error;
                 gchar *text = NULL;
@@ -635,6 +640,9 @@ show_text (void)
                                     ww->continuing_reading, NULL);
                 gtk_label_set_text  (GTK_LABEL (label [READING]), text);
                 g_free (text);
+        } else {
+                gtk_label_set_text  (GTK_LABEL (label [READING]), "");
+                gtk_widget_hide (label [READING]);
         }
 
         gint i;
