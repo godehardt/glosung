@@ -86,7 +86,7 @@ static gchar const * const states [] = {
 
 
 /* buf_len for the string which contains the text while parsing */
-#define LINE_LEN 80
+#define LINE_LEN 255
 
 static State     state;
 static GSList   *stack;
@@ -100,6 +100,10 @@ static GString  *location;
 /****************************\
       Function prototypes
 \****************************/
+
+static const Losung* parse   (GDate          *date,
+                              gchar          *lang,
+                              gchar          *filename);
 
 static void start_element    (void           *ctx,
                               const xmlChar  *name,
@@ -149,7 +153,6 @@ losung_free (const Losung *ww)
 const Losung*
 get_losung (GDate *date, gchar *lang)
 {
-        xmlSAXHandlerPtr  sax;
         gchar            *filename;
         guint             year;
 
@@ -158,10 +161,42 @@ get_losung (GDate *date, gchar *lang)
         if (! filename) {
                 filename = check_file (GLOSUNG_DATA_DIR, year, lang, "");
         }
-        filename = g_strdup ("/home/icke/DEVELOP/glosung/trunk/glosung/theword/de_2008_Schlachter2000.twd");
         if (! filename) {
                 return NULL;
         }
+
+        return parse (date, lang, filename);
+} /* get_losung */
+
+
+/*
+ * public function that parses the xml file and return required Losung.
+ */
+const Losung*
+get_the_word (GDate *date, gchar *lang)
+{
+        gchar            *filename;
+        guint             year;
+
+        year = g_date_get_year (date);
+        filename = g_strdup_printf ("./theword/%s_%d_Schlachter2000.twd",
+                                    lang, year);
+        if (access (filename, F_OK | R_OK) != 0) {
+                g_free (filename);
+                return NULL;
+        }
+
+        return parse (date, lang, filename);
+} /* get_losung */
+
+
+/*
+ * public function that parses the xml file and return required Losung.
+ */
+static const Losung*
+parse (GDate *date, gchar *lang, gchar *filename)
+{
+        xmlSAXHandlerPtr  sax;
 
         sax = g_new0 (xmlSAXHandler, 1);
         sax->startElement = start_element;
@@ -180,7 +215,7 @@ get_losung (GDate *date, gchar *lang)
         quote = NULL;
 
         return ww;
-} /* get_losung */
+} /* parse */
 
 
 /*
