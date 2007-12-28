@@ -1,3 +1,11 @@
+glosung (3.2-beta0) stable; urgency=low
+
+  * show "The Word" automaticaly after 2007
+  * add a little pad arround all text
+  * version bump to 3.2 Beta
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Fri, 28 Dec 2007 17:34:29 +0200
+
 glosung (3.1.1) stable; urgency=low
 
   * small fix for Gnomesword link

@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.1.1'
+version = '3.2\ Beta'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -69,6 +69,9 @@ SConscript ('build/SConscript')
 SConscript ('po/SConscript')
 
 env.Alias ('install', install_dir)
+
+env.Install (dir = install_dir + '/share/glosung',
+     source = ['de_2008_Schlachter2000.twd'])
 
 env.Install (dir = install_dir + doc_dir,
           source = ['AUTHORS', 'COPYING', 'ChangeLog', 'INSTALL', 'README'])
