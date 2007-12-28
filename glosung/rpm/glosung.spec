@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.1.1
+%define version 3.2 Beta
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -55,6 +55,8 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 #%doc README AUTHORS COPYING ChangeLog NEWS TODO
 #%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
 #%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
+
+/usr/share/glosung/de_2008_Schlachter2000.twd
 
 /usr/share/doc/glosung-%{version}/AUTHORS
 /usr/share/doc/glosung-%{version}/COPYING
