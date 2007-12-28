@@ -179,8 +179,8 @@ get_the_word (GDate *date, gchar *lang)
         guint             year;
 
         year = g_date_get_year (date);
-        filename = g_strdup_printf ("./theword/%s_%d_Schlachter2000.twd",
-                                    lang, year);
+        filename = g_strdup_printf
+                (GLOSUNG_DATA_DIR "/%s_%d_Schlachter2000.twd", lang, year);
         if (access (filename, F_OK | R_OK) != 0) {
                 g_free (filename);
                 return NULL;
