@@ -642,6 +642,7 @@ show_text (void)
                 g_free (text);
         } else {
                 gtk_label_set_text  (GTK_LABEL (label [READING]), "");
+                gtk_widget_hide (label [X3]);
                 gtk_widget_hide (label [READING]);
         }
 
