@@ -718,6 +718,7 @@ about_cb (GtkWidget *w, gpointer data)
 {
         const gchar *authors [] = {
                 "Eicke Godehardt",
+                "Sebastian Pätzold (rpm packages)",
                 NULL
         };
         gchar *translators =
