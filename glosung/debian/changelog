@@ -1,8 +1,8 @@
-glosung (3.2-beta0) stable; urgency=low
+glosung (3.2) stable; urgency=low
 
   * show "The Word" automaticaly after 2007
   * add a little pad arround all text
-  * version bump to 3.2 Beta
+  * version bump to 3.2
 
  -- Eicke Godehardt <eicke@godehardt.org>  Fri, 28 Dec 2007 17:34:29 +0200
 

@@ -16,9 +16,19 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 
-Import ('env install_dir')
+Import ('env install_dir tar_file')
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c',
                                 'download.c', 'losunglist.c'])
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
 env.Install (dir = install_dir + '/bin', source = [losung, glosung])
+
+env.Tar (tar_file, ['SConscript',
+                    'download.c',
+                    'download.h',
+                    'glosung.c',
+                    'losung.c',
+                    'losunglist.c',
+                    'losunglist.h',
+                    'parser.c',
+                    'parser.h'])
