@@ -18,9 +18,9 @@
 
 # $Id:$
 
-Import ('env install_dir')
+Import ('env install_dir tar_file')
 
-languages = ['de', 'cs', 'fr', 'sw']
+languages = ['cs', 'de', 'fr']
 
 env.Command ('glosung.pot', '#/src/glosung.c',
              "/usr/bin/xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
@@ -30,5 +30,10 @@ for lang in languages:
             "/usr/bin/msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
     env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
+
+env.Tar (tar_file, ['SConscript',
+                    'cs.po',
+                    'fr.po',
+                    'de.po'])
 
 #msgmerge --update --strict --verbose de.po glosung.pot
