@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.2\ Beta'
+version = '3.2'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -54,6 +54,8 @@ if ARGUMENTS.get ('profile'):
 if (ARGUMENTS.get ('dev')):
     ccflags   += ' -Werror -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED'
 
+tar_file = '#glosung-' + version + '.tar.bz2'
+
 env = Environment (
   platform  = 'posix',
   LINK      = 'gcc',
@@ -61,14 +63,16 @@ env = Environment (
   CPPPATH   = cpppath,
   LINKFLAGS = linkflags,
   CCFLAGS   = ccflags,
-  ENV       = os.environ)
+  ENV       = os.environ,
+  TARFLAGS  = '-c -j')
 
-Export ('env cpppath ccflags install_dir pixmap_dir')
+Export ('env cpppath ccflags install_dir pixmap_dir tar_file')
 
 SConscript ('build/SConscript')
 SConscript ('po/SConscript')
 
 env.Alias ('install', install_dir)
+env.Alias ('package', tar_file)
 
 env.Install (dir = install_dir + '/share/glosung',
      source = ['de_2008_Schlachter2000.twd'])
@@ -82,6 +86,29 @@ env.Install (dir = install_dir + '/share/applications',
           source = 'glosung.desktop')
 env.Install (dir = install_dir + pixmap_dir, source = 'glosung.png')
 env.Install (dir = install_dir + pixmap_dir, source = 'glosung-big.png')
+
+# TODO put everything into a folder "glosung-<VERSION>" and rename build to src
+env.Tar (tar_file, ['AUTHORS',
+                    'COPYING',
+                    'ChangeLog',
+                    'ENhhut.txt',
+                    'ENhist.txt',
+                    'ENintro.txt',
+                    'ENlicens.txt',
+                    'INSTALL',
+                    'NEWS',
+                    'README',
+                    'SConstruct',
+                    'de_2008_Schlachter2000.twd',
+                    'glosung-big.png',
+                    'glosung.desktop',
+                    'glosung.png',
+                    'debian/glosung.files',
+                    'debian/control',
+                    'debian/changelog',
+                    'debian/copyright',
+                    'debian/rules',
+                    'rpm/glosung.spec'])
 
 # dpkg-buildpackage -tc -us -uc -rfakeroot
 # rpmbuild -ba rpm/glosung.spec

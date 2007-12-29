@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.2 Beta
+%define version 3.2
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
