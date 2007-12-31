@@ -140,10 +140,7 @@ static gchar* get_string     (GString *string);
 static const gchar* sword_book_title (const xmlChar *book);
 static const gchar* sword_book_title_for_the_word
                                      (const xmlChar* book_number);
-static gchar* check_file             (gchar         *directory,
-                                      guint          year,
-                                      gchar         *lang,
-                                      gchar         *prefix);
+static gchar* check_file             (gchar         *file);
 
 /*
  * public function that frees the Losung allocated by get_losung.
@@ -172,15 +169,15 @@ losung_free (const Losung *ww)
 const Losung*
 get_orig_losung (GDate *date, gchar *lang)
 {
+        gchar            *file;
         gchar            *filename;
-        guint             year;
 
-        year = g_date_get_year (date);
-        filename = g_strdup ("");
-        filename = g_strdup_printf
-                ("%s/.glosung/Losungen Free %d.xml", getenv ("HOME"), year);
-        if (access (filename, F_OK | R_OK) != 0) {
-                g_free (filename);
+        file = g_strdup_printf ("Losungen Free %d.xml",
+                                g_date_get_year (date));
+        filename = check_file (file);
+        g_free (file);
+
+        if (! filename) {
                 return NULL;
         }
         // g_message ("orig losung");
@@ -195,14 +192,20 @@ get_orig_losung (GDate *date, gchar *lang)
 const Losung*
 get_losung (GDate *date, gchar *lang)
 {
+        gchar            *file;
         gchar            *filename;
         guint             year;
 
         year = g_date_get_year (date) % 100;
-        filename = check_file ("/.glosung", year, lang, getenv ("HOME"));
-        if (! filename) {
-                filename = check_file (GLOSUNG_DATA_DIR, year, lang, "");
+        if (year < 10) {
+                file = g_strdup_printf ("%s_los0%d.xml", lang, year);
+        } else {
+                file = g_strdup_printf ("%s_los%d.xml", lang, year);
         }
+        
+        filename = check_file (file);
+        g_free (file);
+
         if (! filename) {
                 return NULL;
         }
@@ -218,20 +221,45 @@ get_losung (GDate *date, gchar *lang)
 const Losung*
 get_the_word (GDate *date, gchar *lang)
 {
+        gchar            *file;
         gchar            *filename;
-        guint             year;
 
-        year = g_date_get_year (date);
-        filename = g_strdup_printf
-                (GLOSUNG_DATA_DIR "/%s_%d_Schlachter2000.twd", lang, year);
-        if (access (filename, F_OK | R_OK) != 0) {
-                g_free (filename);
+        file = g_strdup_printf ("%s_%d_Schlachter2000.twd",
+                                lang, g_date_get_year (date));
+        filename = check_file (file);
+        g_free (file);
+
+        if (! filename) {
                 return NULL;
         }
         // g_message ("the word");
 
         return parse (date, lang, filename);
 } /* get_losung */
+
+
+/*
+ * This function will check, if the watch word file exists in global
+ * (PREFIX/share/glosung) or local (~/.glosung) directory and will
+ * return the absolute filename or NULL.
+ */
+static gchar*
+check_file (gchar *file)
+{
+        gchar *filename;
+
+        filename = g_strdup_printf ("%s/.glosung/%s", getenv ("HOME"), file);
+        if (access (filename, F_OK | R_OK)) {
+                g_free (filename);
+                filename = g_strdup_printf (GLOSUNG_DATA_DIR "/%s", file);
+                if (access (filename, F_OK | R_OK)) {
+                        g_free (filename);
+                        return NULL;
+                }
+        }
+
+        return filename;
+} /* check_file */
 
 
 /*
@@ -261,31 +289,6 @@ parse (GDate *date, gchar *lang, gchar *filename)
 
         return ww;
 } /* parse */
-
-
-/*
- * This function will check, if the watch word file exists in given
- * directory
- */
-static gchar*
-check_file (gchar *directory, guint year, gchar *lang, gchar *prefix)
-{
-        gchar *filename;
-
-        if (year < 10) {
-                filename = g_strdup_printf
-                        ("%s%s/%s_los0%d.xml", prefix, directory, lang, year);
-        } else {
-                filename = g_strdup_printf
-                        ("%s%s/%s_los%d.xml", prefix, directory, lang, year);
-        }
-
-        if (access (filename, F_OK | R_OK) != 0) {
-                g_free (filename);
-                return NULL;
-        }
-        return filename;
-} /* check_file */
 
 
 /*
