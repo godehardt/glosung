@@ -44,12 +44,9 @@ struct _Losung {
 };
 
 
-/****************************\
-      Function prototypes
-\****************************/
-
-void          losung_free   (const Losung *ww);
-const Losung *get_losung    (GDate *date, gchar *lang);
-const Losung *get_the_word  (GDate *date, gchar *lang);
+void          losung_free     (const Losung *ww);
+const Losung *get_orig_losung (GDate *date, gchar *lang);
+const Losung *get_losung      (GDate *date, gchar *lang);
+const Losung *get_the_word    (GDate *date, gchar *lang);
 
 #endif /* GLOSUNG_PARSER__H */
