@@ -557,10 +557,39 @@ show_text (void)
 {
         const Losung *ww;
 
-        if (g_date_get_year (new_date) > 2007) {
-                ww = get_the_word (new_date, lang);
+        gtk_label_set_line_wrap (GTK_LABEL (label [OT_TEXT]), FALSE);
+        gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), FALSE);
+
+#ifdef VERSE_LINK
+        if (show_sword) {
+                gtk_widget_hide (label [OT_LOC]);
+                gtk_widget_show (label [OT_LOC_SWORD]);
+                gtk_widget_hide (label [NT_LOC]);
+                gtk_widget_show (label [NT_LOC_SWORD]);
         } else {
-                ww = get_losung (new_date, lang);
+                gtk_widget_hide (label [OT_LOC_SWORD]);
+                gtk_widget_show (label [OT_LOC]);
+                gtk_widget_hide (label [NT_LOC_SWORD]);
+                gtk_widget_show (label [NT_LOC]);
+        }
+#endif
+
+        ww = get_losung (new_date, lang);
+        if (! ww) {
+                ww = get_orig_losung (new_date, lang);
+                if (! ww) {
+                        ww = get_the_word (new_date, lang);
+                } else {
+                        gtk_label_set_line_wrap
+                                (GTK_LABEL (label [OT_TEXT]), TRUE);
+                        gtk_label_set_line_wrap
+                                (GTK_LABEL (label [NT_TEXT]), TRUE);
+
+                        gtk_widget_hide (label [OT_LOC_SWORD]);
+                        gtk_widget_show (label [OT_LOC]);
+                        gtk_widget_hide (label [NT_LOC_SWORD]);
+                        gtk_widget_show (label [NT_LOC]);
+                }
         }
 
         if (ww == NULL) {
@@ -598,8 +627,11 @@ show_text (void)
 #ifdef VERSE_LINK
         gtk_button_set_label (GTK_BUTTON (label [OT_LOC_SWORD]),
                              ww->ot.location);
-        gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
-                                  ww->ot.location_sword);
+        if (ww->ot.location_sword) {
+                gtk_link_button_set_uri
+                        (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
+                         ww->ot.location_sword);
+        }
 #endif
         gtk_label_set_text (GTK_LABEL (label [OT_LOC]), ww->ot.location);
 
@@ -615,8 +647,11 @@ show_text (void)
 #ifdef VERSE_LINK
         gtk_button_set_label (GTK_BUTTON (label [NT_LOC_SWORD]),
                              ww->nt.location);
-        gtk_link_button_set_uri  (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
-                                  ww->nt.location_sword);
+        if (ww->nt.location_sword) {
+                gtk_link_button_set_uri
+                        (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
+                         ww->nt.location_sword);
+        }
 #endif
         gtk_label_set_text (GTK_LABEL (label [NT_LOC]), ww->nt.location);
 

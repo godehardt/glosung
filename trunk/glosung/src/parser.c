@@ -55,6 +55,15 @@ STATE_START,
         TW_TEXT,
           TW_EM,
         TW_REF,
+  LOS_DATAROOT,
+    LOS_LOSUNGEN,
+      LOS_DATUM,
+      LOS_WTAG,
+      LOS_SONNTAG,
+      LOS_LOSUNGSTEXT,
+      LOS_LOSUNGSVERS,
+      LOS_LEHRTEXT,
+      LOS_LEHRTEXTVERS,
 } State;
 
 static gchar const * const states [] = {
@@ -82,6 +91,15 @@ static gchar const * const states [] = {
         "text",
           "em",
         "ref",
+  "dataroot",
+    "Losungen",
+      "Datum",
+      "Wtag",
+      "Sonntag",
+      "Losungstext",
+      "Losungsvers",
+      "Lehrtext",
+      "Lehrtextvers",
 };
 
 
@@ -91,6 +109,7 @@ static gchar const * const states [] = {
 static State     state;
 static GSList   *stack;
 static gint      depth;
+static GDate    *datum;
 static gint      day;
 static Losung   *ww = NULL;
 static Passage  *quote = NULL;
@@ -116,7 +135,7 @@ static void character        (void           *ctx,
 static gboolean switch_state (const xmlChar  *name,
                               State           newState);
 static void pop_state        (void);
-static gchar* pop_string     (GString *string);
+static gchar* get_string     (GString *string);
 
 static const gchar* sword_book_title (const xmlChar *book);
 static const gchar* sword_book_title_for_the_word
@@ -151,6 +170,29 @@ losung_free (const Losung *ww)
  * public function that parses the xml file and return required Losung.
  */
 const Losung*
+get_orig_losung (GDate *date, gchar *lang)
+{
+        gchar            *filename;
+        guint             year;
+
+        year = g_date_get_year (date);
+        filename = g_strdup ("");
+        filename = g_strdup_printf
+                ("%s/.glosung/Losungen Free %d.xml", getenv ("HOME"), year);
+        if (access (filename, F_OK | R_OK) != 0) {
+                g_free (filename);
+                return NULL;
+        }
+        // g_message ("orig losung");
+
+        return parse (date, lang, filename);
+} /* get_losung */
+
+
+/*
+ * public function that parses the xml file and return required Losung.
+ */
+const Losung*
 get_losung (GDate *date, gchar *lang)
 {
         gchar            *filename;
@@ -164,6 +206,7 @@ get_losung (GDate *date, gchar *lang)
         if (! filename) {
                 return NULL;
         }
+        // g_message ("losung");
 
         return parse (date, lang, filename);
 } /* get_losung */
@@ -185,6 +228,7 @@ get_the_word (GDate *date, gchar *lang)
                 g_free (filename);
                 return NULL;
         }
+        // g_message ("the word");
 
         return parse (date, lang, filename);
 } /* get_losung */
@@ -203,6 +247,7 @@ parse (GDate *date, gchar *lang, gchar *filename)
         sax->endElement = end_element;
         sax->characters = character;
         state = STATE_START;
+        datum = date;
         day = g_date_get_day_of_year (date);
         ww = g_new0 (Losung, 1);
         string   = g_string_sized_new (LINE_LEN);
@@ -257,20 +302,43 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         switch (state) {
         case STATE_START:
                 if (switch_state (name, STATE_LOSFILE)) {
-                } else if (switch_state (name, TW_THE_WORD_FILE)) {}
+                } else if (switch_state (name, TW_THE_WORD_FILE)) {
+                } else if (switch_state (name, LOS_DATAROOT)) {}
                 break;
         case STATE_LOSFILE:
         case TW_THE_WORD_FILE:
+        case LOS_DATAROOT:
                 if (switch_state (name, STATE_HEAD)
                   || switch_state (name, TW_HEAD))
                 {
                         depth = 1;
                 } else if (switch_state (name, STATE_LOSUNG)
-                  || switch_state (name, TW_THE_WORD))
+                  || switch_state (name, TW_THE_WORD)
+                  || switch_state (name, LOS_LOSUNGEN))
                 {
                         if (--day != 0) {
                                 depth = 1;
                         }
+                }
+                break;
+        case LOS_LOSUNGEN:
+        {
+                gchar buf [64];
+
+                g_date_strftime (buf, 64, "%A, %e. %B %Y", datum);
+                ww->title = g_strdup_printf ("Losung für %s", buf);
+        }
+                if        (switch_state (name, LOS_DATUM)) {
+                } else if (switch_state (name, LOS_WTAG)) {
+                } else if (switch_state (name, LOS_SONNTAG)) {
+                } else if (switch_state (name, LOS_LOSUNGSTEXT)) {
+                        quote = &ww->ot;
+                } else if (switch_state (name, LOS_LOSUNGSVERS)) {
+                        quote = &ww->ot;
+                } else if (switch_state (name, LOS_LEHRTEXT)) {
+                        quote = &ww->nt;
+                } else if (switch_state (name, LOS_LEHRTEXTVERS)) {
+                        quote = &ww->nt;
                 }
                 break;
         case STATE_LOSUNG:
@@ -332,6 +400,7 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 }
                 break;
         default:
+                g_message ("unknown tag %s.", name);
                 g_assert_not_reached ();
                 break;
         }
@@ -344,6 +413,7 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
 static void
 end_element (void *ctx, const xmlChar *name)
 {
+        // g_message ("END OF %s %d", name, depth);
         if (depth > 0) {
                 depth--;
                 if (depth == 0) {
@@ -355,24 +425,30 @@ end_element (void *ctx, const xmlChar *name)
         switch (state) {
         case STATE_TL:
         case TW_TITLE:
-                ww->title = pop_string (string);
+                ww->title = get_string (string);
+                break;
+        case LOS_LOSUNGSTEXT:
+        case LOS_LEHRTEXT:
+                quote->text = get_string (string);
+                break;
+        case LOS_LOSUNGSVERS:
+        case LOS_LEHRTEXTVERS:
+                quote->location = get_string (location);
                 break;
         case TW_PAROL:
         case STATE_OT:
         case STATE_NT:
-                string->len--;
-                string->str [string->len] = '\0';
-                quote->text = pop_string (string);
-                quote->location = pop_string (location);
+                quote->text = get_string (string);
+                quote->location = get_string (location);
                 break;
         case STATE_SR:
-                ww->selective_reading = pop_string (location);
+                ww->selective_reading = get_string (location);
                 break;
         case STATE_CR:
-                ww->continuing_reading = pop_string (location);
+                ww->continuing_reading = get_string (location);
                 break;
         case STATE_C:
-                ww->comment = pop_string (string);
+                ww->comment = get_string (string);
                 break;
         case STATE_L:
                 g_string_append_c (string, '\n');
@@ -380,7 +456,7 @@ end_element (void *ctx, const xmlChar *name)
         case TW_INTRO:
         case STATE_IL:
                 g_string_append (string, "</i>");
-                quote->say = pop_string (string);
+                quote->say = get_string (string);
                 break;
         case TW_EM:
         case STATE_EM:
@@ -404,6 +480,8 @@ character (void *ctx, const xmlChar *ch, int len)
         }
 
         switch (state) {
+        case LOS_LOSUNGSTEXT:
+        case LOS_LEHRTEXT:
         case TW_TITLE:
         case TW_INTRO:
         case TW_EM:
@@ -414,6 +492,8 @@ character (void *ctx, const xmlChar *ch, int len)
         case STATE_L:
                 g_string_append_len (string, (gchar *) ch, len);
                 break;
+        case LOS_LOSUNGSVERS:
+        case LOS_LEHRTEXTVERS:
         case TW_REF:
         case STATE_SL:
                 g_string_append_len (location, (gchar *) ch, len);
@@ -440,6 +520,10 @@ switch_state (const xmlChar *name, State newState)
 static void
 pop_state (void)
 {
+        if (! stack) {
+                g_assert_not_reached ();
+                return;
+        }
         state = GPOINTER_TO_INT (stack->data);
         GSList *list;
         list = stack;
@@ -449,11 +533,17 @@ pop_state (void)
 
 
 static gchar*
-pop_string (GString *string)
+get_string (GString *string)
 {
+        if (string->str [string->len - 1] == '\r'
+            || string->str [string->len - 1] == '\n')
+        {
+                string->len--;
+                string->str [string->len] = '\0';
+        }
         string->len = 0;
         return g_strdup (string->str);
-} /* pop_string */
+} /* get_string */
 
 
 static gchar const * const books [] = {
