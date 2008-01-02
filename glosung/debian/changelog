@@ -1,3 +1,10 @@
+glosung (3.2.1) stable; urgency=low
+
+  * add support for the "original" Losung file format.
+  * version bump to 3.2.1
+
+ -- Eicke Godehardt <eicke@godehardt.org>  Mon, 31 Dec 2007 15:35:04 +0200
+
 glosung (3.2) stable; urgency=low
 
   * show "The Word" automaticaly after 2007
