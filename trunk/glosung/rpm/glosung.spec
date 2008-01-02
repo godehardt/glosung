@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.2
+%define version 3.2.1
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -56,8 +56,6 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 #%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
 #%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
 
-/usr/share/glosung/de_2008_Schlachter2000.twd
-
 /usr/share/doc/glosung-%{version}/AUTHORS
 /usr/share/doc/glosung-%{version}/COPYING
 /usr/share/doc/glosung-%{version}/ChangeLog
@@ -72,6 +70,15 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
  
 
 %changelog
+* Mon Dec 31 2007 Eicke Godehardt <eicke@godehardt.org>
+- add support for the "original" Losung file format.
+- version bump to 3.2.1
+
+* Fri Dec 28 2007 Eicke Godehardt <eicke@godehardt.org>
+- show "The Word" automaticaly after 2007
+- add a little pad arround all text
+- version bump to 3.2
+
 * Sun Sep 30 2007 Eicke Godehardt <eicke@godehardt.org>
 - small fix for Gnomesword link
 - start only once parameter (--once)
