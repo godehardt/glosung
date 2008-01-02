@@ -17,6 +17,8 @@
  * MA 02111-1307, USA.
  */
 
+#include <glib/gi18n.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -328,8 +330,10 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         {
                 gchar buf [64];
 
-                g_date_strftime (buf, 64, "%A, %e. %B %Y", datum);
-                ww->title = g_strdup_printf ("Losung für %s", buf);
+                // title: timestring according to 'man strftime'
+                g_date_strftime (buf, 64,
+                                 _("Watchword for %A, %e. %B %Y"), datum);
+                ww->title = g_strdup (buf);
         }
                 if        (switch_state (name, LOS_DATUM)) {
                 } else if (switch_state (name, LOS_WTAG)) {

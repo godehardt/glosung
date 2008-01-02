@@ -234,7 +234,7 @@ static GtkActionEntry entries[] = {
           N_("copy the Watchword to clipboard"), G_CALLBACK (clipboard_cb) },
         { "Organize", NULL, N_("_Organize Watchwords..."), NULL,
           N_("update/install watchword files"), G_CALLBACK (lang_manager_cb) },
-        { "Preferences", GTK_STOCK_PREFERENCES, N_("_Preferences..."), NULL,
+        { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
         { "About", GTK_STOCK_ABOUT, NULL, NULL,
