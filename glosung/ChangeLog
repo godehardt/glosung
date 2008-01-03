@@ -1,3 +1,7 @@
+2008-01-03 Eicke Godehardt <eicke@godehardt.org>
+
+	* fix text wrapping problem
+
 2007-12-31 Eicke Godehardt <eicke@godehardt.org>
 
 	* add support for the "original" Losung file format.
