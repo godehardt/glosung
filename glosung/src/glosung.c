@@ -17,6 +17,12 @@
  * MA 02111-1307, USA.
  */
 
+#define GETTEXT_PACKAGE "glosung"
+#define PACKAGE "glosung"
+#define APPNAME "GLosung"
+
+#define ENABLE_NLS
+
 #include <gtk/gtkversion.h>
 
 #if GTK_MINOR_VERSION >= (10)
@@ -68,12 +74,6 @@
 
 #include "parser.h"
 #include "download.h"
-
-
-#define ENABLE_NLS
-
-#define PACKAGE "glosung"
-#define APPNAME "GLosung"
 
 
 /****************************\
@@ -164,6 +164,7 @@ static void sword_cb             (GtkWidget *toggle,   gpointer data);
 static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
+static void my_wrap              (gchar     *string);
 
 
 /******************************\
@@ -171,6 +172,7 @@ static void clipboard_cb         (GtkWidget *w,   gpointer data);
 \******************************/
 
 #define MY_PAD 10
+#define WRAP_SIZE 47
 
 
 static gchar* uistring =
@@ -258,6 +260,17 @@ main (int argc, char **argv)
         bindtextdomain (PACKAGE, "/usr/share/locale");
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
+
+        /*
+        {
+        gchar **list = g_get_language_names ();
+        int i;
+
+        for (i = 0; list [i]; i++) {
+                g_message (list [i]);
+        }
+        }
+        */
 
         /* Initialize GTK */
         gboolean once = FALSE;
@@ -480,7 +493,7 @@ create_app (void)
 
         content = gtk_vbox_new (FALSE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (content), MY_PAD);
-        gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, FALSE, 0);
 
         for (i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
@@ -557,9 +570,6 @@ show_text (void)
 {
         const Losung *ww;
 
-        gtk_label_set_line_wrap (GTK_LABEL (label [OT_TEXT]), FALSE);
-        gtk_label_set_line_wrap (GTK_LABEL (label [NT_TEXT]), FALSE);
-
 #ifdef VERSE_LINK
         if (show_sword) {
                 gtk_widget_hide (label [OT_LOC]);
@@ -580,10 +590,8 @@ show_text (void)
                 if (! ww) {
                         ww = get_the_word (new_date, lang);
                 } else {
-                        gtk_label_set_line_wrap
-                                (GTK_LABEL (label [OT_TEXT]), TRUE);
-                        gtk_label_set_line_wrap
-                                (GTK_LABEL (label [NT_TEXT]), TRUE);
+                        my_wrap (ww->ot.text);
+                        my_wrap (ww->nt.text);
 
                         gtk_widget_hide (label [OT_LOC_SWORD]);
                         gtk_widget_show (label [OT_LOC]);
@@ -1495,3 +1503,19 @@ clipboard_cb (GtkWidget *w, gpointer data)
         gtk_clipboard_set_text (clipboard,
                                 losung_simple_text, losung_simple_text_len);
 } /* clipboard_cb */
+
+
+static void
+my_wrap (gchar *string)
+{
+        int len = strlen (string);
+        int index = 0;
+
+        while (index + WRAP_SIZE < len) {
+                index += WRAP_SIZE;
+                while (string [index] != ' ') {
+                        index--;
+                }
+                string [index] = '\n';
+        }
+} /* my_wrap */
