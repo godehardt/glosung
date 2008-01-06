@@ -74,6 +74,7 @@
 
 #include "parser.h"
 #include "download.h"
+#include "about.h"
 
 
 /****************************\
@@ -760,29 +761,7 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 static void 
 about_cb (GtkWidget *w, gpointer data)
 {
-        const gchar *authors [] = {
-                "Eicke Godehardt",
-                "Sebastian Pätzold (rpm packages)",
-                NULL
-        };
-        gchar *translators =
-                "Marek Drápal\nEicke Godehardt\nNicolas\nEmanuel Feruzi";
-
-        GError *error = NULL;
-        GdkPixbuf *logo =  gdk_pixbuf_new_from_file
-                (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
-
-        gtk_show_about_dialog (GTK_WINDOW (app),
-                 "authors", authors,
-                 "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2008 Eicke Godehardt",
-                 // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
-                 "logo", logo,
-                 "name", APPNAME,
-                 "translator-credits", translators,
-                 "version", VERSION,
-                 "website", "http://www.godehardt.org/losung.html",
-                 NULL);
+        about (app);
 } /* about_cb */
 
 

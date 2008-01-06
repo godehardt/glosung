@@ -19,11 +19,13 @@
 Import ('env install_dir tar_file')
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c',
-                                'download.c', 'losunglist.c'])
+                                'download.c', 'losunglist.c', 'about.c'])
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
 env.Install (dir = install_dir + '/bin', source = [losung, glosung])
 
 env.Tar (tar_file, ['SConscript',
+                    'about.c',
+                    'about.h',
                     'download.c',
                     'download.h',
                     'glosung.c',
