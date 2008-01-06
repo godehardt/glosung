@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2002 Eicke Godehardt
+# Copyright (C) 1999-2008 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ Import ('env install_dir tar_file')
 
 languages = ['cs', 'de', 'fr']
 
-env.Command ('glosung.pot', '#/src/glosung.c',
+env.Command ('glosung.pot', ['#/src/glosung.c', '#/src/parser.c'],
              "/usr/bin/xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
     env.Execute (action = "/usr/bin/msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
