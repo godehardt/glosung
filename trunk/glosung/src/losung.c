@@ -1,5 +1,5 @@
 /* losung.c
- * Copyright (C) 2006-2007 Eicke Godehardt
+ * Copyright (C) 2006-2008 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ static void       show_text             (void);
 
 static GOptionEntry entries[] = {
   { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "language of watch word", "de" },
-  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or relative, e.g., +1, -2m", "2007-08-05" },
+  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or relative, e.g., +1, -2m", "2008-08-05" },
   { NULL }
 };
 
