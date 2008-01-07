@@ -137,11 +137,12 @@ static void character        (void           *ctx,
 static gboolean switch_state (const xmlChar  *name,
                               State           newState);
 static void pop_state        (void);
-static gchar* get_string     (GString *string);
+static gchar* get_string             (GString       *string);
+static gchar* get_string_with_markup (GString       *string);
 
 static const gchar* sword_book_title (const xmlChar *book);
 static const gchar* sword_book_title_for_the_word
-                                     (const xmlChar* book_number);
+                                     (const xmlChar *book_number);
 static gchar* check_file             (gchar         *file);
 
 /*
@@ -436,7 +437,7 @@ end_element (void *ctx, const xmlChar *name)
                 break;
         case LOS_LOSUNGSTEXT:
         case LOS_LEHRTEXT:
-                quote->text = get_string (string);
+                quote->text = get_string_with_markup (string);
                 break;
         case LOS_LOSUNGSVERS:
         case LOS_LEHRTEXTVERS:
@@ -551,6 +552,70 @@ get_string (GString *string)
         string->len = 0;
         return g_strdup (string->str);
 } /* get_string */
+
+
+static gchar*
+get_string_with_markup (GString *string)
+{
+        int index;
+
+        if (string->str [string->len - 1] == '\r'
+            || string->str [string->len - 1] == '\n')
+        {
+                string->len--;
+                string->str [string->len] = '\0';
+        }
+        for (index = 0; index < string->len; index++) {
+                if (string->str [index] == '#' || string->str [index] == '/') {
+                        break;
+                }
+        }
+        if (index != string->len) {
+                gchar   *result;
+                gboolean bold    = FALSE;
+                gboolean italic  = FALSE;
+                GString *string2 = g_string_new_len (string->str, index);
+
+                do {
+                switch (string->str [index]) {
+                case '#':
+                        if (! bold) {
+                                g_string_append (string2, "<b>");
+                        } else {
+                                g_string_append (string2, "</b>");
+                        }
+                        bold = ! bold;
+                        break;
+                case '/':
+                        if (! italic) {
+                                g_string_append (string2, "<i>");
+                        } else {
+                                g_string_append (string2, "</i>");
+                        }
+                        italic = ! italic;
+                        break;
+                }
+                for (index++; index < string->len; index++) {
+                        if (string->str [index] == '#'
+                            || string->str [index] == '/')
+                        {
+                                break;
+                        } else {
+                                g_string_append_c
+                                        (string2, string->str [index]);
+                        }
+                }
+                } while (index < string->len);
+
+                result = g_strdup (string2->str);
+                g_string_free (string2, TRUE);
+                string->len = 0;
+                return result;
+        }
+        
+        string->len = 0;
+        return g_strdup (string->str);
+} /* get_string_with_markup */
 
 
 static gchar const * const books [] = {
