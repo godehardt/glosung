@@ -32,14 +32,10 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
-
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
 
 #include <gconf/gconf-client.h>
 
@@ -129,9 +125,6 @@ static LosungList *server_list = NULL;
 \****************************/
 
 static GHashTable *init_languages            (void);
-static LosungList *scan_for_languages        (void);
-static void        scan_for_languages_in_dir (gchar      *dirname,
-                                              LosungList *list);
 
 static void       get_time              (void);
 static void       show_text             (void);
@@ -306,7 +299,7 @@ main (int argc, char **argv)
                 (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
 
         lang_translations = init_languages ();
-        languages         = scan_for_languages ();
+        languages         = scan_for_files ();
 
         lang = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/language", NULL);
@@ -389,60 +382,6 @@ init_languages (void)
 
         return ht;
 } /* init_languages */
-
-
-static LosungList *
-scan_for_languages (void)
-{
-        gchar *dirname;
-        LosungList *list = losunglist_new ();
-
-        scan_for_languages_in_dir (GLOSUNG_DATA_DIR, list);
-        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
-        scan_for_languages_in_dir (dirname, list);
-        g_free (dirname);
-        losunglist_finialize (list);
-
-        printf ("Found languages: ");
-        guint i = 0;
-        for (i = 0; i < (list->languages)->len; i++) {
-                printf ("%s ",
-                        (gchar*) g_ptr_array_index (list->languages, i));
-        }
-        printf ("\n");
-
-        return list;
-} /* scan_for_languages */
-
-
-static void
-scan_for_languages_in_dir (gchar *dirname, LosungList *list) 
-{
-        if (access (dirname, F_OK | R_OK) != 0) {
-                return;
-        }
-        GDir  *dir = g_dir_open (dirname, 0, NULL);
-        const  gchar *name;
-
-        while ((name = g_dir_read_name (dir)) != NULL) {
-                int len = strlen (name);
-                if ((len != 12 && len != 15)
-                    || (strncmp (name + len - 4, ".xml", 4)) != 0
-                    || (strncmp (name + len - 10, "_los", 4)) != 0
-                    || ! isdigit (name [len - 6])
-                    || ! isdigit (name [len - 5])) {
-                        continue;
-                }
-                gchar *langu = g_strndup (name, len - 10);
-                int year = 1900
-                        + (name [len - 6] - 48) * 10
-                        + (name [len - 5] - 48);
-                if (year < 1970) {
-                        year += 100;
-                }
-                losunglist_add (list, langu, year);
-        }
-} /* scan_for_languages_in_dir */
 
 
 /*

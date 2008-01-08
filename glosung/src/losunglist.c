@@ -17,8 +17,15 @@
  * MA 02111-1307, USA.
  */
 
+#include <ctype.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+
+#include <glib/gdir.h>
 #include <glib/gmem.h>
+#include <glib/gstrfuncs.h>
 
 #include "losunglist.h"
 
@@ -26,6 +33,8 @@
 static void sort_years (gpointer key, gpointer value, gpointer langs);
 static gint int_comp (gconstpointer a, gconstpointer b);
 static gint str_comp (gconstpointer a, gconstpointer b);
+
+static void scan_for_languages_in_dir (gchar *dirname, LosungList *list);
 
 
 LosungList*
@@ -86,3 +95,101 @@ str_comp (gconstpointer a, gconstpointer b)
 {
         return strcmp (*((gchar**)a), *((gchar**)b));
 }
+
+
+
+
+LosungList*
+scan_for_files (void)
+{
+        gchar *dirname;
+        LosungList *list = losunglist_new ();
+
+        scan_for_languages_in_dir (GLOSUNG_DATA_DIR, list);
+        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
+        scan_for_languages_in_dir (dirname, list);
+        g_free (dirname);
+        losunglist_finialize (list);
+
+        printf ("Found languages: ");
+        guint i = 0;
+        for (i = 0; i < (list->languages)->len; i++) {
+                printf ("%s ",
+                        (gchar*) g_ptr_array_index (list->languages, i));
+        }
+        printf ("\n");
+
+        return list;
+} /* scan_for_languages */
+
+
+static gboolean
+check_for_losung_file (gchar *name, int len, LosungList *list)
+{
+        if ((len == 12 || len == 15)
+            && (strncmp (name + len -  4, ".xml", 4)) == 0
+            && (strncmp (name + len - 10, "_los", 4)) == 0
+            && isdigit (name [len - 6])
+            && isdigit (name [len - 5]))
+        {
+                gchar *langu = g_strndup (name, len - 10);
+                int year = 1900
+                        + (name [len - 6] - 48) * 10
+                        + (name [len - 5] - 48);
+                if (year < 1970) {
+                        year += 100;
+                }
+                losunglist_add (list, langu, year);
+                return TRUE;
+        } else {
+                return FALSE;
+        }
+}
+
+
+static gboolean
+check_for_theword_file (gchar *name, int len, LosungList *list)
+{
+        if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
+                gchar *langu = g_strndup (name, 2);
+                int year;
+                sscanf (name + 3, "%d", &year);
+                losunglist_add (list, langu, year);
+                return TRUE;
+        } else {
+                return FALSE;
+        }
+}
+
+
+static gboolean
+check_for_original_losung_file (gchar *name, int len, LosungList *list)
+{
+        if ((strncmp (name, "Losungen Free", 13)) == 0) {
+                gchar *langu = g_strdup ("de");
+                int year;
+                sscanf (name + 14, "%d", &year);
+                losunglist_add (list, langu, year);
+                return TRUE;
+        } else {
+                return FALSE;
+        }
+}
+
+
+static void
+scan_for_languages_in_dir (gchar *dirname, LosungList *list) 
+{
+        if (access (dirname, F_OK | R_OK) != 0) {
+                return;
+        }
+        GDir  *dir = g_dir_open (dirname, 0, NULL);
+        const  gchar *name;
+
+        while ((name = g_dir_read_name (dir)) != NULL) {
+                int len = strlen (name);
+                check_for_losung_file          ((gchar *)name, len, list);
+                check_for_original_losung_file ((gchar *)name, len, list);
+                check_for_theword_file         ((gchar *)name, len, list);
+        }
+} /* scan_for_languages_in_dir */
