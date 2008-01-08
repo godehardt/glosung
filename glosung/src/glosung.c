@@ -510,20 +510,6 @@ show_text (void)
 {
         const Losung *ww;
 
-#ifdef VERSE_LINK
-        if (show_sword) {
-                gtk_widget_hide (label [OT_LOC]);
-                gtk_widget_show (label [OT_LOC_SWORD]);
-                gtk_widget_hide (label [NT_LOC]);
-                gtk_widget_show (label [NT_LOC_SWORD]);
-        } else {
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_show (label [OT_LOC]);
-                gtk_widget_hide (label [NT_LOC_SWORD]);
-                gtk_widget_show (label [NT_LOC]);
-        }
-#endif
-
         ww = get_losung (new_date, lang);
         if (! ww) {
                 ww = get_orig_losung (new_date, lang);
@@ -532,11 +518,6 @@ show_text (void)
                 } else {
                         my_wrap (ww->ot.text);
                         my_wrap (ww->nt.text);
-
-                        gtk_widget_hide (label [OT_LOC_SWORD]);
-                        gtk_widget_show (label [OT_LOC]);
-                        gtk_widget_hide (label [NT_LOC_SWORD]);
-                        gtk_widget_show (label [NT_LOC]);
                 }
         }
 
@@ -579,6 +560,13 @@ show_text (void)
                 gtk_link_button_set_uri
                         (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
                          ww->ot.location_sword);
+                if (show_sword) {
+                        gtk_widget_hide (label [OT_LOC]);
+                        gtk_widget_show (label [OT_LOC_SWORD]);
+                }
+        } else {
+                gtk_widget_hide (label [OT_LOC_SWORD]);
+                gtk_widget_show (label [OT_LOC]);
         }
 #endif
         gtk_label_set_text (GTK_LABEL (label [OT_LOC]), ww->ot.location);
@@ -599,6 +587,13 @@ show_text (void)
                 gtk_link_button_set_uri
                         (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
                          ww->nt.location_sword);
+                if (show_sword) {
+                        gtk_widget_hide (label [NT_LOC]);
+                        gtk_widget_show (label [NT_LOC_SWORD]);
+                }
+        } else {
+                gtk_widget_hide (label [NT_LOC_SWORD]);
+                gtk_widget_show (label [NT_LOC]);
         }
 #endif
         gtk_label_set_text (GTK_LABEL (label [NT_LOC]), ww->nt.location);
