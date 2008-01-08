@@ -9,18 +9,22 @@ Release:        %{release}
 Source0:        %{name}-%{version}.tar.bz2
 Group:          Applications/Productivity
 Vendor:         Eicke Godehardt <eicke AT godehardt DOT org>
-Packager:       Eicke Godehardt <eicke AT godehardt DOT org>
+Packager:       Sebastian Pätzold <sebastian AT paetzold-family DOT de>
 URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       gtk2 >= 2.10
 Requires:       libxml2 >= 2.0
-#Requires:       libcurl
-#BuildRequires:  libxml-devel >= 2.0
-#BuildRequires:  libgtk2-devel >= 2.4
+# Requires:       libcurl
+# BuildRequires:  libxml-devel >= 2.0
+# BuildRequires:  libgtk2-devel >= 2.4
 Prefix:         %{_prefix}
-BuildArchitectures: i386
-Copyright:      Eicke Godehardt
-#License:       GPL
+# BuildArchitectures: i386
+# Distribution:
+Copyright:      (C) 1999-2008 Eicke Godehardt
+License:        GPL
+# This Software is copyright (c) 1999-2008 by Eicke Godehardt.
+# You are free to distribute this software under the terms
+# of the GNU General Public License.
 
 %description
 This program shows the watch words (german: Losungen) for each day.
@@ -28,7 +32,7 @@ The `Losungen' are words out of the bible, one from the Old
 and one from the New Testament.
 
 %prep
-%setup -q
+%setup
 
 %build
 scons
@@ -45,13 +49,14 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 %files
 %defattr(-,root,root)
 /usr/bin/glosung
+/usr/bin/losung
 /usr/share/applications/glosung.desktop
 /usr/share/pixmaps/glosung.png
 /usr/share/pixmaps/glosung-big.png
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
-/usr/share/locale/sw/LC_MESSAGES/glosung.mo
+
 #%doc README AUTHORS COPYING ChangeLog NEWS TODO
 #%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
 #%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
@@ -62,12 +67,6 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/share/doc/glosung-%{version}/INSTALL
 /usr/share/doc/glosung-%{version}/README
 
-/usr/share/doc/glosung-%{version}/ENdist.txt
-/usr/share/doc/glosung-%{version}/ENhhut.txt
-/usr/share/doc/glosung-%{version}/ENhist.txt
-/usr/share/doc/glosung-%{version}/ENintro.txt
-/usr/share/doc/glosung-%{version}/ENlicens.txt
- 
 
 %changelog
 * Mon Dec 31 2007 Eicke Godehardt <eicke@godehardt.org>
