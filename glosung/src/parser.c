@@ -141,8 +141,12 @@ static gchar* get_string             (GString       *string);
 static gchar* get_string_with_markup (GString       *string);
 
 static const gchar* sword_book_title (const xmlChar *book);
+static const gchar* sword_book_title_for_original_losung
+                                     (const gchar   *book);
 static const gchar* sword_book_title_for_the_word
                                      (const xmlChar *book_number);
+static gchar* sword_link_for_original_losung
+                                     (const gchar   *location);
 static gchar* check_file             (gchar         *file);
 
 /*
@@ -442,6 +446,9 @@ end_element (void *ctx, const xmlChar *name)
         case LOS_LOSUNGSVERS:
         case LOS_LEHRTEXTVERS:
                 quote->location = get_string (location);
+                quote->location_sword =
+                        sword_link_for_original_losung (quote->location);
+                g_message ("%s -> %s", quote->location, quote->location_sword);
                 break;
         case TW_PAROL:
         case STATE_OT:
@@ -618,7 +625,11 @@ get_string_with_markup (GString *string)
 } /* get_string_with_markup */
 
 
-/* sword name, old losung abbreviation, first charachters of german Lousng */
+/*
+ * 0: sword book name
+ * 1: old losung book name abbreviation
+ * 2: original german Losung book name
+ */
 static gchar const * const books [][3] = {
    {"Genesis",         "Gn",   "1.Mose"},
    {"Exodus",          "Ex",   "2.Mose"},
@@ -627,7 +638,7 @@ static gchar const * const books [][3] = {
    {"Deuteronomy",     "Dt",   "5.Mose"},
    {"Joshua",          "Jos",  "Josua"},
    {"Judges",          "Jdc",  "Richter"},
-   {"Ruth",            "Rth",  "Rut"},
+   {"Ruth",            "Rth",  "Rut "},
    {"I Samuel",        "1Sm",  "1.Samuel"},
    {"II Samuel",       "2Sm",  "2.Samuel"},
    {"I Kings",         "1Rg",  "1.Könige"},
@@ -705,11 +716,13 @@ sword_book_title (const xmlChar* book)
 
 
 static const gchar*
-sword_book_title_for_original_losung (const xmlChar* book)
+sword_book_title_for_original_losung (const gchar *book)
 {
         int i = 0;
+        int len = 4;//strlen (book);
+
         while (books [i] != NULL) {
-                if (strcmp ((char *) books [i][2], (char *) book) == 0) {
+                if (strncmp ((char *) books [i][2], (char *) book, len) == 0) {
                         return books [i][0];
                 }
                 i++;
@@ -719,9 +732,33 @@ sword_book_title_for_original_losung (const xmlChar* book)
 
 
 static const gchar*
-sword_book_title_for_the_word (const xmlChar* book_number)
+sword_book_title_for_the_word (const xmlChar *book_number)
 {
         int i = 0;
         sscanf ((const char *) book_number, "%d", &i);
         return books [i - 1][0];
 } /* sword_book_title_for_the_word */
+
+
+/*
+ * construct sword link out of original Losung location string
+ */
+static gchar*
+sword_link_for_original_losung (const gchar *location)
+{
+        int chapter;
+        int verse;
+        int index = strlen (location);
+        while (index > 0 && location [--index] != ',')
+                ;
+        sscanf (location + index + 1, "%d", &verse);
+        while (index > 0 && location [--index] != ' ')
+                ;
+        sscanf (location + index + 1, "%d", &chapter);
+        
+        return g_strdup_printf
+                ("sword:///%s %d.%d",
+                 sword_book_title_for_original_losung (location),
+                 chapter, verse);
+} /* sword_link_for_original_losung */
+xs
