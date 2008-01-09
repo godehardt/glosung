@@ -99,6 +99,10 @@ str_comp (gconstpointer a, gconstpointer b)
 
 
 
+/*
+ * This function will search for several kind of losung files in
+ * global and local directory.
+ */
 LosungList*
 scan_for_files (void)
 {
@@ -120,7 +124,7 @@ scan_for_files (void)
         printf ("\n");
 
         return list;
-} /* scan_for_languages */
+} /* scan_for_files */
 
 
 static gboolean
@@ -165,7 +169,9 @@ check_for_theword_file (gchar *name, int len, LosungList *list)
 static gboolean
 check_for_original_losung_file (gchar *name, int len, LosungList *list)
 {
-        if ((strncmp (name, "Losungen Free", 13)) == 0) {
+        if ((strncmp (name, "Losungen Free", 13)) == 0
+            && (strncmp (name + len -  4, ".xml", 4)) == 0)
+        {
                 gchar *langu = g_strdup ("de");
                 int year;
                 sscanf (name + 14, "%d", &year);
