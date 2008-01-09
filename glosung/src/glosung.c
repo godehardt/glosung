@@ -1198,7 +1198,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         dialog = gtk_dialog_new_with_buttons
                 (_("Languages"),
                  GTK_WINDOW (app),
-                 GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                 // GTK_DIALOG_MODAL |
+                 GTK_DIALOG_DESTROY_WITH_PARENT,
                  GTK_STOCK_OK,
                  GTK_RESPONSE_NONE,
                  NULL);
@@ -1248,6 +1249,19 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
+        
+        {
+                GtkWidget *warning = gtk_message_dialog_new
+                    (GTK_WINDOW (dialog), GTK_DIALOG_DESTROY_WITH_PARENT,
+                     GTK_MESSAGE_WARNING, GTK_BUTTONS_CLOSE,
+                     _("This dialog only works for losung files until 2007!\n"
+                       "Please look on GLosung's homepage "
+                       "(www.godehardt.org/losung.html) for a desciption of "
+                       "adding texts from Herrenhut and/or bible20.net."));
+                g_signal_connect (G_OBJECT (warning), "response",
+                                  G_CALLBACK (gtk_widget_destroy), NULL);
+                gtk_widget_show (warning);
+        }
 } /* lang_manager_cb */
 
 
