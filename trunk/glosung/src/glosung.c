@@ -266,7 +266,6 @@ main (int argc, char **argv)
         }
         */
 
-        /* Initialize GTK */
         gboolean once = FALSE;
         GOptionEntry options[] = {
                 { "once", '1', 0, G_OPTION_ARG_NONE, &once,
@@ -274,6 +273,11 @@ main (int argc, char **argv)
                 { NULL }
         };
         gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
+        if (error) {
+                fprintf (stderr, "Error: %s\n", error->message);
+                g_error_free (error);
+                exit (1);
+        }
 
         client = gconf_client_get_default ();
         date = g_date_new ();
