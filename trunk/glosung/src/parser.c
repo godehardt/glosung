@@ -618,74 +618,76 @@ get_string_with_markup (GString *string)
 } /* get_string_with_markup */
 
 
-static gchar const * const books [] = {
-        "Gn",   "Genesis",
-        "Ex",   "Exodus",
-        "Lv",   "Leviticus",
-        "Nu",   "Numbers",
-        "Dt",   "Deuteronomy",
-        "Jos",  "Joshua",
-        "Jdc",  "Judges",
-        "Rth",  "Ruth",
-        "1Sm",  "I Samuel",
-        "2Sm",  "II Samuel",
-        "1Rg",  "I Kings",
-        "2Rg",  "II Kings",
-        "1Chr", "I Chronicles",
-        "2Chr", "II Chronicles",
-        "Esr",  "Ezra",
-        "Neh",  "Nehemiah",
-        "Esth", "Esther",
-        "Job",  "Job",
-        "Ps",   "Psalms",
-        "Prv",  "Proverbs",
-        "Eccl", "Ecclesiastes",
-        "Ct",   "Song of Solomon",
-        "Is",   "Isaiah",
-        "Jr",   "Jeremiah",
-        "Thr",  "Lamentations",
-        "Ez",   "Ezekiel",
-        "Dn",   "Daniel",
-        "Hos",  "Hosea",
-        "Joel", "Joel",
-        "Am",   "Amos",
-        "Ob",   "Obadiah",
-        "Jon",  "Jonah",
-        "Mch",  "Micah",
-        "Nah",  "Nahum",
-        "Hab",  "Habakkuk",
-        "Zph",  "Zephaniah",
-        "Hgg",  "Haggai",
-        "Zch",  "Zechariah",
-        "Ml",   "Malachi",
-        "Mt",   "Matthew",
-        "Mc",   "Mark",
-        "L",    "Luke",
-        "J",    "John",
-        "Act",  "Acts",
-        "R",    "Romans",
-        "1K",   "I Corinthians",
-        "2K",   "II Corinthians",
-        "G",    "Galatians",
-        "E",    "Ephesians",
-        "Ph",   "Philippians",
-        "Kol",  "Colossians",
-        "1Th",  "I Thessalonians",
-        "2Th",  "II Thessalonians",
-        "1T",   "I Timothy",
-        "2T",   "II Timothy",
-        "Tt",   "Titus",
-        "Phm",  "Philemon",
-        "H",    "Hebrews",
-        "Jc",   "James",
-        "1P",   "I Peter",
-        "2P",   "II Peter",
-        "1J",   "I John",
-        "2J",   "II John",
-        "3J",   "III John",
-        "Jd",   "Jude",
-        "Ap",   "Revelation of John",
-        NULL};
+/* sword name, old losung abbreviation, first charachters of german Lousng */
+static gchar const * const books [][3] = {
+   {"Genesis",         "Gn",   "1.Mose"},
+   {"Exodus",          "Ex",   "2.Mose"},
+   {"Leviticus",       "Lv",   "3.Mose"},
+   {"Numbers",         "Nu",   "4.Mose"},
+   {"Deuteronomy",     "Dt",   "5.Mose"},
+   {"Joshua",          "Jos",  "Josua"},
+   {"Judges",          "Jdc",  "Richter"},
+   {"Ruth",            "Rth",  "Rut"},
+   {"I Samuel",        "1Sm",  "1.Samuel"},
+   {"II Samuel",       "2Sm",  "2.Samuel"},
+   {"I Kings",         "1Rg",  "1.Könige"},
+   {"II Kings",        "2Rg",  "2.Könige"},
+   {"I Chronicles",    "1Chr", "1.Chronik"},
+   {"II Chronicles",   "2Chr", "2.Chronik"},
+   {"Ezra",            "Esr",  "Esra"},
+   {"Nehemiah",        "Neh",  "Nehemia"},
+   {"Esther",          "Esth", "Ester"},
+   {"Job",             "Job",  "Hiob"},
+   {"Psalms",          "Ps",   "Psalm"},
+   {"Proverbs",        "Prv",  "Sprüche"},
+   {"Ecclesiastes",    "Eccl", "Prediger"},
+   {"Song of Solomon", "Ct",   "Hohelied"},
+   {"Isaiah",          "Is",   "Jesaja"},
+   {"Jeremiah",        "Jr",   "Jeremia"},
+   {"Lamentations",    "Thr",  "Klagelieder"},
+   {"Ezekiel",         "Ez",   "Hesekiel"},
+   {"Daniel",          "Dn",   "Daniel"},
+   {"Hosea",           "Hos",  "Hosea"},
+   {"Joel",            "Joel", "Joel"},
+   {"Amos",            "Am",   "Amos"},
+   {"Obadiah",         "Ob",   "Obadja"},
+   {"Jonah",           "Jon",  "Jona"},
+   {"Micah",           "Mch",  "Micha"},
+   {"Nahum",           "Nah",  "Nahum"},
+   {"Habakkuk",        "Hab",  "Habakuk"},
+   {"Zephaniah",       "Zph",  "Zefanja"},
+   {"Haggai",          "Hgg",  "Haggai"},
+   {"Zechariah",       "Zch",  "Sacharja"},
+   {"Malachi",         "Ml",   "Maleachi"},
+   {"Matthew",         "Mt",   "Matthäus"},
+   {"Mark",            "Mc",   "Markus"},
+   {"Luke",            "L",    "Lukas"},
+   {"John",            "J",    "Johannes"},
+   {"Acts",            "Act",  "Apostelgeschichte"},
+   {"Romans",          "R",    "Römer"},
+   {"I Corinthians",   "1K",   "1.Korinther"},
+   {"II Corinthians",  "2K",   "2.Korinther"},
+   {"Galatians",       "G",    "Galater"},
+   {"Ephesians",       "E",    "Epheser"},
+   {"Philippians",     "Ph",   "Philipper"},
+   {"Colossians",      "Kol",  "Kolosser"},
+   {"I Thessalonians", "1Th",  "1.Thessalonicher"},
+   {"II Thessalonians","2Th",  "2.Thessalonicher"},
+   {"I Timothy",       "1T",   "1.Timotheus"},
+   {"II Timothy",      "2T",   "2.Timotheus"},
+   {"Titus",           "Tt",   "Titus"},
+   {"Philemon",        "Phm",  "Philemon"},
+   {"Hebrews",         "H",    "Hebräer"},
+   {"James",           "Jc",   "Jakobus"},
+   {"I Peter",         "1P",   "1.Petrus"},
+   {"II Peter",        "2P",   "2.Petrus"},
+   {"I John",          "1J",   "1.Johannes"},
+   {"II John",         "2J",   "2.Johannes"},
+   {"III John",        "3J",   "3.Johannes"},
+   {"Jude",            "Jd",   "Judas"},
+   {"Revelation of John", "Ap", "Offenbarung"},
+   {NULL, NULL, NULL}
+};
 
 
 static const gchar*
@@ -693,13 +695,27 @@ sword_book_title (const xmlChar* book)
 {
         int i = 0;
         while (books [i] != NULL) {
-                if (strcmp ((char *) books [i], (char *) book) == 0) {
-                        return books [i + 1];
+                if (strcmp ((char *) books [i][1], (char *) book) == 0) {
+                        return books [i][0];
                 }
-                i += 2;
+                i++;
         }
         return NULL;
 } /* sword_book_title */
+
+
+static const gchar*
+sword_book_title_for_original_losung (const xmlChar* book)
+{
+        int i = 0;
+        while (books [i] != NULL) {
+                if (strcmp ((char *) books [i][2], (char *) book) == 0) {
+                        return books [i][0];
+                }
+                i++;
+        }
+        return NULL;
+} /* sword_book_title_for_original_losung */
 
 
 static const gchar*
@@ -707,5 +723,5 @@ sword_book_title_for_the_word (const xmlChar* book_number)
 {
         int i = 0;
         sscanf ((const char *) book_number, "%d", &i);
-        return books [(2 * i) - 1];
+        return books [i - 1][0];
 } /* sword_book_title_for_the_word */
