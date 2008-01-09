@@ -761,4 +761,3 @@ sword_link_for_original_losung (const gchar *location)
                  sword_book_title_for_original_losung (location),
                  chapter, verse);
 } /* sword_link_for_original_losung */
-xs
