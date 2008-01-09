@@ -448,7 +448,6 @@ end_element (void *ctx, const xmlChar *name)
                 quote->location = get_string (location);
                 quote->location_sword =
                         sword_link_for_original_losung (quote->location);
-                g_message ("%s -> %s", quote->location, quote->location_sword);
                 break;
         case TW_PAROL:
         case STATE_OT:
