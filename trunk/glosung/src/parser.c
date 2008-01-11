@@ -231,7 +231,7 @@ get_the_word (GDate *date, gchar *lang)
         gchar            *file;
         gchar            *filename;
 
-        file = g_strdup_printf ("%s_%d_Schlachter2000.twd",
+        file = g_strdup_printf ("%s_Schlachter2000_%d.twd",
                                 lang, g_date_get_year (date));
         filename = check_file (file);
         g_free (file);
