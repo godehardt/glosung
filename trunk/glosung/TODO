@@ -1,0 +1,36 @@
+add global include.h
+shrink Add button
+download from bible20.net
+better error handling on download
+
+
+add sword translation
+add alert if using sword texts (not authorized)
+separator in language list (preferences)
+
+announce at gnomesword mailing list
+update ebuild etc
+
+upload into system wide folder?
+"remove language" functionality
+
+
+
+
+
+
+gconftool-2 --unset /apps/glosung/language
+
+
+
+
+DONE
+
+
+compilation flag (#ifdef sword)
+enhance parser to store more detailed location information
+enhance original Losung rendering (\it, ", ...)
+   # bold
+   / it
+add parsing of verse location of original Losung XML
+organize watchwords: add sword line
