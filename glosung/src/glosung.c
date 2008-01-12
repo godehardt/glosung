@@ -173,7 +173,7 @@ static void my_wrap              (gchar     *string);
 static gchar* uistring =
         "<ui>"
         "  <menubar name='MenuBar'>"
-        "    <menu action='MenuFile'>"
+        "    <menu action='FileMenu'>"
         "      <menuitem action='Calendar'/>"
         "      <separator/>"
         "      <menuitem action='Today'/>"
@@ -184,14 +184,14 @@ static gchar* uistring =
         "      <separator/>"
         "      <menuitem action='Quit'/>"
         "    </menu>"
-        "    <menu action='MenuEdit'>"
+        "    <menu action='EditMenu'>"
         "      <menuitem action='Copy'/>"
         "      <separator/>"
         "      <menuitem action='Copy'/>"
         "      <menuitem action='Organize'/>"
         "      <menuitem action='Preferences'/>"
         "    </menu>"
-        "    <menu action='MenuHelp'>"
+        "    <menu action='HelpMenu'>"
         "      <menuitem action='About'/>"
         "    </menu>"
         "  </menubar>"
@@ -206,9 +206,9 @@ static gchar* uistring =
         "</ui>";
 
 static GtkActionEntry entries[] = {
-        { "MenuFile", NULL, N_("_File") },
-        { "MenuEdit", NULL, N_("_Edit") },
-        { "MenuHelp", NULL, N_("_Help") },
+        { "FileMenu", NULL, N_("_File") },
+        { "EditMenu", NULL, N_("_Edit") },
+        { "HelpMenu", NULL, N_("_Help") },
 
         { "Calendar", GTK_STOCK_COPY, N_("_Calendar"), "<control>D",
           N_("select date from calendar"), G_CALLBACK (calendar_cb) },
@@ -225,7 +225,7 @@ static GtkActionEntry entries[] = {
           "<control>Page_Up",
           N_("Show losung of previous month"), G_CALLBACK (prev_month_cb) },
         { "Quit", GTK_STOCK_QUIT,  NULL, "<control>Q",
-          "Quit the application", G_CALLBACK (gtk_main_quit) },
+          N_("Quit the application"), G_CALLBACK (gtk_main_quit) },
 
         { "Copy", GTK_STOCK_COPY, N_("_Copy Watchword"), "<control>C",
           N_("copy the Watchword to clipboard"), G_CALLBACK (clipboard_cb) },
@@ -404,19 +404,20 @@ create_app (void)
         gint            i;
         PangoFontDescription *font_desc;
 
-        /* Make a window */
         app = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         g_signal_connect (G_OBJECT (app), "destroy",
                           G_CALLBACK (gtk_main_quit),
                           NULL);
         gtk_window_set_title (GTK_WINDOW (app), APPNAME);
-        // gtk_widget_set_size_request (GTK_WIDGET (app), 300, 200);
+        gtk_window_set_default_size (GTK_WINDOW (app), 500, 400);
+        gtk_window_set_position (GTK_WINDOW (app), GTK_WIN_POS_CENTER);
 
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
         gtk_container_add (GTK_CONTAINER (app), vbox);
 
         action = gtk_action_group_new ("GLosungActions");
+        gtk_action_group_set_translation_domain (action, PACKAGE);
         gtk_action_group_add_actions (action, entries, n_entries, NULL);
 
         uiman = gtk_ui_manager_new ();
