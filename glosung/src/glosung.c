@@ -53,6 +53,7 @@
 #include <gtk/gtkframe.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtklabel.h>
+#include <gtk/gtkliststore.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkmenubar.h>
