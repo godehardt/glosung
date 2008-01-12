@@ -25,6 +25,7 @@
 
 #include <glib/gdir.h>
 #include <glib/gmem.h>
+#include <glib/gmessages.h>
 #include <glib/gstrfuncs.h>
 
 #include "losunglist.h"
@@ -145,9 +146,8 @@ check_for_losung_file (gchar *name, int len, LosungList *list)
                 }
                 losunglist_add (list, langu, year);
                 return TRUE;
-        } else {
-                return FALSE;
         }
+        return FALSE;
 }
 
 
@@ -156,13 +156,16 @@ check_for_theword_file (gchar *name, int len, LosungList *list)
 {
         if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
                 gchar *langu = g_strndup (name, 2);
-                int year;
-                sscanf (name + 3, "%d", &year);
-                losunglist_add (list, langu, year);
-                return TRUE;
-        } else {
-                return FALSE;
+                int year = -1;
+                if (sscanf (name + len - 8, "%d", &year) == 0) {
+                        sscanf (name + 3, "%d", &year);
+                }
+                if (year != -1) {
+                        losunglist_add (list, langu, year);
+                        return TRUE;
+                }
         }
+        return FALSE;
 }
 
 
@@ -173,13 +176,14 @@ check_for_original_losung_file (gchar *name, int len, LosungList *list)
             && (strncmp (name + len -  4, ".xml", 4)) == 0)
         {
                 gchar *langu = g_strdup ("de");
-                int year;
+                int year = -1;
                 sscanf (name + 14, "%d", &year);
-                losunglist_add (list, langu, year);
-                return TRUE;
-        } else {
-                return FALSE;
+                if (year != -1) {
+                        losunglist_add (list, langu, year);
+                        return TRUE;
+                }
         }
+        return FALSE;
 }
 
 
