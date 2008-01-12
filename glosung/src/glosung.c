@@ -515,15 +515,15 @@ show_text (void)
 {
         const Losung *ww;
 
-        ww = get_losung (new_date, lang);
+        ww = get_orig_losung (new_date, lang);
         if (! ww) {
-                ww = get_orig_losung (new_date, lang);
+                ww = get_losung (new_date, lang);
                 if (! ww) {
                         ww = get_the_word (new_date, lang);
-                } else {
-                        my_wrap (ww->ot.text);
-                        my_wrap (ww->nt.text);
                 }
+        } else {
+                my_wrap (ww->ot.text);
+                my_wrap (ww->nt.text);
         }
 
         if (ww == NULL) {
