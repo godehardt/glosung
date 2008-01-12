@@ -231,10 +231,18 @@ get_the_word (GDate *date, gchar *lang)
         gchar            *file;
         gchar            *filename;
 
+        /* FIXME this have to changed when other translations are used!!! */
         file = g_strdup_printf ("%s_Schlachter2000_%d.twd",
                                 lang, g_date_get_year (date));
         filename = check_file (file);
         g_free (file);
+
+        if (! filename) {
+                file = g_strdup_printf ("%s_%d_Schlachter2000.twd",
+                                        lang, g_date_get_year (date));
+                filename = check_file (file);
+                g_free (file);
+        }
 
         if (! filename) {
                 return NULL;
@@ -637,7 +645,7 @@ static gchar const * const books [][3] = {
         {"Deuteronomy",     "Dt",   "5.Mose"},
         {"Joshua",          "Jos",  "Josua"},
         {"Judges",          "Jdc",  "Richter"},
-        {"Ruth",            "Rth",  "Rut "},
+        {"Ruth",            "Rth",  "Rut "}, /* add a space for 4 chars */
         {"I Samuel",        "1Sm",  "1.Samuel"},
         {"II Samuel",       "2Sm",  "2.Samuel"},
         {"I Kings",         "1Rg",  "1.Könige"},
@@ -718,7 +726,7 @@ static const gchar*
 sword_book_title_for_original_losung (const gchar *book)
 {
         int i = 0;
-        int len = 4;//strlen (book);
+        int len = 4; // strlen (book);
 
         while (books [i] != NULL) {
                 if (strncmp ((char *) books [i][2], (char *) book, len) == 0) {
