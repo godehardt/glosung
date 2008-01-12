@@ -18,7 +18,8 @@
 
 import os
 
-version = '3.2.1'
+version_number = '3.2.2'
+version_release = 'beta'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -34,14 +35,14 @@ Help ('''Options:
 prefix      = ARGUMENTS.get ('PREFIX', '/usr')
 install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
 pixmap_dir  = '/share/pixmaps'
-doc_dir     = '/share/doc/glosung-' + version
+doc_dir     = '/share/doc/glosung-' + version_number
 
 BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
 ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
             `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl` \
-            -DVERSION=\\"' + version + '\\"  \
+            -DVERSION=\\"' + version_number + '\\ ' + version_release + '\\"  \
             -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
 linkflags = '-Wl,--export-dynamic  -L/usr/lib \
              `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`'
@@ -54,7 +55,7 @@ if ARGUMENTS.get ('profile'):
 if (ARGUMENTS.get ('dev')):
     ccflags   += ' -Werror -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED'
 
-tar_file = '#glosung-' + version + '.tar.bz2'
+tar_file = '#../glosung-' + version_number + '_' + version_release + '.tar.bz2'
 
 env = Environment (
   platform  = 'posix',
