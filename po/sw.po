@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 21:28+0200\n"
+"POT-Creation-Date: 2007-12-28 17:39+0100\n"
 "PO-Revision-Date: 2006-11-29 22:28+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: Swahili <sw@li.org>\n"
@@ -224,7 +224,7 @@ msgstr ""
 msgid "No %s texts found for %d!"
 msgstr "Matini %s za %d  [u/zi]mepatikana!"
 #
-# File: src/glosung.c, line: 563
+# File: src/glosung.c, line: 733
 msgid "Gods word for every day"
 msgstr ""
 #
@@ -284,9 +284,13 @@ msgid "Year"
 msgstr ""
 #
 #
+#
+#
 # File: src/glosung.c, line: 148
 #~ msgid "Open a calendar-widget"
 #~ msgstr "Fungua Kalenda"
+#
+#
 #
 #
 # File: src/glosung.c, line: 178
