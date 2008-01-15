@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.2.1
+%define version 3.2.2
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -69,6 +69,15 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+* Sat Jan 12 2008 Eicke Godehardt <eicke@godehardt.org>
+- make file handling more robust
+- add important warning message on organize watchword dialog
+- fix i18n of menu
+- version bump to 3.2.2
+
+* Thu Jan 03 2008 Eicke Godehardt <eicke@godehardt.org>
+- fix text wrapping problem
+
 * Mon Dec 31 2007 Eicke Godehardt <eicke@godehardt.org>
 - add support for the "original" Losung file format.
 - version bump to 3.2.1
