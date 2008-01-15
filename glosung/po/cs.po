@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 21:28+0200\n"
+"POT-Creation-Date: 2008-01-15 20:21+0100\n"
 "PO-Revision-Date: 2006-11-30 21:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -14,9 +14,10 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: src/glosung.c, line: 203
+# File: src/glosung.c, line: 209
 msgid "_File"
 msgstr ""
+#
 #
 #
 #
@@ -32,7 +33,7 @@ msgstr ""
 msgid "_Edit"
 msgstr "/Úpravy"
 #
-# File: src/glosung.c, line: 205
+# File: src/glosung.c, line: 211
 msgid "_Help"
 msgstr ""
 #
@@ -192,6 +193,10 @@ msgstr "Předchozí měsíc"
 msgid "Show losung of previous month"
 msgstr "Zobrazit hesla na předchozí měsíc"
 #
+# File: src/glosung.c, line: 228
+msgid "Quit the application"
+msgstr ""
+#
 # File: src/glosung.c, line: 193
 msgid "_Copy Watchword"
 msgstr "Kopírovat Heslo"
@@ -219,13 +224,6 @@ msgstr "Uspořádat Hesla..."
 #, fuzzy
 msgid "update/install watchword files"
 msgstr "Aktualizovat/instalovat jazykové soubory"
-#
-# src/glosung.c:103
-# File: src/glosung.c, line: 153
-# File: src/glosung.c, line: 429
-#, fuzzy
-msgid "_Preferences..."
-msgstr "Nastavení"
 #
 #
 #
@@ -362,10 +360,6 @@ msgstr "čínsky (tradičně)"
 msgid "No %s texts found for %d!"
 msgstr "Nebyl nalezen text %s pro %d"
 #
-# File: src/glosung.c, line: 563
-msgid "Gods word for every day"
-msgstr "Boží slovo pro každý den"
-#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
@@ -411,6 +405,13 @@ msgstr "Jazyky"
 msgid "Installed Languages"
 msgstr "Instalované jazyky"
 #
+# File: src/glosung.c, line: 1259
+msgid ""
+"This dialog only works for losung files until 2007!\n"
+"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a "
+"desciption of adding texts from Herrnhut and/or bible20.net."
+msgstr ""
+#
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
 msgstr "Přidej jazyk"
@@ -427,10 +428,77 @@ msgstr "Jazyk"
 msgid "Year"
 msgstr "Rok"
 #
+# File: src/parser.c, line: 334
+msgid "Watchword for %A, %e. %B %Y"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 563
+#, fuzzy
+#~ msgid "Gods word for every day"
+#~ msgstr "Boží slovo pro každý den"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:103
+# File: src/glosung.c, line: 153
+# File: src/glosung.c, line: 429
+#, fuzzy
+#~ msgid "_Preferences..."
+#~ msgstr "Nastavení"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 # File: src/glosung.c, line: 195
 #~ msgid "_About"
 #~ msgstr "O aplikaci"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -445,6 +513,22 @@ msgstr "Rok"
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -470,12 +554,44 @@ msgstr "Rok"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -502,11 +618,43 @@ msgstr "Rok"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Předchozí měsíc"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -532,11 +680,43 @@ msgstr "Rok"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Předchozí měsíc"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -569,10 +749,42 @@ msgstr "Rok"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:124
 # File: src/glosung.c, line: 174
 #~ msgid "Exit the Program"
 #~ msgstr "Ukončit program"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #

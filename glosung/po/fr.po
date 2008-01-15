@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 21:28+0200\n"
+"POT-Creation-Date: 2008-01-15 20:21+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -14,15 +14,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: src/glosung.c, line: 203
+# File: src/glosung.c, line: 209
 msgid "_File"
 msgstr ""
+#
 #
 #, fuzzy
 msgid "_Edit"
 msgstr "Quitter"
 #
-# File: src/glosung.c, line: 205
+# File: src/glosung.c, line: 211
 msgid "_Help"
 msgstr ""
 #
@@ -69,6 +70,10 @@ msgstr "Mois précédent"
 msgid "Show losung of previous month"
 msgstr "Afficher les versets du mois précédent"
 #
+# File: src/glosung.c, line: 228
+msgid "Quit the application"
+msgstr ""
+#
 # File: src/glosung.c, line: 224
 msgid "_Copy Watchword"
 msgstr ""
@@ -85,10 +90,6 @@ msgstr ""
 #, fuzzy
 msgid "update/install watchword files"
 msgstr "Mettre à jour/ajouter de nouvelles traductions"
-#
-#, fuzzy
-msgid "_Preferences..."
-msgstr "Préférences..."
 #
 #, fuzzy
 msgid "Edit the preferences"
@@ -193,10 +194,6 @@ msgstr "Chinois traditionnel"
 msgid "No %s texts found for %d!"
 msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
 #
-# File: src/glosung.c, line: 563
-msgid "Gods word for every day"
-msgstr "La Parole de Dieu au quotidien"
-#
 msgid "Preferences"
 msgstr "Préférences"
 #
@@ -228,6 +225,13 @@ msgstr "Traductions"
 msgid "Installed Languages"
 msgstr "Traductions installées"
 #
+# File: src/glosung.c, line: 1259
+msgid ""
+"This dialog only works for losung files until 2007!\n"
+"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a "
+"desciption of adding texts from Herrnhut and/or bible20.net."
+msgstr ""
+#
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
 msgstr "Ajouter de nouvelles traductions"
@@ -244,14 +248,94 @@ msgstr "Traduction"
 msgid "Year"
 msgstr "Année"
 #
+# File: src/parser.c, line: 334
+msgid "Watchword for %A, %e. %B %Y"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 563
+#, fuzzy
+#~ msgid "Gods word for every day"
+#~ msgstr "La Parole de Dieu au quotidien"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+#~ msgid "_Preferences..."
+#~ msgstr "Préférences..."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #~ msgid "Open a calendar-widget"
 #~ msgstr "Ouvrir le calendrier"
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #~ msgid "Exit the Program"

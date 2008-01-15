@@ -6,14 +6,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-09 19:32+0100\n"
-"PO-Revision-Date: 2008-01-12 16:07+0100\n"
+"POT-Creation-Date: 2008-01-15 20:21+0100\n"
+"PO-Revision-Date: 2008-01-15 20:23+0100\n"
 "Last-Translator: Eicke Godehardt <eicke at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#
+#
+#
 #
 # File: src/glosung.c, line: 203
 msgid "_File"
@@ -28,9 +31,12 @@ msgstr "_Datei"
 #
 #
 #
+#
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
+#
+#
 #
 # File: src/glosung.c, line: 205
 msgid "_Help"
@@ -168,6 +174,11 @@ msgstr "_Voriger Monat"
 #
 msgid "Show losung of previous month"
 msgstr "Zeigt die Losung des vorigen Monats"
+
+#
+# File: src/glosung.c, line: 228
+msgid "Quit the application"
+msgstr "Beendet das Programm"
 
 #
 # File: src/glosung.c, line: 193
@@ -389,10 +400,10 @@ msgstr "Installierte Sprachen"
 # File: src/glosung.c, line: 1257
 msgid ""
 "This dialog only works for losung files until 2007!\n"
-"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a desciption of adding texts from Herrenhut and/or bible20.net."
+"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a desciption of adding texts from Herrnhut and/or bible20.net."
 msgstr ""
 "Dieser Dialog funktioniert nur für Losung Dateien bis einschließlich 2007!\n"
-"Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www.godehardt.org/losung.html), um Text von Herrenhut bzw. bible20.net zu installieren."
+"Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www.godehardt.org/losung.html), um Text von Herrnhut bzw. bible20.net zu installieren."
 
 #
 # File: src/glosung.c, line: 1141
@@ -424,6 +435,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 563
 #, fuzzy
 #~ msgid "Gods word for every day"
@@ -435,8 +451,18 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -472,10 +498,20 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
+#
 #
 #
 #
@@ -521,10 +557,20 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
+#
 #
 #
 #
@@ -571,6 +617,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -596,10 +647,20 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
+#
+#
+#
+#
 #
 #
 #
