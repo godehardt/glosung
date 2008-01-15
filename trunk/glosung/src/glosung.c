@@ -1259,7 +1259,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                      _("This dialog only works for losung files until 2007!\n"
                        "Please look on GLosung's homepage "
                        "(www.godehardt.org/losung.html) for a desciption of "
-                       "adding texts from Herrenhut and/or bible20.net."));
+                       "adding texts from Herrnhut and/or bible20.net."));
                 g_signal_connect (G_OBJECT (warning), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
                 gtk_widget_show (warning);
