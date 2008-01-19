@@ -28,7 +28,8 @@
 
 #include "parser.h"
 
-/****************************\
+
+/****************************                   \
    Variables & Definitions
 \****************************/
 
@@ -118,7 +119,8 @@ static Passage  *quote = NULL;
 static GString  *string;
 static GString  *location;
 
-/****************************\
+
+/****************************                   \
       Function prototypes
 \****************************/
 
@@ -148,6 +150,7 @@ static const gchar* sword_book_title_for_the_word
 static gchar* sword_link_for_original_losung
                                      (const gchar   *location);
 static gchar* check_file             (gchar         *file);
+
 
 /*
  * public function that frees the Losung allocated by get_losung.
@@ -193,7 +196,7 @@ get_orig_losung (GDate *date, gchar *lang)
         // g_message ("orig losung");
 
         return parse (date, lang, filename);
-} /* get_losung */
+} /* get_orig_losung */
 
 
 /*
@@ -253,7 +256,7 @@ get_the_word (GDate *date, gchar *lang)
         // g_message ("the word");
 
         return parse (date, lang, filename);
-} /* get_losung */
+} /* get_the word */
 
 
 /*
@@ -346,7 +349,7 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         {
                 gchar buf [64];
 
-                // title: timestring according to 'man strftime'
+                /* title: timestring according to 'man strftime' */
                 g_date_strftime (buf, 64,
                                  _("Watchword for %A, %e. %B %Y"), datum);
                 ww->title = g_strdup (buf);
@@ -648,7 +651,7 @@ static gchar const * const books [][3] = {
         {"Deuteronomy",     "Dt",   "5.Mose"},
         {"Joshua",          "Jos",  "Josua"},
         {"Judges",          "Jdc",  "Richter"},
-        {"Ruth",            "Rth",  "Rut "}, /* add a space for 4 chars */
+        {"Ruth",            "Rth",  "Rut "}, /* add a space for >=4 chars */
         {"I Samuel",        "1Sm",  "1.Samuel"},
         {"II Samuel",       "2Sm",  "2.Samuel"},
         {"I Kings",         "1Rg",  "1.Könige"},
