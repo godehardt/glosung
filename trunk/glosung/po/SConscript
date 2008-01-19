@@ -22,7 +22,9 @@ Import ('env install_dir tar_file')
 
 languages = ['cs', 'de', 'fr']
 
-env.Command ('glosung.pot', ['#/src/glosung.c', '#/src/parser.c'],
+env.Command ('glosung.pot', ['#/src/about.c',
+                             '#/src/glosung.c',
+                             '#/src/parser.c'],
              "/usr/bin/xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
     env.Execute (action = "/usr/bin/msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
