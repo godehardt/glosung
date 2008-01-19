@@ -129,7 +129,7 @@ scan_for_files (void)
 
 
 static gboolean
-check_for_losung_file (gchar *name, int len, LosungList *list)
+check_for_losung_file (const gchar *name, int len, LosungList *list)
 {
         if ((len == 12 || len == 15)
             && (strncmp (name + len -  4, ".xml", 4)) == 0
@@ -152,7 +152,7 @@ check_for_losung_file (gchar *name, int len, LosungList *list)
 
 
 static gboolean
-check_for_theword_file (gchar *name, int len, LosungList *list)
+check_for_theword_file (const gchar *name, int len, LosungList *list)
 {
         if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
                 gchar *langu = g_strndup (name, 2);
@@ -170,7 +170,7 @@ check_for_theword_file (gchar *name, int len, LosungList *list)
 
 
 static gboolean
-check_for_original_losung_file (gchar *name, int len, LosungList *list)
+check_for_original_losung_file (const gchar *name, int len, LosungList *list)
 {
         if ((strncmp (name, "Losungen Free", 13)) == 0
             && (strncmp (name + len -  4, ".xml", 4)) == 0)
@@ -194,12 +194,12 @@ scan_for_languages_in_dir (gchar *dirname, LosungList *list)
                 return;
         }
         GDir  *dir = g_dir_open (dirname, 0, NULL);
-        const  gchar *name;
+        const gchar *name;
 
         while ((name = g_dir_read_name (dir)) != NULL) {
                 int len = strlen (name);
-                check_for_losung_file          ((gchar *)name, len, list);
-                check_for_original_losung_file ((gchar *)name, len, list);
-                check_for_theword_file         ((gchar *)name, len, list);
+                check_for_losung_file          (name, len, list);
+                check_for_original_losung_file (name, len, list);
+                check_for_theword_file         (name, len, list);
         }
 } /* scan_for_languages_in_dir */
