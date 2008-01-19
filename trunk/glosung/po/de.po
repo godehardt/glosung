@@ -6,13 +6,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-15 20:21+0100\n"
-"PO-Revision-Date: 2008-01-15 20:23+0100\n"
+"POT-Creation-Date: 2008-01-19 17:31+0100\n"
+"PO-Revision-Date: 2008-01-19 17:49+0100\n"
 "Last-Translator: Eicke Godehardt <eicke at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 563
+msgid "Gods word for every day"
+msgstr "Gottes Wort für jeden Tag"
 
 #
 #
@@ -440,24 +454,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
-# File: src/glosung.c, line: 563
-#, fuzzy
-#~ msgid "Gods word for every day"
-#~ msgstr "Gottes Wort für jeden Tag"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -503,10 +504,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -562,10 +565,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -622,6 +627,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -652,10 +658,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
 #
 #
 #
