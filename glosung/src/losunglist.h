@@ -28,7 +28,9 @@ typedef struct _LosungList LosungList;
 
 struct _LosungList
 {
+        /* e.g. "de" -> [2001, 2002, 2007] */
         GHashTable *hash_table;
+        /* e.g. ["de, "en", "cz"] */
         GPtrArray  *languages;
 };
 
