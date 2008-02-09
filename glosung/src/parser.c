@@ -29,7 +29,7 @@
 #include "parser.h"
 
 
-/****************************                   \
+/****************************\
    Variables & Definitions
 \****************************/
 
@@ -37,10 +37,14 @@ typedef enum {
 STATE_START,
   STATE_LOSFILE,
     STATE_HEAD,
+    STATE_YEAR,
+    STATE_MONTH,
+    STATE_DAY,
     STATE_LOSUNG,
       STATE_TL,
       STATE_OT,
       STATE_NT,
+      STATE_TT,
       STATE_SR,
       STATE_CR,
       STATE_C,
@@ -73,10 +77,14 @@ static gchar const * const states [] = {
 "start", /* dummy string */
   "LOSFILE",
     "HEAD",
+    "YEAR",
+    "MONTH",
+    "DAY",
     "LOSUNG",
       "TL",
       "OT",
       "NT",
+      "TT",
       "SR",
       "CR",
       "C",
@@ -333,6 +341,9 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         case TW_THE_WORD_FILE:
         case LOS_DATAROOT:
                 if (switch_state (name, STATE_HEAD)
+                  || switch_state (name, STATE_YEAR)
+                  || switch_state (name, STATE_MONTH)
+                  || switch_state (name, STATE_DAY)
                   || switch_state (name, TW_HEAD))
                 {
                         depth = 1;
@@ -343,6 +354,8 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                         if (--day != 0) {
                                 depth = 1;
                         }
+                } else {
+                        g_message ("huhuh %s", name);
                 }
                 break;
         case LOS_LOSUNGEN:
@@ -373,6 +386,9 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                         quote = &ww->ot;
                 } else if (switch_state (name, STATE_NT)) {
                         quote = &ww->nt;
+                } else if (switch_state (name, STATE_TT)) {
+                        depth = 1;
+                        
                 } else if (switch_state (name, STATE_SR)) {
                 } else if (switch_state (name, STATE_CR)) {
                 } else if (switch_state (name, STATE_C)) {
@@ -549,6 +565,7 @@ static void
 pop_state (void)
 {
         if (! stack) {
+                g_message ("old state = %s (%d)", states [state], state);
                 g_assert_not_reached ();
                 return;
         }
