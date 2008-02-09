@@ -158,6 +158,8 @@ static const gchar* sword_book_title_for_the_word
 static gchar* sword_link_for_original_losung
                                      (const gchar   *location);
 static gchar* check_file             (gchar         *file);
+static const gchar* find_the_word_file(gchar        *lang,
+                                      gint           year);
 
 
 /*
@@ -245,18 +247,8 @@ get_the_word (GDate *date, gchar *lang)
         gchar            *file;
         gchar            *filename;
 
-        /* FIXME this have to changed when other translations are used!!! */
-        file = g_strdup_printf ("%s_Schlachter2000_%d.twd",
-                                lang, g_date_get_year (date));
+        file = find_the_word_file (lang, g_date_get_year (date));
         filename = check_file (file);
-        g_free (file);
-
-        if (! filename) {
-                file = g_strdup_printf ("%s_%d_Schlachter2000.twd",
-                                        lang, g_date_get_year (date));
-                filename = check_file (file);
-                g_free (file);
-        }
 
         if (! filename) {
                 return NULL;
@@ -388,7 +380,6 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                         quote = &ww->nt;
                 } else if (switch_state (name, STATE_TT)) {
                         depth = 1;
-                        
                 } else if (switch_state (name, STATE_SR)) {
                 } else if (switch_state (name, STATE_CR)) {
                 } else if (switch_state (name, STATE_C)) {
@@ -791,3 +782,64 @@ sword_link_for_original_losung (const gchar *location)
                  sword_book_title_for_original_losung (location),
                  chapter, verse);
 } /* sword_link_for_original_losung */
+
+
+
+
+
+
+
+
+
+
+static gboolean
+is_the_word_file (const gchar *name, int len, gchar* lang, gint year)
+{
+        if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
+                gchar *file_lang = g_strndup (name, 2);
+                int    file_year = -1;
+                if (sscanf (name + len - 8, "%d", &file_year) == 0) {
+                        sscanf (name + 3, "%d", &file_year);
+                }
+                if (file_year == year && strncmp (lang, file_lang, 2) == 0) {
+                        return TRUE;
+                }
+        }
+        return FALSE;
+} /* is_the_word_file */
+
+
+static const gchar*
+find_the_word_file_in_dir (gchar *dirname, gchar* lang, gint year)
+{
+        if (access (dirname, F_OK | R_OK) != 0) {
+                return NULL;
+        }
+        GDir  *dir = g_dir_open (dirname, 0, NULL);
+        const gchar *name;
+
+        while ((name = g_dir_read_name (dir)) != NULL) {
+                int len = strlen (name);
+                if (is_the_word_file (name, len, lang, year)) {
+                        return name;
+                }
+        }
+        return NULL;
+} /* find_the_word_file_in_dir */
+
+
+static const gchar*
+find_the_word_file (gchar *lang, gint year)
+{
+        gchar *dirname;
+        const gchar *filename;
+
+        filename = find_the_word_file_in_dir (GLOSUNG_DATA_DIR, lang, year);
+        if (filename != NULL) {
+                return filename;
+        }
+        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
+        filename = find_the_word_file_in_dir (dirname, lang, year);
+
+        return filename;
+} /* find_the_word_file */
