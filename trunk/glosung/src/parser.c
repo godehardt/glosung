@@ -122,6 +122,8 @@ static GSList   *stack;
 static gint      depth;
 static GDate    *datum;
 static gint      day;
+static gboolean  found;
+static gchar    *date_string;
 static Losung   *ww = NULL;
 static Passage  *quote = NULL;
 static GString  *string;
@@ -157,7 +159,7 @@ static const gchar* sword_book_title_for_the_word
                                      (const xmlChar *book_number);
 static gchar* sword_link_for_original_losung
                                      (const gchar   *location);
-static gchar* check_file             (gchar         *file);
+static gchar* check_file             (const gchar   *file);
 static const gchar* find_the_word_file(gchar        *lang,
                                       gint           year);
 
@@ -244,8 +246,8 @@ get_losung (GDate *date, gchar *lang)
 const Losung*
 get_the_word (GDate *date, gchar *lang)
 {
-        gchar            *file;
-        gchar            *filename;
+        const gchar *file;
+        gchar       *filename;
 
         file = find_the_word_file (lang, g_date_get_year (date));
         filename = check_file (file);
@@ -265,7 +267,7 @@ get_the_word (GDate *date, gchar *lang)
  * return the absolute filename or NULL.
  */
 static gchar*
-check_file (gchar *file)
+check_file (const gchar *file)
 {
         gchar *filename;
 
@@ -298,6 +300,9 @@ parse (GDate *date, gchar *lang, gchar *filename)
         state = STATE_START;
         datum = date;
         day = g_date_get_day_of_year (date);
+        found = FALSE;
+        date_string = g_malloc (11); /* "YYYY-MM-DD"; */
+        g_date_strftime (date_string, 11, "%Y-%m-%d", date);
         ww = g_new0 (Losung, 1);
         string   = g_string_sized_new (LINE_LEN);
         location = g_string_sized_new (LINE_LEN);
@@ -305,6 +310,7 @@ parse (GDate *date, gchar *lang, gchar *filename)
         xmlSAXParseFile (sax, filename, 0);
 
         g_free (filename);
+        g_free (date_string);
         g_free (sax);
         quote = NULL;
 
@@ -340,14 +346,19 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 {
                         depth = 1;
                 } else if (switch_state (name, STATE_LOSUNG)
-                  || switch_state (name, TW_THE_WORD)
                   || switch_state (name, LOS_LOSUNGEN))
                 {
                         if (--day != 0) {
                                 depth = 1;
                         }
-                } else {
-                        g_message ("huhuh %s", name);
+                } else if (switch_state (name, TW_THE_WORD)) {
+                        if (found || (strcmp ((const gchar*) attrs [1],
+                                              date_string) != 0))
+                        {
+                                depth = 1;
+                        } else {
+                                found = TRUE;
+                        }
                 }
                 break;
         case LOS_LOSUNGEN:
