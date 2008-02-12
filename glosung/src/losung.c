@@ -17,6 +17,9 @@
  * MA 02111-1307, USA.
  */
 
+#define ENABLE_NLS
+#define PACKAGE "glosung"
+
 #include "parser.h"
 
 #include <string.h>
@@ -29,8 +32,6 @@
 #include <glib/gi18n.h>
 #include <glib/goption.h>
 
-#define PACKAGE "glosung"
-
 
 /****************************\
    Variables & Definitions
@@ -40,13 +41,16 @@ static GDate *date;
 static gchar *lang;
 static gchar *date_param = NULL;
 
+#define WRAP_SIZE 50
+
 
 /****************************\
       Function prototypes
 \****************************/
 
-static void       get_time              (void);
-static void       show_text             (void);
+static void get_time    (void);
+static void show_text   (void);
+static void my_wrap     (gchar     *string);
 
 
 static GOptionEntry entries[] = {
@@ -64,6 +68,10 @@ main (int argc, char **argv)
 {
         GError *error = NULL;
         GOptionContext *context;
+
+        bindtextdomain (PACKAGE, "/usr/share/locale");
+        bind_textdomain_codeset (PACKAGE, "UTF-8");
+        textdomain (PACKAGE);
 
         GConfClient *client = gconf_client_get_default ();
         lang = gconf_client_get_string
@@ -135,9 +143,18 @@ static void
 show_text (void)
 {
         const Losung *ww;
-        // guint i;
 
-        ww = get_losung (date, lang);
+        ww = get_orig_losung (date, lang);
+        if (! ww) {
+                ww = get_losung (date, lang);
+                if (! ww) {
+                        ww = get_the_word (date, lang);
+                }
+        } else {
+                my_wrap (ww->ot.text);
+                my_wrap (ww->nt.text);
+        }
+
         if (ww == NULL) {
                 printf (_("No '%s' texts found for %d!\n"),
                         lang, g_date_get_year (date));
@@ -183,3 +200,19 @@ show_text (void)
         */
         losung_free (ww);
 } /* show_text */
+
+
+static void
+my_wrap (gchar *string)
+{
+        int len = strlen (string);
+        int index = 0;
+
+        while (index + WRAP_SIZE < len) {
+                index += WRAP_SIZE;
+                while (string [index] != ' ') {
+                        index--;
+                }
+                string [index] = '\n';
+        }
+} /* my_wrap */
