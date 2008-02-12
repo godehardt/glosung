@@ -313,6 +313,10 @@ parse (GDate *date, gchar *lang, gchar *filename)
         g_free (date_string);
         g_free (sax);
         quote = NULL;
+        if (! found) {
+                losung_free (ww);
+                ww = NULL;
+        }
 
         return ww;
 } /* parse */
@@ -350,6 +354,8 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 {
                         if (--day != 0) {
                                 depth = 1;
+                        } else {
+                                found = TRUE;
                         }
                 } else if (switch_state (name, TW_THE_WORD)) {
                         if (found || (strcmp ((const gchar*) attrs [1],
