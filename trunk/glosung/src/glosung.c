@@ -1294,7 +1294,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         lang_combo = gtk_combo_box_new_text ();
         if (! server_list) {
-                server_list = download_list ();
+                server_list = download_losung_list ();
         }
         gint i;
         for (i = 0; i < (server_list->languages)->len; i++) {
@@ -1340,7 +1340,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                        gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
-                download (langu, year);
+                download_losung (langu, year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
                 update_language_store ();
