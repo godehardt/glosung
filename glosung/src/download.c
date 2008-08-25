@@ -183,7 +183,7 @@ analyse (Memory chunk)
 
 
 LosungList*
-download_list (void)
+download_losung_list (void)
 {
         CURL     *curl_handle;
         CURLcode  res;
@@ -227,9 +227,10 @@ download_list (void)
 
 
 int
-download (gchar *lang, guint year)
+download_losung (gchar *lang, guint year)
 {
-        gchar *url = g_strdup_printf (LOZ_URL "?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
+        gchar *url = g_strdup_printf
+                (LOZ_URL "?cmd=get&dlgLang=en&docLang=%s&year=%d", lang, year);
         CURL     *curl_handle;
         CURLcode  res;
         Memory    chunk;

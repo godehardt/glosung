@@ -25,7 +25,7 @@
 #include "losunglist.h"
 
 
-LosungList* download_list ();
-int         download (gchar *lang, guint year);
+LosungList* download_losung_list ();
+int         download_losung (gchar *lang, guint year);
 
 #endif /* GLOSUNG_DOWNLOAD__H */
