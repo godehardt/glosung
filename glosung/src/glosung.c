@@ -72,6 +72,7 @@
 #include "parser.h"
 #include "download.h"
 #include "about.h"
+#include "autostart.h"
 
 
 /****************************\
@@ -104,6 +105,8 @@ static GtkWidget *property = NULL;
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
 static gchar     *new_font;
+static gboolean   autostart;
+static gboolean   autostart_new;
 static gboolean   calendar_close;
 static gboolean   calendar_close_new;
 static gboolean   show_readings;
@@ -135,6 +138,7 @@ static GtkWidget *create_property_table (void);
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
 static void apply_cb             (void);
+static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
@@ -811,6 +815,14 @@ apply_cb (void)
                 }
                 pango_font_description_free (font_desc);
         }
+        if (autostart_new != autostart) {
+				if (autostart_new) {
+						add_to_autostart ();
+				} else {
+						remove_from_autostart ();
+				}
+				autostart = autostart_new;
+		}
         if (calendar_close_new != calendar_close) {
                 calendar_close = calendar_close_new;
                 gconf_client_set_bool
@@ -903,6 +915,17 @@ create_property_table ()
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 1, 2, 1, 2);
 
         widget = gtk_check_button_new_with_label
+                (_("Start GLosung at login time"));
+		autostart = autostart_new = is_in_autostart ();
+        if (autostart) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+                                              TRUE);
+        }
+        g_signal_connect (G_OBJECT (widget), "toggled",
+                          G_CALLBACK (autostart_cb), NULL);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
+
+		widget = gtk_check_button_new_with_label
                 (_("Close calendar by double click"));
         if (calendar_close) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
@@ -910,7 +933,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (calendar_option_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
 
         widget = gtk_check_button_new_with_label
                 (_("Show selective and continuing reading"));
@@ -920,8 +943,8 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (readings_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
-        
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+
 #ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
                 (_("Link location to gnomesword"));
@@ -931,7 +954,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 5, 6);
 #endif
 
         return table;
@@ -996,6 +1019,19 @@ readings_cb (GtkWidget *toggle, gpointer data)
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
 } /* readings_cb */
+
+
+/*
+ * callback function for options menu.
+ */
+static void 
+autostart_cb (GtkWidget *toggle, gpointer data)
+{
+        autostart_new = gtk_toggle_button_get_active (
+                GTK_TOGGLE_BUTTON (toggle));
+        gtk_dialog_set_response_sensitive (
+                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
+} /* autostart_cb */
 
 
 /*
