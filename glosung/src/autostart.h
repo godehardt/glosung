@@ -20,7 +20,7 @@
 #ifndef GLOSUNG_AUTOSTART__H
 #define GLOSUNG_AUTOSTART__H
 
-#include <glib.h>
+#include <glib/gtypes.h>
 
 
 gboolean   is_in_autostart ();

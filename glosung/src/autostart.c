@@ -21,6 +21,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <glib/gstrfuncs.h>
+#include <glib/gmessages.h>
+
 #include "autostart.h"
 
 
@@ -35,7 +39,6 @@ is_in_autostart ()
         struct stat buf;
 
 		init ();
-		g_message ("%s", config_path);
 
         stat (config_path, &buf);
         return S_ISREG (buf.st_mode);
@@ -45,12 +48,29 @@ is_in_autostart ()
 void
 add_to_autostart ()
 {
+		FILE *file = fopen (config_path, "w");
+
+		init ();
+
+		fprintf (file, "[Desktop Entry]\n");
+		fprintf (file, "Version=1.0\n");
+		fprintf (file, "Encoding=UTF-8\n");
+		fprintf (file, "Name=GLosung\n");
+		fprintf (file, "Comment=Watchwords for Gnome\n");
+		fprintf (file, "Comment[de]=Losungen für GNOME\n");
+		fprintf (file, "Exec=glosung --once\n");
+		fprintf (file, "X-GNOME-Autostart-enabled=true\n");
 }
 
 
 void
 remove_from_autostart ()
 {
+		init ();
+
+		if (remove (config_path) == -1) {
+				g_message ("deletion of autostart file failed");
+		}
 }
 
 

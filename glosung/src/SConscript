@@ -18,7 +18,9 @@
 
 Import ('env install_dir tar_file')
 
-test = env.Program ('test', ['test-autostart.c', 'autostart.c'])
+
+# test = env.Program ('test', ['test-autostart.c', 'autostart.c'])
+
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
                                 'download.c', 'losunglist.c', 'about.c'])
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
