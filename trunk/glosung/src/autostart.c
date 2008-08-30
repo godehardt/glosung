@@ -17,10 +17,28 @@
  * MA 02111-1307, USA.
  */
 
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include "autostart.h"
+
+
+static void init ();
+
+static gchar *config_path;
+
 
 gboolean
 is_in_autostart ()
 {
+        struct stat buf;
+
+		init ();
+		g_message ("%s", config_path);
+
+        stat (config_path, &buf);
+        return S_ISREG (buf.st_mode);
 }
 
 
@@ -33,4 +51,20 @@ add_to_autostart ()
 void
 remove_from_autostart ()
 {
+}
+
+
+static void
+init (void)
+{
+        config_path = getenv ("XDG_CONFIG_HOME");
+        if (config_path) {
+                config_path = g_strdup_printf
+						("%s/autostart/glosung.desktop",
+						 config_path);
+        } else {
+                config_path = g_strdup_printf
+						("%s/.config/autostart/glosung.desktop",
+						 getenv ("HOME"));
+        }
 }
