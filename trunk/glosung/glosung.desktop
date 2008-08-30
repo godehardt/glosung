@@ -1,8 +1,7 @@
 [Desktop Entry]
 Name=GLosung
-Name[de]=GLosung
-Comment=Losung for GNOME
-Comment[de]=Losung für GNOME
+Comment=Watchwords for GNOME
+Comment[de]=Losungen für GNOME
 Exec=glosung
 Icon=/usr/share/pixmaps/glosung.png
 Terminal=false
