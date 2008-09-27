@@ -22,11 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <glib/gdir.h>
-#include <glib/gmem.h>
-#include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 #include "losunglist.h"
 

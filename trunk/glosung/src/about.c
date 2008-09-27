@@ -17,8 +17,10 @@
  * MA 02111-1307, USA.
  */
 
+#include <glib.h>
 #include <glib/gi18n.h>
-#include <gtk/gtkaboutdialog.h>
+
+#include "about.h"
 
 #define APPNAME "GLosung"
 

@@ -22,8 +22,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <glib/gstrfuncs.h>
-#include <glib/gmessages.h>
 
 #include "autostart.h"
 
@@ -38,8 +36,9 @@ is_in_autostart ()
 {
         struct stat buf;
 
-		init ();
+        init ();
 
+        /* TODO: use g_file_test instead */
         stat (config_path, &buf);
         return S_ISREG (buf.st_mode);
 }
@@ -48,29 +47,30 @@ is_in_autostart ()
 void
 add_to_autostart ()
 {
-		FILE *file = fopen (config_path, "w");
+        FILE *file = fopen (config_path, "w");
 
-		init ();
+        init ();
 
-		fprintf (file, "[Desktop Entry]\n");
-		fprintf (file, "Version=1.0\n");
-		fprintf (file, "Encoding=UTF-8\n");
-		fprintf (file, "Name=GLosung\n");
-		fprintf (file, "Comment=Watchwords for Gnome\n");
-		fprintf (file, "Comment[de]=Losungen für GNOME\n");
-		fprintf (file, "Exec=glosung --once\n");
-		fprintf (file, "X-GNOME-Autostart-enabled=true\n");
+        /* TODO: use g_file_set_contents instead */
+        fprintf (file, "[Desktop Entry]\n");
+        fprintf (file, "Version=1.0\n");
+        fprintf (file, "Encoding=UTF-8\n");
+        fprintf (file, "Name=GLosung\n");
+        fprintf (file, "Comment=Watchwords for Gnome\n");
+        fprintf (file, "Comment[de]=Losungen für GNOME\n");
+        fprintf (file, "Exec=glosung --once\n");
+        fprintf (file, "X-GNOME-Autostart-enabled=true\n");
 }
 
 
 void
 remove_from_autostart ()
 {
-		init ();
+        init ();
 
-		if (remove (config_path) == -1) {
-				g_message ("deletion of autostart file failed");
-		}
+        if (remove (config_path) == -1) {
+                g_message ("deletion of autostart file failed");
+        }
 }
 
 
@@ -80,11 +80,9 @@ init (void)
         config_path = getenv ("XDG_CONFIG_HOME");
         if (config_path) {
                 config_path = g_strdup_printf
-						("%s/autostart/glosung.desktop",
-						 config_path);
+                      ("%s/autostart/glosung.desktop", config_path);
         } else {
                 config_path = g_strdup_printf
-						("%s/.config/autostart/glosung.desktop",
-						 getenv ("HOME"));
+                      ("%s/.config/autostart/glosung.desktop", getenv ("HOME"));
         }
 }

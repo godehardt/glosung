@@ -20,6 +20,8 @@
 #ifndef GLOSUNG_ABOUT__H
 #define GLOSUNG_ABOUT__H
 
+#include <gtk/gtk.h>
+
 
 void about (GtkWidget *app);
 
