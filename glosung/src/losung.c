@@ -54,8 +54,10 @@ static void my_wrap     (gchar     *string);
 
 
 static GOptionEntry entries[] = {
-  { "language", 'l', 0, G_OPTION_ARG_STRING, &lang, "language of watch word", "de" },
-  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param, "set date absolute or relative, e.g., +1, -2m", "2008-08-05" },
+  { "language", 'l', 0, G_OPTION_ARG_STRING, &lang,
+    "language of watch word", "de" },
+  { "date", 0, 0, G_OPTION_ARG_STRING, &date_param,
+    "set date absolute or relative, e.g., +1, -2m", "2008-08-05" },
   { NULL }
 };
 

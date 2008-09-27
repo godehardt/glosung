@@ -40,39 +40,13 @@
 #include <gconf/gconf-client.h>
 
 #include <glib/gi18n.h>
-
-#include <gtk/gtkaboutdialog.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkcalendar.h>
-#include <gtk/gtkcheckbutton.h>
-#include <gtk/gtkcellrenderertext.h>
-#include <gtk/gtkclipboard.h>
-#include <gtk/gtkcombobox.h>
-#include <gtk/gtkdialog.h>
-#include <gtk/gtkfontbutton.h>
-#include <gtk/gtkframe.h>
-#include <gtk/gtkhbbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkliststore.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmessagedialog.h>
-#include <gtk/gtkmenubar.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtktoolbar.h>
-#include <gtk/gtkuimanager.h>
-#include <gtk/gtkvbox.h>
-#ifdef VERSE_LINK
-  #include <gtk/gtklinkbutton.h>
-#endif
+#include <gtk/gtk.h>
 
 #include "parser.h"
 #include "download.h"
 #include "about.h"
 #include "autostart.h"
+#include "losunglist.h"
 
 
 /****************************\
@@ -1319,8 +1293,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                  GTK_RESPONSE_REJECT,
                  NULL);
 
+	/*
         GtkWidget *lang_frame = gtk_frame_new (_("Language"));
         gtk_widget_show (lang_frame);
+		*/
         GtkWidget *year_frame = gtk_frame_new (_("Year"));
         gtk_widget_show (year_frame);
 
@@ -1328,29 +1304,25 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
         gtk_widget_show (vbox);
 
+	/*
         lang_combo = gtk_combo_box_new_text ();
-        if (! server_list) {
-                server_list = download_losung_list ();
-        }
-        gint i;
-        for (i = 0; i < (server_list->languages)->len; i++) {
-                gchar *langu = g_ptr_array_index (server_list->languages, i);
-                // gchar *str = g_strdup_printf ("%s ()", );
-                gtk_combo_box_append_text
-                        (GTK_COMBO_BOX (lang_combo),
-                         g_hash_table_lookup (lang_translations, langu));
-                if (lang != NULL && strcmp (lang, langu) == 0) {
-                        gtk_combo_box_set_active
-                                (GTK_COMBO_BOX (lang_combo), i);
-                }
-        }
-        gtk_widget_show (lang_combo);
 
-        year_combo = gtk_combo_box_new_text ();
-        years = g_hash_table_lookup (server_list->hash_table, lang);
-        for (i = 0; i < years->len; i++) {
-                gchar *year = g_strdup_printf
-                        ("%d", GPOINTER_TO_INT (g_ptr_array_index (years, i)));
+	gchar *langu = g_ptr_array_index (server_list->languages, i);
+	// gchar *str = g_strdup_printf ("%s ()", );
+	gtk_combo_box_append_text
+		(GTK_COMBO_BOX (lang_combo), "German Watchwords");
+	if (lang != NULL && strcmp (lang, langu) == 0) {
+		gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), i);
+	}
+
+        gtk_widget_show (lang_combo);
+	*/
+
+	year_combo = gtk_combo_box_new_text ();
+	gint i;
+	gint this_year = 2008;
+        for (i = this_year - 3; i <= this_year; i++) {
+                gchar *year = g_strdup_printf ("%d", i);
                 gtk_combo_box_append_text
                         (GTK_COMBO_BOX (year_combo), year);
         }
@@ -1360,9 +1332,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (lang_combo), "changed",
                           G_CALLBACK (update_years), year_combo);
         
-
+	/*
         gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
         gtk_container_add (GTK_CONTAINER (lang_frame), lang_combo);
+	*/
         gtk_box_pack_start (GTK_BOX (vbox), year_frame,
                             FALSE, FALSE, MY_PAD);
         // gtk_container_add (GTK_CONTAINER (vbox), year_frame);
@@ -1376,7 +1349,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                        gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
-                download_losung (langu, year);
+                download_losungen (year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
                 update_language_store ();

@@ -22,10 +22,7 @@
 
 #include <glib.h>
 
-#include "losunglist.h"
 
-
-LosungList* download_losung_list ();
-int         download_losung (gchar *lang, guint year);
+int         download_losungen (guint year);
 
 #endif /* GLOSUNG_DOWNLOAD__H */

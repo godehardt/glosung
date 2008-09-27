@@ -20,8 +20,7 @@
 #ifndef GLOSUNG_LOSUNGLIST__H
 #define GLOSUNG_LOSUNGLIST__H
 
-#include <glib/ghash.h>
-#include <glib/garray.h>
+#include <glib.h>
 
 
 typedef struct _LosungList LosungList;
