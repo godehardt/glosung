@@ -1261,19 +1261,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
-        
-        {
-                GtkWidget *warning = gtk_message_dialog_new
-                    (GTK_WINDOW (dialog), GTK_DIALOG_DESTROY_WITH_PARENT,
-                     GTK_MESSAGE_WARNING, GTK_BUTTONS_CLOSE,
-                     _("This dialog only works for losung files until 2007!\n"
-                       "Please look on GLosung's homepage "
-                       "(www.godehardt.org/losung.html) for a desciption of "
-                       "adding texts from Herrnhut and/or bible20.net."));
-                g_signal_connect (G_OBJECT (warning), "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
-                gtk_widget_show (warning);
-        }
 } /* lang_manager_cb */
 
 
@@ -1293,16 +1280,12 @@ add_lang_cb (GtkWidget *w, gpointer data)
                  GTK_RESPONSE_REJECT,
                  NULL);
 
-	/*
-        GtkWidget *lang_frame = gtk_frame_new (_("Language"));
-        gtk_widget_show (lang_frame);
-		*/
+        GtkWidget *label = gtk_label_new (_("Herrnhuter Losungen (deutsch)"));
+
         GtkWidget *year_frame = gtk_frame_new (_("Year"));
-        gtk_widget_show (year_frame);
 
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
-        gtk_widget_show (vbox);
 
 	/*
         lang_combo = gtk_combo_box_new_text ();
@@ -1314,41 +1297,48 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	if (lang != NULL && strcmp (lang, langu) == 0) {
 		gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), i);
 	}
-
-        gtk_widget_show (lang_combo);
 	*/
 
 	year_combo = gtk_combo_box_new_text ();
 	gint i;
+        gint years [] = {2008, 2007, 2006};
 	gint this_year = 2008;
-        for (i = this_year - 3; i <= this_year; i++) {
+        for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
                 gtk_combo_box_append_text
                         (GTK_COMBO_BOX (year_combo), year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
-        gtk_widget_show (year_combo);
 
+        /*
         g_signal_connect (G_OBJECT (lang_combo), "changed",
                           G_CALLBACK (update_years), year_combo);
-        
-	/*
+        */
+
+        /*
         gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
         gtk_container_add (GTK_CONTAINER (lang_frame), lang_combo);
 	*/
+        gtk_box_pack_start (GTK_BOX (vbox), label,
+                            FALSE, FALSE, MY_PAD);
         gtk_box_pack_start (GTK_BOX (vbox), year_frame,
                             FALSE, FALSE, MY_PAD);
         // gtk_container_add (GTK_CONTAINER (vbox), year_frame);
         gtk_container_add (GTK_CONTAINER (year_frame), year_combo);
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
 
-        // gtk_widget_show (dialog);
+        gtk_widget_show_all (dialog);
+
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
-                gchar *langu = g_ptr_array_index
-                      (server_list->languages,
-                       gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
-                gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
-                       gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
+                gchar *langu = "de";
+/*                 gchar *langu = g_ptr_array_index
+ *                       (server_list->languages,
+ *                        gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
+ *                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
+ *                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
+ */
+                gint year = years
+                        [gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))];
                 download_losungen (year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
