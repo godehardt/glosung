@@ -28,7 +28,7 @@
 
 static void init ();
 
-static gchar *config_path;
+static gchar *config_path = NULL;
 
 
 gboolean
@@ -77,6 +77,10 @@ remove_from_autostart ()
 static void
 init (void)
 {
+        if (config_path) {
+                return; /* config_path already set */
+        }
+
         config_path = getenv ("XDG_CONFIG_HOME");
         if (config_path) {
                 config_path = g_strdup_printf
