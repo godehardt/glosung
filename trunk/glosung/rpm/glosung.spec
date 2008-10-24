@@ -8,7 +8,7 @@ Version:        %{version}
 Release:        %{release}
 Source0:        %{name}-%{version}.tar.bz2
 Group:          Applications/Productivity
-Vendor:         Eicke Godehardt <eicke AT godehardt DOT org>
+Vendor:         Eicke Godehardt <sf AT godehardt DOT org>
 Packager:       Sebastian Pätzold <sebastian AT paetzold-family DOT de>
 URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
@@ -36,6 +36,8 @@ and one from the New Testament.
 
 %build
 scons
+strip build/glosung
+strip build/losung
 
 %install
 rm -rf $RPM_BUILD_ROOT
