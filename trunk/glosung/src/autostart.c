@@ -38,9 +38,7 @@ is_in_autostart ()
 
         init ();
 
-        /* TODO: use g_file_test instead */
-        stat (config_path, &buf);
-        return S_ISREG (buf.st_mode);
+        return g_file_test (config_path, G_FILE_TEST_IS_REGULAR)
 }
 
 
