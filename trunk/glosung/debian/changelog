@@ -1,3 +1,9 @@
+glosung (3.2.2-2) gutsy; urgency=low
+
+  * fix build dependencies
+
+ -- Eicke Godehardt <sf@godehardt.org>  Sat, 01 Nov 2008 23:20:15 +0100
+
 glosung (3.2.2) gutsy; urgency=low
 
   * fix line wrapping
@@ -152,6 +158,3 @@ glosung (0.9.4) unstable; urgency=low
 
  -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Sat, 24 Feb 2001 15:22:08 +0200
 
-Local variables:
-mode: debian-changelog
-End:
