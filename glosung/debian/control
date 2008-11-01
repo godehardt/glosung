@@ -1,14 +1,13 @@
 Source: glosung
-Maintainer: Eicke Godehardt <eicke AT godehardt DOT org>
-Section: X11
+Maintainer: Eicke Godehardt <sf@godehardt.org>
+Section: gnome
 Priority: extra
 Standards-Version: 2.0
-#Build-Depends: debhelper, libgtk+2.4-dev, libxml2-dev, scons
+Build-Depends: scons, debhelper, intltool, libgtk2.0-dev, libxml2-dev, libcurl4-gnutls-dev, libgconf2-dev
 
 Package: glosung
 Architecture: any
-Depends: debconf, libgtk2.0-0 (>= 2.10), libxml2, libcurl3
-Recommends: glosung-text
+Depends: ${shlibs:Depends}
 Description: Gnome Version of watch words (german: Losung).
  This program shows the watch words (german: Losungen) for each day.
  The `Losungen' are words out of the bible, one from the Old
