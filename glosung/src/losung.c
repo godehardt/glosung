@@ -27,10 +27,14 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <gconf/gconf-client.h>
+#ifndef WIN32
+    #include <gconf/gconf-client.h>
+#endif /* WIN32 */
 
 #include <glib/gi18n.h>
 #include <glib/goption.h>
+
+#define PACKAGE "glosung"
 
 
 /****************************\
@@ -38,7 +42,7 @@
 \****************************/
 
 static GDate *date;
-static gchar *lang;
+static gchar *lang = NULL;
 static gchar *date_param = NULL;
 
 #define WRAP_SIZE 50
@@ -75,9 +79,11 @@ main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
+#ifndef WIN32
         GConfClient *client = gconf_client_get_default ();
         lang = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/language", NULL);
+#endif /* WIN32 */
         if (lang == NULL) {
                 lang = "de";
         }

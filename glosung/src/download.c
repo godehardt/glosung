@@ -76,7 +76,11 @@ to_file (Memory chunk)
         gchar *tmp_dir = g_strdup_printf ("%s/tmp_download", glosung_dir);
         gchar *zipfile = g_strdup_printf ("%s/Losung_XML.zip", tmp_dir);
 
-        mkdir (tmp_dir, 0777);
+#ifdef WIN32
+        mkdir (tmp_dir);
+#else /* WIN32 */
+		mkdir (tmp_dir, 0777);
+#endif /* WIN32 */
         FILE *file = fopen (zipfile, "wb");
         if (file) {
                 size_t written = fwrite (chunk.memory, 1, chunk.size, file);
@@ -171,7 +175,11 @@ init (void)
         glosung_dir = g_strdup_printf
                 ("%s/.glosung", getenv ("HOME"));
         if (! g_file_test (glosung_dir, G_FILE_TEST_IS_DIR)) {
+#ifdef WIN32
+				int error = mkdir (glosung_dir);
+#else /* WIN32 */
                 int error = mkdir (glosung_dir, 0750);
+#endif /* WIN32 */
                 if (error == -1) {
                         g_message ("Error: Could not create directory %s!",
                                    glosung_dir);

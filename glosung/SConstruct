@@ -33,18 +33,25 @@ Help ('''Options:
 
 prefix      = ARGUMENTS.get ('PREFIX', '/usr')
 install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
-pixmap_dir  = '/share/pixmaps'
+#pixmap_dir  = prefix + '/share/pixmaps/'
+pixmap_dir  = ''
+#data_dir  = prefix + '/share/glosung'
+data_dir  = ''
 doc_dir     = '/share/doc/glosung-' + version
 
 BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = '-Wall -O2 -g -DGLOSUNG_DATA_DIR=\\"' + prefix + '/share/glosung\\" \
-            `pkg-config --cflags gtk+-2.0 libxml-2.0 gconf-2.0 libcurl` \
-            -DVERSION=\\"' + version + '\\"  \
-            -DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"'
-linkflags = '-Wl,--export-dynamic  -L/usr/lib \
-             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`'
+ccflags   = ['-O2', '-Wall', '-g',
+#		'-DLIBXML_STATIC',
+		'-DVERSION=\\"' + version + '\\"',
+		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
+		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
+
+linkflags = ['-Wl,--export-dynamic', '-L.']
+#  -L/usr/lib'
+#             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`
+             
 
 if ARGUMENTS.get ('profile'):
     ccflags   += ' -pg -fprofile-arcs'
@@ -57,7 +64,6 @@ if (ARGUMENTS.get ('dev')):
 tar_file = '#../glosung-' + version + '.tar.bz2'
 
 env = Environment (
-  platform  = 'posix',
   LINK      = 'gcc',
   CC        = 'gcc',
   CPPPATH   = cpppath,
@@ -65,6 +71,18 @@ env = Environment (
   CCFLAGS   = ccflags,
   ENV       = os.environ,
   TARFLAGS  = '-c -j')
+
+if env['PLATFORM'] == 'win32':
+    Tool('mingw')(env)
+else:
+    Tool('posix')(env)
+
+#env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 libcurl --cflags --libs')
+env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
+
+conf = Configure (env)
+if not conf.CheckLib ('libxml2'):
+	print 'Did not find libxml2.a or xml2.lib, exiting!'
 
 Export ('env cpppath ccflags install_dir pixmap_dir tar_file')
 
@@ -83,7 +101,8 @@ env.Install (dir = install_dir + pixmap_dir, source = 'glosung.png')
 env.Install (dir = install_dir + pixmap_dir, source = 'glosung-big.png')
 
 # TODO put everything into a folder "glosung-<VERSION>" and rename build to src
-env.Tar (tar_file, ['AUTHORS',
+if env['PLATFORM'] != 'win32':
+	env.Tar (tar_file, ['AUTHORS',
                     'COPYING',
                     'ChangeLog',
                     'INSTALL',

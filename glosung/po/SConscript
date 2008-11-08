@@ -25,15 +25,16 @@ languages = ['cs', 'de', 'fr']
 env.Command ('glosung.pot', ['#/src/about.c',
                              '#/src/glosung.c',
                              '#/src/parser.c'],
-             "/usr/bin/xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
+             "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
-    env.Execute (action = "/usr/bin/msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
+    env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
     env.Command (lang + '.mo', lang + '.po',
-            "/usr/bin/msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
+            "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
     env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
-env.Tar (tar_file, ['SConscript',
+if env['PLATFORM'] != 'win32':
+	env.Tar (tar_file, ['SConscript',
                     'cs.po',
                     'fr.po',
                     'de.po'])

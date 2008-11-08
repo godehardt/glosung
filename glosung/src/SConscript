@@ -18,7 +18,6 @@
 
 Import ('env install_dir tar_file')
 
-
 # test = env.Program ('test', ['test-autostart.c', 'autostart.c'])
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
@@ -26,7 +25,8 @@ glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
 env.Install (dir = install_dir + '/bin', source = [losung, glosung])
 
-env.Tar (tar_file, ['SConscript',
+if env['PLATFORM'] != 'win32':
+	env.Tar (tar_file, ['SConscript',
                     'about.c',
                     'about.h',
                     'download.c',
