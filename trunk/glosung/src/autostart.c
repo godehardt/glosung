@@ -34,11 +34,9 @@ static gchar *config_path = NULL;
 gboolean
 is_in_autostart ()
 {
-        struct stat buf;
-
         init ();
 
-        return g_file_test (config_path, G_FILE_TEST_IS_REGULAR)
+        return g_file_test (config_path, G_FILE_TEST_IS_REGULAR);
 }
 
 
@@ -79,12 +77,19 @@ init (void)
                 return; /* config_path already set */
         }
 
+        g_message ("fore");
         config_path = getenv ("XDG_CONFIG_HOME");
+        g_message ("aaafter");
         if (config_path) {
                 config_path = g_strdup_printf
                       ("%s/autostart/glosung.desktop", config_path);
         } else {
-                config_path = g_strdup_printf
-                      ("%s/.config/autostart/glosung.desktop", getenv ("HOME"));
+#ifndef WIN32
+		config_path = g_strdup_printf
+			  ("%s/.config/autostart/glosung.desktop", getenv ("HOME"));
+#else /* WIN32 */
+		config_path = g_strdup_printf ("%s%s/.config/autostart/glosung.desktop",
+        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"));
+#endif /* WIN32 */
         }
 }

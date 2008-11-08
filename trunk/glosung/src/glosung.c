@@ -37,7 +37,9 @@
 #include <string.h>
 #include <time.h>
 
-#include <gconf/gconf-client.h>
+#ifndef WIN32
+	#include <gconf/gconf-client.h>
+#endif
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -68,7 +70,10 @@ enum {
         NUMBER_OF_LABELS
 };
 
-static GConfClient *client;
+#ifndef WIN32
+	static GConfClient *client;
+#endif /* WIN32 */
+
 static GtkWidget *app;
 static GDate     *date;
 static GDate     *new_date;
@@ -83,15 +88,15 @@ static gboolean   autostart;
 static gboolean   autostart_new;
 static gboolean   calendar_close;
 static gboolean   calendar_close_new;
-static gboolean   show_readings;
-static gboolean   show_readings_new;
+static gboolean   show_readings = TRUE;
+static gboolean   show_readings_new = TRUE;
 static gboolean   show_sword;
 static gboolean   show_sword_new;
 static gchar     *losung_simple_text;
 static guint      losung_simple_text_len;
 
 static LosungList *languages;
-static gchar      *lang;
+static gchar      *lang = NULL;
 static GHashTable *lang_translations;
 static LosungList *server_list = NULL;
 
@@ -224,7 +229,7 @@ static guint n_entries = G_N_ELEMENTS (entries);
 /*
  * the one and only main function :-)
  */
-int 
+int
 main (int argc, char **argv)
 {
         GError *error = NULL;
@@ -258,10 +263,14 @@ main (int argc, char **argv)
                 exit (1);
         }
 
+#ifndef WIN32
         client = gconf_client_get_default ();
+#endif /* WIN32 */
+
         date = g_date_new ();
         get_time ();
         new_date = g_date_new_julian (g_date_get_julian (date));
+#ifndef WIN32
         if (once) {
                 gchar *last_time_str = gconf_client_get_string
                         (client, "/apps/" PACKAGE "/last_time", NULL);
@@ -277,15 +286,18 @@ main (int argc, char **argv)
         g_date_strftime (time_str, 11, "%Y-%m-%d", date);
         gconf_client_set_string
                 (client, "/apps/" PACKAGE "/last_time", time_str, NULL);
+#endif /* WIN32 */
 
         gtk_window_set_default_icon_from_file
-                (PACKAGE_PIXMAPS_DIR "/glosung.png", NULL);
+                (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
         lang_translations = init_languages ();
         languages         = scan_for_files ();
 
+#ifndef WIN32
         lang = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/language", NULL);
+#endif /* WIN32 */
         if (lang == NULL) {
                 /* should be translated to corresponding language, e.g. 'de' */
                 lang = _("en");
@@ -300,19 +312,21 @@ main (int argc, char **argv)
         }
 
         printf ("Choosen language: %s\n", lang);
+#ifndef WIN32
         calendar_close = calendar_close_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
         show_readings = show_readings_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/show_readings", NULL);
-#ifdef VERSE_LINK
+        font = gconf_client_get_string (client, "/apps/" PACKAGE "/font",
+                                        NULL);
+#endif /* WIN32 */
+#if (defined (VERSE_LINK) && ! defined (WIN32))
         show_sword = show_sword_new = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/link_sword", NULL);
 #else
         show_sword = show_sword_new = FALSE;
-#endif
-        font = gconf_client_get_string (client, "/apps/" PACKAGE "/font",
-                                        NULL);
+#endif /* VERSE_LINK, WIN32 */
 
         create_app ();
         if (languages->languages->len == 0) {
@@ -400,7 +414,7 @@ create_app (void)
 
         uiman = gtk_ui_manager_new ();
         gtk_ui_manager_insert_action_group (uiman, action, 0);
-        gtk_window_add_accel_group (GTK_WINDOW (app), 
+        gtk_window_add_accel_group (GTK_WINDOW (app),
                                     gtk_ui_manager_get_accel_group (uiman));
 
         GError *error;
@@ -473,7 +487,7 @@ create_app (void)
 /*
  * computes local date and fill GDate date.
  */
-static void 
+static void
 get_time (void)
 {
         time_t     t;
@@ -489,7 +503,7 @@ get_time (void)
 /*
  * display the ww for the current date.
  */
-static void 
+static void
 show_text (void)
 {
         const Losung *ww;
@@ -557,7 +571,7 @@ show_text (void)
 
         if (ww->nt.say != NULL) {
                 gchar *text;
-                
+
                 text = g_strconcat (ww->nt.say, "\n", ww->nt.text, NULL);
                 gtk_label_set_text (GTK_LABEL (label [NT_TEXT]), text);
                 g_free (text);
@@ -676,7 +690,7 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 /*
  * callback function that displays the about dialog.
  */
-static void 
+static void
 about_cb (GtkWidget *w, gpointer data)
 {
         about (app);
@@ -686,7 +700,7 @@ about_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that displays a property dialog.
  */
-static void 
+static void
 property_cb (GtkWidget *w, gpointer data)
 {
         if (property != NULL) {
@@ -738,7 +752,7 @@ property_cb (GtkWidget *w, gpointer data)
 /*
  * callback function for property box.
  */
-static void 
+static void
 property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
 {
         switch (arg1) {
@@ -761,14 +775,16 @@ property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
 /*
  * callback function for property box.
  */
-static void 
+static void
 apply_cb (void)
 {
         if (new_lang != NULL) {
                 lang = new_lang;
                 new_lang = NULL;
+#ifndef WIN32
                 gconf_client_set_string
                         (client, "/apps/" PACKAGE "/language", lang, NULL);
+#endif /* WIN32 */
                 show_text ();
         }
         if (new_font != NULL) {
@@ -780,8 +796,10 @@ apply_cb (void)
                 }
                 font = new_font;
                 new_font = NULL;
+#ifndef WIN32
                 gconf_client_set_string (client, "/apps/" PACKAGE "/font",
                                          font, NULL);
+#endif /* WIN32 */
 
                 font_desc = pango_font_description_from_string (font);
                 for (i = 0; i < NUMBER_OF_LABELS; i++) {
@@ -799,16 +817,20 @@ apply_cb (void)
 		}
         if (calendar_close_new != calendar_close) {
                 calendar_close = calendar_close_new;
+#ifndef WIN32
                 gconf_client_set_bool
                         (client,
                          "/apps/" PACKAGE "/calendar_close_by_double_click",
                          calendar_close, NULL);
+#endif /* WIN32 */
         }
         if (show_readings_new != show_readings) {
                 show_readings = show_readings_new;
+#ifndef WIN32
                 gconf_client_set_bool (client,
                                        "/apps/" PACKAGE "/show_readings",
                                        show_readings, NULL);
+#endif /* WIN32 */
                 if (show_readings) {
                         gtk_widget_show (label [X3]);
                         gtk_widget_show (label [READING]);
@@ -820,8 +842,10 @@ apply_cb (void)
 #ifdef VERSE_LINK
         if (show_sword_new != show_sword) {
                 show_sword = show_sword_new;
+#ifndef WIN32
                 gconf_client_set_bool (client, "/apps/" PACKAGE "/link_sword",
                                        show_sword, NULL);
+#endif /* WIN32 */
                 if (show_sword) {
                         gtk_widget_hide (label [OT_LOC]);
                         gtk_widget_show (label [OT_LOC_SWORD]);
@@ -856,7 +880,7 @@ create_property_table ()
         table = gtk_table_new (5, 2, FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (table), MY_PAD);
         // gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
-        
+
         label = gtk_label_new (_("Choose displayed language:"));
         gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
 
@@ -907,7 +931,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (calendar_option_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
 
         widget = gtk_check_button_new_with_label
                 (_("Show selective and continuing reading"));
@@ -917,7 +941,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (readings_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
 
 #ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
@@ -928,7 +952,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 5, 6);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
 #endif
 
         return table;
@@ -938,7 +962,7 @@ create_property_table ()
 /*
  * callback function for options menu.
  */
-static void 
+static void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
@@ -951,7 +975,7 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
 /*
  * callback function when font is selected.
  */
-static void 
+static void
 font_sel_cb (GtkWidget *gfb, gpointer data)
 {
         const gchar* font_name = gtk_font_button_get_font_name
@@ -970,9 +994,9 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 
 
 /*
- * callback function for options menu.
+ * callback function for calender options changes.
  */
-static void 
+static void
 calendar_option_cb (GtkWidget *toggle, gpointer data)
 {
         calendar_close_new = gtk_toggle_button_get_active (
@@ -983,9 +1007,9 @@ calendar_option_cb (GtkWidget *toggle, gpointer data)
 
 
 /*
- * callback function for options menu.
+ * callback function for reading changes.
  */
-static void 
+static void
 readings_cb (GtkWidget *toggle, gpointer data)
 {
         show_readings_new = gtk_toggle_button_get_active (
@@ -996,9 +1020,9 @@ readings_cb (GtkWidget *toggle, gpointer data)
 
 
 /*
- * callback function for options menu.
+ * callback function for autostart changes.
  */
-static void 
+static void
 autostart_cb (GtkWidget *toggle, gpointer data)
 {
         autostart_new = gtk_toggle_button_get_active (
@@ -1009,9 +1033,9 @@ autostart_cb (GtkWidget *toggle, gpointer data)
 
 
 /*
- * callback function for options menu.
+ * callback function for gnomwsword option change.
  */
-static void 
+static void
 sword_cb (GtkWidget *toggle, gpointer data)
 {
         show_sword_new = gtk_toggle_button_get_active (
@@ -1024,11 +1048,11 @@ sword_cb (GtkWidget *toggle, gpointer data)
 /*
  * callback function that displays a calendar.
  */
-static void 
+static void
 calendar_cb (GtkWidget *w, gpointer data)
 {
         static GtkWidget *dialog = NULL;
-  
+
         if (dialog != NULL) {
                 g_assert (GTK_WIDGET_REALIZED (dialog));
                 gdk_window_show  (dialog->window);
@@ -1043,12 +1067,12 @@ calendar_cb (GtkWidget *w, gpointer data)
 
                 calendar = gtk_calendar_new ();
                 gtk_calendar_set_display_options
-                        (GTK_CALENDAR (calendar), 
+                        (GTK_CALENDAR (calendar),
                          GTK_CALENDAR_WEEK_START_MONDAY |
                          GTK_CALENDAR_SHOW_WEEK_NUMBERS |
                          GTK_CALENDAR_SHOW_HEADING |
                          GTK_CALENDAR_SHOW_DAY_NAMES);
-                gtk_calendar_select_month    (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month    (GTK_CALENDAR (calendar),
                                               g_date_get_month (date) - 1,
                                               g_date_get_year (date));
                 gtk_calendar_select_day      (GTK_CALENDAR (calendar),
@@ -1074,7 +1098,7 @@ calendar_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that computes Losung for the current date.
  */
-static void 
+static void
 today_cb (GtkWidget *w, gpointer data)
 {
         date = g_date_new ();
@@ -1082,7 +1106,7 @@ today_cb (GtkWidget *w, gpointer data)
         new_date = g_date_new_julian (g_date_get_julian (date));
         show_text ();
         if (calendar != NULL) {
-                gtk_calendar_select_month (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                            g_date_get_month (date) - 1,
                                            g_date_get_year (date));
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
@@ -1094,13 +1118,13 @@ today_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that increases the day.
  */
-static void 
+static void
 next_day_cb (GtkWidget *w, gpointer data)
 {
         g_date_add_days (new_date, 1);
         show_text ();
         if (calendar != NULL) {
-                gtk_calendar_select_month (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                            g_date_get_month (date) - 1,
                                            g_date_get_year (date));
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
@@ -1112,13 +1136,13 @@ next_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the day.
  */
-static void 
+static void
 prev_day_cb (GtkWidget *w, gpointer data)
 {
         g_date_subtract_days (new_date, 1);
         show_text ();
         if (calendar != NULL) {
-                gtk_calendar_select_month (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                            g_date_get_month (date) - 1,
                                            g_date_get_year (date));
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
@@ -1130,13 +1154,13 @@ prev_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function  that increases the month.
  */
-static void 
+static void
 next_month_cb (GtkWidget *w, gpointer data)
 {
         g_date_add_months (new_date, 1);
         show_text ();
         if (calendar != NULL) {
-                gtk_calendar_select_month (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                            g_date_get_month (date) - 1,
                                            g_date_get_year (date));
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
@@ -1148,13 +1172,13 @@ next_month_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the month.
  */
-static void 
+static void
 prev_month_cb (GtkWidget *w, gpointer data)
 {
         g_date_subtract_months (new_date, 1);
         show_text ();
         if (calendar != NULL) {
-                gtk_calendar_select_month (GTK_CALENDAR (calendar), 
+                gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                            g_date_get_month (date) - 1,
                                            g_date_get_year (date));
                 gtk_calendar_select_day   (GTK_CALENDAR (calendar),
@@ -1166,7 +1190,7 @@ prev_month_cb (GtkWidget *w, gpointer data)
 /*
  * callback function for the calendar widget.
  */
-static void 
+static void
 calendar_select_cb (GtkWidget *calendar, gpointer data)
 {
         guint y, m, d;
@@ -1257,7 +1281,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                             FALSE, FALSE, MY_PAD);
 
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-        
+
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
@@ -1327,8 +1351,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (year_frame), year_combo);
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
 
-        gtk_widget_show_all (dialog);
-
+        // gtk_widget_show (dialog);
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 gchar *langu = "de";
 /*                 gchar *langu = g_ptr_array_index
@@ -1345,8 +1368,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 update_language_store ();
                 if (languages->languages->len == 1) {
                         lang = langu;
+#ifndef WIN32
                         gconf_client_set_string
                             (client, "/apps/" PACKAGE "/language", lang, NULL);
+#endif /* WIN32 */
                 }
                 show_text ();
         }
@@ -1426,7 +1451,7 @@ update_language_store ()
 
 
 static void
-clipboard_cb (GtkWidget *w, gpointer data) 
+clipboard_cb (GtkWidget *w, gpointer data)
 {
         GtkClipboard* clipboard = gtk_clipboard_get (GDK_SELECTION_PRIMARY);
         gtk_clipboard_set_text (clipboard,

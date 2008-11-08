@@ -17,7 +17,7 @@
  * MA 02111-1307, USA.
  */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
 #include "about.h"
@@ -28,7 +28,7 @@
 /*
  * callback function that displays the about dialog.
  */
-void 
+void
 about (GtkWidget *app)
 {
         const gchar *authors [] = {

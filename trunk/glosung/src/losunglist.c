@@ -107,9 +107,16 @@ scan_for_files (void)
         LosungList *list = losunglist_new ();
 
         scan_for_languages_in_dir (GLOSUNG_DATA_DIR, list);
+#ifndef WIN32
         dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
         scan_for_languages_in_dir (dirname, list);
         g_free (dirname);
+#else /* WIN32 */
+        dirname = g_strdup_printf ("%s%s%s",
+        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), "/.glosung");
+        scan_for_languages_in_dir (dirname, list);
+        g_free (dirname);
+#endif /* WIN32 */
         losunglist_finialize (list);
 
         printf ("Found languages: ");
@@ -184,7 +191,7 @@ check_for_original_losung_file (const gchar *name, int len, LosungList *list)
 
 
 static void
-scan_for_languages_in_dir (gchar *dirname, LosungList *list) 
+scan_for_languages_in_dir (gchar *dirname, LosungList *list)
 {
         if (access (dirname, F_OK | R_OK) != 0) {
                 return;
