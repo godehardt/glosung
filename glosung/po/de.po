@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-19 17:31+0100\n"
-"PO-Revision-Date: 2008-01-19 17:49+0100\n"
-"Last-Translator: Eicke Godehardt <eicke at godehardt.org>\n"
+"POT-Creation-Date: 2008-11-23 18:35+0100\n"
+"PO-Revision-Date: 2008-11-24 21:16+0100\n"
+"Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -384,6 +384,11 @@ msgid "Choose Font:"
 msgstr "Schriftart des Textes:"
 
 #
+# File: src/glosung.c, line: 917
+msgid "Start GLosung at login time"
+msgstr "Starte GLosung beim Einlogen"
+
+#
 msgid "Close calendar by double click"
 msgstr "Schließen des Kalenders durch Doppelklick"
 
@@ -411,18 +416,9 @@ msgid "Installed Languages"
 msgstr "Installierte Sprachen"
 
 #
-# File: src/glosung.c, line: 1257
-msgid ""
-"This dialog only works for losung files until 2007!\n"
-"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a desciption of adding texts from Herrnhut and/or bible20.net."
-msgstr ""
-"Dieser Dialog funktioniert nur für Losung Dateien bis einschließlich 2007!\n"
-"Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www.godehardt.org/losung.html), um Text von Herrnhut bzw. bible20.net zu installieren."
-
-#
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
-msgstr "Sprache hinzufügen"
+msgstr "Sprachen hinzufügen"
 
 #
 # File: src/glosung.c, line: 1144
@@ -430,9 +426,9 @@ msgid "Download"
 msgstr "Herunterladen"
 
 #
-# File: src/glosung.c, line: 1150
-msgid "Language"
-msgstr "Sprache"
+# File: src/glosung.c, line: 1283
+msgid "Herrnhuter Losungen (deutsch)"
+msgstr "Herrnhuter Losungen (deutsch)"
 
 #
 # File: src/glosung.c, line: 1152
@@ -450,6 +446,40 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+# File: src/glosung.c, line: 1257
+#~ msgid ""
+#~ "This dialog only works for losung files until 2007!\n"
+#~ "Please look on GLosung's homepage (www.godehardt.org/losung.html) for a "
+#~ "desciption of adding texts from Herrnhut and/or bible20.net."
+#~ msgstr ""
+#~ "Dieser Dialog funktioniert nur für Losung Dateien bis einschließlich "
+#~ "2007!\n"
+#~ "Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www."
+#~ "godehardt.org/losung.html), um Text von Herrnhut bzw. bible20.net zu "
+#~ "installieren."
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 1150
+#~ msgid "Language"
+#~ msgstr "Sprache"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -458,6 +488,13 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -505,10 +542,24 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -566,10 +617,24 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -628,6 +693,13 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -659,10 +731,24 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
