@@ -1,7 +1,9 @@
+better error handling on download
+        add global download constants (OK, DL_FAILED, INSTALL_FAILED ...)
+
 add global include.h
 shrink Add button
 download from bible20.net
-better error handling on download
 
 
 add sword translation
