@@ -33,9 +33,10 @@
 //#include <curl/easy.h>
 
 #include "download.h"
-
+#include "losunglist.h"
 
 #define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
+#define BIBLE20_BASE_URL "http://bible20.net/service/TheWord/twd11/"
 
 
 static gchar *glosung_dir = NULL;
@@ -46,8 +47,9 @@ typedef struct Memory {
 } Memory;
 
 
-static void init ();
-static int  to_file (Memory chunk);
+static void   init     ();
+static int    to_file_losungen  (Memory chunk);
+static Memory download (gchar *url);
 
 
 
@@ -69,7 +71,25 @@ WriteMemoryCallback (void *ptr, size_t size, size_t nmemb, void *data)
 
 
 static int
-to_file (Memory chunk)
+to_file (Memory chunk, gchar *filename)
+{
+        FILE *file = fopen (filename, "wb");
+
+        if (file) {
+                size_t written = fwrite (chunk.memory, 1, chunk.size, file);
+                fclose (file);
+                printf ("written: %d\n", written);
+                if (written != chunk.size) {
+                        remove (filename);
+                        return -2;
+                }
+        }
+        return 0;
+}
+
+
+static int
+to_file_losungen (Memory chunk)
 {
         init ();
 
@@ -79,23 +99,18 @@ to_file (Memory chunk)
 #ifdef WIN32
         mkdir (tmp_dir);
 #else /* WIN32 */
-		mkdir (tmp_dir, 0777);
+        mkdir (tmp_dir, 0777);
 #endif /* WIN32 */
-        FILE *file = fopen (zipfile, "wb");
-        if (file) {
-                size_t written = fwrite (chunk.memory, 1, chunk.size, file);
-                fclose (file);
-                printf ("written: %d\n", written);
-                if (written != chunk.size) {
-                        remove (zipfile);
-                        rmdir (tmp_dir);
-
-                        g_free (tmp_dir);
-                        g_free (zipfile);
-                        return -2;
-                }
+        int res = to_file (chunk, zipfile);
+        if (res) {
+                rmdir (tmp_dir);
+                g_free (tmp_dir);
+                g_free (zipfile);
+                return res;
         }
+
         // TODO: use getcwd (char *buf, size_t size); and reset afterwards
+        // TODO: handle return type of chdir
         chdir (tmp_dir);
         gchar *command = g_strdup_printf ("unzip %s", zipfile);
         gboolean success =
@@ -135,9 +150,22 @@ to_file (Memory chunk)
 int
 download_losungen (guint year)
 {
-        gchar    *url    = g_strdup_printf (LOSUNGEN_URL, year);
+        gchar *url   = g_strdup_printf (LOSUNGEN_URL, year);
+        Memory chunk = download (url);
+
+        to_file_losungen (chunk);
+        return 0;
+}
+
+
+/*
+ * generic method to download specified url to chunk of memory
+ */
+static Memory
+download (gchar *url)
+{
         CURL     *curl_handle;
-        CURLcode  res = CURLE_OK;
+        CURLcode  res = -1;
         Memory    chunk;
 
         chunk.memory = NULL;
@@ -157,11 +185,69 @@ download_losungen (guint year)
                 res = curl_easy_perform (curl_handle);
                 curl_easy_cleanup (curl_handle);
 
+                /*
                 if (res == CURLE_OK) {
-                        to_file (chunk);
+                        return chunk;
                 }
+                */
         }
-        return res;
+        return chunk;
+}
+
+
+static void
+analyse_bible20_list (Memory mem)
+{
+        LosungList* list = losunglist_new ();
+        gchar** lines = g_strsplit (mem.memory, "\n", -1);
+        GHashTable *columns = g_hash_table_new (g_str_hash, g_str_equal);
+        gint i = 0;
+        while (lines [i]) {
+                g_message ("%s", lines [i]);
+                gchar** tokens = g_strsplit (lines [i], "\";", -1);
+        }
+        /*
+                i = 0;
+                while (tokens [i]) {
+                        g_hash_table_insert (columns, tokens [i], GINT_TO_POINTER (i));
+                }
+
+                switch (chunk.memory [start]) {
+                case '#':
+                        break;
+                case 'F':
+                        if (isdigit (chunk.memory [start + 1]) &&
+                            isdigit (chunk.memory [start + 2]) &&
+                            isdigit (chunk.memory [start + 3]) &&
+                            isdigit (chunk.memory [start + 4]))
+                        {
+                                year =  (chunk.memory [++start] - 48) * 1000;
+                                year += (chunk.memory [++start] - 48) * 100;
+                                year += (chunk.memory [++start] - 48) * 10;
+                                year += (chunk.memory [++start] - 48);
+                                start += 2;
+                                lang = g_strndup (chunk.memory + start,
+                                                  end - start - 1);
+                                losunglist_add (list, lang, year);
+                        }
+                        break;
+                case 'D':
+                        chunk.memory += start + 1;
+                        chunk.size -= start + 1;
+
+                        LozHeader     *header = get_header (& chunk);
+                        unsigned char *data   = get_data   (& chunk);
+                        data = unloz (header, data);
+                        to_file (header, data);
+                        return NULL;
+
+                        break;
+                }
+        } while (chunk.memory [end] != '\0');
+
+        losunglist_finialize (list);
+        return list;
+        */
 }
 
 
@@ -176,7 +262,7 @@ init (void)
                 ("%s/.glosung", getenv ("HOME"));
         if (! g_file_test (glosung_dir, G_FILE_TEST_IS_DIR)) {
 #ifdef WIN32
-				int error = mkdir (glosung_dir);
+                int error = mkdir (glosung_dir);
 #else /* WIN32 */
                 int error = mkdir (glosung_dir, 0750);
 #endif /* WIN32 */
