@@ -73,12 +73,12 @@ env = Environment (
   TARFLAGS  = '-c -j')
 
 if env['PLATFORM'] == 'win32':
-    Tool('mingw')(env)
+        env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
+        Tool('mingw')(env)
 else:
-    Tool('posix')(env)
+        env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 libcurl --cflags --libs')
+#        Tool('posix')(env)
 
-#env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 libcurl --cflags --libs')
-env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
 
 conf = Configure (env)
 if not conf.CheckLib ('libxml2'):
