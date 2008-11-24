@@ -25,7 +25,7 @@
 
 #include <gtk/gtkversion.h>
 
-#if GTK_MINOR_VERSION >= (10)
+#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
   #define VERSE_LINK 1
 #endif
 
@@ -914,7 +914,7 @@ create_property_table ()
 
         widget = gtk_check_button_new_with_label
                 (_("Start GLosung at login time"));
-		autostart = autostart_new = is_in_autostart ();
+        autostart = autostart_new = is_in_autostart ();
         if (autostart) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
                                               TRUE);
@@ -923,7 +923,7 @@ create_property_table ()
                           G_CALLBACK (autostart_cb), NULL);
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
 
-		widget = gtk_check_button_new_with_label
+        widget = gtk_check_button_new_with_label
                 (_("Close calendar by double click"));
         if (calendar_close) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
@@ -931,7 +931,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (calendar_option_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
 
         widget = gtk_check_button_new_with_label
                 (_("Show selective and continuing reading"));
@@ -941,7 +941,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (readings_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
 
 #ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
@@ -952,7 +952,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 5, 6);
 #endif
 
         return table;
@@ -1230,7 +1230,6 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         GtkCellRenderer   *renderer;
         GtkTreeViewColumn *column;
 
-
         dialog = gtk_dialog_new_with_buttons
                 (_("Languages"),
                  GTK_WINDOW (app),
@@ -1304,12 +1303,14 @@ add_lang_cb (GtkWidget *w, gpointer data)
                  GTK_RESPONSE_REJECT,
                  NULL);
 
-        GtkWidget *label = gtk_label_new (_("Herrnhuter Losungen (deutsch)"));
-
-        GtkWidget *year_frame = gtk_frame_new (_("Year"));
-
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
+
+        GtkWidget *label = gtk_label_new (_("Herrnhuter Losungen (deutsch)"));
+        gtk_box_pack_start (GTK_BOX (vbox), label,
+                            FALSE, FALSE, MY_PAD);
+
+        GtkWidget *year_frame = gtk_frame_new (_("Year"));
 
 	/*
         lang_combo = gtk_combo_box_new_text ();
@@ -1325,8 +1326,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
 	year_combo = gtk_combo_box_new_text ();
 	gint i;
-        gint years [] = {2008, 2007, 2006};
-	gint this_year = 2008;
+        gint years [] = {2009, 2008, 2007};
+	gint this_year = 2009;
         for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
                 gtk_combo_box_append_text
@@ -1343,15 +1344,13 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
         gtk_container_add (GTK_CONTAINER (lang_frame), lang_combo);
 	*/
-        gtk_box_pack_start (GTK_BOX (vbox), label,
-                            FALSE, FALSE, MY_PAD);
-        gtk_box_pack_start (GTK_BOX (vbox), year_frame,
-                            FALSE, FALSE, MY_PAD);
-        // gtk_container_add (GTK_CONTAINER (vbox), year_frame);
+        // gtk_box_pack_start (GTK_BOX (vbox), year_frame,
+        //                     FALSE, FALSE, MY_PAD);
+        gtk_container_add (GTK_CONTAINER (vbox), year_frame);
         gtk_container_add (GTK_CONTAINER (year_frame), year_combo);
         gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
+        gtk_widget_show_all (vbox);
 
-        // gtk_widget_show (dialog);
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 gchar *langu = "de";
 /*                 gchar *langu = g_ptr_array_index
@@ -1362,6 +1361,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
  */
                 gint year = years
                         [gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))];
+                g_message ("download %d", year);
                 download_losungen (year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);

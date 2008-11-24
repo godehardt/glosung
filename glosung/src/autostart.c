@@ -77,9 +77,7 @@ init (void)
                 return; /* config_path already set */
         }
 
-        g_message ("fore");
         config_path = getenv ("XDG_CONFIG_HOME");
-        g_message ("aaafter");
         if (config_path) {
                 config_path = g_strdup_printf
                       ("%s/autostart/glosung.desktop", config_path);
