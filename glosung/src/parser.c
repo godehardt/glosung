@@ -173,7 +173,7 @@ losung_free (const Losung *ww)
         g_free (ww->ot.say);
         g_free (ww->ot.text);
         g_free (ww->ot.location);
-   
+
         g_free (ww->nt.say);
         g_free (ww->nt.text);
         g_free (ww->nt.location);
@@ -227,7 +227,7 @@ get_losung (GDate *date, gchar *lang)
         } else {
                 file = g_strdup_printf ("%s_los%d.xml", lang, year);
         }
-        
+
         filename = check_file (file);
         g_free (file);
 
@@ -271,7 +271,12 @@ check_file (const gchar *file)
 {
         gchar *filename;
 
+#ifndef WIN32
         filename = g_strdup_printf ("%s/.glosung/%s", getenv ("HOME"), file);
+#else /* WIN32 */
+        filename = g_strdup_printf ("%s%s/.glosung/%s",
+        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), file);
+#endif /* WIN32 */
         if (access (filename, F_OK | R_OK)) {
                 g_free (filename);
                 filename = g_strdup_printf (GLOSUNG_DATA_DIR "/%s", file);
@@ -526,7 +531,7 @@ end_element (void *ctx, const xmlChar *name)
  */
 static void
 character (void *ctx, const xmlChar *ch, int len)
-{        
+{
         if (depth > 0) {
                 return;
         }
@@ -557,7 +562,7 @@ character (void *ctx, const xmlChar *ch, int len)
 
 
 static gboolean
-switch_state (const xmlChar *name, State newState) 
+switch_state (const xmlChar *name, State newState)
 {
         if (strcmp ((char *) name, states [newState]) != 0) {
                 return FALSE;
@@ -657,7 +662,7 @@ get_string_with_markup (GString *string)
                 string->len = 0;
                 return result;
         }
-        
+
         string->len = 0;
         return g_strdup (string->str);
 } /* get_string_with_markup */
@@ -793,7 +798,7 @@ sword_link_for_original_losung (const gchar *location)
         while (index > 0 && location [--index] != ' ')
                 ;
         sscanf (location + index + 1, "%d", &chapter);
-        
+
         return g_strdup_printf
                 ("sword:///%s %d.%d",
                  sword_book_title_for_original_losung (location),
