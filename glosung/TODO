@@ -1,3 +1,6 @@
+add unzip/zip to debian dependencies
+
+
 better error handling on download
         add global download constants (OK, DL_FAILED, INSTALL_FAILED ...)
 

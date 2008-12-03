@@ -78,8 +78,8 @@ to_file (Memory chunk, gchar *filename)
         if (file) {
                 size_t written = fwrite (chunk.memory, 1, chunk.size, file);
                 fclose (file);
-                printf ("written: %d\n", written);
                 if (written != chunk.size) {
+                        g_message ("download error - written: %d", written);
                         remove (filename);
                         return -2;
                 }

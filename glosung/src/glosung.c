@@ -808,13 +808,15 @@ apply_cb (void)
                 pango_font_description_free (font_desc);
         }
         if (autostart_new != autostart) {
-				if (autostart_new) {
-						add_to_autostart ();
-				} else {
-						remove_from_autostart ();
-				}
-				autostart = autostart_new;
-		}
+                if (autostart_new) {
+                        /* TODO handle return type */
+                        add_to_autostart ();
+                } else {
+                        /* TODO handle return type */
+                        remove_from_autostart ();
+                }
+                autostart = autostart_new;
+        }
         if (calendar_close_new != calendar_close) {
                 calendar_close = calendar_close_new;
 #ifndef WIN32
@@ -1361,7 +1363,6 @@ add_lang_cb (GtkWidget *w, gpointer data)
  */
                 gint year = years
                         [gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))];
-                g_message ("download %d", year);
                 download_losungen (year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
