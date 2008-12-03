@@ -23,9 +23,9 @@
 #include <glib.h>
 
 
-gboolean   is_in_autostart ();
-void      add_to_autostart ();
-void remove_from_autostart ();
+gboolean       is_in_autostart ();
+gboolean      add_to_autostart ();
+gboolean remove_from_autostart ();
 
 
 #endif /* GLOSUNG_AUTOSTART__H */

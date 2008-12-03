@@ -40,33 +40,35 @@ is_in_autostart ()
 }
 
 
-void
+/*
+ * return TRUE on success
+ */
+gboolean
 add_to_autostart ()
 {
-        FILE *file = fopen (config_path, "w");
-
         init ();
 
-        /* TODO: use g_file_set_contents instead */
-        fprintf (file, "[Desktop Entry]\n");
-        fprintf (file, "Version=1.0\n");
-        fprintf (file, "Encoding=UTF-8\n");
-        fprintf (file, "Name=GLosung\n");
-        fprintf (file, "Comment=Watchwords for Gnome\n");
-        fprintf (file, "Comment[de]=Losungen für GNOME\n");
-        fprintf (file, "Exec=glosung --once\n");
-        fprintf (file, "X-GNOME-Autostart-enabled=true\n");
+        return g_file_set_contents (config_path,
+                 "\n[Desktop Entry]\nType=Application\nName=GLosung\n"
+                 "Exec=glosung --once\nIcon=system-run\n"
+                 "Comment=Watchwords for GNOME\nComment[de]=Losungen für GNOME",
+                 -1, NULL); /* TODO GError **error */
 }
 
 
-void
+/*
+ * return TRUE on success
+ */
+gboolean
 remove_from_autostart ()
 {
         init ();
 
         if (remove (config_path) == -1) {
                 g_message ("deletion of autostart file failed");
+                return FALSE;
         }
+        return TRUE;
 }
 
 
