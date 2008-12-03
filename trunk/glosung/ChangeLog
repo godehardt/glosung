@@ -1,3 +1,107 @@
+2008-12-03  eicke
+
+        * version bump to 3.3
+	* [r205] add win32 fixes
+	  clean up
+	* [r204] enhance error handling and return type for autostart
+
+2008-11-24  eicke
+
+	* [r203] update German translation
+	* [r202] enhance download, fix UI for download and preferences
+	* [r201] fix windows/linux conflict in SConstruct
+	* [r200] update TODO
+	* [r199] enhance build dependencies for debian control
+
+2008-11-08  eicke
+
+	* [r198] make glosung compilable under Windows (mingw)
+	  remove absolute paths for gettext commands in po/SConscript
+	  clean up code
+
+2008-11-01  eicke
+
+	* [r197] use g_file_test in autostart test
+	* [r196] fix debian files due to upload and build problems on ppa
+
+2008-10-24  eicke
+
+	* [r195] add fix for SuSE package size (thanks Sebastian)
+
+2008-09-30  eicke
+
+	* [r194] original German xml losungen file can now be downloaded
+	  and extracted
+	* [r193] set config_path only once
+
+2008-09-27  eicke
+
+	* [r192] clean up, especially in download
+
+2008-08-30  eicke
+
+	* [r191] finish autostart handling
+	* [r190] finish autostart handling
+	* [r189] enhance desktop file
+	* [r188] add checking for autostart
+	* [r187] correct header
+
+2008-08-27  eicke
+
+	* [r186] add initial files for handling autostart settings
+
+2008-08-25  eicke
+
+	* [r185] prepare addition of download of original losungen file
+
+2008-02-12  eicke
+
+	* [r184] fix command line tool to support same text files as gui
+	  version
+	* [r183] fix encode setting of czech po file (thanks Marek)
+	* [r182] handle incomplete text files
+
+2008-02-09  eicke
+
+	* [r181] hopefully the parser for 'The Word' is fixed now for
+	  incomplete files
+	* [r180] first changes towards better support of 'The Word' in
+	  different languages
+	* [r179] add comments
+	* [r178] convert glosung logo to svg
+	* [r177] handle czech los file structure
+
+2008-01-19  eicke
+
+	* [r176] add about.c as a source for gettext strings
+	* [r175] try to fix compile warning on openSUSE10.3
+	* [r174] add about.c as a source for gettext strings
+	* [r173] clean up
+	* [r172] do not load originial for other lang than 'de'
+
+2008-01-15  eicke
+
+	* [r171] delete losung license texts as no text files are delivered
+	  with glosung
+	* [r170] fix typo
+	* [r169] add changelog and version bump to spec file
+
+2008-01-12  eicke
+
+	* [r168] update log
+	* [r167] revert version handling
+	* [r165] version bump
+	* [r164] fix i18n problem for menu
+	* [r163] prefer original Losung over old Losung files
+	* [r162] fix compilation problem under < GTK+-2.10
+	* [r161] update German texts
+	* [r160] split version string in number and release
+	* [r159] make file name handling for 'The Word' more robust
+
+2008-01-11  eicke
+
+	* [r158] add todo file under svn
+
 2008-01-12 Eicke Godehardt <eicke@godehardt.org>
 
 	* make file handling more robust
