@@ -33,7 +33,7 @@ Help ('''Options:
 
 prefix      = ARGUMENTS.get ('PREFIX', '/usr')
 install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
-pixmap_dir  = prefix + '/share/pixmaps/'
+pixmap_dir  = '/share/pixmaps/'
 #pixmap_dir  = ''
 data_dir  = prefix + '/share/glosung'
 #data_dir  = ''
@@ -46,7 +46,7 @@ ccflags   = ['-O2', '-Wall', '-g',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
-		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
+		'-DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"']
 
 linkflags = ['-Wl,--export-dynamic', '-L.']
 #  -L/usr/lib'
