@@ -1,8 +1,15 @@
+glosung (3.3.2) intrepid; urgency=low
+
+  * version bump
+  * fix path problems
+
+ -- Eicke Godehardt <sf@godehardt.org>  Fri, 05 Dec 2008 13:20:00 +0100
+
 glosung (3.3.1) intrepid; urgency=low
 
   * version bump
 
- -- Eicke Godehardt <sf@godehardt.org>  Wed, 03 Dec 2008 22:43:00 +0100
+ -- Eicke Godehardt <sf@godehardt.org>  Fri, 05 Dec 2008 12:54:00 +0100
 
 glosung (3.3) intrepid; urgency=low
 
