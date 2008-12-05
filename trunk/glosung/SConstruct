@@ -33,10 +33,10 @@ Help ('''Options:
 
 prefix      = ARGUMENTS.get ('PREFIX', '/usr')
 install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
-#pixmap_dir  = prefix + '/share/pixmaps/'
-pixmap_dir  = ''
-#data_dir  = prefix + '/share/glosung'
-data_dir  = ''
+pixmap_dir  = prefix + '/share/pixmaps/'
+#pixmap_dir  = ''
+data_dir  = prefix + '/share/glosung'
+#data_dir  = ''
 doc_dir     = '/share/doc/glosung-' + version
 
 BuildDir ('build', 'src')
