@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-19 17:31+0100\n"
+"POT-Creation-Date: 2008-11-23 18:35+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -218,6 +218,10 @@ msgstr "Langue :"
 msgid "Choose Font:"
 msgstr "Police :"
 #
+# File: src/glosung.c, line: 917
+msgid "Start GLosung at login time"
+msgstr ""
+#
 msgid "Close calendar by double click"
 msgstr "Fermer le calendrier en double-cliquant"
 #
@@ -239,14 +243,8 @@ msgstr "Traductions"
 msgid "Installed Languages"
 msgstr "Traductions installées"
 #
-# File: src/glosung.c, line: 1259
-msgid ""
-"This dialog only works for losung files until 2007!\n"
-"Please look on GLosung's homepage (www.godehardt.org/losung.html) for a "
-"desciption of adding texts from Herrnhut and/or bible20.net."
-msgstr ""
-#
 # File: src/glosung.c, line: 1141
+#, fuzzy
 msgid "Add Languages"
 msgstr "Ajouter de nouvelles traductions"
 #
@@ -254,9 +252,9 @@ msgstr "Ajouter de nouvelles traductions"
 msgid "Download"
 msgstr "Télécharger"
 #
-# File: src/glosung.c, line: 1150
-msgid "Language"
-msgstr "Traduction"
+# File: src/glosung.c, line: 1283
+msgid "Herrnhuter Losungen (deutsch)"
+msgstr ""
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
@@ -272,6 +270,23 @@ msgstr ""
 #
 #
 #
+# File: src/glosung.c, line: 1150
+#~ msgid "Language"
+#~ msgstr "Traduction"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -280,6 +295,13 @@ msgstr ""
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -320,9 +342,23 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
