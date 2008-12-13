@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.2.2
+%define version 3.3.2
 %define release 1
 
 Summary:        Gnome Version of watch words (german: Losung)
@@ -14,6 +14,7 @@ URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       gtk2 >= 2.10
 Requires:       libxml2 >= 2.0
+Requires:       unzip
 # Requires:       libcurl
 # BuildRequires:  libxml-devel >= 2.0
 # BuildRequires:  libgtk2-devel >= 2.4
@@ -71,6 +72,88 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+* Fri Dec 05 2008 Eicke
+- version bump to 3.3.2
+- fix path problem finally (hope so)
+
+* Fri Dec 05 2008 Eicke
+- version bump to 3.3.1
+- fix packaging and path problem
+
+* Wed Dec 03 2008 Eicke
+- version bump to 3.3
+- add win32 fixes
+- clean up
+- enhance error handling and return type for autostart
+
+* Mon Nov 24 2008 Eicke
+- update German translation
+- enhance download, fix UI for download and preferences
+- fix windows/linux conflict in SConstruct
+- update TODO
+- enhance build dependencies for debian control
+
+* Sat Nov 08 2008 Eicke
+- make glosung compilable under Windows (mingw)
+- remove absolute paths for gettext commands in po/SConscript
+- clean up code
+
+* Sat Nov 01 2008 Eicke
+- use g_file_test in autostart test
+- fix debian files due to upload and build problems on ppa
+
+* Fri Oct 24 2008 Eicke
+- add fix for SuSE package size (thanks Sebastian)
+
+* Tue Sep 30 2008 Eicke
+- original German xml losungen file can now be downloaded
+  and extracted
+- set config_path only once
+
+* Sat Sep 27 2008 Eicke
+- clean up, especially in download
+
+* Sat Aug 30 2008 Eicke
+- finish autostart handling
+- finish autostart handling
+- enhance desktop file
+- add checking for autostart
+- correct header
+
+* Wed Aug 27 2008 Eicke
+- add initial files for handling autostart settings
+
+* Mon Aug 25 2008 Eicke
+- prepare addition of download of original losungen file
+
+* Tue Feb 12 2008 Eicke
+- fix command line tool to support same text files as gui
+  version
+- fix encode setting of czech po file (thanks Marek)
+- handle incomplete text files
+
+* Sat Feb 09 2008 Eicke
+- hopefully the parser for 'The Word' is fixed now for
+  incomplete files
+- first changes towards better support of 'The Word' in
+  different languages
+- add comments
+- convert glosung logo to svg
+- handle czech los file structure
+
+* Sat Jan 19 2008 Eicke
+- add about.c as a source for gettext strings
+- try to fix compile warning on openSUSE10.3
+- add about.c as a source for gettext strings
+- clean up
+- do not load originial for other lang than 'de'
+
+* Tue Jan 15 2008 Eicke
+- delete losung license texts as no text files are delivered
+  with glosung
+- fix typo
+- add changelog and version bump to spec file
+
 * Sat Jan 12 2008 Eicke Godehardt <eicke@godehardt.org>
 - make file handling more robust
 - add important warning message on organize watchword dialog
