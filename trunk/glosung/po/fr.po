@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-23 18:35+0100\n"
+"POT-Creation-Date: 2008-12-13 12:40+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -88,12 +88,12 @@ msgstr "Afficher les versets du mois précédent"
 msgid "Quit the application"
 msgstr ""
 #
-# File: src/glosung.c, line: 224
-msgid "_Copy Watchword"
+# File: src/glosung.c, line: 213
+msgid "_Copy text"
 msgstr ""
 #
-# File: src/glosung.c, line: 225
-msgid "copy the Watchword to clipboard"
+# File: src/glosung.c, line: 214
+msgid "copy the text to clipboard"
 msgstr ""
 #
 # File: src/glosung.c, line: 226
@@ -102,7 +102,7 @@ msgstr ""
 #
 # File: src/glosung.c, line: 181
 #, fuzzy
-msgid "update/install watchword files"
+msgid "update/install text files"
 msgstr "Mettre à jour/ajouter de nouvelles traductions"
 #
 #, fuzzy
@@ -270,6 +270,7 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 1150
 #~ msgid "Language"
 #~ msgstr "Traduction"
@@ -292,9 +293,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
 #
 #
 #
@@ -349,9 +352,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
 #
 #
 #
