@@ -1,13 +1,12 @@
 # This are the german translations for glosung.
-# Copyright (C) 2000-2002 Free Software Foundation, Inc.
-# Eicke Godehardt <eicke@godehardt-online.de>, 2000.
+# Copyright (C) 2000-2008 Eicke Godehardt <sf@godehardt.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-23 18:35+0100\n"
-"PO-Revision-Date: 2008-11-24 21:16+0100\n"
+"POT-Creation-Date: 2008-12-13 12:40+0100\n"
+"PO-Revision-Date: 2008-12-13 12:43+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -195,14 +194,14 @@ msgid "Quit the application"
 msgstr "Beendet das Programm"
 
 #
-# File: src/glosung.c, line: 193
-msgid "_Copy Watchword"
-msgstr "Losung _kopieren"
+# File: src/glosung.c, line: 213
+msgid "_Copy text"
+msgstr "Text _kopieren"
 
 #
 # File: src/glosung.c, line: 194
-msgid "copy the Watchword to clipboard"
-msgstr "Losung in die Zwischenablage kopieren"
+msgid "copy the text to clipboard"
+msgstr "Text in die Zwischenablage kopieren"
 
 #
 # File: src/glosung.c, line: 222
@@ -222,8 +221,8 @@ msgstr "Losungstexte _organisieren"
 #
 #
 # File: src/glosung.c, line: 181
-msgid "update/install watchword files"
-msgstr "aktualisieren/installieren von Losungstexten"
+msgid "update/install text files"
+msgstr "aktualisieren/installieren von Texten"
 
 #
 #
@@ -442,6 +441,12 @@ msgstr "Losung für %A, %e. %B %Y"
 
 #
 #
+# File: src/glosung.c, line: 193
+#~ msgid "_Copy Watchword"
+#~ msgstr "Losung _kopieren"
+#
+#
+#
 #
 #
 #
@@ -457,6 +462,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #~ "Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www."
 #~ "godehardt.org/losung.html), um Text von Herrnhut bzw. bible20.net zu "
 #~ "installieren."
+#
 #
 #
 #
@@ -486,8 +492,10 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -549,10 +557,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -624,10 +634,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -700,6 +712,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -738,10 +751,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
 #
 #
 #

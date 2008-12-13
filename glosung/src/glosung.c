@@ -210,10 +210,10 @@ static GtkActionEntry entries[] = {
         { "Quit", GTK_STOCK_QUIT,  NULL, "<control>Q",
           N_("Quit the application"), G_CALLBACK (gtk_main_quit) },
 
-        { "Copy", GTK_STOCK_COPY, N_("_Copy Watchword"), "<control>C",
-          N_("copy the Watchword to clipboard"), G_CALLBACK (clipboard_cb) },
+        { "Copy", GTK_STOCK_COPY, N_("_Copy text"), "<control>C",
+          N_("copy the text to clipboard"), G_CALLBACK (clipboard_cb) },
         { "Organize", NULL, N_("_Organize Watchwords..."), NULL,
-          N_("update/install watchword files"), G_CALLBACK (lang_manager_cb) },
+          N_("update/install text files"), G_CALLBACK (lang_manager_cb) },
         { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
