@@ -86,8 +86,7 @@ static gchar     *font = NULL;
 static gchar     *new_font;
 static gboolean   autostart;
 static gboolean   autostart_new;
-static gboolean   calendar_close;
-static gboolean   calendar_close_new;
+static gboolean   calendar_close = TRUE;
 static gboolean   show_readings = TRUE;
 static gboolean   show_readings_new = TRUE;
 static gboolean   show_sword;
@@ -119,7 +118,6 @@ static void about_cb             (GtkWidget *w,   gpointer data);
 static void apply_cb             (void);
 static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
-static void calendar_option_cb   (GtkWidget *toggle,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
 static GString* create_years_string (gchar *langu);
 static void font_sel_cb          (GtkWidget *button,   gpointer data);
@@ -313,7 +311,7 @@ main (int argc, char **argv)
 
         printf ("Choosen language: %s\n", lang);
 #ifndef WIN32
-        calendar_close = calendar_close_new = gconf_client_get_bool
+        calendar_close = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
         show_readings = show_readings_new = gconf_client_get_bool
@@ -817,15 +815,6 @@ apply_cb (void)
                 }
                 autostart = autostart_new;
         }
-        if (calendar_close_new != calendar_close) {
-                calendar_close = calendar_close_new;
-#ifndef WIN32
-                gconf_client_set_bool
-                        (client,
-                         "/apps/" PACKAGE "/calendar_close_by_double_click",
-                         calendar_close, NULL);
-#endif /* WIN32 */
-        }
         if (show_readings_new != show_readings) {
                 show_readings = show_readings_new;
 #ifndef WIN32
@@ -926,16 +915,6 @@ create_property_table ()
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
 
         widget = gtk_check_button_new_with_label
-                (_("Close calendar by double click"));
-        if (calendar_close) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                              TRUE);
-        }
-        g_signal_connect (G_OBJECT (widget), "toggled",
-                          G_CALLBACK (calendar_option_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
-
-        widget = gtk_check_button_new_with_label
                 (_("Show selective and continuing reading"));
         if (show_readings) {
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
@@ -943,7 +922,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (readings_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
 
 #ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
@@ -954,7 +933,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 5, 6);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
 #endif
 
         return table;
@@ -993,19 +972,6 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
                 new_font = g_strdup (font_name);
         }
 } /* font_sel_cb */
-
-
-/*
- * callback function for calender options changes.
- */
-static void
-calendar_option_cb (GtkWidget *toggle, gpointer data)
-{
-        calendar_close_new = gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (toggle));
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
-} /* calendar_option_cb */
 
 
 /*
