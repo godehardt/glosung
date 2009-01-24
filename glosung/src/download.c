@@ -110,8 +110,9 @@ to_file_losungen (Memory chunk)
         }
 
         // TODO: use getcwd (char *buf, size_t size); and reset afterwards
-        // TODO: handle return type of chdir
-        chdir (tmp_dir);
+        if (chdir (tmp_dir) != 0) {
+                return -4;
+        }
         gchar *command = g_strdup_printf ("unzip %s", zipfile);
         gboolean success =
                 g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
