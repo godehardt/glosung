@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 
-void about (GtkWidget *app);
+void about          (GtkWidget *app);
+void about_losungen (GtkWidget *app);
 
 #endif /* GLOSUNG_ABOUT__H */

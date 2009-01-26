@@ -43,10 +43,11 @@ about (GtkWidget *app)
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
 
+        g_message ("normal about");
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
                  "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2008 Eicke Godehardt",
+                 "copyright", "(C) 1999-2009 Eicke Godehardt",
                  // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
                  "logo", logo,
                  "name", APPNAME,
@@ -55,3 +56,28 @@ about (GtkWidget *app)
                  "website", "http://www.godehardt.org/losung.html",
                  NULL);
 } /* about */
+
+
+/*
+ * callback function that displays the about dialog.
+ */
+void
+about_losungen (GtkWidget *app)
+{
+        const gchar *authors [] = {
+                NULL
+        };
+        gchar *translators = NULL;
+
+        GError *error = NULL;
+        GdkPixbuf *logo =  gdk_pixbuf_new_from_file
+                (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
+
+        g_message ("new herrnhuter about");
+        gtk_show_about_dialog (GTK_WINDOW (app),
+                 "copyright", "(C) 1747-2009 Herrnhut",
+                 "logo", logo,
+                 "name", "Herrnhuter Losungen",
+                 "website", "http://www.losungen.de",
+                 NULL);
+} /* about_losungen */

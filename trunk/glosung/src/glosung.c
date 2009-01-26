@@ -88,7 +88,6 @@ static gboolean   autostart;
 static gboolean   autostart_new;
 static gboolean   calendar_close = TRUE;
 static gboolean   show_readings = TRUE;
-static gboolean   show_readings_new = TRUE;
 static gboolean   show_sword;
 static gboolean   show_sword_new;
 static gchar     *losung_simple_text;
@@ -115,6 +114,7 @@ static GtkWidget *create_property_table (void);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
+static void about_losungen_cb    (GtkWidget *w,   gpointer data);
 static void apply_cb             (void);
 static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
@@ -135,7 +135,6 @@ static void property_cb          (GtkWidget *w,   gpointer data);
 static void property_response_cb (GtkDialog *dialog,
                                   gint       arg1,
                                   gpointer   user_data);
-static void readings_cb          (GtkWidget *toggle,   gpointer data);
 static void sword_cb             (GtkWidget *toggle,   gpointer data);
 static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
@@ -173,6 +172,8 @@ static gchar* uistring =
         "      <menuitem action='Preferences'/>"
         "    </menu>"
         "    <menu action='HelpMenu'>"
+        "      <menuitem action='AboutLosungen'/>"
+        "      <separator/>"
         "      <menuitem action='About'/>"
         "    </menu>"
         "  </menubar>"
@@ -215,7 +216,9 @@ static GtkActionEntry entries[] = {
         { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
-        { "About", GTK_STOCK_ABOUT, NULL, NULL,
+        { "AboutLosungen", GTK_STOCK_ABOUT, N_("About Losungen"), NULL,
+          N_("about Losungen"), G_CALLBACK (about_losungen_cb) },
+        { "About", GTK_STOCK_ABOUT, N_("About GLosung"), NULL,
           N_("about GLosung"), G_CALLBACK (about_cb) },
 };
 
@@ -314,8 +317,6 @@ main (int argc, char **argv)
         calendar_close = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
-        show_readings = show_readings_new = gconf_client_get_bool
-                (client, "/apps/" PACKAGE "/show_readings", NULL);
         font = gconf_client_get_string (client, "/apps/" PACKAGE "/font",
                                         NULL);
 #endif /* WIN32 */
@@ -518,20 +519,15 @@ show_text (void)
         }
 
         if (ww == NULL) {
-                GtkWidget *error;
-                gchar *text = NULL;
-
-                text = g_strdup_printf
-                        (_("No %s texts found for %d!"),
-                         (gchar*)g_hash_table_lookup (lang_translations, lang),
-                         g_date_get_year (new_date));
-                error = gtk_message_dialog_new (
+                GtkWidget *error = gtk_message_dialog_new (
                         GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                        GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, text);
+                        GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+                        _("No %s texts found for %d!"),
+                        (gchar*)g_hash_table_lookup (lang_translations, lang),
+                        g_date_get_year (new_date));
                 g_signal_connect (G_OBJECT (error), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
                 gtk_widget_show (error);
-                g_free (text);
                 new_date = g_date_new_julian (g_date_get_julian (date));
                 return;
         }
@@ -599,7 +595,8 @@ show_text (void)
 
                 comment = gtk_message_dialog_new (
                         GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                        GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, ww->comment);
+                        GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+                        "%s", ww->comment);
 
                 g_signal_connect (G_OBJECT (comment), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
@@ -675,7 +672,7 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
                 GtkWidget *msg = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                         error->message);
+                         "%s", error->message);
                 //_("No text files found!\n");
                 g_signal_connect (G_OBJECT (msg), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
@@ -691,8 +688,20 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 static void
 about_cb (GtkWidget *w, gpointer data)
 {
+        g_message ("normal about");
         about (app);
 } /* about_cb */
+
+
+/*
+ * callback function that displays the about dialog.
+ */
+static void
+about_losungen_cb (GtkWidget *w, gpointer data)
+{
+        g_message ("new herrnhuter about");
+        about_losungen (app);
+} /* about_losungen_cb */
 
 
 /*
@@ -815,21 +824,6 @@ apply_cb (void)
                 }
                 autostart = autostart_new;
         }
-        if (show_readings_new != show_readings) {
-                show_readings = show_readings_new;
-#ifndef WIN32
-                gconf_client_set_bool (client,
-                                       "/apps/" PACKAGE "/show_readings",
-                                       show_readings, NULL);
-#endif /* WIN32 */
-                if (show_readings) {
-                        gtk_widget_show (label [X3]);
-                        gtk_widget_show (label [READING]);
-                } else {
-                        gtk_widget_hide (label [X3]);
-                        gtk_widget_hide (label [READING]);
-                }
-        }
 #ifdef VERSE_LINK
         if (show_sword_new != show_sword) {
                 show_sword = show_sword_new;
@@ -914,16 +908,6 @@ create_property_table ()
                           G_CALLBACK (autostart_cb), NULL);
         gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
 
-        widget = gtk_check_button_new_with_label
-                (_("Show selective and continuing reading"));
-        if (show_readings) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                              TRUE);
-        }
-        g_signal_connect (G_OBJECT (widget), "toggled",
-                          G_CALLBACK (readings_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
-
 #ifdef VERSE_LINK
         widget = gtk_check_button_new_with_label
                 (_("Link location to gnomesword"));
@@ -933,7 +917,7 @@ create_property_table ()
         }
         g_signal_connect (G_OBJECT (widget), "toggled",
                           G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 4, 5);
+        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
 #endif
 
         return table;
@@ -975,19 +959,6 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 
 
 /*
- * callback function for reading changes.
- */
-static void
-readings_cb (GtkWidget *toggle, gpointer data)
-{
-        show_readings_new = gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (toggle));
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
-} /* readings_cb */
-
-
-/*
  * callback function for autostart changes.
  */
 static void
@@ -1010,7 +981,7 @@ sword_cb (GtkWidget *toggle, gpointer data)
                 GTK_TOGGLE_BUTTON (toggle));
         gtk_dialog_set_response_sensitive (
                 GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
-} /* readings_cb */
+} /* sword_cb */
 
 
 /*
