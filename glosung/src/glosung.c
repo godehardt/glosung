@@ -114,7 +114,7 @@ static GtkWidget *create_property_table (void);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
-static void about_losungen_cb    (GtkWidget *w,   gpointer data);
+static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
 static void apply_cb             (void);
 static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
@@ -172,7 +172,7 @@ static gchar* uistring =
         "      <menuitem action='Preferences'/>"
         "    </menu>"
         "    <menu action='HelpMenu'>"
-        "      <menuitem action='AboutLosungen'/>"
+        "      <menuitem action='AboutHerrnhut'/>"
         "      <separator/>"
         "      <menuitem action='About'/>"
         "    </menu>"
@@ -216,8 +216,8 @@ static GtkActionEntry entries[] = {
         { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
-        { "AboutLosungen", GTK_STOCK_ABOUT, N_("About Losungen"), NULL,
-          N_("about Losungen"), G_CALLBACK (about_losungen_cb) },
+        { "AboutHerrnhut", GTK_STOCK_ABOUT, N_("About Herrnhut"), NULL,
+          N_("about Losungen"), G_CALLBACK (about_herrnhut_cb) },
         { "About", GTK_STOCK_ABOUT, N_("About GLosung"), NULL,
           N_("about GLosung"), G_CALLBACK (about_cb) },
 };
@@ -688,7 +688,6 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 static void
 about_cb (GtkWidget *w, gpointer data)
 {
-        g_message ("normal about");
         about (app);
 } /* about_cb */
 
@@ -697,11 +696,10 @@ about_cb (GtkWidget *w, gpointer data)
  * callback function that displays the about dialog.
  */
 static void
-about_losungen_cb (GtkWidget *w, gpointer data)
+about_herrnhut_cb (GtkWidget *w, gpointer data)
 {
-        g_message ("new herrnhuter about");
-        about_losungen (app);
-} /* about_losungen_cb */
+        about_herrnhut (app);
+} /* about_herrnhut_cb */
 
 
 /*
