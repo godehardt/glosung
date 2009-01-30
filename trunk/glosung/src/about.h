@@ -24,6 +24,6 @@
 
 
 void about          (GtkWidget *app);
-void about_losungen (GtkWidget *app);
+void about_herrnhut (GtkWidget *app);
 
 #endif /* GLOSUNG_ABOUT__H */

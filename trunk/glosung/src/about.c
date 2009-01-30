@@ -43,7 +43,6 @@ about (GtkWidget *app)
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
 
-        g_message ("normal about");
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
                  "comments", _("Gods word for every day"),
@@ -62,22 +61,21 @@ about (GtkWidget *app)
  * callback function that displays the about dialog.
  */
 void
-about_losungen (GtkWidget *app)
+about_herrnhut (GtkWidget *app)
 {
-        const gchar *authors [] = {
-                NULL
-        };
-        gchar *translators = NULL;
-
+        GtkWidget *herrnhut;
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
 
-        g_message ("new herrnhuter about");
-        gtk_show_about_dialog (GTK_WINDOW (app),
-                 "copyright", "(C) 1747-2009 Herrnhut",
-                 "logo", logo,
-                 "name", "Herrnhuter Losungen",
-                 "website", "http://www.losungen.de",
-                 NULL);
-} /* about_losungen */
+        herrnhut = gtk_about_dialog_new ();
+        gtk_about_dialog_set_name
+                (GTK_ABOUT_DIALOG (herrnhut), "Herrnhuter Losungen");
+        gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (herrnhut), logo);
+        gtk_about_dialog_set_website
+                (GTK_ABOUT_DIALOG (herrnhut), "http://www.losungen.de");
+        gtk_widget_show (herrnhut);
+        g_signal_connect (G_OBJECT (herrnhut), "response",
+                          G_CALLBACK (gtk_widget_destroy),
+                          NULL);
+} /* about_herrnhut */
