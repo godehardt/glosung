@@ -658,6 +658,10 @@ show_text (void)
 static void
 link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 {
+        /* hack because of gtk_about_dialog_set_url_hook */
+        if (strncmp (uri, "http://", 7) == 0) {
+                     return;
+        }
         char *argv [3];
         argv [0] = "gnomesword2";
         argv [1] = uri;
