@@ -97,6 +97,7 @@ env.Install (dir = install_dir + doc_dir,
 
 env.Install (dir = install_dir + '/share/applications',
           source = 'glosung.desktop')
+env.Install (dir = install_dir + pixmap_dir, source = 'herrnhut.png')
 env.Install (dir = install_dir + pixmap_dir, source = 'glosung.png')
 env.Install (dir = install_dir + pixmap_dir, source = 'glosung-big.png')
 
@@ -109,6 +110,7 @@ if env['PLATFORM'] != 'win32':
                     'NEWS',
                     'README',
                     'SConstruct',
+                    'herrnhut.png',
                     'glosung-big.png',
                     'glosung.desktop',
                     'glosung.png',
