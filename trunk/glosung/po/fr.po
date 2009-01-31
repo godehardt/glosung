@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-13 12:40+0100\n"
+"POT-Creation-Date: 2009-01-31 13:49+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -27,6 +27,16 @@ msgstr ""
 #, fuzzy
 msgid "Gods word for every day"
 msgstr "La Parole de Dieu au quotidien"
+#
+# File: src/about.c, line: 86
+msgid "Since 1731 in about 50 languages."
+msgstr ""
+#
+# File: src/about.c, line: 88
+msgid ""
+"Watchwords: (C) Moravian Church\n"
+"Bible texts: (C) German Bible Association, Stuttgart"
+msgstr ""
 #
 # File: src/glosung.c, line: 209
 msgid "_File"
@@ -108,6 +118,18 @@ msgstr "Mettre à jour/ajouter de nouvelles traductions"
 #, fuzzy
 msgid "Edit the preferences"
 msgstr "Modifier les préférences"
+#
+# File: src/glosung.c, line: 219
+msgid "About Herrnhut"
+msgstr ""
+#
+#, fuzzy
+msgid "about Losungen"
+msgstr "_Losung"
+#
+#, fuzzy
+msgid "About GLosung"
+msgstr "_Losung"
 #
 #, fuzzy
 msgid "about GLosung"
@@ -222,12 +244,6 @@ msgstr "Police :"
 msgid "Start GLosung at login time"
 msgstr ""
 #
-msgid "Close calendar by double click"
-msgstr "Fermer le calendrier en double-cliquant"
-#
-msgid "Show selective and continuing reading"
-msgstr "Afficher les suggestions de lecture suivie"
-#
 # File: src/glosung.c, line: 791
 msgid "Link location to gnomesword"
 msgstr "Liens vers gnomesword"
@@ -268,6 +284,49 @@ msgstr ""
 #
 #
 #
+#, fuzzy
+#~ msgid "About Losungen"
+#~ msgstr "_Losung"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "Show selective and continuing reading"
+#~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "Close calendar by double click"
+#~ msgstr "Fermer le calendrier en double-cliquant"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -294,9 +353,29 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -353,9 +432,29 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #

@@ -84,6 +84,9 @@ about_herrnhut (GtkWidget *app)
         gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (herrnhut), logo);
         gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (herrnhut),
                 _("Since 1731 in about 50 languages."));
+        gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (herrnhut),
+                _("Watchwords: (C) Moravian Church\n"
+                  "Bible texts: (C) German Bible Association, Stuttgart"));
         gtk_about_dialog_set_website
                 (GTK_ABOUT_DIALOG (herrnhut), "http://www.losungen.de");
         gtk_widget_show (herrnhut);

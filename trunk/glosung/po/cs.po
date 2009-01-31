@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-13 12:40+0100\n"
+"POT-Creation-Date: 2009-01-31 13:49+0100\n"
 "PO-Revision-Date: 2006-11-30 21:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -27,6 +27,16 @@ msgstr ""
 #, fuzzy
 msgid "Gods word for every day"
 msgstr "Boží slovo pro každý den"
+#
+# File: src/about.c, line: 86
+msgid "Since 1731 in about 50 languages."
+msgstr ""
+#
+# File: src/about.c, line: 88
+msgid ""
+"Watchwords: (C) Moravian Church\n"
+"Bible texts: (C) German Bible Association, Stuttgart"
+msgstr ""
 #
 # File: src/glosung.c, line: 209
 msgid "_File"
@@ -257,6 +267,36 @@ msgstr "Aktualizovat/instalovat jazykové soubory"
 msgid "Edit the preferences"
 msgstr "Změnit nastavení"
 #
+# File: src/glosung.c, line: 219
+msgid "About Herrnhut"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+msgid "about Losungen"
+msgstr "o aplikaci GLosung"
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+msgid "About GLosung"
+msgstr "o aplikaci GLosung"
+#
 #
 #
 #
@@ -396,16 +436,6 @@ msgstr "Výběr písma:"
 msgid "Start GLosung at login time"
 msgstr ""
 #
-# src/glosung.c:509
-# File: src/glosung.c, line: 594
-msgid "Close calendar by double click"
-msgstr "Zavření kalendáře pomocí dvojkliku"
-#
-# src/glosung.c:519
-# File: src/glosung.c, line: 604
-msgid "Show selective and continuing reading"
-msgstr "Ukaž výběrové a souvislé čtení"
-#
 # File: src/glosung.c, line: 791
 msgid "Link location to gnomesword"
 msgstr "Odkaz na gnomesword"
@@ -446,9 +476,75 @@ msgid "Watchword for %A, %e. %B %Y"
 msgstr ""
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+#~ msgid "About Losungen"
+#~ msgstr "o aplikaci GLosung"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:519
+# File: src/glosung.c, line: 604
+#~ msgid "Show selective and continuing reading"
+#~ msgstr "Ukaž výběrové a souvislé čtení"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:509
+# File: src/glosung.c, line: 594
+#~ msgid "Close calendar by double click"
+#~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Kopírovat Heslo"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -480,12 +576,32 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -549,12 +665,32 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -630,12 +766,32 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -712,11 +868,31 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Předchozí měsíc"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -792,11 +968,31 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Předchozí měsíc"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -879,10 +1075,30 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # src/glosung.c:124
 # File: src/glosung.c, line: 174
 #~ msgid "Exit the Program"
 #~ msgstr "Ukončit program"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
