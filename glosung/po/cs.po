@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-31 13:49+0100\n"
+"POT-Creation-Date: 2009-01-31 14:43+0100\n"
 "PO-Revision-Date: 2006-11-30 21:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -29,7 +29,10 @@ msgid "Gods word for every day"
 msgstr "Boží slovo pro každý den"
 #
 # File: src/about.c, line: 86
-msgid "Since 1731 in about 50 languages."
+msgid ""
+"The watchwords (german: Losungen) are words out of the bible, one from the "
+"Old and one from the New Testament.  They are choosen by lot since 1731.  By "
+"now they are provided in about 50 languages."
 msgstr ""
 #
 # File: src/about.c, line: 88
@@ -486,6 +489,7 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:116
 # File: src/glosung.c, line: 166
 #, fuzzy
@@ -501,10 +505,12 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Ukaž výběrové a souvislé čtení"
+#
 #
 #
 #
@@ -532,9 +538,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Kopírovat Heslo"
+#
 #
 #
 #
@@ -586,12 +594,14 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
 #
 #
 #
@@ -675,12 +685,14 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
 #
 #
 #
@@ -776,12 +788,14 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
 #
 #
 #
@@ -878,11 +892,13 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Předchozí měsíc"
+#
 #
 #
 #
@@ -978,11 +994,13 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Předchozí měsíc"
+#
 #
 #
 #
@@ -1085,10 +1103,12 @@ msgstr ""
 #
 #
 #
+#
 # src/glosung.c:124
 # File: src/glosung.c, line: 174
 #~ msgid "Exit the Program"
 #~ msgstr "Ukončit program"
+#
 #
 #
 #

@@ -7,8 +7,8 @@ Build-Depends: scons, debhelper, intltool, libgtk2.0-dev, libxml2-dev, libcurl4-
 
 Package: glosung
 Architecture: any
-Depends: ${shlibs:Depends}, unzip
-Description: Gnome Version of watch words (german: Losung).
- This program shows the watch words (german: Losungen) for each day.
+Depends: ${shlibs:Depends}, unzip, xdg-utils
+Description: Gtk+ Version of watchwords (german: Losungen).
+ This program shows the watchwords (german: Losungen) for each day.
  The `Losungen' are words out of the bible, one from the Old
  and one from the New Testament.

@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2008 Eicke Godehardt
+# Copyright (C) 1999-2009 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ if env['PLATFORM'] != 'win32':
 	env.Tar (tar_file, ['SConscript',
                     'about.c',
                     'about.h',
+                    'autostart.c',
+                    'autostart.h',
                     'download.c',
                     'download.h',
                     'glosung.c',
