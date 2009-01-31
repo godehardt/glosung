@@ -1,8 +1,8 @@
 %define name glosung
-%define version 3.3.2
+%define version 3.4
 %define release 1
 
-Summary:        Gnome Version of watch words (german: Losung)
+Summary:        Gtk+ Version of watch words (german: Losung)
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}
@@ -14,16 +14,16 @@ URL:            http://www.godehardt.org/losung.html
 BuildRoot:      %{_tmppath}/%{name}-buildroot
 Requires:       gtk2 >= 2.10
 Requires:       libxml2 >= 2.0
-Requires:       unzip
+Requires:       unzip, xdg-utils
 # Requires:       libcurl
 # BuildRequires:  libxml-devel >= 2.0
 # BuildRequires:  libgtk2-devel >= 2.4
 Prefix:         %{_prefix}
 # BuildArchitectures: i386
 # Distribution:
-Copyright:      (C) 1999-2008 Eicke Godehardt
+Copyright:      (C) 1999-2009 Eicke Godehardt
 License:        GPL
-# This Software is copyright (c) 1999-2008 by Eicke Godehardt.
+# This Software is copyright (c) 1999-2009 by Eicke Godehardt.
 # You are free to distribute this software under the terms
 # of the GNU General Public License.
 
@@ -72,6 +72,11 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+* Sat Jan 31 2009 Eicke
+- version bump to 3.4
+- add about Herrnhut
+- simplify preferences
+
 * Fri Dec 05 2008 Eicke
 - version bump to 3.3.2
 - fix path problem finally (hope so)

@@ -1,3 +1,38 @@
+2009-01-31  eicke
+
+	* [r222] add copyright to Herrnhut about, remove word 'Gnome' from
+	  .dekstop file
+	* add herrnhut.png to glosung.files
+	* version bump to 3.4
+
+2009-01-30  eicke
+
+	* [r221] finish Herrnhut about dialog, only text has to be adapted
+
+2009-01-26  eicke
+
+	* [r219] start adding 'about Herrnhut', simplify pref
+
+2009-01-24  eicke
+
+	* [r218] check return value of chdir
+	* [r217] simplify UI (calender closes by double click)
+
+2009-01-06  eicke
+
+	* [r216] update copyright statement
+
+2008-12-13  eicke
+
+	* [r215] change menu texts
+	* [r214] update spec file, thanks Sebastian
+
+2008-12-05  eicke
+
+	* [r213] fix pixmap path problem, version bump to 3.3.2
+	* [r212] fix pixmap path problem
+	* [r211] update language files
+
 2008-12-05  eicke
 
         * version bump to 3.3.2

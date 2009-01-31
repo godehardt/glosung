@@ -1,12 +1,12 @@
 # This are the german translations for glosung.
-# Copyright (C) 2000-2008 Eicke Godehardt <sf@godehardt.org>
+# Copyright (C) 2000-2009 Eicke Godehardt <sf@godehardt.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-31 13:49+0100\n"
-"PO-Revision-Date: 2009-01-31 13:52+0100\n"
+"POT-Creation-Date: 2009-01-31 14:43+0100\n"
+"PO-Revision-Date: 2009-01-31 14:45+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgstr "Gottes Wort für jeden Tag"
 
 #
 # File: src/about.c, line: 86
-msgid "Since 1731 in about 50 languages."
-msgstr "Seit 1731 in etwa 50 Sprachen."
+msgid "The watchwords (german: Losungen) are words out of the bible, one from the Old and one from the New Testament.  They are choosen by lot since 1731.  By now they are provided in about 50 languages."
+msgstr "Die Losungen sind Worte aus der Bibel, eines aus dem Alten und eins aus dem Neuen Testament.  Sie werden per Los seit 1731 gezogen.  Inzwischen gibt es sie in etwa 50 Sprachen."
 
 #
 # File: src/about.c, line: 88
@@ -474,6 +474,12 @@ msgstr "Losung für %A, %e. %B %Y"
 
 #
 #
+# File: src/about.c, line: 86
+#~ msgid "Since 1731 in about 50 languages."
+#~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
+#
+#
 #
 #
 #
@@ -486,6 +492,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #~ msgid "About Losungen"
 #~ msgstr "_über Losungen"
+#
 #
 #
 #
@@ -509,8 +516,10 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #~ msgid "Close calendar by double click"
 #~ msgstr "Schließen des Kalenders durch Doppelklick"
+#
 #
 #
 #
@@ -543,6 +552,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 # File: src/glosung.c, line: 1257
 #~ msgid ""
 #~ "This dialog only works for losung files until 2007!\n"
@@ -554,6 +564,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #~ "Bitte verwenden Sie die Beschreibung auf der Homepage von GLosung (www."
 #~ "godehardt.org/losung.html), um Text von Herrnhut bzw. bible20.net zu "
 #~ "installieren."
+#
 #
 #
 #
@@ -605,8 +616,10 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -690,10 +703,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -787,10 +802,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -885,6 +902,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -934,10 +952,12 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
 #
 #
 #
