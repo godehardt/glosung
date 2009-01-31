@@ -1,7 +1,8 @@
 [Desktop Entry]
-Name=GLosung
-Comment=Watchwords for GNOME
-Comment[de]=Losungen für GNOME
+Name=GLosung - Herrnhut's Watchwords
+Name[de]=GLosung - Herrnhuter Losungen
+Comment=Gods Word for every day
+Comment[de]=Gottes Wort für jeden Tag
 Exec=glosung
 Icon=/usr/share/pixmaps/glosung.png
 Terminal=false
