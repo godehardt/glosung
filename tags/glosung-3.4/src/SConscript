@@ -1,0 +1,41 @@
+# SConstruct
+# Copyright (C) 1999-2009 Eicke Godehardt
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+# MA 02111-1307, USA.
+
+Import ('env install_dir tar_file')
+
+# test = env.Program ('test', ['test-autostart.c', 'autostart.c'])
+
+glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
+                                'download.c', 'losunglist.c', 'about.c'])
+losung  = env.Program ('losung', ['losung.c', 'parser.c'])
+env.Install (dir = install_dir + '/bin', source = [losung, glosung])
+
+if env['PLATFORM'] != 'win32':
+	env.Tar (tar_file, ['SConscript',
+                    'about.c',
+                    'about.h',
+                    'autostart.c',
+                    'autostart.h',
+                    'download.c',
+                    'download.h',
+                    'glosung.c',
+                    'losung.c',
+                    'losunglist.c',
+                    'losunglist.h',
+                    'parser.c',
+                    'parser.h'])

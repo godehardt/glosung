@@ -1,0 +1,14 @@
+Source: glosung
+Maintainer: Eicke Godehardt <sf@godehardt.org>
+Section: gnome
+Priority: extra
+Standards-Version: 2.0
+Build-Depends: scons, debhelper, intltool, libgtk2.0-dev, libxml2-dev, libcurl4-gnutls-dev | libcurl3-dev, libgconf2-dev
+
+Package: glosung
+Architecture: any
+Depends: ${shlibs:Depends}, unzip, xdg-utils
+Description: Gtk+ Version of watchwords (german: Losungen).
+ This program shows the watchwords (german: Losungen) for each day.
+ The `Losungen' are words out of the bible, one from the Old
+ and one from the New Testament.
