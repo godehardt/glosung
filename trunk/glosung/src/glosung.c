@@ -663,7 +663,7 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
                      return;
         }
         char *argv [3];
-        argv [0] = "gnomesword2";
+        argv [0] = "xiphos";
         argv [1] = uri;
         argv [2] = NULL;
 
@@ -672,16 +672,25 @@ link_execute (GtkWidget *widget, gchar *uri, gpointer data)
                        G_SPAWN_STDOUT_TO_DEV_NULL
                         | G_SPAWN_STDERR_TO_DEV_NULL
                         | G_SPAWN_SEARCH_PATH,
-                       NULL, NULL, NULL, &error)) {
-                GtkWidget *msg = gtk_message_dialog_new
-                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                         "%s", error->message);
-                //_("No text files found!\n");
-                g_signal_connect (G_OBJECT (msg), "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
-                gtk_widget_show (msg);
-                g_error_free (error);
+                       NULL, NULL, NULL, &error))
+        {
+                argv [0] = "gnomesword2";
+                if (! g_spawn_async (NULL, argv, NULL,
+                       G_SPAWN_STDOUT_TO_DEV_NULL
+                        | G_SPAWN_STDERR_TO_DEV_NULL
+                        | G_SPAWN_SEARCH_PATH,
+                       NULL, NULL, NULL, &error))
+                {
+                        GtkWidget *msg = gtk_message_dialog_new
+                            (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                             GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                 "%s", error->message);
+                        //_("No text files found!\n");
+                        g_signal_connect (G_OBJECT (msg), "response",
+                                          G_CALLBACK (gtk_widget_destroy),NULL);
+                        gtk_widget_show (msg);
+                        g_error_free (error);
+                }
         }
 }
 
