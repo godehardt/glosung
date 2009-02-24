@@ -16,22 +16,22 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 
-# $Id:$
-
 Import ('env install_dir tar_file')
 
 languages = ['cs', 'de', 'fr']
 
 pot = env.Command ('glosung.pot', ['#/src/about.c',
+                                   '#/src/losung.c',
                                    '#/src/glosung.c',
                                    '#/src/parser.c'],
           "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
     po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
-    env.Depends (po, pot)
+#    po = env.Command (lang + '.po',  'glosung.pot', "msgmerge --update --strict --verbose $TARGET $SOURCES");
+#    env.Depends (po, pot)
     mo = env.Command (lang + '.mo', lang + '.po',
             "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
-    env.Depends (mo, po)
+#    env.Depends (mo, po)
     env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
@@ -40,5 +40,3 @@ if env['PLATFORM'] != 'win32':
                     'cs.po',
                     'fr.po',
                     'de.po'])
-
-#msgmerge --update --strict --verbose de.po glosung.pot
