@@ -31,13 +31,29 @@ Help ('''Options:
   DESTDIR=/                   Real installation path DESTDIR + PREFIX
                               (this option is only for packaging)''')
 
-prefix      = ARGUMENTS.get ('PREFIX', '/usr')
-install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
-pixmap_dir  = '/share/pixmaps/'
-#pixmap_dir  = ''
-data_dir  = prefix + '/share/glosung'
-#data_dir  = ''
-doc_dir     = '/share/doc/glosung-' + version
+env = Environment (
+  LINK      = 'gcc',
+  CC        = 'gcc',
+  CPPPATH   = '',
+  LINKFLAGS = '',
+  CCFLAGS   = '',
+  ENV       = os.environ,
+  TARFLAGS  = '-c -j')
+
+
+if env['PLATFORM'] == 'win32':
+	prefix      = ARGUMENTS.get ('PREFIX', '')
+	install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
+	pixmap_dir  = ''
+	data_dir    = '.'
+	doc_dir     = ''
+else:
+	prefix      = ARGUMENTS.get ('PREFIX', '/usr')
+	install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
+	pixmap_dir  = prefix + '/share/pixmaps/'
+	data_dir    = prefix + '/share/glosung'
+	doc_dir     = '/share/doc/glosung-' + version
+
 
 BuildDir ('build', 'src')
 
@@ -46,7 +62,7 @@ ccflags   = ['-O2', '-Wall', '-g',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
-		'-DPACKAGE_PIXMAPS_DIR=\\"' + prefix + pixmap_dir + '\\"']
+		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
 
 linkflags = ['-Wl,--export-dynamic', '-L.']
 #  -L/usr/lib'
@@ -63,14 +79,10 @@ if (ARGUMENTS.get ('dev')):
 
 tar_file = '#../glosung-' + version + '.tar.bz2'
 
-env = Environment (
-  LINK      = 'gcc',
-  CC        = 'gcc',
+env.Append (
   CPPPATH   = cpppath,
   LINKFLAGS = linkflags,
-  CCFLAGS   = ccflags,
-  ENV       = os.environ,
-  TARFLAGS  = '-c -j')
+  CCFLAGS   = ccflags)
 
 if env['PLATFORM'] == 'win32':
         env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
