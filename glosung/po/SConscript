@@ -22,14 +22,16 @@ Import ('env install_dir tar_file')
 
 languages = ['cs', 'de', 'fr']
 
-env.Command ('glosung.pot', ['#/src/about.c',
-                             '#/src/glosung.c',
-                             '#/src/parser.c'],
-             "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
+pot = env.Command ('glosung.pot', ['#/src/about.c',
+                                   '#/src/glosung.c',
+                                   '#/src/parser.c'],
+          "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
-    env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
-    env.Command (lang + '.mo', lang + '.po',
+    po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
+    env.Depends (po, pot)
+    mo = env.Command (lang + '.mo', lang + '.po',
             "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
+    env.Depends (mo, po)
     env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
