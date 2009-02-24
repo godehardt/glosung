@@ -37,6 +37,8 @@ is_in_autostart ()
         init ();
 
         return g_file_test (config_path, G_FILE_TEST_IS_REGULAR);
+        /* TODO g_file_get_contents (config_path, gchar **contents,
+                                gsize *length, NULL); */
 }
 
 
@@ -75,6 +77,7 @@ remove_from_autostart ()
 static void
 init (void)
 {
+        /* TODO: const gchar* g_get_user_config_dir () */
         if (config_path) {
                 return; /* config_path already set */
         }
