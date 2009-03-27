@@ -40,3 +40,23 @@ if env['PLATFORM'] != 'win32':
                     'cs.po',
                     'fr.po',
                     'de.po'])
+
+
+#import glob
+
+#Import ( 'environment' )
+
+#sourceDirectory = Dir ( '.' ).srcnode ( ).abspath
+
+#poFiles = [ file.replace ( sourceDirectory + '/' , '' ) for file in
+#glob.glob ( sourceDirectory + '/*.po' ) ]
+#compiledExtension = '.mo'
+
+#for poFile in poFiles :
+#    countryCode = poFile[:-3]
+#    target = countryCode + compiledExtension
+#    environment.Command ( target , poFile , "msgfmt -o $TARGET $SOURCES" )
+#    environment.Alias ( 'build' , target )
+#    installationDirectory = environment ['GNOMELOCALEDIR'] + '/' + countryCode + '/LC_MESSAGES/'
+#    installed = installationDirectory + environment ['NAME'] + compiledExtension
+#    environment.Alias ('install' , installed , environment.InstallAs (installed , target))
