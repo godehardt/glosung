@@ -115,7 +115,6 @@ static GtkWidget *create_property_table (void);
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
 static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
-static void apply_cb             (void);
 static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
@@ -741,14 +740,6 @@ property_cb (GtkWidget *w, gpointer data)
                 */
                 gtk_dialog_add_action_widget (
                         GTK_DIALOG (property),
-                        gtk_button_new_from_stock (GTK_STOCK_OK),
-                        GTK_RESPONSE_OK);
-                gtk_dialog_add_action_widget (
-                        GTK_DIALOG (property),
-                        gtk_button_new_from_stock (GTK_STOCK_APPLY),
-                        GTK_RESPONSE_APPLY);
-                gtk_dialog_add_action_widget (
-                        GTK_DIALOG (property),
                         gtk_button_new_from_stock (GTK_STOCK_CLOSE),
                         GTK_RESPONSE_CLOSE);
                 gtk_dialog_set_response_sensitive (
@@ -774,91 +765,13 @@ static void
 property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
 {
         switch (arg1) {
-        case GTK_RESPONSE_NONE:
         case GTK_RESPONSE_HELP:
-        case GTK_RESPONSE_DELETE_EVENT:
                 break;
-        case GTK_RESPONSE_APPLY:
-                apply_cb ();
-                break;
-        case GTK_RESPONSE_OK:
-                apply_cb ();
         case GTK_RESPONSE_CLOSE:
                 gtk_widget_destroy (GTK_WIDGET (dialog));
                 break;
         }
 } /* property_response_cb */
-
-
-/*
- * callback function for property box.
- */
-static void
-apply_cb (void)
-{
-        if (new_lang != NULL) {
-                lang = new_lang;
-                new_lang = NULL;
-#ifndef WIN32
-                gconf_client_set_string
-                        (client, "/apps/" PACKAGE "/language", lang, NULL);
-#endif /* WIN32 */
-                show_text ();
-        }
-        if (new_font != NULL) {
-                PangoFontDescription *font_desc;
-                gint i;
-
-                if (font != NULL) {
-                        g_free (font);
-                }
-                font = new_font;
-                new_font = NULL;
-#ifndef WIN32
-                gconf_client_set_string (client, "/apps/" PACKAGE "/font",
-                                         font, NULL);
-#endif /* WIN32 */
-
-                font_desc = pango_font_description_from_string (font);
-                for (i = 0; i < NUMBER_OF_LABELS; i++) {
-                        gtk_widget_modify_font (label [i], font_desc);
-                }
-                pango_font_description_free (font_desc);
-        }
-        if (autostart_new != autostart) {
-                if (autostart_new) {
-                        /* TODO handle return type */
-                        add_to_autostart ();
-                } else {
-                        /* TODO handle return type */
-                        remove_from_autostart ();
-                }
-                autostart = autostart_new;
-        }
-#ifdef VERSE_LINK
-        if (show_sword_new != show_sword) {
-                show_sword = show_sword_new;
-#ifndef WIN32
-                gconf_client_set_bool (client, "/apps/" PACKAGE "/link_sword",
-                                       show_sword, NULL);
-#endif /* WIN32 */
-                if (show_sword) {
-                        gtk_widget_hide (label [OT_LOC]);
-                        gtk_widget_show (label [OT_LOC_SWORD]);
-                        gtk_widget_hide (label [NT_LOC]);
-                        gtk_widget_show (label [NT_LOC_SWORD]);
-                } else {
-                        gtk_widget_hide (label [OT_LOC_SWORD]);
-                        gtk_widget_show (label [OT_LOC]);
-                        gtk_widget_hide (label [NT_LOC_SWORD]);
-                        gtk_widget_show (label [NT_LOC]);
-                }
-        }
-#endif
-
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, FALSE);
-} /* apply_cb */
 
 
 /*
@@ -943,8 +856,15 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
         new_lang = (gchar*) g_ptr_array_index (languages->languages, num);
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
+        if (new_lang != NULL) {
+                lang = new_lang;
+                new_lang = NULL;
+#ifndef WIN32
+                gconf_client_set_string
+                        (client, "/apps/" PACKAGE "/language", lang, NULL);
+#endif /* WIN32 */
+                show_text ();
+        }
 } /* lang_changed_cb */
 
 
@@ -959,12 +879,30 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
         if (font_name != NULL
             && (font == NULL || strcmp (font, font_name) != 0))
         {
-                gtk_dialog_set_response_sensitive
-                        (GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
                 if (new_font != NULL) {
                         g_free (new_font);
                 }
                 new_font = g_strdup (font_name);
+                if (new_font != NULL) {
+                        PangoFontDescription *font_desc;
+                        gint i;
+
+                        if (font != NULL) {
+                                g_free (font);
+                        }
+                        font = new_font;
+                        new_font = NULL;
+#ifndef WIN32
+                        gconf_client_set_string
+                                (client, "/apps/" PACKAGE "/font", font, NULL);
+#endif /* WIN32 */
+
+                        font_desc = pango_font_description_from_string (font);
+                        for (i = 0; i < NUMBER_OF_LABELS; i++) {
+                                gtk_widget_modify_font (label [i], font_desc);
+                        }
+                        pango_font_description_free (font_desc);
+                }
         }
 } /* font_sel_cb */
 
@@ -977,8 +915,16 @@ autostart_cb (GtkWidget *toggle, gpointer data)
 {
         autostart_new = gtk_toggle_button_get_active (
                 GTK_TOGGLE_BUTTON (toggle));
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
+        if (autostart_new != autostart) {
+                if (autostart_new) {
+                        /* TODO handle return type */
+                        add_to_autostart ();
+                } else {
+                        /* TODO handle return type */
+                        remove_from_autostart ();
+                }
+                autostart = autostart_new;
+        }
 } /* autostart_cb */
 
 
@@ -988,10 +934,29 @@ autostart_cb (GtkWidget *toggle, gpointer data)
 static void
 sword_cb (GtkWidget *toggle, gpointer data)
 {
-        show_sword_new = gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (toggle));
-        gtk_dialog_set_response_sensitive (
-                GTK_DIALOG (property), GTK_RESPONSE_APPLY, TRUE);
+        show_sword_new = gtk_toggle_button_get_active
+                (GTK_TOGGLE_BUTTON (toggle));
+
+#ifdef VERSE_LINK
+        if (show_sword_new != show_sword) {
+                show_sword = show_sword_new;
+#ifndef WIN32
+                gconf_client_set_bool (client, "/apps/" PACKAGE "/link_sword",
+                                       show_sword, NULL);
+#endif /* WIN32 */
+                if (show_sword) {
+                        gtk_widget_hide (label [OT_LOC]);
+                        gtk_widget_show (label [OT_LOC_SWORD]);
+                        gtk_widget_hide (label [NT_LOC]);
+                        gtk_widget_show (label [NT_LOC_SWORD]);
+                } else {
+                        gtk_widget_hide (label [OT_LOC_SWORD]);
+                        gtk_widget_show (label [OT_LOC]);
+                        gtk_widget_hide (label [NT_LOC_SWORD]);
+                        gtk_widget_show (label [NT_LOC]);
+                }
+        }
+#endif
 } /* sword_cb */
 
 
@@ -1164,7 +1129,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 static GtkWidget    *lang_combo;
-static GtkWidget    *year_combo;
+static GtkComboBox  *year_combo;
 static GtkListStore *store;
 static GPtrArray    *years;
 
@@ -1241,26 +1206,16 @@ static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
-        GtkWidget    *vbox;
 
-        dialog = gtk_dialog_new_with_buttons
-                (_("Add Languages"),
-                 GTK_WINDOW (data),
-                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                 _("Download"),
-                 GTK_RESPONSE_ACCEPT,
-                 GTK_STOCK_CANCEL,
-                 GTK_RESPONSE_REJECT,
-                 NULL);
-
-        vbox = gtk_vbox_new (FALSE, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
-
-        GtkWidget *label = gtk_label_new (_("Herrnhuter Losungen (deutsch)"));
-        gtk_box_pack_start (GTK_BOX (vbox), label,
-                            FALSE, FALSE, MY_PAD);
-
-        GtkWidget *year_frame = gtk_frame_new (_("Year"));
+        GtkBuilder* builder = gtk_builder_new ();
+        guint build = gtk_builder_add_from_file
+                (builder, "add_language.glade", NULL);
+        if (! build) {
+                g_message ("Error while loading UI definition file");
+                return;
+        }
+        dialog = GTK_WIDGET
+                (gtk_builder_get_object (builder, "add_language_dialog"));
 
 	/*
         lang_combo = gtk_combo_box_new_text ();
@@ -1274,14 +1229,16 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	}
 	*/
 
-	year_combo = gtk_combo_box_new_text ();
+        GtkFrame *year_frame = GTK_FRAME
+                (gtk_builder_get_object (builder, "year_frame"));
+	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+        gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
 	gint i;
         gint years [] = {2009, 2008, 2007};
 	gint this_year = 2009;
         for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
-                gtk_combo_box_append_text
-                        (GTK_COMBO_BOX (year_combo), year);
+                gtk_combo_box_append_text (year_combo, year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
 
@@ -1290,16 +1247,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (update_years), year_combo);
         */
 
-        /*
-        gtk_container_add (GTK_CONTAINER (vbox), lang_frame);
-        gtk_container_add (GTK_CONTAINER (lang_frame), lang_combo);
-	*/
-        // gtk_box_pack_start (GTK_BOX (vbox), year_frame,
-        //                     FALSE, FALSE, MY_PAD);
-        gtk_container_add (GTK_CONTAINER (vbox), year_frame);
-        gtk_container_add (GTK_CONTAINER (year_frame), year_combo);
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), vbox);
-        gtk_widget_show_all (vbox);
+        gtk_widget_show_all (dialog);
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 gchar *langu = "de";
