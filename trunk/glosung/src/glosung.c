@@ -657,6 +657,9 @@ show_text (void)
 static void
 link_execute (GtkWidget *widget, gchar *uri, gpointer data)
 {
+        /* since 2.14 !!!
+        gboolean gtk_show_uri (NULL, (const gchar*) uri, 0, NULL);
+         */
         /* hack because of gtk_about_dialog_set_url_hook */
         if (strncmp (uri, "http://", 7) == 0) {
                      return;
@@ -1209,7 +1212,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         guint build = gtk_builder_add_from_file
-                (builder, "add_language.glade", NULL);
+                (builder, "ui/add_language.glade", NULL);
         if (! build) {
                 g_message ("Error while loading UI definition file");
                 return;
