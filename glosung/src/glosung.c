@@ -110,17 +110,13 @@ static GHashTable *init_languages            (void);
 static void       get_time              (void);
 static void       show_text             (void);
 static void       create_app            (void);
-static GtkWidget *create_property_table (void);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
 static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
-static void autostart_cb         (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
 static GString* create_years_string (gchar *langu);
-static void font_sel_cb          (GtkWidget *button,   gpointer data);
-static void lang_changed_cb      (GtkWidget *item,     gpointer data);
 static void update_years         (GtkWidget *w,   gpointer data);
 static void lang_manager_cb      (GtkWidget *w,   gpointer data);
 static void link_execute         (GtkWidget *widget,
@@ -131,14 +127,18 @@ static void no_languages_cb      (GtkWidget *w,   gpointer data);
 static void prev_day_cb          (GtkWidget *w,   gpointer data);
 static void prev_month_cb        (GtkWidget *w,   gpointer data);
 static void property_cb          (GtkWidget *w,   gpointer data);
-static void property_response_cb (GtkDialog *dialog,
-                                  gint       arg1,
-                                  gpointer   user_data);
-static void sword_cb             (GtkWidget *toggle,   gpointer data);
 static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
 static void my_wrap              (gchar     *string);
+
+void autostart_cb         (GtkWidget *w,   gpointer data);
+void font_sel_cb          (GtkWidget *button,   gpointer data);
+void lang_changed_cb      (GtkWidget *item,     gpointer data);
+void property_response_cb (GtkDialog *dialog,
+                           gint       arg1,
+                           gpointer   user_data);
+void sword_cb             (GtkWidget *toggle,   gpointer data);
 
 
 /******************************\
@@ -728,43 +728,76 @@ property_cb (GtkWidget *w, gpointer data)
                 gdk_window_show  (property->window);
                 gdk_window_raise (property->window);
         } else {
+                GtkWidget *combo;
+                gint       i;
+
                 if (new_font != NULL) {
                         g_free (new_font);
                         new_font = NULL;
                 }
 
-                property = gtk_dialog_new ();
-                gtk_window_set_title (GTK_WINDOW (property), _("Preferences"));
-                /*
-                gtk_dialog_add_action_widget (
-                        GTK_DIALOG (property),
-                        gtk_button_new_from_stock (GTK_STOCK_HELP),
-                        GTK_RESPONSE_HELP);
-                */
-                gtk_dialog_add_action_widget (
-                        GTK_DIALOG (property),
-                        gtk_button_new_from_stock (GTK_STOCK_CLOSE),
-                        GTK_RESPONSE_CLOSE);
-                gtk_dialog_set_response_sensitive (
-                        GTK_DIALOG (property), GTK_RESPONSE_APPLY, FALSE);
+                GtkBuilder* builder = gtk_builder_new ();
+                gtk_builder_set_translation_domain (builder, PACKAGE);
+                guint build = gtk_builder_add_from_file
+                        (builder, "ui/preferences.glade", NULL);
+                if (! build) {
+                        g_message ("Error while loading UI definition file");
+                        return;
+                }
+                property = GTK_WIDGET
+                        (gtk_builder_get_object (builder, "preferences_dialog"));
 
-                gtk_container_add (GTK_CONTAINER (GTK_DIALOG (property)->vbox),
-                                   create_property_table ());
+                combo = GTK_WIDGET
+                        (gtk_builder_get_object (builder, "language_combobox"));
 
-                g_signal_connect (G_OBJECT (property), "response",
-                                  G_CALLBACK (property_response_cb), NULL);
+                for (i = 0; i < (languages->languages)->len; i++) {
+                        gchar *langu = g_ptr_array_index (languages->languages, i);
+                        gtk_combo_box_append_text
+                                (GTK_COMBO_BOX (combo),
+                                 g_hash_table_lookup (lang_translations, langu));
+                        if (strcmp (lang, langu) == 0) {
+                                gtk_combo_box_set_active
+                                        (GTK_COMBO_BOX (combo), i);
+                        }
+                }
+
+                if (font != NULL) {
+                        gtk_font_button_set_font_name (GTK_FONT_BUTTON
+                           (gtk_builder_get_object (builder, "fontbutton")),
+                            font);
+                }
+                if (is_in_autostart ()) {
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+                           (gtk_builder_get_object (builder, "autostart_checkbox")),
+                            TRUE);
+                }
+#ifdef VERSE_LINK
+                if (show_sword) {
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+                           (gtk_builder_get_object (builder, "sword_checkbox")),
+                            TRUE);
+                }
+#else
+                gtk_widget_set_sensitive (GTK_WIDGET
+                        (gtk_builder_get_object (builder, "sword_checkbox")),
+                         FALSE);
+#endif
+
+/*
                 g_signal_connect (G_OBJECT (property), "destroy",
                                  G_CALLBACK (gtk_widget_destroyed), &property);
+*/
 
+                gtk_builder_connect_signals (builder, NULL);
                 gtk_widget_show_all (property);
-                }
+        }
 } /* property_cb */
 
 
 /*
  * callback function for property box.
  */
-static void
+void
 property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
 {
         switch (arg1) {
@@ -778,83 +811,9 @@ property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
 
 
 /*
- * creates one page for the property box.
- */
-static GtkWidget *
-create_property_table ()
-{
-        GtkWidget *table;
-        GtkWidget *label;
-        GtkWidget *combo;
-        GtkWidget *widget;
-        gint       i;
-
-        table = gtk_table_new (5, 2, FALSE);
-        gtk_container_set_border_width (GTK_CONTAINER (table), MY_PAD);
-        // gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
-
-        label = gtk_label_new (_("Choose displayed language:"));
-        gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
-
-        combo = gtk_combo_box_new_text ();
-
-        for (i = 0; i < (languages->languages)->len; i++) {
-                gchar *langu = g_ptr_array_index (languages->languages, i);
-                gtk_combo_box_append_text
-                        (GTK_COMBO_BOX (combo),
-                         g_hash_table_lookup (lang_translations, langu));
-                if (strcmp (lang, langu) == 0) {
-                        gtk_combo_box_set_active
-                                (GTK_COMBO_BOX (combo), i);
-                }
-        }
-        g_signal_connect (G_OBJECT (combo), "changed",
-                          G_CALLBACK (lang_changed_cb), NULL);
-        gtk_widget_show (combo);
-        gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
-
-        label = gtk_label_new (_("Choose Font:"));
-        gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
-
-        widget = gtk_font_button_new ();
-        g_signal_connect (G_OBJECT (widget), "font_set",
-                          G_CALLBACK (font_sel_cb), NULL);
-        if (font != NULL) {
-                gtk_font_button_set_font_name (GTK_FONT_BUTTON (widget), font);
-        }
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 1, 2, 1, 2);
-
-        widget = gtk_check_button_new_with_label
-                (_("Start GLosung at login time"));
-        autostart = autostart_new = is_in_autostart ();
-        if (autostart) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                              TRUE);
-        }
-        g_signal_connect (G_OBJECT (widget), "toggled",
-                          G_CALLBACK (autostart_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 2, 3);
-
-#ifdef VERSE_LINK
-        widget = gtk_check_button_new_with_label
-                (_("Link location to gnomesword"));
-        if (show_sword) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                              TRUE);
-        }
-        g_signal_connect (G_OBJECT (widget), "toggled",
-                          G_CALLBACK (sword_cb), NULL);
-        gtk_table_attach_defaults (GTK_TABLE (table), widget, 0, 2, 3, 4);
-#endif
-
-        return table;
-} /* create_property_table */
-
-
-/*
  * callback function for options menu.
  */
-static void
+void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
@@ -874,7 +833,7 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
 /*
  * callback function when font is selected.
  */
-static void
+void
 font_sel_cb (GtkWidget *gfb, gpointer data)
 {
         const gchar* font_name = gtk_font_button_get_font_name
@@ -913,7 +872,7 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 /*
  * callback function for autostart changes.
  */
-static void
+void
 autostart_cb (GtkWidget *toggle, gpointer data)
 {
         autostart_new = gtk_toggle_button_get_active (
@@ -934,7 +893,7 @@ autostart_cb (GtkWidget *toggle, gpointer data)
 /*
  * callback function for gnomwsword option change.
  */
-static void
+void
 sword_cb (GtkWidget *toggle, gpointer data)
 {
         show_sword_new = gtk_toggle_button_get_active

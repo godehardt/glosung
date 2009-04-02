@@ -58,7 +58,7 @@ else:
 BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = ['-O2', '-Wall', '-g',
+ccflags   = ['-O2', '-Wall', '-g', '-Wl,--export-dynamic',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
@@ -88,7 +88,7 @@ if env['PLATFORM'] == 'win32':
         env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
         Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 libcurl --cflags --libs')
+        env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
 #        Tool('posix')(env)
 
 

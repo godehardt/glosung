@@ -7,13 +7,14 @@
     <property name="title" translatable="yes">Preferences</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
+    <signal name="response" handler="property_response_cb"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">5</property>
         <child>
-          <object class="GtkTable" id="table1">
+          <object class="GtkTable" id="preferences_table">
             <property name="visible">True</property>
             <property name="n_rows">4</property>
             <property name="n_columns">2</property>
@@ -40,6 +41,8 @@
             <child>
               <object class="GtkComboBox" id="language_combobox">
                 <property name="visible">True</property>
+                <property name="model">liststore</property>
+                <signal name="changed" handler="lang_changed_cb"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -51,6 +54,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="font_set" handler="font_sel_cb"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -66,6 +70,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="autostart_cb"/>
               </object>
               <packing>
                 <property name="right_attach">2</property>
@@ -80,6 +85,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="sword_cb"/>
               </object>
               <packing>
                 <property name="right_attach">2</property>
@@ -115,6 +121,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
+                <signal name="clicked" handler="gtk_widget_destroy" object="preferences_dialog"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -134,5 +141,11 @@
     <action-widgets>
       <action-widget response="-60">close</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkListStore" id="liststore">
+    <columns>
+      <!-- column-name text -->
+      <column type="gchararray"/>
+    </columns>
   </object>
 </interface>
