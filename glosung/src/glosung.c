@@ -750,6 +750,12 @@ property_cb (GtkWidget *w, gpointer data)
                 combo = GTK_WIDGET
                         (gtk_builder_get_object (builder, "language_combobox"));
 
+                GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+                gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo),
+                renderer, TRUE);
+                gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo),
+                renderer, "text", 0);
+
                 for (i = 0; i < (languages->languages)->len; i++) {
                         gchar *langu = g_ptr_array_index (languages->languages, i);
                         gtk_combo_box_append_text
