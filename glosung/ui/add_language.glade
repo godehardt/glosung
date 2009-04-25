@@ -48,7 +48,9 @@
                 <property name="label_xalign">0</property>
                 <property name="shadow_type">out</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkComboBox" id="year_combobox">
+                    <property name="visible">True</property>
+                  </object>
                 </child>
                 <child type="label">
                   <object class="GtkLabel" id="label3">
