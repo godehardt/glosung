@@ -729,6 +729,7 @@ property_cb (GtkWidget *w, gpointer data)
                 gdk_window_raise (property->window);
         } else {
                 GtkWidget *combo;
+                GtkWidget *table;
                 gint       i;
 
                 if (new_font != NULL) {
@@ -747,15 +748,10 @@ property_cb (GtkWidget *w, gpointer data)
                 property = GTK_WIDGET
                         (gtk_builder_get_object (builder, "preferences_dialog"));
 
-                combo = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "language_combobox"));
+                table = GTK_WIDGET
+                        (gtk_builder_get_object (builder, "preferences_table"));
 
-                GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
-                gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo),
-                renderer, TRUE);
-                gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo),
-                renderer, "text", 0);
-
+                combo = gtk_combo_box_new_text ();
                 for (i = 0; i < (languages->languages)->len; i++) {
                         gchar *langu = g_ptr_array_index (languages->languages, i);
                         gtk_combo_box_append_text
@@ -766,6 +762,10 @@ property_cb (GtkWidget *w, gpointer data)
                                         (GTK_COMBO_BOX (combo), i);
                         }
                 }
+                g_signal_connect (G_OBJECT (combo), "changed",
+                                  G_CALLBACK (lang_changed_cb), NULL);
+                gtk_widget_show (combo);
+                gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
                 if (font != NULL) {
                         gtk_font_button_set_font_name (GTK_FONT_BUTTON

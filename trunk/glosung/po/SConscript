@@ -23,7 +23,9 @@ languages = ['cs', 'de', 'fr']
 pot = env.Command ('glosung.pot', ['#/src/about.c',
                                    '#/src/losung.c',
                                    '#/src/glosung.c',
-                                   '#/src/parser.c'],
+                                   '#/src/parser.c',
+                                   '#/ui/add_language.glade',
+                                   '#/ui/preferences.glade'],
           "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
 for lang in languages:
     po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");

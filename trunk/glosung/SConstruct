@@ -70,8 +70,11 @@ linkflags = ['-Wl,--export-dynamic', '-L.']
              
 
 if ARGUMENTS.get ('profile'):
-    ccflags   += ' -pg -fprofile-arcs'
-    linkflags += ' -pg -fprofile-arcs'
+    ccflags.append   ('-pg', '-fprofile-arcs')
+    linkflags.append ('-pg', '-fprofile-arcs')
+
+if env['PLATFORM'] != 'win32':
+        linkflags.append ('-Wl,--as-needed')
 
 #if not (ARGUMENTS.get ('dev')):
 if (ARGUMENTS.get ('dev')):
