@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.4.1 SVN beta'
+version = '3.4.1'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
