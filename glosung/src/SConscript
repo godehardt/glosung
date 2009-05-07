@@ -38,7 +38,4 @@ if env['PLATFORM'] != 'win32':
                     'losunglist.c',
                     'losunglist.h',
                     'parser.c',
-                    'parser.h',
-
-                    'add_language.glade',
-                    'preferences.glade'])
+                    'parser.h'])
