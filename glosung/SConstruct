@@ -43,14 +43,14 @@ env = Environment (
 
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
-	install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
+	install_dir = ARGUMENTS.get ('DESTDIR', '')
 	pixmap_dir  = ''
 	data_dir    = '.'
 	doc_dir     = ''
 else:
 	prefix      = ARGUMENTS.get ('PREFIX', '/usr')
-	install_dir = ARGUMENTS.get ('DESTDIR', '') + prefix
-	pixmap_dir  = prefix + '/share/pixmaps/'
+	install_dir = ARGUMENTS.get ('DESTDIR', '')
+	pixmap_dir  = prefix + '/share/glosung/'
 	data_dir    = prefix + '/share/glosung'
 	doc_dir     = '/share/doc/glosung-' + version
 
@@ -99,7 +99,7 @@ conf = Configure (env)
 if not conf.CheckLib ('libxml2'):
 	print 'Did not find libxml2.a or xml2.lib, exiting!'
 
-Export ('env cpppath ccflags install_dir pixmap_dir tar_file')
+Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file')
 
 SConscript ('build/SConscript')
 SConscript ('po/SConscript')
@@ -107,14 +107,15 @@ SConscript ('po/SConscript')
 env.Alias ('install', install_dir)
 env.Alias ('package', tar_file)
 
-env.Install (dir = install_dir + doc_dir,
+env.Install (dir = install_dir + prefix + doc_dir,
           source = ['AUTHORS', 'COPYING', 'ChangeLog', 'INSTALL', 'README'])
 
-env.Install (dir = install_dir + '/share/applications',
+env.Install (dir = install_dir + prefix + '/share/applications',
           source = 'glosung.desktop')
-env.Install (dir = install_dir + pixmap_dir, source = 'herrnhut.png')
-env.Install (dir = install_dir + pixmap_dir, source = 'glosung.png')
-env.Install (dir = install_dir + pixmap_dir, source = 'glosung-big.png')
+env.Install (dir = install_dir + pixmap_dir,
+        source = ['herrnhut.png', 'glosung.png', 'glosung-big.png'])
+env.Install (dir = install_dir + data_dir,
+        source = ['ui/add_language.glade', 'ui/preferences.glade'])
 
 # TODO put everything into a folder "glosung-<VERSION>" and rename build to src
 if env['PLATFORM'] != 'win32':

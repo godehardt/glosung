@@ -1,3 +1,9 @@
+glosung (3.4.1) jaunty; urgency=low
+
+  * new version
+
+ -- Eicke Godehardt <sf@godehardt.org>  Sat, 31 Jan 2009 15:21:00 +0100
+
 glosung (3.4-1) intrepid; urgency=low
 
   * add herrnhut.png to glosung.files

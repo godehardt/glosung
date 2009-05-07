@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-27 21:40+0100\n"
+"POT-Creation-Date: 2009-04-25 20:57+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -237,24 +237,6 @@ msgstr "Chinois traditionnel"
 msgid "No %s texts found for %d!"
 msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
 #
-msgid "Preferences"
-msgstr "Préférences"
-#
-#. gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
-msgid "Choose displayed language:"
-msgstr "Langue :"
-#
-msgid "Choose Font:"
-msgstr "Police :"
-#
-# File: src/glosung.c, line: 917
-msgid "Start GLosung at login time"
-msgstr ""
-#
-# File: src/glosung.c, line: 791
-msgid "Link location to gnomesword"
-msgstr "Liens vers gnomesword"
-#
 msgid "Calendar"
 msgstr "Calendrier"
 #
@@ -271,20 +253,90 @@ msgid "Watchword for %A, %e. %B %Y"
 msgstr ""
 #
 #
+#
 # File: src/glosung.c, line: 1141
 #, fuzzy
-#~ msgid "Add Languages"
-#~ msgstr "Ajouter de nouvelles traductions"
+msgid "Add Languages"
+msgstr "Ajouter de nouvelles traductions"
+#
+# File: ui/add_language.glade, line: 30
+msgid "Herrnhuter Losungen (deutsch)"
+msgstr ""
 #
 #
-# File: src/glosung.c, line: 1144
-#~ msgid "Download"
-#~ msgstr "Télécharger"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 1150
+msgid "Language"
+msgstr "Traduction"
+#
 #
 #
 # File: src/glosung.c, line: 1152
-#~ msgid "Year"
-#~ msgstr "Année"
+msgid "Year"
+msgstr "Année"
+#
+#
+#
+# File: src/glosung.c, line: 1144
+msgid "Download"
+msgstr "Télécharger"
+#
+# File: ui/add_language.glade, line: 100
+msgid "gtk-cancel"
+msgstr ""
+#
+#
+msgid "Preferences"
+msgstr "Préférences"
+#
+#
+#, fuzzy
+msgid "Displayed Language:"
+msgstr "Langue :"
+#
+# File: ui/preferences.glade, line: 33
+msgid "Font:"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 57
+msgid "Start GLosung at login time"
+msgstr ""
+#
+#
+# File: src/glosung.c, line: 791
+#, fuzzy
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Liens vers gnomesword"
+#
+# File: ui/preferences.glade, line: 111
+msgid "gtk-close"
+msgstr ""
+#
+#
+#
+#~ msgid "Choose Font:"
+#~ msgstr "Police :"
+#
+#
 #
 #
 #
@@ -309,8 +361,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
 #
 #
 #
@@ -348,28 +404,6 @@ msgstr ""
 #
 #
 #
-# File: src/glosung.c, line: 1150
-#~ msgid "Language"
-#~ msgstr "Traduction"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -387,6 +421,8 @@ msgstr ""
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
 #
 #
 #
@@ -469,9 +505,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
 #
 #
 #

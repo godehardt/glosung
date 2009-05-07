@@ -16,14 +16,14 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 
-Import ('env install_dir tar_file')
+Import ('env install_dir tar_file prefix')
 
 # test = env.Program ('test', ['test-autostart.c', 'autostart.c'])
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
                                 'download.c', 'losunglist.c', 'about.c'])
 losung  = env.Program ('losung', ['losung.c', 'parser.c'])
-env.Install (dir = install_dir + '/bin', source = [losung, glosung])
+env.Install (dir = install_dir + prefix + '/bin', source = [losung, glosung])
 
 if env['PLATFORM'] != 'win32':
 	env.Tar (tar_file, ['SConscript',
@@ -38,4 +38,7 @@ if env['PLATFORM'] != 'win32':
                     'losunglist.c',
                     'losunglist.h',
                     'parser.c',
-                    'parser.h'])
+                    'parser.h',
+
+                    'add_language.glade',
+                    'preferences.glade'])

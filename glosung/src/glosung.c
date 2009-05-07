@@ -740,7 +740,7 @@ property_cb (GtkWidget *w, gpointer data)
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
                 guint build = gtk_builder_add_from_file
-                        (builder, "ui/preferences.glade", NULL);
+                        (builder, PACKAGE_PIXMAPS_DIR "preferences.glade", NULL);
                 if (! build) {
                         g_message ("Error while loading UI definition file");
                         return;
@@ -1177,7 +1177,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         guint build = gtk_builder_add_from_file
-                (builder, "ui/add_language.glade", NULL);
+                (builder, PACKAGE_PIXMAPS_DIR "add_language.glade", NULL);
         if (! build) {
                 g_message ("Error while loading UI definition file");
                 return;
@@ -1202,6 +1202,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
 	gint i;
+        /* TODO make these number dynamic! */
         gint years [] = {2009, 2008, 2007};
 	gint this_year = 2009;
         for (i = this_year; i >= this_year - 2; i--) {

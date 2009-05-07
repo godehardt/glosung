@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 
-Import ('env install_dir tar_file')
+Import ('env install_dir prefix tar_file')
 
 languages = ['cs', 'de', 'fr']
 
@@ -34,7 +34,7 @@ for lang in languages:
     mo = env.Command (lang + '.mo', lang + '.po',
             "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
 #    env.Depends (mo, po)
-    env.InstallAs (target = install_dir + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
+    env.InstallAs (target = install_dir + prefix + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
 if env['PLATFORM'] != 'win32':

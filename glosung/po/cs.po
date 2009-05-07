@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-27 21:40+0100\n"
+"POT-Creation-Date: 2009-04-25 20:57+0200\n"
 "PO-Revision-Date: 2006-11-30 21:39+0100\n"
 "Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -423,31 +423,6 @@ msgstr "čínsky (tradičně)"
 msgid "No %s texts found for %d!"
 msgstr "Nebyl nalezen text %s pro %d"
 #
-# src/glosung.c:103
-# File: src/glosung.c, line: 153
-# File: src/glosung.c, line: 429
-msgid "Preferences"
-msgstr "Nastavení"
-#
-# src/glosung.c:479
-# File: src/glosung.c, line: 557
-#. gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
-msgid "Choose displayed language:"
-msgstr "Výběr jazyka:"
-#
-# src/glosung.c:500
-# File: src/glosung.c, line: 581
-msgid "Choose Font:"
-msgstr "Výběr písma:"
-#
-# File: src/glosung.c, line: 917
-msgid "Start GLosung at login time"
-msgstr ""
-#
-# File: src/glosung.c, line: 791
-msgid "Link location to gnomesword"
-msgstr "Odkaz na gnomesword"
-#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
@@ -467,20 +442,97 @@ msgid "Watchword for %A, %e. %B %Y"
 msgstr ""
 #
 #
+#
 # File: src/glosung.c, line: 1141
 #, fuzzy
-#~ msgid "Add Languages"
-#~ msgstr "Přidej jazyk"
+msgid "Add Languages"
+msgstr "Přidej jazyk"
+#
+# File: ui/add_language.glade, line: 30
+msgid "Herrnhuter Losungen (deutsch)"
+msgstr ""
 #
 #
-# File: src/glosung.c, line: 1144
-#~ msgid "Download"
-#~ msgstr "Stáhnout"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 1150
+msgid "Language"
+msgstr "Jazyk"
+#
 #
 #
 # File: src/glosung.c, line: 1152
-#~ msgid "Year"
-#~ msgstr "Rok"
+msgid "Year"
+msgstr "Rok"
+#
+#
+#
+# File: src/glosung.c, line: 1144
+msgid "Download"
+msgstr "Stáhnout"
+#
+# File: ui/add_language.glade, line: 100
+msgid "gtk-cancel"
+msgstr ""
+#
+#
+# src/glosung.c:103
+# File: src/glosung.c, line: 153
+# File: src/glosung.c, line: 429
+msgid "Preferences"
+msgstr "Nastavení"
+#
+#
+# src/glosung.c:479
+# File: src/glosung.c, line: 557
+#, fuzzy
+msgid "Displayed Language:"
+msgstr "Výběr jazyka:"
+#
+# File: ui/preferences.glade, line: 33
+msgid "Font:"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 57
+msgid "Start GLosung at login time"
+msgstr ""
+#
+#
+# File: src/glosung.c, line: 791
+#, fuzzy
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Odkaz na gnomesword"
+#
+# File: ui/preferences.glade, line: 111
+msgid "gtk-close"
+msgstr ""
+#
+#
+#
+# src/glosung.c:500
+# File: src/glosung.c, line: 581
+#~ msgid "Choose Font:"
+#~ msgstr "Výběr písma:"
+#
+#
 #
 #
 #
@@ -514,6 +566,8 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 #~ msgid "Show selective and continuing reading"
@@ -532,10 +586,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:509
 # File: src/glosung.c, line: 594
 #~ msgid "Close calendar by double click"
 #~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
+#
 #
 #
 #
@@ -575,28 +633,6 @@ msgstr ""
 #
 #
 #
-# File: src/glosung.c, line: 1150
-#~ msgid "Language"
-#~ msgstr "Jazyk"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -617,6 +653,8 @@ msgstr ""
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
+#
 #
 #
 #
@@ -706,12 +744,16 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
+#
 #
 #
 #
@@ -813,12 +855,16 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
+#
 #
 #
 #
@@ -921,11 +967,15 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Předchozí měsíc"
+#
+#
 #
 #
 #
@@ -1027,11 +1077,15 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Předchozí měsíc"
+#
+#
 #
 #
 #
@@ -1140,10 +1194,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:124
 # File: src/glosung.c, line: 174
 #~ msgid "Exit the Program"
 #~ msgstr "Ukončit program"
+#
+#
 #
 #
 #
