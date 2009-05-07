@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.4
+%define version 3.4.1
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -72,6 +72,12 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+* Sat May 07 2009 Eicke
+- version bump to 3.4.1
+- handle new name of GnomeSword, now Xiphos
+- further simplify preferences
+- some glade than UI code
+
 * Sat Jan 31 2009 Eicke
 - version bump to 3.4
 - add about Herrnhut

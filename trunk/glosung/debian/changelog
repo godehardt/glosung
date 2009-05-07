@@ -1,8 +1,11 @@
 glosung (3.4.1) jaunty; urgency=low
 
-  * new version
+  * version bump to 3.4.1
+  * handle new name of GnomeSword, now Xiphos
+  * further simplify preferences
+  * some glade than UI code
 
- -- Eicke Godehardt <sf@godehardt.org>  Sat, 31 Jan 2009 15:21:00 +0100
+ -- Eicke Godehardt <sf@godehardt.org>  Thu, 07 May 2009 21:37:00 +0100
 
 glosung (3.4-1) intrepid; urgency=low
 

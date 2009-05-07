@@ -1,3 +1,45 @@
+2009-05-07  eicke
+
+	* [r237] fix path in desktop file, fix add_language.glade
+	* [r236] adapt paths, include glade files into build and packaging
+	  process
+        * version bump to 3.4.1 update debian and rpm files accordingly
+
+2009-04-25  eicke
+
+	* [r235] fix glade usage for preferences, update German translation
+
+2009-04-02  eicke
+
+	* [r234] fix text rendering in preferences dialog
+	* [r233] improve glade files and handling
+
+2009-03-31  eicke
+
+	* [r232] add glade file preferences dialog
+
+2009-03-29  eicke
+
+	* [r231] move glade files to new folder 'ui'
+
+2009-03-27  eicke
+
+	* [r230] add_languages.glade: add dialog UI definition file,
+	  further simplify preferences
+
+2009-02-24  eicke
+
+	* [r229] enhance Herrnhut image
+	* [r228] work on po/SConscript file
+	* [r227] add todo comments
+	* [r226] fix scons files for:
+	  - compiling on Win32
+	  - add dependencies for po files
+
+2009-02-18  eicke
+
+	* [r225] handle new name of gnomesword: xiphos
+
 2009-01-31  eicke
 
 	* [r222] add copyright to Herrnhut about, remove word 'Gnome' from
