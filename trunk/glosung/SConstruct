@@ -130,6 +130,8 @@ if env['PLATFORM'] != 'win32':
                     'glosung-big.png',
                     'glosung.desktop',
                     'glosung.png',
+                    'ui/add_language.glade',
+                    'ui/preferences.glade',
                     'debian/glosung.files',
                     'debian/control',
                     'debian/changelog',
