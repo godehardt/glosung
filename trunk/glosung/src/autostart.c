@@ -77,7 +77,7 @@ remove_from_autostart ()
 static void
 init (void)
 {
-        /* TODO: const gchar* g_get_user_config_dir () */
+        /* TODO: const gchar* g_get_user_config_dir () and g_build_filename () */
         if (config_path) {
                 return; /* config_path already set */
         }
