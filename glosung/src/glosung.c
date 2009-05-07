@@ -1202,8 +1202,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
 	gint i;
-        /* TODO make these number dynamic! */
-        gint years [] = {2009, 2008, 2007};
+        /* TODO make these numbers dynamic! */
 	gint this_year = 2009;
         for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
@@ -1226,8 +1225,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
  *                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
  *                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
  */
-                gint year = years
-                        [gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))];
+                gint year = this_year - 
+                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);
                 losunglist_add (languages, langu, year);
                 losunglist_finialize (languages);
