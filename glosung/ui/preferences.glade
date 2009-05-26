@@ -2,12 +2,17 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
+  <object class="GtkListStore" id="liststore">
+    <columns>
+      <!-- column-name text -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkDialog" id="preferences_dialog">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Preferences</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
-    <signal name="response" handler="property_response_cb"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -133,11 +138,5 @@
     <action-widgets>
       <action-widget response="-60">close</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkListStore" id="liststore">
-    <columns>
-      <!-- column-name text -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>
