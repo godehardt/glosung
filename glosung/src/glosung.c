@@ -797,7 +797,7 @@ property_cb (GtkWidget *w, gpointer data)
 /*
  * callback function for options menu.
  */
-void
+G_MODULE_EXPORT void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
@@ -817,7 +817,7 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
 /*
  * callback function when font is selected.
  */
-void
+G_MODULE_EXPORT void
 font_sel_cb (GtkWidget *gfb, gpointer data)
 {
         const gchar* font_name = gtk_font_button_get_font_name
@@ -856,7 +856,7 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 /*
  * callback function for autostart changes.
  */
-void
+G_MODULE_EXPORT void
 autostart_cb (GtkWidget *toggle, gpointer data)
 {
         autostart_new = gtk_toggle_button_get_active (
@@ -877,7 +877,7 @@ autostart_cb (GtkWidget *toggle, gpointer data)
 /*
  * callback function for gnomwsword option change.
  */
-void
+G_MODULE_EXPORT void
 sword_cb (GtkWidget *toggle, gpointer data)
 {
         show_sword_new = gtk_toggle_button_get_active
