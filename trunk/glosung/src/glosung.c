@@ -134,9 +134,6 @@ static void my_wrap              (gchar     *string);
 void autostart_cb         (GtkWidget *w,   gpointer data);
 void font_sel_cb          (GtkWidget *button,   gpointer data);
 void lang_changed_cb      (GtkWidget *item,     gpointer data);
-void property_response_cb (GtkDialog *dialog,
-                           gint       arg1,
-                           gpointer   user_data);
 void sword_cb             (GtkWidget *toggle,   gpointer data);
 
 
@@ -788,31 +785,13 @@ property_cb (GtkWidget *w, gpointer data)
                          FALSE);
 #endif
 
-/*
                 g_signal_connect (G_OBJECT (property), "destroy",
                                  G_CALLBACK (gtk_widget_destroyed), &property);
-*/
 
                 gtk_builder_connect_signals (builder, NULL);
                 gtk_widget_show_all (property);
         }
 } /* property_cb */
-
-
-/*
- * callback function for property box.
- */
-void
-property_response_cb (GtkDialog *dialog, gint arg1, gpointer user_data)
-{
-        switch (arg1) {
-        case GTK_RESPONSE_HELP:
-                break;
-        case GTK_RESPONSE_CLOSE:
-                gtk_widget_destroy (GTK_WIDGET (dialog));
-                break;
-        }
-} /* property_response_cb */
 
 
 /*
