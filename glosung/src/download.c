@@ -78,7 +78,8 @@ to_file (Memory chunk, gchar *filename)
                 size_t written = fwrite (chunk.memory, 1, chunk.size, file);
                 fclose (file);
                 if (written != chunk.size) {
-                        g_message ("download error - written: %d", written);
+                        g_message ("download error - bytes written: %d",
+                                   (int) written);
                         remove (filename);
                         return -2;
                 }
