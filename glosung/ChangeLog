@@ -1,5 +1,18 @@
+2009-05-26  eicke
+
+        * release version 3.4.2
+	* [r243] remove one compile warning
+	* [r242] decorate signal callbacks with G_MODULE_EXPORT
+	* [r241] bug fix: preferences window opened only once
+
+2009-05-25  eicke
+
+	* [r240] update FSF address in header information
+
 2009-05-07  eicke
 
+	* [r239] update packaging code
+	* [r238] update Changelog, release new version
 	* [r237] fix path in desktop file, fix add_language.glade
 	* [r236] adapt paths, include glade files into build and packaging
 	  process
