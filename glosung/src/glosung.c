@@ -92,10 +92,10 @@ static gboolean   show_sword_new;
 static gchar     *losung_simple_text;
 static guint      losung_simple_text_len;
 
-static Collection *languages;
+static CollectionSource *languages;
 static gchar      *lang = NULL;
 static GHashTable *lang_translations;
-static Collection *server_list = NULL;
+static CollectionSource *server_list = NULL;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -302,7 +302,7 @@ main (int argc, char **argv)
                    if not use first available language instead */
 
                 if (languages->languages->len > 0 &&
-                    ! g_hash_table_lookup (languages->hash_table, lang)) {
+                    ! collectionsource_get_years (languages, lang)) {
                         lang = g_ptr_array_index (languages->languages, 0);
                 }
         }
@@ -1242,7 +1242,7 @@ update_years (GtkWidget *w, gpointer data)
         gchar *langu = g_ptr_array_index
                 (server_list->languages,
                  gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
-        years = g_hash_table_lookup (server_list->hash_table,langu);
+        years = collectionsource_get_years (server_list, langu);
         gint i;
         for (i = 0; i < years->len; i++) {
                 gchar *year = g_strdup_printf
@@ -1256,7 +1256,7 @@ update_years (GtkWidget *w, gpointer data)
 static GString*
 create_years_string (gchar *langu)
 {
-        GPtrArray *years = g_hash_table_lookup (languages->hash_table, langu);
+        GPtrArray *years = collectionsource_get_years (languages, langu);
         GString *result = g_string_new ("");
         g_string_printf (result, "%d",
                          GPOINTER_TO_INT (g_ptr_array_index (years, 0)));

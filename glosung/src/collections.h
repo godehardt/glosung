@@ -16,25 +16,47 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef GLOSUNG_COLLECTION__H
-#define GLOSUNG_COLLECTION__H
+#ifndef GLOSUNG_COLLECTIONS__H
+#define GLOSUNG_COLLECTIONS__H
 
 #include <glib.h>
 
 
-typedef struct _Collection Collection;
+typedef enum {
+        COLLECTION_SOURCE_LOCAL,
+        COLLECTION_SOURCE_LOSUNGEN,
+        COLLECTION_SOURCE_BIBLE20
+} CollectionSourceType;
 
-struct _Collection
-{
-        /* e.g. "de" -> [2001, 2002, 2007] */
-        GHashTable *hash_table;
-        /* e.g. ["de, "en", "cz"] */
+typedef struct {
+        CollectionSourceType type;
+        gchar *name;
+
+        /* Mapping to sorted list of collections,
+         * e.g. "de" -> [2001, 2002, 2007]. */
+        GHashTable *collections;
+        /* Sorted list of languages, e.g. ["de, "en", "cz"].
+         * May be NULL, before finalize is called! */
         GPtrArray  *languages;
-};
+} CollectionSource;
 
-Collection* collection_new       (void);
-void        collection_add       (Collection *list, gchar *lang, gint year);
-void        collection_finialize (Collection *list);
-Collection* scan_for_collections (void);
+typedef struct {
+        CollectionSourceType type;
+        gchar *language;
+        gint   year;
+        gchar *bible;
+        gchar *biblename;
+        GDate  updated;
+        gchar *info;
+        gchar *url;
+} Collection;
 
-#endif /* GLOSUNG_COLLECTION__H */
+
+CollectionSource* collection_new (CollectionSourceType type, gchar *name);
+void        collection_add       (CollectionSource *cs, gchar *lang, gint year);
+void        collection_finialize (CollectionSource *cs);
+CollectionSource* scan_for_collections (void);
+
+GPtrArray* collectionsource_get_years (CollectionSource* cs, gchar *language);
+
+#endif /* GLOSUNG_COLLECTIONS__H */
