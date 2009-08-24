@@ -26,7 +26,8 @@
 #include "losunglist.h"
 
 
-static void sort_years (gpointer key, gpointer value, gpointer langs);
+static void collect_and_sort_years
+                     (gpointer key, gpointer value, gpointer langs);
 static gint int_comp (gconstpointer a, gconstpointer b);
 static gint str_comp (gconstpointer a, gconstpointer b);
 
@@ -66,13 +67,14 @@ void
 losunglist_finialize (LosungList *list)
 {
         list->languages = g_ptr_array_new ();
-        g_hash_table_foreach (list->hash_table, sort_years, list->languages);
+        g_hash_table_foreach (list->hash_table, collect_and_sort_years,
+                              list->languages);
         g_ptr_array_sort (list->languages, str_comp);
 }
 
 
 static void
-sort_years (gpointer key, gpointer value, gpointer langs)
+collect_and_sort_years (gpointer key, gpointer value, gpointer langs)
 {
         g_ptr_array_add (langs, key);
         g_ptr_array_sort (value, int_comp);
@@ -109,13 +111,12 @@ scan_for_files (void)
 #ifndef WIN32
         dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
         scan_for_languages_in_dir (dirname, list);
-        g_free (dirname);
 #else /* WIN32 */
         dirname = g_strdup_printf ("%s%s%s",
         		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), "/.glosung");
         scan_for_languages_in_dir (dirname, list);
-        g_free (dirname);
 #endif /* WIN32 */
+        g_free (dirname);
         losunglist_finialize (list);
 
         printf ("Found languages: ");
