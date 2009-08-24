@@ -47,7 +47,7 @@
 #include "download.h"
 #include "about.h"
 #include "autostart.h"
-#include "losunglist.h"
+#include "collections.h"
 
 
 /****************************\
@@ -92,10 +92,10 @@ static gboolean   show_sword_new;
 static gchar     *losung_simple_text;
 static guint      losung_simple_text_len;
 
-static LosungList *languages;
+static Collection *languages;
 static gchar      *lang = NULL;
 static GHashTable *lang_translations;
-static LosungList *server_list = NULL;
+static Collection *server_list = NULL;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -288,7 +288,7 @@ main (int argc, char **argv)
                 (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
         lang_translations = init_languages ();
-        languages         = scan_for_files ();
+        languages         = scan_for_collections ();
 
 #ifndef WIN32
         lang = gconf_client_get_string
@@ -1206,8 +1206,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint year = this_year - 
                         gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);
-                losunglist_add (languages, langu, year);
-                losunglist_finialize (languages);
+                collection_add (languages, langu, year);
+                collection_finialize (languages);
                 update_language_store ();
                 if (languages->languages->len == 1) {
                         lang = langu;
