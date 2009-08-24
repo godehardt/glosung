@@ -32,7 +32,7 @@
 //#include <curl/easy.h>
 
 #include "download.h"
-#include "losunglist.h"
+#include "collections.h"
 
 #define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
 #define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
@@ -207,7 +207,7 @@ download (gchar *url)
 static void
 analyse_bible20_list (Memory mem)
 {
-        LosungList* list = losunglist_new ();
+        Collection* list = collection_new ();
         gchar** lines = g_strsplit (mem.memory, "\n", -1);
         gint col_year = 0;
         gint col_lang = 0;
@@ -264,7 +264,7 @@ analyse_bible20_list (Memory mem)
                                 start += 2;
                                 lang = g_strndup (chunk.memory + start,
                                                   end - start - 1);
-                                losunglist_add (list, lang, year);
+                                collection_add (list, lang, year);
                         }
                         break;
                 case 'D':
@@ -281,7 +281,7 @@ analyse_bible20_list (Memory mem)
                 }
         } while (chunk.memory [end] != '\0');
 
-        losunglist_finialize (list);
+        collection_finialize (list);
         return list;
         */
 }

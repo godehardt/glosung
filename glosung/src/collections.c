@@ -1,4 +1,4 @@
-/* losunglist.c
+/* collections.c
  * Copyright (C) 2006-2009 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <glib.h>
 
-#include "losunglist.h"
+#include "collections.h"
 
 
 static void collect_and_sort_years
@@ -31,20 +31,20 @@ static void collect_and_sort_years
 static gint int_comp (gconstpointer a, gconstpointer b);
 static gint str_comp (gconstpointer a, gconstpointer b);
 
-static void scan_for_languages_in_dir (gchar *dirname, LosungList *list);
+static void scan_for_collections_in_dir (gchar *dirname, Collection *list);
 
 
-LosungList*
-losunglist_new ()
+Collection*
+collection_new ()
 {
-        LosungList *list = g_new (LosungList, 1);
+        Collection *list = g_new (Collection, 1);
         list->hash_table = g_hash_table_new (g_str_hash, g_str_equal);
         return list;
 }
 
 
 void
-losunglist_add (LosungList *list, gchar *lang, gint year)
+collection_add (Collection *list, gchar *lang, gint year)
 {
         GPtrArray *years = g_hash_table_lookup (list->hash_table, lang);
         if (years == NULL) {
@@ -64,7 +64,7 @@ losunglist_add (LosungList *list, gchar *lang, gint year)
 
 
 void
-losunglist_finialize (LosungList *list)
+collection_finialize (Collection *list)
 {
         list->languages = g_ptr_array_new ();
         g_hash_table_foreach (list->hash_table, collect_and_sort_years,
@@ -101,23 +101,23 @@ str_comp (gconstpointer a, gconstpointer b)
  * This function will search for several kind of losung files in
  * global and local directory.
  */
-LosungList*
-scan_for_files (void)
+Collection*
+scan_for_collections (void)
 {
         gchar *dirname;
-        LosungList *list = losunglist_new ();
+        Collection *list = collection_new ();
 
-        scan_for_languages_in_dir (GLOSUNG_DATA_DIR, list);
+        scan_for_collections_in_dir (GLOSUNG_DATA_DIR, list);
 #ifndef WIN32
         dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
-        scan_for_languages_in_dir (dirname, list);
+        scan_for_collections_in_dir (dirname, list);
 #else /* WIN32 */
         dirname = g_strdup_printf ("%s%s%s",
         		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), "/.glosung");
-        scan_for_languages_in_dir (dirname, list);
+        scan_for_collections_in_dir (dirname, list);
 #endif /* WIN32 */
         g_free (dirname);
-        losunglist_finialize (list);
+        collection_finialize (list);
 
         printf ("Found languages: ");
         guint i = 0;
@@ -128,11 +128,11 @@ scan_for_files (void)
         printf ("\n");
 
         return list;
-} /* scan_for_files */
+} /* scan_for_collections */
 
 
 static gboolean
-check_for_losung_file (const gchar *name, int len, LosungList *list)
+check_for_losung_file (const gchar *name, int len, Collection *list)
 {
         if ((len == 12 || len == 15)
             && (strncmp (name + len -  4, ".xml", 4)) == 0
@@ -147,7 +147,7 @@ check_for_losung_file (const gchar *name, int len, LosungList *list)
                 if (year < 1970) {
                         year += 100;
                 }
-                losunglist_add (list, langu, year);
+                collection_add (list, langu, year);
                 return TRUE;
         }
         return FALSE;
@@ -155,7 +155,7 @@ check_for_losung_file (const gchar *name, int len, LosungList *list)
 
 
 static gboolean
-check_for_theword_file (const gchar *name, int len, LosungList *list)
+check_for_theword_file (const gchar *name, int len, Collection *list)
 {
         if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
                 gchar *langu = g_strndup (name, 2);
@@ -164,7 +164,7 @@ check_for_theword_file (const gchar *name, int len, LosungList *list)
                         sscanf (name + 3, "%d", &year);
                 }
                 if (year != -1) {
-                        losunglist_add (list, langu, year);
+                        collection_add (list, langu, year);
                         return TRUE;
                 }
         }
@@ -173,7 +173,7 @@ check_for_theword_file (const gchar *name, int len, LosungList *list)
 
 
 static gboolean
-check_for_original_losung_file (const gchar *name, int len, LosungList *list)
+check_for_original_losung_file (const gchar *name, int len, Collection *list)
 {
         if ((strncmp (name, "Losungen Free", 13)) == 0
             && (strncmp (name + len -  4, ".xml", 4)) == 0)
@@ -182,7 +182,7 @@ check_for_original_losung_file (const gchar *name, int len, LosungList *list)
                 int year = -1;
                 sscanf (name + 14, "%d", &year);
                 if (year != -1) {
-                        losunglist_add (list, langu, year);
+                        collection_add (list, langu, year);
                         return TRUE;
                 }
         }
@@ -191,7 +191,7 @@ check_for_original_losung_file (const gchar *name, int len, LosungList *list)
 
 
 static void
-scan_for_languages_in_dir (gchar *dirname, LosungList *list)
+scan_for_collections_in_dir (gchar *dirname, Collection *list)
 {
         if (access (dirname, F_OK | R_OK) != 0) {
                 return;
