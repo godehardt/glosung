@@ -35,8 +35,7 @@
 #include "losunglist.h"
 
 #define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
-#define BIBLE20_BASE_URL "http://bible20.net/service/TheWord/twd11/"
-
+#define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
 
 static gchar *glosung_dir = NULL;
 
@@ -49,7 +48,7 @@ typedef struct Memory {
 static void   init     ();
 static int    to_file_losungen  (Memory chunk);
 static Memory download (gchar *url);
-
+static void   analyse_bible20_list (Memory mem);
 
 
 static size_t
@@ -159,6 +158,15 @@ download_losungen (guint year)
 }
 
 
+int
+download_bible20  (gchar *lang, guint year)
+{
+        Memory chunk = download (BIBLE20_BASE_URL);
+        analyse_bible20_list (chunk);
+        return 0;
+}
+
+
 /*
  * generic method to download specified url to chunk of memory
  */
@@ -201,11 +209,38 @@ analyse_bible20_list (Memory mem)
 {
         LosungList* list = losunglist_new ();
         gchar** lines = g_strsplit (mem.memory, "\n", -1);
-        GHashTable *columns = g_hash_table_new (g_str_hash, g_str_equal);
+        gint col_year = 0;
+        gint col_lang = 0;
+        gint col_url  = 0;
+        gint j = 0;
         gint i = 0;
-        while (lines [i]) {
-                g_message ("%s", lines [i]);
-                gchar** tokens = g_strsplit (lines [i], "\";", -1);
+
+        gchar** tokens = g_strsplit (lines [j], ";", -1);
+        while (tokens [i]) {
+                gchar* token = tokens [i];
+                if (g_str_equal ("year", token)) {
+                        col_year = i;
+                } else if (g_str_equal ("lang", token)) {
+                        col_lang = i;
+                } else if (g_str_equal ("url", token)) {
+                        col_url = i;
+                }
+                i++;
+        }
+        if (! col_year || ! col_lang || ! col_url) {
+                g_message ("Syntax error in first line of CSV!");
+                return /* -42*/;
+        }
+
+        j++;
+        while (lines [j]) {
+//                g_message ("%s", lines [j]);
+                tokens = g_strsplit (lines [j], ";", -1);
+                if (tokens [0] && g_str_equal ("file", tokens [0])) {
+                        i = 0;
+                        g_message ("%s %s %s", tokens [col_lang], tokens [col_year], tokens [col_url]);
+                }
+                j++;
         }
         /*
                 i = 0;

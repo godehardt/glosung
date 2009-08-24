@@ -23,5 +23,6 @@
 
 
 int         download_losungen (guint year);
+int         download_bible20  (gchar *lang, guint year);
 
 #endif /* GLOSUNG_DOWNLOAD__H */
