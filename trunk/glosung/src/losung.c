@@ -33,6 +33,9 @@
 #include <glib/gi18n.h>
 #include <glib/goption.h>
 
+#include "util.h"
+
+
 #define PACKAGE "glosung"
 
 
@@ -44,8 +47,6 @@ static GDate *date;
 static gchar *lang = NULL;
 static gchar *date_param = NULL;
 
-#define WRAP_SIZE 50
-
 
 /****************************\
       Function prototypes
@@ -53,7 +54,6 @@ static gchar *date_param = NULL;
 
 static void get_time    (void);
 static void show_text   (void);
-static void my_wrap     (gchar     *string);
 
 
 static GOptionEntry entries[] = {
@@ -158,8 +158,8 @@ show_text (void)
                         ww = get_the_word (date, lang);
                 }
         } else {
-                my_wrap (ww->ot.text);
-                my_wrap (ww->nt.text);
+        	wrap_text (ww->ot.text, 50);
+        	wrap_text (ww->nt.text, 50);
         }
 
         if (ww == NULL) {
@@ -207,19 +207,3 @@ show_text (void)
         */
         losung_free (ww);
 } /* show_text */
-
-
-static void
-my_wrap (gchar *string)
-{
-        int len = strlen (string);
-        int index = 0;
-
-        while (index + WRAP_SIZE < len) {
-                index += WRAP_SIZE;
-                while (string [index] != ' ') {
-                        index--;
-                }
-                string [index] = '\n';
-        }
-} /* my_wrap */
