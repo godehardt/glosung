@@ -27,6 +27,7 @@
 #include <zlib.h>
 #include <errno.h>
 #include <errno.h>
+#include <glib/gi18n.h>
 
 //#include <curl/types.h>
 //#include <curl/easy.h>
@@ -201,13 +202,14 @@ download (gchar *url)
                 */
         }
         return chunk;
-}
+} /* download */
 
 
 static void
 analyse_bible20_list (Memory mem)
 {
-        CollectionSource* list = collection_new (COLLECTION_SOURCE_LOCAL, NULL);
+        CollectionSource* cs = collection_new (COLLECTION_SOURCE_BIBLE20,
+                                               _("Bible 2.0"));
         gchar** lines = g_strsplit (mem.memory, "\n", -1);
         gint col_year = 0;
         gint col_lang = 0;
@@ -307,4 +309,4 @@ init (void)
                                    glosung_dir);
                 }
         }
-}
+} /* init */

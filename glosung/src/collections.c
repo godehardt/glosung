@@ -21,9 +21,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <glib.h>
+#include <glib/gi18n.h>
 
 #include "collections.h"
+#include "download.h"
+
+static GPtrArray *sources = NULL;
 
 
 static void collect_and_sort_years
@@ -31,6 +34,7 @@ static void collect_and_sort_years
 static gint int_comp (gconstpointer a, gconstpointer b);
 static gint str_comp (gconstpointer a, gconstpointer b);
 
+static void scan_for_collections        (CollectionSource* cs);
 static void scan_for_collections_in_dir (gchar *dirname, CollectionSource *list);
 
 
@@ -46,12 +50,12 @@ collection_new (CollectionSourceType type, gchar *name)
 
 
 void
-collection_add (CollectionSource *list, gchar *lang, gint year)
+collections_add_minimal (CollectionSource *cs, gchar *lang, gint year)
 {
-        GPtrArray *years = g_hash_table_lookup (list->collections, lang);
+        GPtrArray *years = g_hash_table_lookup (cs->collections, lang);
         if (years == NULL) {
                 years = g_ptr_array_new ();
-                g_hash_table_insert (list->collections, lang, years);
+                g_hash_table_insert (cs->collections, lang, years);
         }
 
         int i;
@@ -104,10 +108,21 @@ str_comp (gconstpointer a, gconstpointer b)
  * global and local directory.
  */
 CollectionSource*
-scan_for_collections (void)
+get_local_collections (void)
+{
+        get_collectionsources ();
+        CollectionSource *cs = (CollectionSource*)
+                g_ptr_array_index (sources, COLLECTION_SOURCE_LOCAL);
+        scan_for_collections (cs);
+
+        return cs;
+} /* get_local_collections */
+
+
+static void
+scan_for_collections (CollectionSource* cs)
 {
         gchar *dirname;
-        CollectionSource *cs = collection_new (COLLECTION_SOURCE_LOCAL, NULL);
 
         scan_for_collections_in_dir (GLOSUNG_DATA_DIR, cs);
 #ifndef WIN32
@@ -128,13 +143,11 @@ scan_for_collections (void)
                         (gchar*) g_ptr_array_index (cs->languages, i));
         }
         printf ("\n");
-
-        return cs;
 } /* scan_for_collections */
 
 
 static gboolean
-check_for_losung_file (const gchar *name, int len, CollectionSource *list)
+check_for_losung_file (const gchar *name, int len, CollectionSource *cs)
 {
         if ((len == 12 || len == 15)
             && (strncmp (name + len -  4, ".xml", 4)) == 0
@@ -149,7 +162,7 @@ check_for_losung_file (const gchar *name, int len, CollectionSource *list)
                 if (year < 1970) {
                         year += 100;
                 }
-                collection_add (list, langu, year);
+                collections_add_minimal (cs, langu, year);
                 return TRUE;
         }
         return FALSE;
@@ -157,7 +170,7 @@ check_for_losung_file (const gchar *name, int len, CollectionSource *list)
 
 
 static gboolean
-check_for_theword_file (const gchar *name, int len, CollectionSource *list)
+check_for_theword_file (const gchar *name, int len, CollectionSource *cs)
 {
         if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
                 gchar *langu = g_strndup (name, 2);
@@ -166,7 +179,7 @@ check_for_theword_file (const gchar *name, int len, CollectionSource *list)
                         sscanf (name + 3, "%d", &year);
                 }
                 if (year != -1) {
-                        collection_add (list, langu, year);
+                        collections_add_minimal (cs, langu, year);
                         return TRUE;
                 }
         }
@@ -175,7 +188,7 @@ check_for_theword_file (const gchar *name, int len, CollectionSource *list)
 
 
 static gboolean
-check_for_original_losung_file (const gchar *name, int len, CollectionSource *list)
+check_for_original_losung_file (const gchar *name, int len, CollectionSource *cs)
 {
         if ((strncmp (name, "Losungen Free", 13)) == 0
             && (strncmp (name + len -  4, ".xml", 4)) == 0)
@@ -184,7 +197,7 @@ check_for_original_losung_file (const gchar *name, int len, CollectionSource *li
                 int year = -1;
                 sscanf (name + 14, "%d", &year);
                 if (year != -1) {
-                        collection_add (list, langu, year);
+                        collections_add_minimal (cs, langu, year);
                         return TRUE;
                 }
         }
@@ -193,7 +206,7 @@ check_for_original_losung_file (const gchar *name, int len, CollectionSource *li
 
 
 static void
-scan_for_collections_in_dir (gchar *dirname, CollectionSource *list)
+scan_for_collections_in_dir (gchar *dirname, CollectionSource *cs)
 {
         if (access (dirname, F_OK | R_OK) != 0) {
                 return;
@@ -203,15 +216,68 @@ scan_for_collections_in_dir (gchar *dirname, CollectionSource *list)
 
         while ((name = g_dir_read_name (dir)) != NULL) {
                 int len = strlen (name);
-                check_for_losung_file          (name, len, list);
-                check_for_original_losung_file (name, len, list);
-                check_for_theword_file         (name, len, list);
+                check_for_losung_file          (name, len, cs);
+                check_for_original_losung_file (name, len, cs);
+                check_for_theword_file         (name, len, cs);
         }
 } /* scan_for_languages_in_dir */
 
 
 GPtrArray*
+get_collectionsources ()
+{
+        if (sources == NULL) {
+                sources = g_ptr_array_sized_new (3);
+                CollectionSource *cs;
+
+                cs = collection_new (COLLECTION_SOURCE_LOCAL, NULL);
+                g_ptr_array_add (sources, cs);
+
+                cs = collection_new (COLLECTION_SOURCE_LOSUNGEN,
+                                     _("Herrnhuter Losungen"));
+                g_ptr_array_add (sources, cs);
+                cs->languages = g_ptr_array_sized_new (1);
+                g_ptr_array_add (cs->languages, "de");
+
+                cs = collection_new (COLLECTION_SOURCE_BIBLE20, _("Bible 2.0"));
+                g_ptr_array_add (sources, cs);
+        }
+        return sources;
+}
+
+
+GPtrArray*
+collectionsource_get_languages (CollectionSource* cs)
+{
+        if (cs == NULL) {
+                g_message ("CollectionSource is NULL!");
+                return NULL;
+        }
+        if (cs->languages == NULL) {
+                switch (cs->type) {
+                case COLLECTION_SOURCE_LOCAL:
+                        scan_for_collections (cs);
+                        break;
+                case COLLECTION_SOURCE_BIBLE20:
+                        scan_for_collections (cs);
+                        break;
+                }
+        }
+        return cs->languages;
+}
+
+
+GPtrArray*
 collectionsource_get_years (CollectionSource* cs, gchar *language)
 {
+        if (cs == NULL) {
+                g_message ("CollectionSource is NULL!");
+                return NULL;
+        }
+        if (g_hash_table_size (cs->collections) == 0) {
+                collections_add_minimal (cs, language, 2008);
+                collections_add_minimal (cs, language, 2009);
+                collection_finialize (cs);
+        }
         return g_hash_table_lookup (cs->collections, language);
 }

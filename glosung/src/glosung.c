@@ -48,6 +48,7 @@
 #include "about.h"
 #include "autostart.h"
 #include "collections.h"
+#include "util.h"
 
 
 /****************************\
@@ -116,7 +117,8 @@ static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
 static GString* create_years_string (gchar *langu);
-static void update_years         (GtkWidget *w,   gpointer data);
+static void sources_changed      (GtkWidget *w,   gpointer data);
+static void language_changed     (GtkWidget *w,   gpointer data);
 static void lang_manager_cb      (GtkWidget *w,   gpointer data);
 static void link_execute         (GtkWidget *widget,
                                   gchar     *uri, gpointer data);
@@ -129,7 +131,6 @@ static void property_cb          (GtkWidget *w,   gpointer data);
 static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
-static void my_wrap              (gchar     *string);
 
 void autostart_cb         (GtkWidget *w,   gpointer data);
 void font_sel_cb          (GtkWidget *button,   gpointer data);
@@ -142,7 +143,6 @@ void sword_cb             (GtkWidget *toggle,   gpointer data);
 \******************************/
 
 #define MY_PAD 10
-#define WRAP_SIZE 47
 
 
 static gchar* uistring =
@@ -288,7 +288,7 @@ main (int argc, char **argv)
                 (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
         lang_translations = init_languages ();
-        languages         = scan_for_collections ();
+        languages         = get_local_collections ();
 
 #ifndef WIN32
         lang = gconf_client_get_string
@@ -509,8 +509,8 @@ show_text (void)
                         ww = get_the_word (new_date, lang);
                 }
         } else {
-                my_wrap (ww->ot.text);
-                my_wrap (ww->nt.text);
+        	wrap_text (ww->ot.text, 47);
+        	wrap_text (ww->nt.text, 47);
         }
 
         if (ww == NULL) {
@@ -518,7 +518,7 @@ show_text (void)
                         GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
                         _("No %s texts found for %d!"),
-                        (gchar*)g_hash_table_lookup (lang_translations, lang),
+                        (gchar*) g_hash_table_lookup (lang_translations, lang),
                         g_date_get_year (new_date));
                 g_signal_connect (G_OBJECT (error), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
@@ -1074,7 +1074,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-static GtkWidget    *lang_combo;
+static GtkComboBox  *lang_combo;
 static GtkComboBox  *year_combo;
 static GtkListStore *store;
 static GPtrArray    *years;
@@ -1152,6 +1152,7 @@ static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
+	gint i;
 
         GtkBuilder* builder = gtk_builder_new ();
         guint build = gtk_builder_add_from_file
@@ -1163,36 +1164,49 @@ add_lang_cb (GtkWidget *w, gpointer data)
         dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
-	/*
-        lang_combo = gtk_combo_box_new_text ();
+        GtkFrame *source_frame = GTK_FRAME
+                (gtk_builder_get_object (builder, "source_frame"));
+        GtkComboBox *source_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+        gtk_container_add (GTK_CONTAINER (source_frame),
+                           GTK_WIDGET (source_combo));
+        gtk_combo_box_append_text (source_combo, "");
 
-	gchar *langu = g_ptr_array_index (server_list->languages, i);
-	// gchar *str = g_strdup_printf ("%s ()", );
-	gtk_combo_box_append_text
-		(GTK_COMBO_BOX (lang_combo), "German Watchwords");
-	if (lang != NULL && strcmp (lang, langu) == 0) {
-		gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), i);
-	}
-	*/
+        GPtrArray *sources = get_collectionsources ();
+        for (i = 0; i < sources->len; i++) {
+                CollectionSource *cs = (CollectionSource*)
+                        g_ptr_array_index (sources, i);
+                if (cs->type != COLLECTION_SOURCE_LOCAL) {
+                        gtk_combo_box_append_text (source_combo, cs->name);
+                }
+        }
+        gtk_combo_box_set_active (source_combo, 0);
+
+        GtkFrame *lang_frame = GTK_FRAME
+                (gtk_builder_get_object (builder, "lang_frame"));
+        GtkComboBox *lang_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
+        gtk_container_add (GTK_CONTAINER (lang_frame), GTK_WIDGET (lang_combo));
+        gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
 
         GtkFrame *year_frame = GTK_FRAME
                 (gtk_builder_get_object (builder, "year_frame"));
 	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
-	gint i;
+        gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+
         /* TODO make these numbers dynamic! */
-	gint this_year = 2009;
+        gint this_year = 2009;
+/*
         for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
                 gtk_combo_box_append_text (year_combo, year);
         }
-        gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
+*/
+        gtk_combo_box_set_active (year_combo, 0);
 
-        /*
+        g_signal_connect (G_OBJECT (source_combo), "changed",
+                          G_CALLBACK (sources_changed), lang_combo);
         g_signal_connect (G_OBJECT (lang_combo), "changed",
-                          G_CALLBACK (update_years), year_combo);
-        */
-
+                          G_CALLBACK (language_changed), year_combo);
         gtk_widget_show_all (dialog);
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
@@ -1206,7 +1220,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint year = this_year - 
                         gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);
-                collection_add (languages, langu, year);
+                collections_add_minimal (languages, langu, year);
                 collection_finialize (languages);
                 update_language_store ();
                 if (languages->languages->len == 1) {
@@ -1231,26 +1245,67 @@ no_languages_cb (GtkWidget *w, gpointer data)
 
 
 static void
-update_years (GtkWidget *w, gpointer data)
+sources_changed (GtkWidget *w, gpointer data)
 {
-        GtkComboBox    *combo = GTK_COMBO_BOX (year_combo);
-        while (gtk_combo_box_get_active (combo) != -1) {
-                gtk_combo_box_remove_text (combo, 0);
-                gtk_combo_box_set_active (combo, 0);
+        GtkComboBox    *lang_combo = GTK_COMBO_BOX (data);
+        while (gtk_combo_box_get_active (lang_combo) != -1) {
+                gtk_combo_box_remove_text (lang_combo, 0);
+                gtk_combo_box_set_active (lang_combo, 0);
+        }
+
+        gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
+        if (index == 0) {
+                gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
+                gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+                return;
+        }
+
+        server_list = g_ptr_array_index
+                (get_collectionsources (), index);
+        GPtrArray *langs = collectionsource_get_languages (server_list);
+
+        gint i;
+        if (langs->len >= 1) {
+                gtk_combo_box_append_text (lang_combo, "");
+        }
+        for (i = 0; i < langs->len; i++) {
+                gtk_combo_box_append_text (lang_combo,
+                        (gchar*) g_hash_table_lookup (lang_translations,
+                                (gchar*) g_ptr_array_index (langs, i)));
+        }
+        gtk_combo_box_set_active (lang_combo, 0);
+        gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), TRUE);
+} /* sources_changed */
+
+
+static void
+language_changed (GtkWidget *w, gpointer data)
+{
+        GtkComboBox    *year_combo = GTK_COMBO_BOX (data);
+        while (gtk_combo_box_get_active (year_combo) != -1) {
+                gtk_combo_box_remove_text (year_combo, 0);
+                gtk_combo_box_set_active (year_combo, 0);
+        }
+
+        gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
+        gchar *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (w));
+        if (index == 0 && g_str_equal ("", text)) {
+                gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+                return;
         }
 
         gchar *langu = g_ptr_array_index
-                (server_list->languages,
-                 gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
+                (collectionsource_get_languages (server_list), index - 1);
         years = collectionsource_get_years (server_list, langu);
         gint i;
         for (i = 0; i < years->len; i++) {
                 gchar *year = g_strdup_printf
                         ("%d", GPOINTER_TO_INT (g_ptr_array_index (years, i)));
-                gtk_combo_box_append_text (combo, year);
+                gtk_combo_box_append_text (year_combo, year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
-} /* update_years */
+        gtk_widget_set_sensitive (GTK_WIDGET (year_combo), TRUE);
+} /* language_changed */
 
 
 static GString*
@@ -1303,19 +1358,3 @@ clipboard_cb (GtkWidget *w, gpointer data)
         gtk_clipboard_set_text (clipboard,
                                 losung_simple_text, losung_simple_text_len);
 } /* clipboard_cb */
-
-
-static void
-my_wrap (gchar *string)
-{
-        int len = strlen (string);
-        int index = 0;
-
-        while (index + WRAP_SIZE < len) {
-                index += WRAP_SIZE;
-                while (string [index] != ' ') {
-                        index--;
-                }
-                string [index] = '\n';
-        }
-} /* my_wrap */
