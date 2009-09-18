@@ -439,6 +439,8 @@ create_app (void)
                         gtk_link_button_set_uri_hook
                                 ((GtkLinkButtonUriFunc) link_execute,
                                  NULL, NULL);
+                        gtk_widget_set_tooltip_text
+				(label [i], "open in Xiphos bible study");
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
                         gtk_box_pack_start (GTK_BOX (content), widget,
                                             FALSE, FALSE, 0);
