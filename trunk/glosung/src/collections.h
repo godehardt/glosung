@@ -21,6 +21,7 @@
 
 #include <glib.h>
 
+G_BEGIN_DECLS
 
 typedef enum {
         COLLECTION_SOURCE_LOCAL,
@@ -32,10 +33,10 @@ typedef struct {
         CollectionSourceType type;
         gchar *name;
 
-        /* Mapping to sorted list of collections,
+        /* Mapping to ordered list of collections,
          * e.g. "de" -> [2001, 2002, 2007]. */
         GHashTable *collections;
-        /* Sorted list of languages, e.g. ["de, "en", "cz"].
+        /* Ordered list of languages, e.g. ["de, "en", "cz"].
          * May be NULL, before finalize is called! */
         GPtrArray  *languages;
 } CollectionSource;
@@ -45,18 +46,26 @@ typedef struct {
         gchar *language;
         gint   year;
         gchar *bible;
-        gchar *biblename;
-        GDate  updated;
+        GDate *updated;
         gchar *info;
         gchar *url;
 } Collection;
 
 
-CollectionSource* collection_new (CollectionSourceType type, gchar *name);
-void        collection_add       (CollectionSource *cs, gchar *lang, gint year);
-void        collection_finialize (CollectionSource *cs);
-CollectionSource* scan_for_collections (void);
+CollectionSource* collection_new       (CollectionSourceType type, gchar *name);
+void        collections_add_minimal    (CollectionSource *cs,
+                                        gchar *language, gint   year);
+void        collections_add_full       (CollectionSource *cs,
+                                        gchar *language, gint   year,
+                                        gchar *bible,    GDate *updated,
+                                        gchar *info,     gchar *url);
+void        collection_finialize       (CollectionSource *cs);
+CollectionSource* get_local_collections(void);
 
-GPtrArray* collectionsource_get_years (CollectionSource* cs, gchar *language);
+GPtrArray* get_collectionsources       (void);
+GPtrArray* collectionsource_get_languages (CollectionSource* cs);
+GPtrArray* collectionsource_get_years  (CollectionSource* cs, gchar *language);
+
+G_END_DECLS
 
 #endif /* GLOSUNG_COLLECTIONS__H */
