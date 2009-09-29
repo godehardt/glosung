@@ -261,6 +261,9 @@ collectionsource_get_languages (CollectionSource* cs)
                 case COLLECTION_SOURCE_BIBLE20:
                         scan_for_collections (cs);
                         break;
+                default:
+                        scan_for_collections (cs);
+                	break;
                 }
         }
         return cs->languages;

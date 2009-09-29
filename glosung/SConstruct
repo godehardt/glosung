@@ -76,9 +76,12 @@ if ARGUMENTS.get ('profile'):
 if env['PLATFORM'] != 'win32':
         linkflags.append ('-Wl,--as-needed')
 
-#if not (ARGUMENTS.get ('dev')):
-if (ARGUMENTS.get ('dev')):
-    ccflags   += ' -Werror -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED'
+if not (ARGUMENTS.get ('dev')):
+	# if (ARGUMENTS.get ('dev')):
+    ccflags   += [
+    	# '-Werror',
+    	 '-DG_DISABLE_DEPRECATED', '-DGDK_PIXBUF_DISABLE_DEPRECATED',
+     	 '-DGDK_DISABLE_DEPRECATED', '-DGTK_DISABLE_DEPRECATED']
 
 tar_file = '#../glosung-' + version + '.tar.bz2'
 

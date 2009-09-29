@@ -737,8 +737,9 @@ property_cb (GtkWidget *w, gpointer data)
 
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
-                guint build = gtk_builder_add_from_file
-                        (builder, PACKAGE_PIXMAPS_DIR "preferences.glade", NULL);
+                gchar *ui_file = find_ui_file ("preferences.glade");
+                guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
+                g_free (ui_file);
                 if (! build) {
                         g_message ("Error while loading UI definition file");
                         return;
@@ -1094,13 +1095,10 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         GtkTreeViewColumn *column;
 
         dialog = gtk_dialog_new_with_buttons
-                (_("Languages"),
-                 GTK_WINDOW (app),
+                (_("Languages"), GTK_WINDOW (app),
                  // GTK_DIALOG_MODAL |
                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                 GTK_STOCK_OK,
-                 GTK_RESPONSE_NONE,
-                 NULL);
+                 GTK_STOCK_OK, GTK_RESPONSE_NONE, NULL);
 
         vbox = gtk_vbox_new (FALSE, 0);
         // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
@@ -1157,8 +1155,9 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	gint i;
 
         GtkBuilder* builder = gtk_builder_new ();
-        guint build = gtk_builder_add_from_file
-                (builder, PACKAGE_PIXMAPS_DIR "add_language.glade", NULL);
+        gchar *ui_file = find_ui_file ("add_language.glade");
+        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
+        g_free (ui_file);
         if (! build) {
                 g_message ("Error while loading UI definition file");
                 return;
