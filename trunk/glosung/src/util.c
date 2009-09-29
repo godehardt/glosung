@@ -21,6 +21,9 @@
 #include "util.h"
 
 
+static gchar* file_exist (gchar* path, gchar* filename);
+
+
 void
 wrap_text (gchar *string, gint width)
 {
@@ -35,3 +38,31 @@ wrap_text (gchar *string, gint width)
                 string [index] = '\n';
         }
 } /* wrap_text */
+
+
+gchar*
+find_ui_file (gchar* filename)
+{
+	gchar* file;
+
+	if ((file = file_exist ("ui/", filename)) != NULL) {
+		return file;
+	} else if ((file = file_exist (PACKAGE_PIXMAPS_DIR, filename)) != NULL) {
+		return file;
+	}
+
+	return NULL;
+} /* find_ui_file */
+
+
+static gchar*
+file_exist (gchar* path, gchar* filename)
+{
+	gchar* file = g_strconcat (path, filename, NULL);
+	if (g_file_test (file, G_FILE_TEST_EXISTS)) {
+		return file;
+	}
+	g_free (file);
+
+	return NULL;
+} /* file_exist */

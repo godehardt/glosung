@@ -78,7 +78,7 @@ about_herrnhut (GtkWidget *app)
 
         gtk_about_dialog_set_url_hook (activate_link, NULL, NULL);
         herrnhut = gtk_about_dialog_new ();
-        gtk_about_dialog_set_name
+        gtk_about_dialog_set_program_name
                 (GTK_ABOUT_DIALOG (herrnhut), "Herrnhuter Losungen");
         gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (herrnhut), logo);
         gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (herrnhut),

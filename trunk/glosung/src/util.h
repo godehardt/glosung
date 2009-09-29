@@ -22,7 +22,7 @@
 #include <glib.h>
 
 
-void wrap_text (gchar *string, gint width);
-
+void   wrap_text    (gchar* string, gint width);
+gchar* find_ui_file (gchar* filename);
 
 #endif /* GLOSUNG_UTIL__H */
