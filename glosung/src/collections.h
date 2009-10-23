@@ -24,13 +24,13 @@
 G_BEGIN_DECLS
 
 typedef enum {
-        COLLECTION_SOURCE_LOCAL,
-        COLLECTION_SOURCE_LOSUNGEN,
-        COLLECTION_SOURCE_BIBLE20
-} CollectionSourceType;
+        SOURCE_LOCAL,
+        SOURCE_LOSUNGEN,
+        SOURCE_BIBLE20
+} SourceType;
 
 typedef struct {
-        CollectionSourceType type;
+        SourceType type;
         gchar *name;
 
         /* Mapping to ordered list of collections,
@@ -39,32 +39,40 @@ typedef struct {
         /* Ordered list of languages, e.g. ["de, "en", "cz"].
          * May be NULL, before finalize is called! */
         GPtrArray  *languages;
-} CollectionSource;
+} Source;
 
 typedef struct {
-        CollectionSourceType type;
+        SourceType type;
         gchar *language;
         gint   year;
         gchar *bible;
         GDate *updated;
         gchar *info;
         gchar *url;
-} Collection;
+} VerseCollection;
+
+#define SOURCE(obj)		  ((Source*) obj)
+#define CS			  SOURCE
+#define VERSION_COLLECTION(obj)	  ((VerseCollection*) obj)
+#define VC			  VERSION_COLLECTION
+
+Source* source_new                (SourceType type, gchar *name);
+void    source_finialize          (Source *cs);
+
+GPtrArray* get_sources            (void);
+GPtrArray* source_get_languages   (Source* cs);
+GPtrArray* source_get_collections (Source* cs, gchar *language);
+
+Source*    get_local_collections  (void);
 
 
-CollectionSource* collection_new       (CollectionSourceType type, gchar *name);
-void        collections_add_minimal    (CollectionSource *cs,
-                                        gchar *language, gint   year);
-void        collections_add_full       (CollectionSource *cs,
-                                        gchar *language, gint   year,
-                                        gchar *bible,    GDate *updated,
-                                        gchar *info,     gchar *url);
-void        collection_finialize       (CollectionSource *cs);
-CollectionSource* get_local_collections(void);
-
-GPtrArray* get_collectionsources       (void);
-GPtrArray* collectionsource_get_languages (CollectionSource* cs);
-GPtrArray* collectionsource_get_years  (CollectionSource* cs, gchar *language);
+VerseCollection* collection_add   (Source *cs, gchar *language, gint   year);
+/*
+VerseCollection* collection_add_full  (Source *cs,
+                                       gchar *language, gint   year,
+                                       gchar *bible,    GDate *updated,
+                                       gchar *info,     gchar *url);
+*/
 
 G_END_DECLS
 

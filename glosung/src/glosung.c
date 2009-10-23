@@ -93,10 +93,10 @@ static gboolean   show_sword_new;
 static gchar     *losung_simple_text;
 static guint      losung_simple_text_len;
 
-static CollectionSource *languages;
-static gchar      *lang = NULL;
-static GHashTable *lang_translations;
-static CollectionSource *server_list = NULL;
+static Source    *local_collections;
+static gchar     *lang = NULL;
+static GHashTable*lang_translations;
+static Source    *server_list = NULL;
 
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
@@ -288,7 +288,7 @@ main (int argc, char **argv)
                 (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
         lang_translations = init_languages ();
-        languages         = get_local_collections ();
+        local_collections = get_local_collections ();
 
 #ifndef WIN32
         lang = gconf_client_get_string
@@ -301,9 +301,11 @@ main (int argc, char **argv)
                 /* is requested language available,
                    if not use first available language instead */
 
-                if (languages->languages->len > 0 &&
-                    ! collectionsource_get_years (languages, lang)) {
-                        lang = g_ptr_array_index (languages->languages, 0);
+                if (local_collections->languages->len > 0 &&
+                    ! source_get_collections (local_collections, lang))
+                {
+                        lang = VC (g_ptr_array_index
+                        	(local_collections->languages, 0))->language;
                 }
         }
 
@@ -323,7 +325,7 @@ main (int argc, char **argv)
 #endif /* VERSE_LINK, WIN32 */
 
         create_app ();
-        if (languages->languages->len == 0) {
+        if (local_collections->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
@@ -751,8 +753,9 @@ property_cb (GtkWidget *w, gpointer data)
                         (gtk_builder_get_object (builder, "preferences_table"));
 
                 combo = gtk_combo_box_new_text ();
-                for (i = 0; i < (languages->languages)->len; i++) {
-                        gchar *langu = g_ptr_array_index (languages->languages, i);
+                for (i = 0; i < (local_collections->languages)->len; i++) {
+                        gchar *langu = g_ptr_array_index
+                        		(local_collections->languages, i);
                         gtk_combo_box_append_text
                                 (GTK_COMBO_BOX (combo),
                                  g_hash_table_lookup (lang_translations, langu));
@@ -804,7 +807,7 @@ G_MODULE_EXPORT void
 lang_changed_cb (GtkWidget *combo, gpointer data)
 {
         gint num = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-        new_lang = (gchar*) g_ptr_array_index (languages->languages, num);
+        new_lang = (gchar*) g_ptr_array_index (local_collections->languages, num);
         if (new_lang != NULL) {
                 lang = new_lang;
                 new_lang = NULL;
@@ -1080,7 +1083,6 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 static GtkComboBox  *lang_combo;
 static GtkComboBox  *year_combo;
 static GtkListStore *store;
-static GPtrArray    *years;
 
 
 static void
@@ -1172,11 +1174,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                            GTK_WIDGET (source_combo));
         gtk_combo_box_append_text (source_combo, "");
 
-        GPtrArray *sources = get_collectionsources ();
+        GPtrArray *sources = get_sources ();
         for (i = 0; i < sources->len; i++) {
-                CollectionSource *cs = (CollectionSource*)
-                        g_ptr_array_index (sources, i);
-                if (cs->type != COLLECTION_SOURCE_LOCAL) {
+                Source *cs = (Source*) g_ptr_array_index (sources, i);
+                if (cs->type != SOURCE_LOCAL) {
                         gtk_combo_box_append_text (source_combo, cs->name);
                 }
         }
@@ -1221,10 +1222,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint year = this_year - 
                         gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);
-                collections_add_minimal (languages, langu, year);
-                collection_finialize (languages);
+                collection_add (local_collections, langu, year);
+                source_finialize (local_collections);
                 update_language_store ();
-                if (languages->languages->len == 1) {
+                if (local_collections->languages->len == 1) {
                         lang = langu;
 #ifndef WIN32
                         gconf_client_set_string
@@ -1261,9 +1262,8 @@ sources_changed (GtkWidget *w, gpointer data)
                 return;
         }
 
-        server_list = g_ptr_array_index
-                (get_collectionsources (), index);
-        GPtrArray *langs = collectionsource_get_languages (server_list);
+        server_list = g_ptr_array_index (get_sources (), index);
+        GPtrArray *langs = source_get_languages (server_list);
 
         gint i;
         if (langs->len >= 1) {
@@ -1283,12 +1283,12 @@ static void
 language_changed (GtkWidget *w, gpointer data)
 {
         GtkComboBox    *year_combo = GTK_COMBO_BOX (data);
-        while (gtk_combo_box_get_active (year_combo) != -1) {
-                gtk_combo_box_remove_text (year_combo, 0);
-                gtk_combo_box_set_active (year_combo, 0);
+        while (gtk_combo_box_get_active  (year_combo) != -1) {
+               gtk_combo_box_remove_text (year_combo, 0);
+               gtk_combo_box_set_active  (year_combo, 0);
         }
 
-        gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
+        gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
         gchar *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (w));
         if (index == 0 && g_str_equal ("", text)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
@@ -1296,12 +1296,13 @@ language_changed (GtkWidget *w, gpointer data)
         }
 
         gchar *langu = g_ptr_array_index
-                (collectionsource_get_languages (server_list), index - 1);
-        years = collectionsource_get_years (server_list, langu);
-        gint i;
-        for (i = 0; i < years->len; i++) {
+                (source_get_languages (server_list), index - 1);
+        GPtrArray *vc_s = source_get_collections (server_list, langu);
+        gint i = 0;
+        g_message ("vc_s == null %d", (vc_s == NULL));
+        for (i = 0; i < vc_s->len; i++) {
                 gchar *year = g_strdup_printf
-                        ("%d", GPOINTER_TO_INT (g_ptr_array_index (years, i)));
+                	("%d", VC (g_ptr_array_index (vc_s, i))->year);
                 gtk_combo_box_append_text (year_combo, year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
@@ -1312,16 +1313,16 @@ language_changed (GtkWidget *w, gpointer data)
 static GString*
 create_years_string (gchar *langu)
 {
-        GPtrArray *years = collectionsource_get_years (languages, langu);
+        GPtrArray *years = source_get_collections (local_collections, langu);
         GString *result = g_string_new ("");
         g_string_printf (result, "%d",
-                         GPOINTER_TO_INT (g_ptr_array_index (years, 0)));
+                         VC (g_ptr_array_index (years, 0))->year);
 
         gint i;
         for (i = 1; i < years->len; i++) {
                 g_string_append_printf
                         (result, ", %d",
-                         GPOINTER_TO_INT (g_ptr_array_index (years, i)));
+                         VC (g_ptr_array_index (years, i))->year);
         }
 
         return result;
@@ -1335,9 +1336,9 @@ update_language_store ()
         int i;
 
         gtk_list_store_clear (store);
-        for (i = 0; i < languages->languages->len; i++) {
+        for (i = 0; i < local_collections->languages->len; i++) {
                 gtk_list_store_append (store, &iter1);
-                gchar *langu = g_ptr_array_index (languages->languages, i);
+                gchar *langu = g_ptr_array_index (local_collections->languages, i);
                 GString *years = create_years_string (langu);
                 gtk_list_store_set
                         (store, &iter1,

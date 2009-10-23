@@ -208,8 +208,7 @@ download (gchar *url)
 static void
 analyse_bible20_list (Memory mem)
 {
-        CollectionSource* cs = collection_new (COLLECTION_SOURCE_BIBLE20,
-                                               _("Bible 2.0"));
+        Source* cs = source_new (SOURCE_BIBLE20, _("Bible 2.0"));
         gchar** lines = g_strsplit (mem.memory, "\n", -1);
         gint col_year = 0;
         gint col_lang = 0;
