@@ -16,12 +16,14 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 
 #include "collections.h"
 #include "download.h"
@@ -31,17 +33,17 @@ static GPtrArray *sources = NULL;
 
 static void collect_and_sort_years
                      (gpointer key, gpointer value, gpointer langs);
-static gint int_comp (gconstpointer a, gconstpointer b);
-static gint str_comp (gconstpointer a, gconstpointer b);
+static gint versecollection_comp (gconstpointer a, gconstpointer b);
+static gint str_comp             (gconstpointer a, gconstpointer b);
 
-static void scan_for_collections        (CollectionSource* cs);
-static void scan_for_collections_in_dir (gchar *dirname, CollectionSource *list);
+static void scan_for_collections        (Source* cs);
+static void scan_for_collections_in_dir (gchar *dirname, Source *list);
 
 
-CollectionSource*
-collection_new (CollectionSourceType type, gchar *name)
+Source*
+source_new (SourceType type, gchar *name)
 {
-        CollectionSource *cs = g_new (CollectionSource, 1);
+        Source *cs = g_new (Source, 1);
         cs->type = type;
         cs->name = name;
         cs->collections = g_hash_table_new (g_str_hash, g_str_equal);
@@ -50,27 +52,7 @@ collection_new (CollectionSourceType type, gchar *name)
 
 
 void
-collections_add_minimal (CollectionSource *cs, gchar *lang, gint year)
-{
-        GPtrArray *years = g_hash_table_lookup (cs->collections, lang);
-        if (years == NULL) {
-                years = g_ptr_array_new ();
-                g_hash_table_insert (cs->collections, lang, years);
-        }
-
-        int i;
-        for (i = 0; i < years->len; i++) {
-                if (year == GPOINTER_TO_INT (g_ptr_array_index (years, i))) {
-                        return;
-                }
-        }
-
-        g_ptr_array_add (years, GINT_TO_POINTER (year));
-}
-
-
-void
-collection_finialize (CollectionSource *list)
+source_finialize (Source *list)
 {
         list->languages = g_ptr_array_new ();
         g_hash_table_foreach (list->collections, collect_and_sort_years,
@@ -79,18 +61,47 @@ collection_finialize (CollectionSource *list)
 }
 
 
+VerseCollection*
+collection_add (Source *cs, gchar *lang, gint year)
+{
+        VerseCollection *result;
+
+        GPtrArray *vc_s = g_hash_table_lookup (cs->collections, lang);
+        if (vc_s == NULL) {
+                vc_s = g_ptr_array_new ();
+                g_hash_table_insert (cs->collections, lang, vc_s);
+        }
+
+        int i;
+        for (i = 0; i < vc_s->len; i++) {
+        	result = VC (g_ptr_array_index (vc_s, i));
+                if (year == result->year) {
+                        return result;
+                }
+        }
+
+        result = g_new (VerseCollection, 1);
+        result->language = lang;
+        result->year = year;
+
+        g_ptr_array_add (vc_s, result);
+        return result;
+} /* collections_add */
+
+
 static void
 collect_and_sort_years (gpointer key, gpointer value, gpointer langs)
 {
         g_ptr_array_add (langs, key);
-        g_ptr_array_sort (value, int_comp);
+        g_ptr_array_sort (value, versecollection_comp);
 }
 
 
 static gint
-int_comp (gconstpointer a, gconstpointer b)
+versecollection_comp (gconstpointer a, gconstpointer b)
 {
-        return *((int*)b) - *((int*)a);
+        return VC(*((VerseCollection**)b))->year
+	     - VC(*((VerseCollection**)a))->year;
 }
 
 
@@ -107,12 +118,12 @@ str_comp (gconstpointer a, gconstpointer b)
  * This function will search for several kind of losung files in
  * global and local directory.
  */
-CollectionSource*
+Source*
 get_local_collections (void)
 {
-        get_collectionsources ();
-        CollectionSource *cs = (CollectionSource*)
-                g_ptr_array_index (sources, COLLECTION_SOURCE_LOCAL);
+        get_sources ();
+        Source *cs = (Source*)
+                g_ptr_array_index (sources, SOURCE_LOCAL);
         scan_for_collections (cs);
 
         return cs;
@@ -120,7 +131,7 @@ get_local_collections (void)
 
 
 static void
-scan_for_collections (CollectionSource* cs)
+scan_for_collections (Source* cs)
 {
         gchar *dirname;
 
@@ -134,7 +145,7 @@ scan_for_collections (CollectionSource* cs)
         scan_for_collections_in_dir (dirname, cs);
 #endif /* WIN32 */
         g_free (dirname);
-        collection_finialize (cs);
+        source_finialize (cs);
 
         printf ("Found languages: ");
         guint i = 0;
@@ -147,7 +158,7 @@ scan_for_collections (CollectionSource* cs)
 
 
 static gboolean
-check_for_losung_file (const gchar *name, int len, CollectionSource *cs)
+check_for_losung_file (const gchar *name, int len, Source *cs)
 {
         if ((len == 12 || len == 15)
             && (strncmp (name + len -  4, ".xml", 4)) == 0
@@ -162,7 +173,14 @@ check_for_losung_file (const gchar *name, int len, CollectionSource *cs)
                 if (year < 1970) {
                         year += 100;
                 }
-                collections_add_minimal (cs, langu, year);
+                VerseCollection *vc = collection_add (cs, langu, year);
+                struct stat buffer;
+                int status = g_stat (name, &buffer);
+                if (status == 0) {
+                	GDate *updated = g_date_new ();
+                	g_date_set_time_t (updated, buffer.st_mtime);
+                	vc->updated = updated;
+                }
                 return TRUE;
         }
         return FALSE;
@@ -170,7 +188,7 @@ check_for_losung_file (const gchar *name, int len, CollectionSource *cs)
 
 
 static gboolean
-check_for_theword_file (const gchar *name, int len, CollectionSource *cs)
+check_for_theword_file (const gchar *name, int len, Source *cs)
 {
         if ((strncmp (name + len -  4, ".twd", 4)) == 0) {
                 gchar *langu = g_strndup (name, 2);
@@ -179,7 +197,14 @@ check_for_theword_file (const gchar *name, int len, CollectionSource *cs)
                         sscanf (name + 3, "%d", &year);
                 }
                 if (year != -1) {
-                        collections_add_minimal (cs, langu, year);
+                        VerseCollection *vc = collection_add (cs, langu, year);
+                        struct stat buffer;
+                        int status = g_stat (name, &buffer);
+                        if (status == 0) {
+                        	GDate *updated = g_date_new ();
+                        	g_date_set_time_t (updated, buffer.st_mtime);
+                        	vc->updated = updated;
+                        }
                         return TRUE;
                 }
         }
@@ -188,7 +213,7 @@ check_for_theword_file (const gchar *name, int len, CollectionSource *cs)
 
 
 static gboolean
-check_for_original_losung_file (const gchar *name, int len, CollectionSource *cs)
+check_for_original_losung_file (const gchar *name, int len, Source *cs)
 {
         if ((strncmp (name, "Losungen Free", 13)) == 0
             && (strncmp (name + len -  4, ".xml", 4)) == 0)
@@ -197,16 +222,23 @@ check_for_original_losung_file (const gchar *name, int len, CollectionSource *cs
                 int year = -1;
                 sscanf (name + 14, "%d", &year);
                 if (year != -1) {
-                        collections_add_minimal (cs, langu, year);
+                        VerseCollection *vc = collection_add (cs, langu, year);
+                        struct stat buffer;
+                        int status = g_stat (name, &buffer);
+                        if (status == 0) {
+                        	GDate *updated = g_date_new ();
+                        	g_date_set_time_t (updated, buffer.st_mtime);
+                        	vc->updated = updated;
+                        }
                         return TRUE;
                 }
         }
         return FALSE;
-}
+} /* check_for_original_losung_file */
 
 
 static void
-scan_for_collections_in_dir (gchar *dirname, CollectionSource *cs)
+scan_for_collections_in_dir (gchar *dirname, Source *cs)
 {
         if (access (dirname, F_OK | R_OK) != 0) {
                 return;
@@ -224,22 +256,22 @@ scan_for_collections_in_dir (gchar *dirname, CollectionSource *cs)
 
 
 GPtrArray*
-get_collectionsources ()
+get_sources ()
 {
         if (sources == NULL) {
                 sources = g_ptr_array_sized_new (3);
-                CollectionSource *cs;
+                Source *cs;
 
-                cs = collection_new (COLLECTION_SOURCE_LOCAL, NULL);
+                cs = source_new (SOURCE_LOCAL, NULL);
                 g_ptr_array_add (sources, cs);
 
-                cs = collection_new (COLLECTION_SOURCE_LOSUNGEN,
-                                     _("Herrnhuter Losungen"));
+                cs = source_new (SOURCE_LOSUNGEN,
+                                           _("Herrnhuter Losungen"));
                 g_ptr_array_add (sources, cs);
                 cs->languages = g_ptr_array_sized_new (1);
                 g_ptr_array_add (cs->languages, "de");
 
-                cs = collection_new (COLLECTION_SOURCE_BIBLE20, _("Bible 2.0"));
+                cs = source_new (SOURCE_BIBLE20, _("Bible 2.0"));
                 g_ptr_array_add (sources, cs);
         }
         return sources;
@@ -247,18 +279,18 @@ get_collectionsources ()
 
 
 GPtrArray*
-collectionsource_get_languages (CollectionSource* cs)
+source_get_languages (Source* cs)
 {
         if (cs == NULL) {
-                g_message ("CollectionSource is NULL!");
+                g_message ("Source is NULL!");
                 return NULL;
         }
         if (cs->languages == NULL) {
                 switch (cs->type) {
-                case COLLECTION_SOURCE_LOCAL:
+                case SOURCE_LOCAL:
                         scan_for_collections (cs);
                         break;
-                case COLLECTION_SOURCE_BIBLE20:
+                case SOURCE_BIBLE20:
                         scan_for_collections (cs);
                         break;
                 default:
@@ -271,16 +303,11 @@ collectionsource_get_languages (CollectionSource* cs)
 
 
 GPtrArray*
-collectionsource_get_years (CollectionSource* cs, gchar *language)
+source_get_collections (Source* cs, gchar *language)
 {
         if (cs == NULL) {
-                g_message ("CollectionSource is NULL!");
+                g_message ("Source is NULL!");
                 return NULL;
-        }
-        if (g_hash_table_size (cs->collections) == 0) {
-                collections_add_minimal (cs, language, 2008);
-                collections_add_minimal (cs, language, 2009);
-                collection_finialize (cs);
         }
         return g_hash_table_lookup (cs->collections, language);
 }
