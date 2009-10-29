@@ -66,7 +66,7 @@ GPtrArray* source_get_collections (Source* cs, gchar *language);
 Source*    get_local_collections  (void);
 
 
-VerseCollection* collection_add   (Source *cs, gchar *language, gint   year);
+VerseCollection* source_add_collection (Source *cs, gchar *language, gint year);
 /*
 VerseCollection* collection_add_full  (Source *cs,
                                        gchar *language, gint   year,

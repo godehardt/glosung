@@ -1082,6 +1082,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 static GtkComboBox  *lang_combo;
 static GtkComboBox  *year_combo;
+static GtkWidget    *download_button;
 static GtkListStore *store;
 
 
@@ -1191,6 +1192,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkFrame *year_frame = GTK_FRAME
                 (gtk_builder_get_object (builder, "year_frame"));
+        download_button = GTK_WIDGET
+                (gtk_builder_get_object (builder, "download_button"));
 	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
@@ -1222,7 +1225,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint year = this_year - 
                         gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);
-                collection_add (local_collections, langu, year);
+                // TODO move to download.c
+                source_add_collection (local_collections, langu, year);
                 source_finialize (local_collections);
                 update_language_store ();
                 if (local_collections->languages->len == 1) {
@@ -1259,6 +1263,7 @@ sources_changed (GtkWidget *w, gpointer data)
         if (index == 0) {
                 gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+                gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
         }
 
@@ -1266,7 +1271,7 @@ sources_changed (GtkWidget *w, gpointer data)
         GPtrArray *langs = source_get_languages (server_list);
 
         gint i;
-        if (langs->len >= 1) {
+        if (langs->len > 1) {
                 gtk_combo_box_append_text (lang_combo, "");
         }
         for (i = 0; i < langs->len; i++) {
@@ -1289,17 +1294,24 @@ language_changed (GtkWidget *w, gpointer data)
         }
 
         gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
+        if (index == -1) {
+        	return;
+        }
         gchar *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (w));
         if (index == 0 && g_str_equal ("", text)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+                gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
         }
 
-        gchar *langu = g_ptr_array_index
-                (source_get_languages (server_list), index - 1);
+        GPtrArray *langs = source_get_languages (server_list);
+        gchar *langu;
+        if (langs->len > 1) {
+        	index = index - 1;
+        }
+	langu = g_ptr_array_index (langs, index);
         GPtrArray *vc_s = source_get_collections (server_list, langu);
         gint i = 0;
-        g_message ("vc_s == null %d", (vc_s == NULL));
         for (i = 0; i < vc_s->len; i++) {
                 gchar *year = g_strdup_printf
                 	("%d", VC (g_ptr_array_index (vc_s, i))->year);
@@ -1307,6 +1319,7 @@ language_changed (GtkWidget *w, gpointer data)
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), TRUE);
+        gtk_widget_set_sensitive (GTK_WIDGET (download_button), TRUE);
 } /* language_changed */
 
 
