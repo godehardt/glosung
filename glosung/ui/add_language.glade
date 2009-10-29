@@ -96,12 +96,13 @@
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="download">
+              <object class="GtkButton" id="download_button">
                 <property name="label" translatable="yes">Download</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">download selected verse collection</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -110,7 +111,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="cancel">
+              <object class="GtkButton" id="cancel_button">
                 <property name="label" translatable="yes">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -133,8 +134,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-3">download</action-widget>
-      <action-widget response="-60">cancel</action-widget>
+      <action-widget response="-3">download_button</action-widget>
+      <action-widget response="-60">cancel_button</action-widget>
     </action-widgets>
   </object>
 </interface>

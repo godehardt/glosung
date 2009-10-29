@@ -47,6 +47,7 @@ source_new (SourceType type, gchar *name)
         cs->type = type;
         cs->name = name;
         cs->collections = g_hash_table_new (g_str_hash, g_str_equal);
+        cs->languages = NULL;
         return cs;
 }
 
@@ -62,7 +63,7 @@ source_finialize (Source *list)
 
 
 VerseCollection*
-collection_add (Source *cs, gchar *lang, gint year)
+source_add_collection (Source *cs, gchar *lang, gint year)
 {
         VerseCollection *result;
 
@@ -86,7 +87,7 @@ collection_add (Source *cs, gchar *lang, gint year)
 
         g_ptr_array_add (vc_s, result);
         return result;
-} /* collections_add */
+} /* source_add_collection */
 
 
 static void
@@ -173,7 +174,7 @@ check_for_losung_file (const gchar *name, int len, Source *cs)
                 if (year < 1970) {
                         year += 100;
                 }
-                VerseCollection *vc = collection_add (cs, langu, year);
+                VerseCollection *vc = source_add_collection (cs, langu, year);
                 struct stat buffer;
                 int status = g_stat (name, &buffer);
                 if (status == 0) {
@@ -197,7 +198,7 @@ check_for_theword_file (const gchar *name, int len, Source *cs)
                         sscanf (name + 3, "%d", &year);
                 }
                 if (year != -1) {
-                        VerseCollection *vc = collection_add (cs, langu, year);
+                        VerseCollection *vc = source_add_collection (cs, langu, year);
                         struct stat buffer;
                         int status = g_stat (name, &buffer);
                         if (status == 0) {
@@ -222,7 +223,7 @@ check_for_original_losung_file (const gchar *name, int len, Source *cs)
                 int year = -1;
                 sscanf (name + 14, "%d", &year);
                 if (year != -1) {
-                        VerseCollection *vc = collection_add (cs, langu, year);
+                        VerseCollection *vc = source_add_collection (cs, langu, year);
                         struct stat buffer;
                         int status = g_stat (name, &buffer);
                         if (status == 0) {
@@ -265,13 +266,10 @@ get_sources ()
                 cs = source_new (SOURCE_LOCAL, NULL);
                 g_ptr_array_add (sources, cs);
 
-                cs = source_new (SOURCE_LOSUNGEN,
-                                           _("Herrnhuter Losungen"));
+                cs = source_new (SOURCE_LOSUNGEN, _("Herrnhuter Losungen"));
                 g_ptr_array_add (sources, cs);
-                cs->languages = g_ptr_array_sized_new (1);
-                g_ptr_array_add (cs->languages, "de");
 
-                cs = source_new (SOURCE_BIBLE20, _("Bible 2.0"));
+                cs = source_new (SOURCE_BIBLE20,  _("Bible 2.0"));
                 g_ptr_array_add (sources, cs);
         }
         return sources;
@@ -290,12 +288,14 @@ source_get_languages (Source* cs)
                 case SOURCE_LOCAL:
                         scan_for_collections (cs);
                         break;
+                case SOURCE_LOSUNGEN:
+			source_add_collection (cs, "de", 2008);
+			source_add_collection (cs, "de", 2009);
+			source_finialize (cs);
+                	break;
                 case SOURCE_BIBLE20:
                         scan_for_collections (cs);
                         break;
-                default:
-                        scan_for_collections (cs);
-                	break;
                 }
         }
         return cs->languages;
@@ -305,7 +305,7 @@ source_get_languages (Source* cs)
 GPtrArray*
 source_get_collections (Source* cs, gchar *language)
 {
-        if (cs == NULL) {
+	if (cs == NULL) {
                 g_message ("Source is NULL!");
                 return NULL;
         }
