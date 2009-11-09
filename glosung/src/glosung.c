@@ -1198,8 +1198,17 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
-        /* TODO make these numbers dynamic! */
-        gint this_year = 2009;
+        time_t     t;
+        struct tm  now;
+
+        t = time (NULL);
+        now = *localtime (&t);
+        gint this_year = now.tm_year + 1900;
+        if (now.tm_mon >= 10) {
+        	// in November and December offer
+        	// download next year's texts
+        	this_year++;
+        }
 /*
         for (i = this_year; i >= this_year - 2; i--) {
                 gchar *year = g_strdup_printf ("%d", i);
@@ -1222,6 +1231,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
  *                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
  *                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
  */
+                // FIXME: get year from combo
                 gint year = this_year - 
                         gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
                 download_losungen (year);

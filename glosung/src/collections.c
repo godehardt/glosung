@@ -40,6 +40,10 @@ static void scan_for_collections        (Source* cs);
 static void scan_for_collections_in_dir (gchar *dirname, Source *list);
 
 
+static int year = 0;
+
+
+
 Source*
 source_new (SourceType type, gchar *name)
 {
@@ -216,8 +220,8 @@ check_for_theword_file (const gchar *name, int len, Source *cs)
 static gboolean
 check_for_original_losung_file (const gchar *name, int len, Source *cs)
 {
-        if ((strncmp (name, "Losungen Free", 13)) == 0
-            && (strncmp (name + len -  4, ".xml", 4)) == 0)
+        if ((g_ascii_strncasecmp (name, "Losungen Free", 13)) == 0
+            && (g_ascii_strncasecmp (name + len -  4, ".xml", 4)) == 0)
         {
                 gchar *langu = g_strdup ("de");
                 int year = -1;
@@ -289,8 +293,23 @@ source_get_languages (Source* cs)
                         scan_for_collections (cs);
                         break;
                 case SOURCE_LOSUNGEN:
-			source_add_collection (cs, "de", 2008);
-			source_add_collection (cs, "de", 2009);
+                	if (! year) {
+                                time_t     t;
+                                struct tm  now;
+
+                                t = time (NULL);
+                                now = *localtime (&t);
+                                year = now.tm_year + 1900;
+                                if (now.tm_mon >= 10) {
+                                	// in November and December offer
+                                	// download next year's texts
+                                	year++;
+                                }
+                	}
+
+                	for (int i = 0; i < 3; i++) {
+        			source_add_collection (cs, "de", year - i);
+                	}
 			source_finialize (cs);
                 	break;
                 case SOURCE_BIBLE20:
