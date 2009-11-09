@@ -58,7 +58,7 @@ else:
 BuildDir ('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = ['-O2', '-Wall', '-g', '-Wl,--export-dynamic',
+ccflags   = ['-O2', '-std=c99', '-Wall', '-g', '-Wl,--export-dynamic',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',

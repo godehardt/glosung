@@ -196,6 +196,7 @@ get_orig_losung (GDate *date, gchar *lang)
         if (strcmp (lang, "de") != 0) {
                 return NULL;
         }
+        g_message ("show year %d", g_date_get_year (date));
         file = g_strdup_printf ("Losungen Free %d.xml",
                                 g_date_get_year (date));
         filename = check_file (file);
