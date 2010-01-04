@@ -1,5 +1,5 @@
 /* download.c
- * Copyright (C) 2006-2009 Eicke Godehardt
+ * Copyright (C) 2006-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,9 +47,11 @@ typedef struct Memory {
 
 
 static void   init     ();
-static int    to_file_losungen  (Memory chunk);
-static Memory download (gchar *url);
-static void   analyse_bible20_list (Memory mem);
+static int    to_file_losungen     (Memory mem, const guint year);
+static Memory real_download        (const gchar *url);
+static void   analyse_bible20_list (Source* cs, Memory mem);
+static int    download_losungen    (guint year);
+static int    download_bible20     (const Source* cs, const gchar *lang, guint year);
 
 
 static size_t
@@ -89,7 +91,7 @@ to_file (Memory chunk, gchar *filename)
 
 
 static int
-to_file_losungen (Memory chunk)
+to_file_losungen (Memory mem, const guint year)
 {
         init ();
 
@@ -101,7 +103,7 @@ to_file_losungen (Memory chunk)
 #else /* WIN32 */
         mkdir (tmp_dir, 0777);
 #endif /* WIN32 */
-        int res = to_file (chunk, zipfile);
+        int res = to_file (mem, zipfile);
         if (res) {
                 rmdir (tmp_dir);
                 g_free (tmp_dir);
@@ -114,8 +116,15 @@ to_file_losungen (Memory chunk)
                 return -4;
         }
         gchar *command = g_strdup_printf ("unzip %s", zipfile);
+        // TODO: handle exit status and error code
         gboolean success =
                 g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
+        g_free (command);
+        g_free (zipfile);
+        if (! success) {
+                g_message ("error while unzip");
+                return -3;
+        }
 
         GDir *dir = g_dir_open (tmp_dir, 0, NULL);
         const gchar *name;
@@ -124,7 +133,9 @@ to_file_losungen (Memory chunk)
                         gchar *losung_file =
                                 g_strdup_printf ("%s/%s", tmp_dir, name);
                         gchar *target_file =
-                                g_strdup_printf ("%s/%s", glosung_dir, name);
+                                g_strdup_printf ("%s/Losungen Free %d.xml",
+                                		glosung_dir, year);
+                        // g_strdup_printf ("%s/%s", glosung_dir, name);
                         if (rename (losung_file, target_file)) {
                                 perror (NULL);
                         }
@@ -137,33 +148,45 @@ to_file_losungen (Memory chunk)
 
         rmdir (tmp_dir);
         g_free (tmp_dir);
-        g_free (zipfile);
-        g_free (command);
-        if (! success) {
-                g_message ("error while unzip");
-                return -3;
-        }
 
         return 0;
 }
 
 
-int
+static int
 download_losungen (guint year)
 {
         gchar *url   = g_strdup_printf (LOSUNGEN_URL, year);
-        Memory chunk = download (url);
+        Memory mem = real_download (url);
 
-        to_file_losungen (chunk);
+        to_file_losungen (mem, year);
+        g_free (mem.memory);
         return 0;
 }
 
 
-int
-download_bible20  (gchar *lang, guint year)
+static int
+download_bible20  (const Source *cs, const gchar *lang, guint year)
 {
-        Memory chunk = download (BIBLE20_BASE_URL);
-        analyse_bible20_list (chunk);
+        GPtrArray* css = source_get_collections (cs, lang);
+	int i;
+	VerseCollection *vc = NULL;
+        for (i = 0; i < css->len; i++) {
+        	vc = (VerseCollection*) g_ptr_array_index (css, i);
+        	if (vc->year == year) {
+        		break;
+        	} else {
+        		vc = NULL;
+        	}
+        }
+
+        Memory mem = real_download (vc->url);
+        init ();
+        gchar *filename =
+        	g_strdup_printf ("%s%s", glosung_dir, strrchr (vc->url, '/'));
+
+        to_file (mem, filename);
+        g_free (mem.memory);
         return 0;
 }
 
@@ -172,7 +195,7 @@ download_bible20  (gchar *lang, guint year)
  * generic method to download specified url to chunk of memory
  */
 static Memory
-download (gchar *url)
+real_download (const gchar *url)
 {
         CURL     *curl_handle;
         CURLcode  res = -1;
@@ -202,32 +225,44 @@ download (gchar *url)
                 */
         }
         return chunk;
-} /* download */
+} /* real download */
 
 
 static void
-analyse_bible20_list (Memory mem)
+analyse_bible20_list (Source* cs, Memory mem)
 {
-        Source* cs = source_new (SOURCE_BIBLE20, _("Bible 2.0"));
-        gchar** lines = g_strsplit (mem.memory, "\n", -1);
-        gint col_year = 0;
-        gint col_lang = 0;
-        gint col_url  = 0;
+	g_assert (cs->type == SOURCE_BIBLE20);
+
+	gchar** lines = g_strsplit (mem.memory, "\n", -1);
+        gint col_year    = 0;
+        gint col_lang    = 0;
+        gint col_url     = 0;
+        gint col_bible   = 0;
+        gint col_info    = 0;
+        gint col_updated = 0;
+
         gint j = 0;
         gint i = 0;
 
         gchar** tokens = g_strsplit (lines [j], ";", -1);
         while (tokens [i]) {
                 gchar* token = tokens [i];
-                if (g_str_equal ("year", token)) {
+                if        (g_str_equal ("year",    token)) {
                         col_year = i;
-                } else if (g_str_equal ("lang", token)) {
+                } else if (g_str_equal ("lang",    token)) {
                         col_lang = i;
-                } else if (g_str_equal ("url", token)) {
+                } else if (g_str_equal ("url",     token)) {
                         col_url = i;
+                } else if (g_str_equal ("bible",   token)) {
+                        col_bible = i;
+                } else if (g_str_equal ("info",    token)) {
+                        col_info = i;
+                } else if (g_str_equal ("updated", token)) {
+                        col_updated = i;
                 }
                 i++;
         }
+        g_strfreev (tokens);
         if (! col_year || ! col_lang || ! col_url) {
                 g_message ("Syntax error in first line of CSV!");
                 return /* -42*/;
@@ -235,14 +270,26 @@ analyse_bible20_list (Memory mem)
 
         j++;
         while (lines [j]) {
-//                g_message ("%s", lines [j]);
                 tokens = g_strsplit (lines [j], ";", -1);
                 if (tokens [0] && g_str_equal ("file", tokens [0])) {
                         i = 0;
-                        g_message ("%s %s %s", tokens [col_lang], tokens [col_year], tokens [col_url]);
+                        guint year;
+                        sscanf (tokens [col_year], "%d", &year);
+                        VerseCollection* vc = source_add_collection
+                        	(cs, tokens [col_lang], year);
+                        vc->url     = tokens [col_url];
+                        vc->bible   = tokens [col_bible];
+                        vc->info    = tokens [col_info];
+                        // vc->updated = tokens [col_updated];
                 }
+                g_free (tokens [0]);
+                g_free (tokens [col_year]);
+                g_free (tokens);
                 j++;
         }
+        g_strfreev (lines);
+
+        source_finialize (cs);
         /*
                 i = 0;
                 while (tokens [i]) {
@@ -281,11 +328,40 @@ analyse_bible20_list (Memory mem)
                         break;
                 }
         } while (chunk.memory [end] != '\0');
-
-        collection_finialize (list);
-        return list;
         */
+} /* analyse_bible20_list */
+
+
+int
+get_bible20_collections (Source* cs)
+{
+        Memory mem = real_download (BIBLE20_BASE_URL);
+        analyse_bible20_list (cs, mem);
+        g_free (mem.memory);
+
+        // FIXME return real values
+        return 0;
 }
+
+
+int
+download (const Source *cs, const gchar *language, guint year)
+{
+	int result;
+	switch (cs->type) {
+	case SOURCE_LOSUNGEN:
+		result = download_losungen (year);
+		break;
+	case SOURCE_BIBLE20:
+		result = download_bible20 (cs, language, year);
+		break;
+	default:
+		g_message ("unknown source type '%s'", cs->name);
+		return -1;
+	}
+
+        return result;
+} /* download */
 
 
 static void

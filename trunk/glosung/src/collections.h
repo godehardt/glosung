@@ -1,5 +1,5 @@
 /* collections.h
- * Copyright (C) 2006-2009 Eicke Godehardt
+ * Copyright (C) 2006-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ void    source_finialize          (Source *cs);
 
 GPtrArray* get_sources            (void);
 GPtrArray* source_get_languages   (Source* cs);
-GPtrArray* source_get_collections (Source* cs, gchar *language);
+GPtrArray* source_get_collections (const Source* cs, const gchar *language);
 
 Source*    get_local_collections  (void);
 

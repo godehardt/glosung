@@ -1,5 +1,5 @@
 /* download.h
- * Copyright (C) 2006-2009 Eicke Godehardt
+ * Copyright (C) 2006-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,10 @@
 #define GLOSUNG_DOWNLOAD__H
 
 #include <glib.h>
+#include "collections.h"
 
 
-int         download_losungen (guint year);
-int         download_bible20  (gchar *lang, guint year);
+int download                (const Source *cs, const gchar *language, guint year);
+int get_bible20_collections (Source* cs);
 
 #endif /* GLOSUNG_DOWNLOAD__H */
