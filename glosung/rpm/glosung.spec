@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.4.2
+%define version 3.5
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -54,8 +54,11 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/bin/glosung
 /usr/bin/losung
 /usr/share/applications/glosung.desktop
-/usr/share/pixmaps/glosung.png
-/usr/share/pixmaps/glosung-big.png
+/usr/share/glosung/glosung.png
+/usr/share/glosung/glosung-big.png
+/usr/share/glosung/herrnhut.png
+/usr/share/glosung/add_language.glade
+/usr/share/glosung/preferences.glade
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
@@ -72,6 +75,10 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+* Mon Jan 04 2010 Eicke
+- version bump to 3.5
+- add functionality to download bible20 texts
+
 * Tue May 26 2009 Eicke
 - version bump to 3.4.2
 - fix opening of preferences
@@ -169,52 +176,52 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 - fix typo
 - add changelog and version bump to spec file
 
-* Sat Jan 12 2008 Eicke Godehardt <eicke@godehardt.org>
+* Sat Jan 12 2008 Eicke
 - make file handling more robust
 - add important warning message on organize watchword dialog
 - fix i18n of menu
 - version bump to 3.2.2
 
-* Thu Jan 03 2008 Eicke Godehardt <eicke@godehardt.org>
+* Thu Jan 03 2008 Eicke
 - fix text wrapping problem
 
-* Mon Dec 31 2007 Eicke Godehardt <eicke@godehardt.org>
+* Mon Dec 31 2007 Eicke
 - add support for the "original" Losung file format.
 - version bump to 3.2.1
 
-* Fri Dec 28 2007 Eicke Godehardt <eicke@godehardt.org>
+* Fri Dec 28 2007 Eicke
 - show "The Word" automaticaly after 2007
 - add a little pad arround all text
 - version bump to 3.2
 
-* Sun Sep 30 2007 Eicke Godehardt <eicke@godehardt.org>
+* Sun Sep 30 2007 Eicke
 - small fix for Gnomesword link
 - start only once parameter (--once)
 - czech translation update
 - version bump to 3.1.1
 
-* Thu Aug 16 2007 Eicke Godehardt <eicke@godehardt.org>
+* Thu Aug 16 2007 Eicke
 - add keyboard shortcuts
 - get rid of gnome libraries
 - other small enhancements
 - make connection to gnomesword more stable
 - Version bump to 3.1
 
-* Sun Feb 11 2007 Eicke Godehardt <eicke@godehardt.org>
+* Sun Feb 11 2007 Eicke
 - add better language handling for first time users
 - add command line arguments to losung
 - bump to 3.0.2
 
-* Tue Jan 23 2007 Eicke Godehardt <eicke@godehardt.org>
+* Tue Jan 23 2007 Eicke
 - fix the crash-at-very-first-startup
 - fix handle years for download
 - bump to 3.0.1
 
-* Sat Dec 02 2006 Eicke Godehardt <eicke@godehardt.org>
+* Sat Dec 02 2006 Eicke
 - add libcurl for downloading language files from www.losung.de
 - bump to 3.0
 
-* Fri Dec 09 2005 Eicke Godehardt <eicke@godehardt.org>
+* Fri Dec 09 2005 Eicke
 - move sword flag from compile flag into runtime changable property
 - fixed debian package issue
 - add texts for 2006
