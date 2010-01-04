@@ -1,5 +1,5 @@
 /* parser.c
- * Copyright (C) 1999-2009 Eicke Godehardt
+ * Copyright (C) 1999-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -196,7 +196,6 @@ get_orig_losung (GDate *date, gchar *lang)
         if (strcmp (lang, "de") != 0) {
                 return NULL;
         }
-        g_message ("show year %d", g_date_get_year (date));
         file = g_strdup_printf ("Losungen Free %d.xml",
                                 g_date_get_year (date));
         filename = check_file (file);
@@ -205,7 +204,6 @@ get_orig_losung (GDate *date, gchar *lang)
         if (! filename) {
                 return NULL;
         }
-        // g_message ("orig losung");
 
         return parse (date, lang, filename);
 } /* get_orig_losung */
@@ -234,7 +232,6 @@ get_losung (GDate *date, gchar *lang)
         if (! filename) {
                 return NULL;
         }
-        // g_message ("losung");
 
         return parse (date, lang, filename);
 } /* get_losung */
