@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-25 20:57+0200\n"
+"POT-Creation-Date: 2010-01-04 23:09+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -213,6 +213,10 @@ msgstr "Roumain"
 msgid "russian"
 msgstr "Russe"
 #
+# File: src/glosung.c, line: 370
+msgid "swahili"
+msgstr ""
+#
 # File: src/glosung.c, line: 303
 msgid "tamil"
 msgstr "Tamoul"
@@ -226,6 +230,7 @@ msgid "vietnamese"
 msgstr "Vietnamien"
 #
 # File: src/glosung.c, line: 306
+#. FIXME
 msgid "chinese simplified"
 msgstr "Chinois simplifié"
 #
@@ -259,8 +264,8 @@ msgstr ""
 msgid "Add Languages"
 msgstr "Ajouter de nouvelles traductions"
 #
-# File: ui/add_language.glade, line: 30
-msgid "Herrnhuter Losungen (deutsch)"
+# File: ui/add_language.glade, line: 31
+msgid "Source"
 msgstr ""
 #
 #
@@ -300,6 +305,10 @@ msgstr "Année"
 msgid "Download"
 msgstr "Télécharger"
 #
+# File: ui/add_language.glade, line: 105
+msgid "download selected verse collection"
+msgstr ""
+#
 # File: ui/add_language.glade, line: 100
 msgid "gtk-cancel"
 msgstr ""
@@ -333,8 +342,16 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
+#
+#
+#
 #
 #
 #
@@ -363,8 +380,16 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
+#
+#
 #
 #
 #
@@ -418,9 +443,17 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
+#
+#
 #
 #
 #
@@ -507,9 +540,17 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
+#
+#
 #
 #
 #

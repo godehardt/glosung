@@ -1,3 +1,15 @@
+define global exit status in download.h (with i18n error message?)
+split download manager GUI into its own file
+
+check last mod time of local files against "updated"
+
+use uppercase language names
+
+
+
+
+
+
 add unzip/zip to debian dependencies
 
 

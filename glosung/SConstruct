@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2009 Eicke Godehardt
+# Copyright (C) 1999-2010 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.4.2'
+version = '3.5'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
