@@ -1,6 +1,47 @@
+2010-01-04  eicke
+
+	* release version 3.5
+	* [r260] update copyright statements
+	* [r259] udpate German translation
+	* [r258] add functionality to download bible20 texts
+
+2009-11-09  eicke
+
+	* [r257] adjust year automatically for download Losungen
+
+2009-10-29  eicke
+
+	* [r256] work on download dialog -> less crashes ;-)
+
+2009-10-23  eicke
+
+	* [r255] working on verse collections
+
+2009-09-29  eicke
+
+	* [r254] add helper function for ui file loading, check deprecated symbols
+
+2009-09-18  eicke
+
+	* [r253] fix tooltip of link to Xiphos (#2834963)
+	* [r252] adding more stuff towards downloading of texts from bible20
+	* [r251] add new util file, for now just wrapping
+
+2009-08-24  eicke
+
+	* [r250] add some more stuff to collections
+	* [r249] renamed losunglist to collection
+	* [r248] start downloading and analyzing texts from bible20
+	* [r247] fix naming
+	* [r246] update debian changelog
+
+2009-06-27  eicke
+
+	* [r245] fix gtk version in glade files
+
 2009-05-26  eicke
 
-        * release version 3.4.2
+	* release version 3.4.2
 	* [r243] remove one compile warning
 	* [r242] decorate signal callbacks with G_MODULE_EXPORT
 	* [r241] bug fix: preferences window opened only once

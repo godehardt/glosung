@@ -1,32 +1,56 @@
+glosung (3.5~karmic) karmic; urgency=low
+
+  * new upstream release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 04 Jan 2010 23:39:34 +0200
+
+glosung (3.5~jaunty) jaunty; urgency=low
+
+  * new upstream release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 04 Jan 2010 23:39:34 +0200
+
+glosung (3.5~intrepid) intrepid; urgency=low
+
+  * new upstream release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 04 Jan 2010 23:39:34 +0200
+
+glosung (3.5~hardy) hardy; urgency=low
+
+  * new upstream release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 04 Jan 2010 23:39:34 +0200
+
 glosung (3.4.2~hardy-1) hardy; urgency=low
 
   * patch: gtk version in glade file
 
- -- Eicke Godehardt <icke@lambda>  Tue, 26 May 2009 18:41:18 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 26 May 2009 18:41:18 +0200
 
 glosung (3.4.2~jaunty) jaunty; urgency=low
 
   * new upstream release
 
- -- Eicke Godehardt <icke@lambda>  Tue, 26 May 2009 18:41:18 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 26 May 2009 18:41:18 +0200
 
 glosung (3.4.2~intrepid) intrepid; urgency=low
 
   * new upstream release
 
- -- Eicke Godehardt <icke@lambda>  Tue, 26 May 2009 18:41:18 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 26 May 2009 18:41:18 +0200
 
 glosung (3.4.2~hardy) hardy; urgency=low
 
   * new upstream release
 
- -- Eicke Godehardt <icke@lambda>  Tue, 26 May 2009 18:41:18 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 26 May 2009 18:41:18 +0200
 
 glosung (3.4.1-2) intrepid; urgency=low
 
   * add intrepid version (2nd try)
 
- -- Eicke Godehardt <sf@godehardt.org>  Sun, 24 May 2009 21:27:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sun, 24 May 2009 21:27:00 +0100
 
 glosung (3.4.1) jaunty; urgency=low
 
@@ -35,13 +59,13 @@ glosung (3.4.1) jaunty; urgency=low
   * further simplify preferences
   * some glade than UI code
 
- -- Eicke Godehardt <sf@godehardt.org>  Thu, 07 May 2009 21:37:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Thu, 07 May 2009 21:37:00 +0100
 
 glosung (3.4-1) intrepid; urgency=low
 
   * add herrnhut.png to glosung.files
 
- -- Eicke Godehardt <sf@godehardt.org>  Sat, 31 Jan 2009 15:21:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 31 Jan 2009 15:21:00 +0100
 
 glosung (3.4) intrepid; urgency=low
 
@@ -49,32 +73,32 @@ glosung (3.4) intrepid; urgency=low
   * add about Herrnhut
   * simplify preferences
 
- -- Eicke Godehardt <sf@godehardt.org>  Sat, 31 Jan 2009 14:26:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 31 Jan 2009 14:26:00 +0100
 
 glosung (3.3.2) intrepid; urgency=low
 
   * version bump
   * fix path problems
 
- -- Eicke Godehardt <sf@godehardt.org>  Fri, 05 Dec 2008 13:20:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 05 Dec 2008 13:20:00 +0100
 
 glosung (3.3.1) intrepid; urgency=low
 
   * version bump
 
- -- Eicke Godehardt <sf@godehardt.org>  Fri, 05 Dec 2008 12:54:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 05 Dec 2008 12:54:00 +0100
 
 glosung (3.3) intrepid; urgency=low
 
   * version bump
 
- -- Eicke Godehardt <sf@godehardt.org>  Wed, 03 Dec 2008 22:43:00 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Wed, 03 Dec 2008 22:43:00 +0100
 
 glosung (3.2.2-2) gutsy; urgency=low
 
   * fix build dependencies
 
- -- Eicke Godehardt <sf@godehardt.org>  Sat, 01 Nov 2008 23:20:15 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 01 Nov 2008 23:20:15 +0100
 
 glosung (3.2.2) gutsy; urgency=low
 
@@ -84,14 +108,14 @@ glosung (3.2.2) gutsy; urgency=low
   * fix i18n of menu
   * version bump 
 
- -- Eicke Godehardt <eicke@godehardt.org>  Sat, 12 Jan 2008 16:11:22 +0100
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 12 Jan 2008 16:11:22 +0100
 
 glosung (3.2.1) stable; urgency=low
 
   * add support for the "original" Losung file format.
   * version bump to 3.2.1
 
- -- Eicke Godehardt <eicke@godehardt.org>  Mon, 31 Dec 2007 15:35:04 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 31 Dec 2007 15:35:04 +0200
 
 glosung (3.2) stable; urgency=low
 
@@ -99,7 +123,7 @@ glosung (3.2) stable; urgency=low
   * add a little pad arround all text
   * version bump to 3.2
 
- -- Eicke Godehardt <eicke@godehardt.org>  Fri, 28 Dec 2007 17:34:29 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 28 Dec 2007 17:34:29 +0200
 
 glosung (3.1.1) stable; urgency=low
 
@@ -108,7 +132,7 @@ glosung (3.1.1) stable; urgency=low
   * czech translation update
   * version bump to 3.1.1
 
- -- Eicke Godehardt <eicke@godehardt.org>  Sun, 30 Sep 2007 20:18:42 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sun, 30 Sep 2007 20:18:42 +0200
 
 glosung (3.1) stable; urgency=low
 
@@ -118,7 +142,7 @@ glosung (3.1) stable; urgency=low
   * make connection to gnomesword more stable
   * Version bump to 3.1
 
- -- Eicke Godehardt <eicke@godehardt.org>  Thu, 16 Aug 2007 22:38:31 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Thu, 16 Aug 2007 22:38:31 +0200
 
 glosung (3.0.2) stable; urgency=low
 
@@ -126,7 +150,7 @@ glosung (3.0.2) stable; urgency=low
   * add command line arguments to losung
   * bump to 3.0.2
 
- -- Eicke Godehardt <eicke@godehardt.org>  Tue, 01 Feb 2007 17:55:19 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 01 Feb 2007 17:55:19 +0200
 
 glosung (3.0.1) stable; urgency=low
 
@@ -134,7 +158,7 @@ glosung (3.0.1) stable; urgency=low
   * fix handle years for download
   * bump to 3.0.1
 
- -- Eicke Godehardt <eicke@godehardt.org>  Tue, 23 Jan 2007 23:08:24 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 23 Jan 2007 23:08:24 +0200
 
 glosung (3.0) stable; urgency=low
 
@@ -142,7 +166,7 @@ glosung (3.0) stable; urgency=low
   * add very simple command line interface
   * bump to 3.0
 
- -- Eicke Godehardt <eicke@godehardt.org>  Sat, 02 Dec 2006 13:49:23 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 02 Dec 2006 13:49:23 +0200
 
 glosung (2.1.3) stable; urgency=low
 
@@ -152,81 +176,81 @@ glosung (2.1.3) stable; urgency=low
   * add swahili localization
   * bump to 2.1.3
 
- -- Eicke Godehardt <eicke@godehardt.org>  Fri, 09 Dec 2005 15:52:10 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 09 Dec 2005 15:52:10 +0200
 
 glosung (2.1.2) stable; urgency=low
 
   * add french texts and GUI.
   * fixed compilation bug in SConstruct when PKG_CONFIG_PATH is not defined
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Sat, 04 Feb 2005 14:12:42 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 04 Feb 2005 14:12:42 +0200
 
 glosung (2.1.1) stable; urgency=low
 
   * up to date texts for chinese.
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Thu, 04 Jan 2005 17:18:15 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Thu, 04 Jan 2005 17:18:15 +0200
 
 glosung (2.1.0) stable; urgency=low
 
   * make ready for gtk+-2.4
   * add files for 2005.
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Thu, 23 Dec 2004 08:16:12 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Thu, 23 Dec 2004 08:16:12 +0200
   
 glosung (2.0.4) stable; urgency=low
 
   * add czech texts for 2004.
   * add languages: es, zh-CN, zh-TW
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Sat, 10 Jan 2004 16:32:22 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 10 Jan 2004 16:32:22 +0200
 
 glosung (2.0.3) stable; urgency=low
 
   * fix building bugs.
   * fix bug in debian packages
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Mon, 05 Jan 2004 19:53:42 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 05 Jan 2004 19:53:42 +0200
 
 glosung (2.0.2) stable; urgency=low
 
   * package for 2004.
 
- -- Eicke Godehardt <eicke@godehardt-online.de>  Mon, 22 Dec 2003 13:06:01 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 22 Dec 2003 13:06:01 +0200
 
 glosung (2.0.1) unstable; urgency=low
 
   * fixed gettext encoding but.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Wed, 8 Oct 2003 21:49:21 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Wed, 8 Oct 2003 21:49:21 +0200
 
 glosung (2.0) unstable; urgency=low
 
   * switched to gnome2.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 12 Nov 2002 14:27:09 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 12 Nov 2002 14:27:09 +0200
 
 glosung (1.0.2) unstable; urgency=low
 
   * better font selector used.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 2 Apr 2002 20:49:35 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 2 Apr 2002 20:49:35 +0200
 
 glosung (1.0.1) unstable; urgency=low
 
   * add czech support.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue, 19 Mar 2002 21:35:26 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue, 19 Mar 2002 21:35:26 +0200
 
 glosung (1.0) unstable; urgency=low
 
   * new release.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Tue,  3 Apr 2001 20:21:51 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Tue,  3 Apr 2001 20:21:51 +0200
 
 glosung (0.9.4) unstable; urgency=low
 
   * deianized.
 
- -- Eicke Godehardt <eicke.godehardt@igd.fhg.de>  Sat, 24 Feb 2001 15:22:08 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Sat, 24 Feb 2001 15:22:08 +0200
 
