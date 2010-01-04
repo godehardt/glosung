@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-25 20:57+0200\n"
-"PO-Revision-Date: 2009-04-25 21:00+0100\n"
+"POT-Creation-Date: 2010-01-04 23:09+0100\n"
+"PO-Revision-Date: 2010-01-04 23:16+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -386,6 +386,11 @@ msgid "russian"
 msgstr "russisch"
 
 #
+# File: src/glosung.c, line: 370
+msgid "swahili"
+msgstr "suaheli"
+
+#
 # File: src/glosung.c, line: 303
 msgid "tamil"
 msgstr "tamilisch"
@@ -402,6 +407,7 @@ msgstr "vietnamesisch"
 
 #
 # File: src/glosung.c, line: 306
+#. FIXME
 msgid "chinese simplified"
 msgstr "vereinfachtes chinesisch"
 
@@ -442,11 +448,9 @@ msgid "Add Languages"
 msgstr "Sprachen hinzufügen"
 
 #
-#
-#
-# File: src/glosung.c, line: 1283
-msgid "Herrnhuter Losungen (deutsch)"
-msgstr "Herrnhuter Losungen (deutsch)"
+# File: ui/add_language.glade, line: 31
+msgid "Source"
+msgstr "Quelle"
 
 #
 #
@@ -489,6 +493,11 @@ msgid "Download"
 msgstr "Herunterladen"
 
 #
+# File: ui/add_language.glade, line: 105
+msgid "download selected verse collection"
+msgstr "herunterladen der ausgewählten Verszusammenstellung"
+
+#
 # File: ui/add_language.glade, line: 100
 msgid "gtk-cancel"
 msgstr ""
@@ -528,8 +537,26 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+# File: src/glosung.c, line: 1283
+#~ msgid "Herrnhuter Losungen (deutsch)"
+#~ msgstr "Herrnhuter Losungen (deutsch)"
+#
+#
+#
+#
+#
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Schriftart des Textes:"
+#
+#
+#
+#
 #
 #
 #
@@ -539,6 +566,10 @@ msgstr ""
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
+#
+#
+#
 #
 #
 #
@@ -573,8 +604,16 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
+#
+#
+#
 #
 #
 #
@@ -610,9 +649,17 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
+#
+#
+#
 #
 #
 #
@@ -681,8 +728,16 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
+#
+#
+#
 #
 #
 #
@@ -776,10 +831,18 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
 #
 #
 #
@@ -883,10 +946,18 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
+#
+#
 #
 #
 #
@@ -991,6 +1062,10 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1045,10 +1120,18 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
+#
+#
+#
 #
 #
 #
