@@ -1,5 +1,5 @@
 /* collections.c
- * Copyright (C) 2006-2009 Eicke Godehardt
+ * Copyright (C) 2006-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ source_add_collection (Source *cs, gchar *lang, gint year)
 
         result = g_new (VerseCollection, 1);
         result->language = lang;
-        result->year = year;
+        result->year     = year;
 
         g_ptr_array_add (vc_s, result);
         return result;
@@ -313,7 +313,7 @@ source_get_languages (Source* cs)
 			source_finialize (cs);
                 	break;
                 case SOURCE_BIBLE20:
-                        scan_for_collections (cs);
+                	get_bible20_collections (cs);
                         break;
                 }
         }
@@ -322,7 +322,7 @@ source_get_languages (Source* cs)
 
 
 GPtrArray*
-source_get_collections (Source* cs, gchar *language)
+source_get_collections (const Source* cs, const gchar *language)
 {
 	if (cs == NULL) {
                 g_message ("Source is NULL!");

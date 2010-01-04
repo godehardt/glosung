@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2009 Eicke Godehardt
+ * Copyright (C) 1999-2010 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -367,11 +367,15 @@ init_languages (void)
         g_hash_table_insert (ht, "pt",    _("portuguese"));
         g_hash_table_insert (ht, "ro",    _("romanian"));
         g_hash_table_insert (ht, "ru",    _("russian"));
+        g_hash_table_insert (ht, "sw",    _("swahili"));
         g_hash_table_insert (ht, "ta",    _("tamil"));
         g_hash_table_insert (ht, "tr",    _("turkish"));
         g_hash_table_insert (ht, "vi",    _("vietnamese"));
         g_hash_table_insert (ht, "zh-CN", _("chinese simplified"));
         g_hash_table_insert (ht, "zh-TW", _("chinese traditional"));
+        // FIXME
+        g_hash_table_insert (ht, "zh-Hans", _("chinese simplified"));
+        g_hash_table_insert (ht, "zh-Hant", _("chinese traditional"));
 
         return ht;
 } /* init_languages */
@@ -1080,7 +1084,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-static GtkComboBox  *lang_combo;
+// static GtkComboBox  *lang_combo;
 static GtkComboBox  *year_combo;
 static GtkWidget    *download_button;
 static GtkListStore *store;
@@ -1224,20 +1228,28 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_widget_show_all (dialog);
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
-                gchar *langu = "de";
-/*                 gchar *langu = g_ptr_array_index
- *                       (server_list->languages,
- *                        gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)));
- *                 gint year = GPOINTER_TO_INT (g_ptr_array_index (years,
- *                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo))));
- */
-                // FIXME: get year from combo
-                gint year = this_year - 
-                        gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
-                download_losungen (year);
-                // TODO move to download.c
+                // gchar *langu = "de";
+                gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
+                if (index == -1) {
+                	return;
+                }
+                GPtrArray *langs = source_get_languages (server_list);
+                gchar *langu;
+                if (langs->len > 0 && index > 0) {
+                	index--;
+                }
+        	langu = g_ptr_array_index (langs, index);
+
+                GPtrArray *vc_s = source_get_collections (server_list, langu);
+                gint i = 0;
+		guint year = VC (g_ptr_array_index (vc_s, i))->year;
+
+                download (server_list, langu, year);
+
+                // TODO check return value of download
                 source_add_collection (local_collections, langu, year);
-                source_finialize (local_collections);
+                source_finialize      (local_collections);
+
                 update_language_store ();
                 if (local_collections->languages->len == 1) {
                         lang = langu;
@@ -1285,9 +1297,14 @@ sources_changed (GtkWidget *w, gpointer data)
                 gtk_combo_box_append_text (lang_combo, "");
         }
         for (i = 0; i < langs->len; i++) {
-                gtk_combo_box_append_text (lang_combo,
-                        (gchar*) g_hash_table_lookup (lang_translations,
-                                (gchar*) g_ptr_array_index (langs, i)));
+        	gchar *lang_code = (gchar*) g_ptr_array_index (langs, i);
+        	gchar *langu = (gchar*)
+        		g_hash_table_lookup (lang_translations, lang_code);
+        	if (! langu) {
+        		// continue;
+        		langu = lang_code;
+        	}
+                gtk_combo_box_append_text (lang_combo, langu);
         }
         gtk_combo_box_set_active (lang_combo, 0);
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), TRUE);
@@ -1316,8 +1333,8 @@ language_changed (GtkWidget *w, gpointer data)
 
         GPtrArray *langs = source_get_languages (server_list);
         gchar *langu;
-        if (langs->len > 1) {
-        	index = index - 1;
+        if (langs->len > 0 && index > 0) {
+        	index--;
         }
 	langu = g_ptr_array_index (langs, index);
         GPtrArray *vc_s = source_get_collections (server_list, langu);
