@@ -1,8 +1,32 @@
+glosung (3.5.1~karmic1) karmic; urgency=low
+
+  * new upstream bug fixing release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 22 Jan 2010 22:20:13 +0100
+
+glosung (3.5.1~jaunty1) jaunty; urgency=low
+
+  * new upstream bug fixing release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 22 Jan 2010 22:20:13 +0100
+
+glosung (3.5.1~intrepid1) intrepid; urgency=low
+
+  * new upstream bug fixing release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 22 Jan 2010 22:20:13 +0100
+
+glosung (3.5.1~hardy1) hardy; urgency=low
+
+  * new upstream bug fixing release
+
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Fri, 22 Jan 2010 22:20:13 +0100
+
 glosung (3.5~karmic) karmic; urgency=low
 
   * new upstream release
 
- -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 04 Jan 2010 23:39:34 +0200
+ -- Eicke Godehardt <sf AT godehardt DOT org>  Mon, 10 Jan 2010 19:12:29 +0200
 
 glosung (3.5~jaunty) jaunty; urgency=low
 

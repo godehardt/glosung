@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-04 23:09+0100\n"
+"POT-Creation-Date: 2010-01-22 22:22+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -126,8 +126,8 @@ msgstr "Mettre à jour/ajouter de nouvelles traductions"
 msgid "Edit the preferences"
 msgstr "Modifier les préférences"
 #
-# File: src/glosung.c, line: 219
-msgid "About Herrnhut"
+# File: src/glosung.c, line: 214
+msgid "About _Herrnhut"
 msgstr ""
 #
 #, fuzzy
@@ -135,7 +135,7 @@ msgid "about Losungen"
 msgstr "_Losung"
 #
 #, fuzzy
-msgid "About GLosung"
+msgid "About _GLosung"
 msgstr "_Losung"
 #
 #, fuzzy
@@ -346,8 +346,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
 #
 #
 #
@@ -384,8 +386,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
 #
 #
 #
@@ -447,9 +451,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
 #
 #
 #
@@ -544,9 +550,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
 #
 #
 #
