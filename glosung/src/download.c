@@ -271,64 +271,28 @@ analyse_bible20_list (Source* cs, Memory mem)
         j++;
         while (lines [j]) {
                 tokens = g_strsplit (lines [j], ";", -1);
-                if (tokens [0] && g_str_equal ("file", tokens [0])) {
-                        i = 0;
-                        guint year;
-                        sscanf (tokens [col_year], "%d", &year);
-                        VerseCollection* vc = source_add_collection
-                        	(cs, tokens [col_lang], year);
-                        vc->url     = tokens [col_url];
-                        vc->bible   = tokens [col_bible];
-                        vc->info    = tokens [col_info];
-                        // vc->updated = tokens [col_updated];
+                if (tokens [0]) {
+			if (g_str_equal ("file", tokens [0])) {
+				i = 0;
+				guint year;
+				sscanf (tokens [col_year], "%d", &year);
+				VerseCollection* vc = source_add_collection
+					(cs, tokens [col_lang], year);
+				vc->url     = tokens [col_url];
+				vc->bible   = tokens [col_bible];
+				vc->info    = tokens [col_info];
+				// vc->updated = g_date_new ();
+				// g_date_set_parse (vc->updated, tokens [col_updated]);
+			}
+			g_free (tokens [0]);
+			g_free (tokens [col_year]);
+			g_free (tokens);
                 }
-                g_free (tokens [0]);
-                g_free (tokens [col_year]);
-                g_free (tokens);
                 j++;
         }
         g_strfreev (lines);
 
         source_finialize (cs);
-        /*
-                i = 0;
-                while (tokens [i]) {
-                        g_hash_table_insert (columns, tokens [i], GINT_TO_POINTER (i));
-                }
-
-                switch (chunk.memory [start]) {
-                case '#':
-                        break;
-                case 'F':
-                        if (isdigit (chunk.memory [start + 1]) &&
-                            isdigit (chunk.memory [start + 2]) &&
-                            isdigit (chunk.memory [start + 3]) &&
-                            isdigit (chunk.memory [start + 4]))
-                        {
-                                year =  (chunk.memory [++start] - 48) * 1000;
-                                year += (chunk.memory [++start] - 48) * 100;
-                                year += (chunk.memory [++start] - 48) * 10;
-                                year += (chunk.memory [++start] - 48);
-                                start += 2;
-                                lang = g_strndup (chunk.memory + start,
-                                                  end - start - 1);
-                                collection_add (list, lang, year);
-                        }
-                        break;
-                case 'D':
-                        chunk.memory += start + 1;
-                        chunk.size -= start + 1;
-
-                        LozHeader     *header = get_header (& chunk);
-                        unsigned char *data   = get_data   (& chunk);
-                        data = unloz (header, data);
-                        to_file (header, data);
-                        return NULL;
-
-                        break;
-                }
-        } while (chunk.memory [end] != '\0');
-        */
 } /* analyse_bible20_list */
 
 
