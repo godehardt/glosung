@@ -211,9 +211,9 @@ static GtkActionEntry entries[] = {
         { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL,
           N_("Edit the preferences"), G_CALLBACK (property_cb) },
 
-        { "AboutHerrnhut", GTK_STOCK_ABOUT, N_("About Herrnhut"), NULL,
+        { "AboutHerrnhut", GTK_STOCK_ABOUT, N_("About _Herrnhut"), NULL,
           N_("about Losungen"), G_CALLBACK (about_herrnhut_cb) },
-        { "About", GTK_STOCK_ABOUT, N_("About GLosung"), NULL,
+        { "About", GTK_STOCK_ABOUT, N_("About _GLosung"), NULL,
           N_("about GLosung"), G_CALLBACK (about_cb) },
 };
 
