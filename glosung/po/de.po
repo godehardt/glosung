@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-04 23:09+0100\n"
-"PO-Revision-Date: 2010-01-04 23:16+0100\n"
+"PO-Revision-Date: 2010-01-22 22:14+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -283,7 +283,7 @@ msgstr "_über Losungen"
 #
 #
 msgid "About GLosung"
-msgstr "_über GLosung"
+msgstr "_Über GLosung"
 
 #
 #
