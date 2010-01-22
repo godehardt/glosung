@@ -1,3 +1,10 @@
+2010-01-22  eicke
+
+	* release version 3.5.1
+	* [r264] fix access key for about menu items
+	* [r263] fix crash in download manager when selecting bible20
+	* [r262] update German and Czech translation
+
 2010-01-04  eicke
 
 	* release version 3.5

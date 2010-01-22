@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-04 23:09+0100\n"
-"PO-Revision-Date: 2010-01-22 22:14+0100\n"
+"POT-Creation-Date: 2010-01-22 22:22+0100\n"
+"PO-Revision-Date: 2010-01-22 22:23+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -260,8 +260,8 @@ msgstr "Einstellungen ändern"
 
 #
 # File: src/glosung.c, line: 219
-msgid "About Herrnhut"
-msgstr "Über Herrnhut"
+msgid "About _Herrnhut"
+msgstr "Über _Herrnhut"
 
 #
 #
@@ -282,8 +282,8 @@ msgstr "_über Losungen"
 #
 #
 #
-msgid "About GLosung"
-msgstr "_Über GLosung"
+msgid "About _GLosung"
+msgstr "Über _GLosung"
 
 #
 #
@@ -541,9 +541,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 1283
 #~ msgid "Herrnhuter Losungen (deutsch)"
 #~ msgstr "Herrnhuter Losungen (deutsch)"
+#
 #
 #
 #
@@ -563,9 +565,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
 #
 #
 #
@@ -608,8 +612,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
 #
 #
 #
@@ -653,9 +659,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
 #
 #
 #
@@ -732,8 +740,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -835,10 +845,12 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -950,10 +962,12 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
 #
 #
 #
@@ -1066,6 +1080,7 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1124,10 +1139,12 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
 #
 #
 #
