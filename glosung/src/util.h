@@ -20,9 +20,11 @@
 #define GLOSUNG_UTIL__H
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 
-void   wrap_text    (gchar* string, gint width);
-gchar* find_ui_file (gchar* filename);
+void   wrap_text    (gchar     *string, gint width);
+gchar* find_ui_file (gchar     *filename);
+void   show_uri     (GtkWidget *widget, gchar *uri, gpointer data);
 
 #endif /* GLOSUNG_UTIL__H */
