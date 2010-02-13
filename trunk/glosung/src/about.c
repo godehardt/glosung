@@ -20,13 +20,12 @@
 #include <glib/gi18n.h>
 
 #include "about.h"
+#include "util.h"
 
 #define APPNAME "GLosung"
 
 
 static GtkWidget *herrnhut = NULL;
-
-static void activate_link (GtkAboutDialog *about, const gchar *link, gpointer data);
 
 
 /*
@@ -46,8 +45,9 @@ about (GtkWidget *app)
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
-        gtk_about_dialog_set_url_hook (activate_link, GINT_TO_POINTER (1),
-                                       NULL);
+        gtk_about_dialog_set_url_hook
+		((GtkAboutDialogActivateLinkFunc) show_uri,
+		 GINT_TO_POINTER (1), NULL);
 
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
@@ -76,7 +76,8 @@ about_herrnhut (GtkWidget *app)
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/herrnhut.png", &error);
 
-        gtk_about_dialog_set_url_hook (activate_link, NULL, NULL);
+        gtk_about_dialog_set_url_hook
+		((GtkAboutDialogActivateLinkFunc) show_uri, NULL, NULL);
         herrnhut = gtk_about_dialog_new ();
         gtk_about_dialog_set_program_name
                 (GTK_ABOUT_DIALOG (herrnhut), "Herrnhuter Losungen");
@@ -97,29 +98,3 @@ about_herrnhut (GtkWidget *app)
         g_signal_connect (G_OBJECT (herrnhut), "destroy",
                           G_CALLBACK (gtk_widget_destroyed), &herrnhut);
 } /* about_herrnhut */
-
-
-static void
-activate_link (GtkAboutDialog *about, const gchar *uri, gpointer data)
-{
-        char *argv [3];
-        argv [0] = "xdg-open";
-        argv [1] = (char *) uri;
-        argv [2] = NULL;
-
-        GError *error = NULL;
-        if (! g_spawn_async (NULL, argv, NULL,
-                       G_SPAWN_STDOUT_TO_DEV_NULL
-                        | G_SPAWN_STDERR_TO_DEV_NULL
-                        | G_SPAWN_SEARCH_PATH,
-                       NULL, NULL, NULL, &error)) {
-                GtkWidget *msg = gtk_message_dialog_new
-                        (NULL, GTK_DIALOG_MODAL,
-                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                         "%s", error->message);
-                g_signal_connect (G_OBJECT (msg), "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
-                gtk_widget_show (msg);
-                g_error_free (error);
-        }
-}

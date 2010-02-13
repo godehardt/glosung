@@ -120,8 +120,6 @@ static GString* create_years_string (gchar *langu);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
 static void lang_manager_cb      (GtkWidget *w,   gpointer data);
-static void link_execute         (GtkWidget *widget,
-                                  gchar     *uri, gpointer data);
 static void next_day_cb          (GtkWidget *w,   gpointer data);
 static void next_month_cb        (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
@@ -443,8 +441,7 @@ create_app (void)
                                  GTK_BUTTONBOX_SPREAD);
                         label [i] = gtk_link_button_new ("");
                         gtk_link_button_set_uri_hook
-                                ((GtkLinkButtonUriFunc) link_execute,
-                                 NULL, NULL);
+                                ((GtkLinkButtonUriFunc) show_uri, app, NULL);
                         gtk_widget_set_tooltip_text
 				(label [i], "open in Xiphos bible study");
                         gtk_container_add (GTK_CONTAINER (widget), label [i]);
@@ -653,52 +650,6 @@ show_text (void)
 
         losung_free (ww);
 } /* show_text */
-
-
-/*
- * callback function for linkbutton to open gnomesword
- */
-static void
-link_execute (GtkWidget *widget, gchar *uri, gpointer data)
-{
-        /* since 2.14 !!!
-        gboolean gtk_show_uri (NULL, (const gchar*) uri, 0, NULL);
-         */
-        /* hack because of gtk_about_dialog_set_url_hook */
-        if (strncmp (uri, "http://", 7) == 0) {
-                     return;
-        }
-        char *argv [3];
-        argv [0] = "xiphos";
-        argv [1] = uri;
-        argv [2] = NULL;
-
-        GError *error = NULL;
-        if (! g_spawn_async (NULL, argv, NULL,
-                       G_SPAWN_STDOUT_TO_DEV_NULL
-                        | G_SPAWN_STDERR_TO_DEV_NULL
-                        | G_SPAWN_SEARCH_PATH,
-                       NULL, NULL, NULL, &error))
-        {
-                argv [0] = "gnomesword2";
-                if (! g_spawn_async (NULL, argv, NULL,
-                       G_SPAWN_STDOUT_TO_DEV_NULL
-                        | G_SPAWN_STDERR_TO_DEV_NULL
-                        | G_SPAWN_SEARCH_PATH,
-                       NULL, NULL, NULL, &error))
-                {
-                        GtkWidget *msg = gtk_message_dialog_new
-                            (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                             GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                                 "%s", error->message);
-                        //_("No text files found!\n");
-                        g_signal_connect (G_OBJECT (msg), "response",
-                                          G_CALLBACK (gtk_widget_destroy),NULL);
-                        gtk_widget_show (msg);
-                        g_error_free (error);
-                }
-        }
-}
 
 
 /*
