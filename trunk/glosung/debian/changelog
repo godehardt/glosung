@@ -1,3 +1,15 @@
+glosung (3.5.3~lucid) lucid; urgency=low
+
+  * fix compilation problem under lucid/new gtk versions
+
+ -- Eicke Godehardt <sf@godehardt.org>  Mon, 03 May 2010 21:44:05 +0200
+
+glosung (3.5.2~lucid) lucid; urgency=low
+
+  * fix #2947728 and #2935243 (open xiphos and urls in about)
+
+ -- Eicke Godehardt <sf@godehardt.org>  Sat, 13 Feb 2010 13:23:54 +0100
+
 glosung (3.5.2~karmic) karmic; urgency=low
 
   * fix #2947728 and #2935243 (open xiphos and urls in about)

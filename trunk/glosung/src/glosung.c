@@ -101,6 +101,13 @@ static Source    *server_list = NULL;
 
 /* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
 
+
+/* compatibility with older Gtk+s */
+#if ! GTK_CHECK_VERSION(2,20,0)
+	#define gtk_widget_get_realized GTK_WIDGET_REALIZED
+#endif
+
+
 /****************************\
       Function prototypes
 \****************************/
@@ -679,7 +686,7 @@ static void
 property_cb (GtkWidget *w, gpointer data)
 {
         if (property != NULL) {
-                g_assert (GTK_WIDGET_REALIZED (property));
+                g_assert (gtk_widget_get_realized (property));
                 gdk_window_show  (property->window);
                 gdk_window_raise (property->window);
         } else {
@@ -876,7 +883,7 @@ calendar_cb (GtkWidget *w, gpointer data)
         static GtkWidget *dialog = NULL;
 
         if (dialog != NULL) {
-                g_assert (GTK_WIDGET_REALIZED (dialog));
+                g_assert (gtk_widget_get_realized (dialog));
                 gdk_window_show  (dialog->window);
                 gdk_window_raise (dialog->window);
         } else {
