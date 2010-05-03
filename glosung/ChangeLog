@@ -1,3 +1,14 @@
+2010-05-03  eicke
+
+	* release version 3.5.3
+	* fix compilation problem under lucid/new gtk versions
+
+2010-02-13  eicke
+
+	* release version 3.5.2
+	* [r267] update debian changelog
+	* [r266] fix #2947728 and #2935243 (open xiphos and urls in about)
+
 2010-01-22  eicke
 
 	* release version 3.5.1

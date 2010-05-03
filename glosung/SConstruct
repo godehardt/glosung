@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.5.2'
+version = '3.5.3'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -76,10 +76,10 @@ if ARGUMENTS.get ('profile'):
 if env['PLATFORM'] != 'win32':
         linkflags.append ('-Wl,--as-needed')
 
-if not (ARGUMENTS.get ('dev')):
-	# if (ARGUMENTS.get ('dev')):
+#if not (ARGUMENTS.get ('dev')):
+if (ARGUMENTS.get ('dev')):
     ccflags   += [
-    	# '-Werror',
+    	 '-Werror',
     	 '-DG_DISABLE_DEPRECATED', '-DGDK_PIXBUF_DISABLE_DEPRECATED',
      	 '-DGDK_DISABLE_DEPRECATED', '-DGTK_DISABLE_DEPRECATED']
 
