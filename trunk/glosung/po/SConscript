@@ -18,7 +18,7 @@
 
 Import ('env install_dir prefix tar_file')
 
-languages = ['cs', 'de', 'fr']
+languages = ['cs', 'de', 'fr', 'hu']
 
 pot = env.Command ('glosung.pot', ['#/src/about.c',
                                    '#/src/losung.c',
@@ -40,8 +40,9 @@ for lang in languages:
 if env['PLATFORM'] != 'win32':
 	env.Tar (tar_file, ['SConscript',
                     'cs.po',
+                    'de.po',
                     'fr.po',
-                    'de.po'])
+                    'hu.po'])
 
 
 #import glob
