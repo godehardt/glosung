@@ -83,6 +83,8 @@ static GtkWidget *property = NULL;
 
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
+static gboolean   use_proxy = FALSE;
+  gchar     *proxy = NULL;
 static gchar     *new_font;
 static gboolean   autostart;
 static gboolean   autostart_new;
@@ -137,10 +139,12 @@ static void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store ();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
 
-void autostart_cb         (GtkWidget *w,   gpointer data);
-void font_sel_cb          (GtkWidget *button,   gpointer data);
-void lang_changed_cb      (GtkWidget *item,     gpointer data);
-void sword_cb             (GtkWidget *toggle,   gpointer data);
+void autostart_cb           (GtkWidget *w,        gpointer data);
+void font_sel_cb            (GtkWidget *button,   gpointer data);
+void lang_changed_cb        (GtkWidget *item,     gpointer data);
+void proxy_toggled_cb       (GtkWidget *toggle,   gpointer data);
+void proxy_changed_cb       (GtkWidget *toggle,   gpointer data);
+void sword_cb               (GtkWidget *toggle,   gpointer data);
 
 
 /******************************\
@@ -319,8 +323,12 @@ main (int argc, char **argv)
         calendar_close = gconf_client_get_bool
                 (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
                  NULL);
-        font = gconf_client_get_string (client, "/apps/" PACKAGE "/font",
-                                        NULL);
+        font      = gconf_client_get_string
+        		(client, "/apps/" PACKAGE "/font", NULL);
+        use_proxy = gconf_client_get_bool
+        		(client, "/apps/" PACKAGE "/use_proxy", NULL);
+        proxy     = gconf_client_get_string
+        		(client, "/apps/" PACKAGE "/proxy", NULL);
 #endif /* WIN32 */
 #if (defined (VERSE_LINK) && ! defined (WIN32))
         show_sword = show_sword_new = gconf_client_get_bool
@@ -692,6 +700,8 @@ property_cb (GtkWidget *w, gpointer data)
         } else {
                 GtkWidget *combo;
                 GtkWidget *table;
+                GtkWidget *proxy_entry;
+                GtkWidget *proxy_checkbox;
                 gint       i;
 
                 if (new_font != NULL) {
@@ -708,11 +718,15 @@ property_cb (GtkWidget *w, gpointer data)
                         g_message ("Error while loading UI definition file");
                         return;
                 }
+
                 property = GTK_WIDGET
                         (gtk_builder_get_object (builder, "preferences_dialog"));
-
                 table = GTK_WIDGET
                         (gtk_builder_get_object (builder, "preferences_table"));
+                proxy_checkbox = GTK_WIDGET
+                        (gtk_builder_get_object (builder, "proxy_checkbox"));
+                proxy_entry = GTK_WIDGET
+                        (gtk_builder_get_object (builder, "proxy_entry"));
 
                 combo = gtk_combo_box_new_text ();
                 for (i = 0; i < (local_collections->languages)->len; i++) {
@@ -731,6 +745,14 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_widget_show (combo);
                 gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
+                if (use_proxy) {
+                	gtk_toggle_button_set_active
+				(GTK_TOGGLE_BUTTON (proxy_checkbox), TRUE);
+                	gtk_widget_set_sensitive (proxy_entry, TRUE);
+                }
+                if (proxy && strlen (proxy) > 0) {
+                	gtk_entry_set_text (GTK_ENTRY (proxy_entry), proxy);
+                }
                 if (font != NULL) {
                         gtk_font_button_set_font_name (GTK_FONT_BUTTON
                            (gtk_builder_get_object (builder, "fontbutton")),
@@ -760,6 +782,41 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_widget_show_all (property);
         }
 } /* property_cb */
+
+
+/*
+ * callback function for preferences dialog.
+ */
+G_MODULE_EXPORT void
+proxy_toggled_cb (GtkWidget *data, gpointer toggle)
+{
+        gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+        gtk_widget_set_sensitive (GTK_WIDGET (data), on);
+
+#ifndef WIN32
+	gconf_client_set_bool
+		(client, "/apps/" PACKAGE "/use_proxy", on, NULL);
+#endif /* WIN32 */
+} /* lang_changed_cb */
+
+
+/*
+ * callback function for preferences dialog.
+ */
+G_MODULE_EXPORT void
+proxy_changed_cb (GtkWidget *entry, gpointer data)
+{
+        const gchar *proxy_new = gtk_entry_get_text (GTK_ENTRY (entry));
+        if (proxy) {
+        	g_free (proxy);
+        }
+        proxy = g_strdup (proxy_new);
+
+#ifndef WIN32
+	gconf_client_set_string
+		(client, "/apps/" PACKAGE "/proxy", proxy, NULL);
+#endif /* WIN32 */
+} /* lang_changed_cb */
 
 
 /*

@@ -10,78 +10,142 @@
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">5</property>
         <child>
-          <object class="GtkTable" id="preferences_table">
+          <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
-            <property name="n_rows">4</property>
-            <property name="n_columns">2</property>
-            <property name="row_spacing">3</property>
+            <property name="can_focus">True</property>
             <child>
-              <object class="GtkLabel" id="language_label">
+              <object class="GtkTable" id="preferences_table">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">Displayed Language:</property>
+                <property name="n_rows">4</property>
+                <property name="n_columns">2</property>
+                <property name="row_spacing">3</property>
+                <child>
+                  <object class="GtkLabel" id="language_label">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">Displayed Language:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="font_label">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">Font:</property>
+                    <property name="angle">0.050000000000000003</property>
+                  </object>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFontButton" id="fontbutton">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="font_set" handler="font_sel_cb"/>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="autostart_checkbox">
+                    <property name="label" translatable="yes">Start GLosung at login time</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="autostart_cb"/>
+                  </object>
+                  <packing>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">2</property>
+                    <property name="bottom_attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="sword_checkbox">
+                    <property name="label" translatable="yes">Link location to Xiphos/Gnomesword</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="sword_cb"/>
+                  </object>
+                  <packing>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
             </child>
-            <child>
-              <object class="GtkLabel" id="font_label">
+            <child type="tab">
+              <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">Font:</property>
-                <property name="angle">0.050000000000000003</property>
+                <property name="label" translatable="yes">View</property>
               </object>
               <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
-              <object class="GtkFontButton" id="fontbutton">
+              <object class="GtkTable" id="network_table">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <signal name="font_set" handler="font_sel_cb"/>
+                <property name="n_columns">2</property>
+                <child>
+                  <object class="GtkCheckButton" id="proxy_checkbox">
+                    <property name="label" translatable="yes">Proxy</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <signal name="toggled" handler="proxy_toggled_cb" object="proxy_entry"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="proxy_entry">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_text" translatable="yes">host:port</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="caps_lock_warning">False</property>
+                    <signal name="changed" handler="proxy_changed_cb"/>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                  </packing>
+                </child>
               </object>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Network</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="autostart_checkbox">
-                <property name="label" translatable="yes">Start GLosung at login time</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="autostart_cb"/>
-              </object>
-              <packing>
-                <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
+              <placeholder/>
             </child>
-            <child>
-              <object class="GtkCheckButton" id="sword_checkbox">
-                <property name="label" translatable="yes">Link location to Xiphos/Gnomesword</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="sword_cb"/>
-              </object>
-              <packing>
-                <property name="right_attach">2</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-              </packing>
-            </child>
-            <child>
+            <child type="tab">
               <placeholder/>
             </child>
           </object>
@@ -107,7 +171,7 @@
             </child>
             <child>
               <object class="GtkButton" id="close">
-                <property name="label" translatable="yes">gtk-close</property>
+                <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
