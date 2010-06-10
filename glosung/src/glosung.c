@@ -51,6 +51,7 @@
 #include "util.h"
 
 
+static const int WRAP_LENGTH = 47;
 /****************************\
    Variables & Definitions
 \****************************/
@@ -84,7 +85,7 @@ static GtkWidget *property = NULL;
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
 static gboolean   use_proxy = FALSE;
-  gchar     *proxy = NULL;
+static gchar     *proxy = NULL;
 static gchar     *new_font;
 static gboolean   autostart;
 static gboolean   autostart_new;
@@ -528,9 +529,21 @@ show_text (void)
                 if (! ww) {
                         ww = get_the_word (new_date, lang);
                 }
+                if (ww) {
+                	if ((strlen (ww->ot.text) > WRAP_LENGTH + 5)
+                			&& ! strstr (ww->ot.text, "\n"))
+                	{
+                        	wrap_text (ww->ot.text, WRAP_LENGTH);
+                	}
+                	if ((strlen (ww->nt.text) > WRAP_LENGTH + 5)
+                			&& ! strstr (ww->nt.text, "\n"))
+                	{
+                        	wrap_text (ww->nt.text, WRAP_LENGTH);
+                	}
+                }
         } else {
-        	wrap_text (ww->ot.text, 47);
-        	wrap_text (ww->nt.text, 47);
+        	wrap_text (ww->ot.text, WRAP_LENGTH);
+        	wrap_text (ww->nt.text, WRAP_LENGTH);
         }
 
         if (ww == NULL) {
