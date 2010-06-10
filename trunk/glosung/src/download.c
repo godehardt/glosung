@@ -214,6 +214,11 @@ real_download (const gchar *url)
                                   (void *)&chunk);
                 curl_easy_setopt (curl_handle, CURLOPT_USERAGENT,
                                   "glosung/" VERSION);
+                /*
+                if (proxy) {
+                	curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
+                }
+                */
 
                 res = curl_easy_perform (curl_handle);
                 curl_easy_cleanup (curl_handle);

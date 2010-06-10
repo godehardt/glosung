@@ -6,14 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-22 22:22+0100\n"
+"POT-Creation-Date: 2010-06-09 18:35+0200\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 #
 #
 #
@@ -27,12 +26,16 @@ msgstr ""
 # File: src/glosung.c, line: 563
 msgid "Gods word for every day"
 msgstr "Boží slovo pro každý den"
-
 #
 # File: src/about.c, line: 86
-msgid "The watchwords (german: Losungen) are words out of the bible, one from the Old and one from the New Testament.  They are choosen by lot since 1731.  By now they are provided in about 50 languages."
-msgstr "Hesla jsou verše z Bible, jeden verš ze Starého a jeden z Nového zákona. Verše jsou losovány od roku 1731. Momentálně jsou Hesla vydávána asi v 50 jazycích."
-
+msgid ""
+"The watchwords (german: Losungen) are words out of the bible, one from the "
+"Old and one from the New Testament.  They are choosen by lot since 1731.  By "
+"now they are provided in about 50 languages."
+msgstr ""
+"Hesla jsou verše z Bible, jeden verš ze Starého a jeden z Nového zákona. "
+"Verše jsou losovány od roku 1731. Momentálně jsou Hesla vydávána asi v 50 "
+"jazycích."
 #
 # File: src/about.c, line: 88
 msgid ""
@@ -42,18 +45,15 @@ msgstr ""
 "Hesla: (C) Ochranovská Jednota bratrská\n"
 "Česká edice: (C) Petr Heřman - DÚLOS\n"
 "Překlad: (C) Miroslav Matouš, Jindřich Halama st. "
-
 #
 # File: src/glosung.c, line: 316
 #, c-format
 msgid "No '%s' texts found for %d!\n"
 msgstr "Nebyl nalezen text '%s' pro %d!\n"
-
 #
 # File: src/glosung.c, line: 209
 msgid "_File"
 msgstr "_Soubor"
-
 #
 #
 #
@@ -68,25 +68,21 @@ msgstr "_Soubor"
 # File: src/glosung.c, line: 173
 msgid "_Edit"
 msgstr "Úpr_avy"
-
 #
 # File: src/glosung.c, line: 211
 msgid "_Help"
 msgstr "Nápo_věda"
-
 #
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 msgid "_Calendar"
 msgstr "Ka_lendář"
-
 #
 # File: src/glosung.c, line: 194
 # File: src/glosung.c, line: 196
 msgid "select date from calendar"
 msgstr "vybrat datum z kalendáře"
-
 #
 #
 #
@@ -102,7 +98,6 @@ msgstr "vybrat datum z kalendáře"
 # File: src/glosung.c, line: 180
 msgid "_Today"
 msgstr "_Dnes"
-
 #
 #
 #
@@ -118,7 +113,6 @@ msgstr "_Dnes"
 # File: src/glosung.c, line: 181
 msgid "Show losung of today"
 msgstr "Ukázat dnešní hesla"
-
 #
 #
 #
@@ -130,7 +124,6 @@ msgstr "Ukázat dnešní hesla"
 # File: src/glosung.c, line: 183
 msgid "_Next Day"
 msgstr "_Následující den"
-
 #
 #
 #
@@ -147,7 +140,6 @@ msgstr "_Následující den"
 # File: src/glosung.c, line: 184
 msgid "Show losung of next day"
 msgstr "Zobrazit hesla na následující den"
-
 #
 #
 #
@@ -164,7 +156,6 @@ msgstr "Zobrazit hesla na následující den"
 # File: src/glosung.c, line: 177
 msgid "_Previous Day"
 msgstr "_Předchozí den"
-
 #
 #
 #
@@ -181,7 +172,6 @@ msgstr "_Předchozí den"
 # File: src/glosung.c, line: 178
 msgid "Show losung of previous day"
 msgstr "Zobrazit hesla na předchozí den"
-
 #
 #
 #
@@ -192,7 +182,6 @@ msgstr "Zobrazit hesla na předchozí den"
 # File: src/glosung.c, line: 133
 msgid "_Next Month"
 msgstr "Následující _měsíc"
-
 #
 #
 #
@@ -208,7 +197,6 @@ msgstr "Následující _měsíc"
 # File: src/glosung.c, line: 134
 msgid "Show losung of next month"
 msgstr "Zobrazit hesla na následující měsíc"
-
 #
 #
 #
@@ -219,7 +207,6 @@ msgstr "Zobrazit hesla na následující měsíc"
 # File: src/glosung.c, line: 136
 msgid "_Previous Month"
 msgstr "Pře_dchozí měsíc"
-
 #
 #
 #
@@ -235,27 +222,22 @@ msgstr "Pře_dchozí měsíc"
 # File: src/glosung.c, line: 137
 msgid "Show losung of previous month"
 msgstr "Zobrazit hesla na předchozí měsíc"
-
 #
 # File: src/glosung.c, line: 228
 msgid "Quit the application"
 msgstr "Ukončit aplikaci"
-
 #
 # File: src/glosung.c, line: 213
 msgid "_Copy text"
 msgstr "_Kopírovat text"
-
 #
 # File: src/glosung.c, line: 194
 msgid "copy the text to clipboard"
 msgstr "kopírovat text do schránky"
-
 #
 # File: src/glosung.c, line: 222
 msgid "_Organize Watchwords..."
 msgstr "_Uspořádat Hesla..."
-
 #
 #
 #
@@ -271,7 +253,6 @@ msgstr "_Uspořádat Hesla..."
 # File: src/glosung.c, line: 181
 msgid "update/install text files"
 msgstr "aktualizovat/instalovat jazykové soubory"
-
 #
 #
 #
@@ -288,12 +269,10 @@ msgstr "aktualizovat/instalovat jazykové soubory"
 # File: src/glosung.c, line: 154
 msgid "Edit the preferences"
 msgstr "Změnit nastavení"
-
 #
 # File: src/glosung.c, line: 219
 msgid "About _Herrnhut"
 msgstr "O _Ochranově"
-
 #
 #
 #
@@ -306,7 +285,6 @@ msgstr "O _Ochranově"
 # File: src/glosung.c, line: 166
 msgid "about Losungen"
 msgstr "o Heslech"
-
 #
 #
 #
@@ -319,7 +297,6 @@ msgstr "o Heslech"
 # File: src/glosung.c, line: 166
 msgid "About _GLosung"
 msgstr "O aplikaci _GLosung"
-
 #
 #
 #
@@ -332,18 +309,15 @@ msgstr "O aplikaci _GLosung"
 # File: src/glosung.c, line: 166
 msgid "about GLosung"
 msgstr "o aplikaci GLosung"
-
 #
 # File: src/glosung.c, line: 257
 msgid "Start only once a day"
 msgstr "Spouštět jen jednou za den"
-
 #
 # File: src/glosung.c, line: 209
 #. should be translated to corresponding language, e.g. 'de'
 msgid "en"
 msgstr "cs"
-
 #
 # File: src/glosung.c, line: 267
 msgid ""
@@ -352,156 +326,127 @@ msgid ""
 msgstr ""
 "Žádné textové soubory nebyly nalezeny!\n"
 "Nainstalujte si, prosím, příslušné jazykové soubory."
-
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
 msgstr "afrikánsky"
-
 #
 # File: src/glosung.c, line: 289
 msgid "arabic"
 msgstr "arabsky"
-
 #
 # src/glosung.c:25
 # File: src/glosung.c, line: 79
 msgid "czech"
 msgstr "česky"
-
 #
 # src/glosung.c:26
 # File: src/glosung.c, line: 80
 msgid "german"
 msgstr "německy"
-
 #
 # src/glosung.c:27
 # File: src/glosung.c, line: 81
 msgid "english"
 msgstr "anglicky"
-
 #
 # File: src/glosung.c, line: 293
 msgid "spanish"
 msgstr "španělsky"
-
 #
 # File: src/glosung.c, line: 294
 msgid "french"
 msgstr "francouzsky"
-
 #
 # File: src/glosung.c, line: 295
 msgid "hebrew"
 msgstr "hebrejsky"
-
 #
 # File: src/glosung.c, line: 296
 msgid "hungarian"
 msgstr "maďarsky"
-
 #
 # File: src/glosung.c, line: 297
 msgid "italian"
 msgstr "italsky"
-
 #
 # File: src/glosung.c, line: 298
 msgid "dutch"
 msgstr "nizozemsky"
-
 #
 # File: src/glosung.c, line: 299
 msgid "norwegian"
 msgstr "norsky"
-
 #
 # File: src/glosung.c, line: 300
 msgid "portuguese"
 msgstr "portugalsky"
-
 #
 # File: src/glosung.c, line: 301
 msgid "romanian"
 msgstr "rumunsky"
-
 #
 # File: src/glosung.c, line: 302
 msgid "russian"
 msgstr "rusky"
-
 #
 # File: src/glosung.c, line: 370
 msgid "swahili"
 msgstr "svahilsky"
-
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
 msgstr "tamilsky"
-
 #
 # File: src/glosung.c, line: 304
 msgid "turkish"
 msgstr "turecky"
-
 #
 # File: src/glosung.c, line: 305
 msgid "vietnamese"
 msgstr "vietnamsky"
-
 #
 # File: src/glosung.c, line: 306
 #. FIXME
 msgid "chinese simplified"
 msgstr "čínsky (zjednodušeně)"
-
 #
 # File: src/glosung.c, line: 307
 msgid "chinese traditional"
 msgstr "čínsky (tradičně)"
-
 #
 # File: src/glosung.c, line: 316
 #, c-format
 msgid "No %s texts found for %d!"
 msgstr "Nebyl nalezen text %s pro %d!"
-
 #
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 msgid "Calendar"
 msgstr "Kalendář"
-
 #
 # File: src/glosung.c, line: 1068
 msgid "Languages"
 msgstr "Jazyky"
-
 #
 # File: src/glosung.c, line: 1107
 msgid "Installed Languages"
 msgstr "Instalované jazyky"
-
 #
 # File: src/parser.c, line: 334
 msgid "Watchword for %A, %e. %B %Y"
 msgstr "Heslo pro %A, %e. %B %Y"
-
 #
 #
 #
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
 msgstr "Přidej jazyky"
-
 #
 # File: ui/add_language.glade, line: 31
 msgid "Source"
 msgstr "Zdroj"
-
 #
 #
 #
@@ -527,31 +472,26 @@ msgstr "Zdroj"
 # File: src/glosung.c, line: 1150
 msgid "Language"
 msgstr "Jazyk"
-
 #
 #
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
 msgstr "Rok"
-
 #
 #
 #
 # File: src/glosung.c, line: 1144
 msgid "Download"
 msgstr "Stáhnout"
-
 #
 # File: ui/add_language.glade, line: 105
 msgid "download selected verse collection"
 msgstr "stáhnout vybranou sbírku veršů"
-
 #
 # File: ui/add_language.glade, line: 100
 msgid "gtk-cancel"
 msgstr "zrušit"
-
 #
 #
 # src/glosung.c:103
@@ -559,35 +499,49 @@ msgstr "zrušit"
 # File: src/glosung.c, line: 429
 msgid "Preferences"
 msgstr "Nastavení"
-
 #
 #
 # src/glosung.c:479
 # File: src/glosung.c, line: 557
 msgid "Displayed Language:"
 msgstr "Výběr jazyka:"
-
 #
 # File: ui/preferences.glade, line: 33
 msgid "Font:"
 msgstr "Písmo:"
-
 #
 # File: ui/preferences.glade, line: 57
 msgid "Start GLosung at login time"
 msgstr "Spouštět Glosung při přihlášení"
-
 #
 #
 # File: src/glosung.c, line: 791
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Odkaz na Xiphos/Gnomesword"
-
+#
+# File: ui/preferences.glade, line: 95
+msgid "View"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 107
+msgid "Proxy"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 135
+msgid "Network"
+msgstr ""
+#
+#
+#
+#
 #
 # File: ui/preferences.glade, line: 111
-msgid "gtk-close"
-msgstr "zavřít"
-
+#~ msgid "gtk-close"
+#~ msgstr "zavřít"
+#
+#
+#
+#
 #
 #
 #
@@ -624,12 +578,19 @@ msgstr "zavřít"
 #
 #
 #
+#
+#
+#
+#
 # src/glosung.c:116
 # File: src/glosung.c, line: 166
 #, fuzzy
 #~ msgid "About Losungen"
 #~ msgstr "o aplikaci GLosung"
-
+#
+#
+#
+#
 #
 #
 #
@@ -677,10 +638,18 @@ msgstr "zavřít"
 #
 #
 #
+#
+#
+#
+#
 # src/glosung.c:509
 # File: src/glosung.c, line: 594
 #~ msgid "Close calendar by double click"
 #~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
+#
+#
+#
 #
 #
 #
@@ -748,13 +717,20 @@ msgstr "zavřít"
 #
 #
 #
+#
+#
+#
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
-
+#
+#
+#
+#
 #
 #
 #
@@ -860,13 +836,20 @@ msgstr "zavřít"
 #
 #
 #
+#
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
-
+#
+#
+#
+#
 #
 #
 #
@@ -929,7 +912,10 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/_Edit/_Preferences..."
 #~ msgstr "Nastavení..."
-
+#
+#
+#
+#
 #
 #
 #
@@ -991,7 +977,10 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
-
+#
+#
+#
+#
 #
 #
 #
@@ -1054,7 +1043,10 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/Toolbar/_Next Day"
 #~ msgstr "Následující den"
-
+#
+#
+#
+#
 #
 #
 #
@@ -1116,7 +1108,10 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Předchozí měsíc"
-
+#
+#
+#
+#
 #
 #
 #
@@ -1178,7 +1173,10 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Následující měsíc"
-
+#
+#
+#
+#
 #
 #
 #
@@ -1240,4 +1238,3 @@ msgstr "zavřít"
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Předchozí měsíc"
-
