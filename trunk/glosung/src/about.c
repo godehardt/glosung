@@ -40,7 +40,7 @@ about (GtkWidget *app)
                 NULL
         };
         gchar *translators =
-                "Marek Drápal\nEicke Godehardt\nNicolas\nEmanuel Feruzi";
+            "Marek Drápal\nNicolas\nEmanuel Feruzi\nMáté Nagy\nEicke Godehardt";
 
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
