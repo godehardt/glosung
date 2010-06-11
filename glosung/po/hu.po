@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-09 18:35+0200\n"
+"POT-Creation-Date: 2010-06-10 17:10+0200\n"
 "PO-Revision-Date: 2010-06-04 14:05+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -313,9 +313,14 @@ msgstr ""
 msgid "Proxy"
 msgstr ""
 #
+# File: ui/preferences.glade, line: 120
+msgid "host:port"
+msgstr ""
+#
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr ""
+#
 #
 #
 #

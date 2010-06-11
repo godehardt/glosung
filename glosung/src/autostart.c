@@ -45,7 +45,7 @@ is_in_autostart ()
  * return TRUE on success
  */
 gboolean
-add_to_autostart ()
+add_to_autostart (gboolean once)
 {
         init ();
 
