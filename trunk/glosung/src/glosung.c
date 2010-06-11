@@ -16,6 +16,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/* FIXME */
 #define GETTEXT_PACKAGE "glosung"
 #define PACKAGE "glosung"
 #define APPNAME "GLosung"
@@ -48,6 +49,7 @@
 #include "about.h"
 #include "autostart.h"
 #include "collections.h"
+#include "settings.h"
 #include "util.h"
 
 
@@ -84,11 +86,11 @@ static GtkWidget *property = NULL;
 
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
-static gboolean   use_proxy = FALSE;
-static gchar     *proxy = NULL;
 static gchar     *new_font;
 static gboolean   autostart;
 static gboolean   autostart_new;
+static gboolean   autostart_once;
+static gboolean   autostart_once_new;
 static gboolean   calendar_close = TRUE;
 static gboolean   show_readings = TRUE;
 static gboolean   show_sword;
@@ -141,6 +143,7 @@ static void update_language_store ();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
 
 void autostart_cb           (GtkWidget *w,        gpointer data);
+void autostart_once_cb      (GtkWidget *w,        gpointer data);
 void font_sel_cb            (GtkWidget *button,   gpointer data);
 void lang_changed_cb        (GtkWidget *item,     gpointer data);
 void proxy_toggled_cb       (GtkWidget *toggle,   gpointer data);
@@ -326,10 +329,6 @@ main (int argc, char **argv)
                  NULL);
         font      = gconf_client_get_string
         		(client, "/apps/" PACKAGE "/font", NULL);
-        use_proxy = gconf_client_get_bool
-        		(client, "/apps/" PACKAGE "/use_proxy", NULL);
-        proxy     = gconf_client_get_string
-        		(client, "/apps/" PACKAGE "/proxy", NULL);
 #endif /* WIN32 */
 #if (defined (VERSE_LINK) && ! defined (WIN32))
         show_sword = show_sword_new = gconf_client_get_bool
@@ -758,11 +757,12 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_widget_show (combo);
                 gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
-                if (use_proxy) {
+                if (get_use_proxy ()) {
                 	gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON (proxy_checkbox), TRUE);
                 	gtk_widget_set_sensitive (proxy_entry, TRUE);
                 }
+                gchar *proxy = get_proxy ();
                 if (proxy && strlen (proxy) > 0) {
                 	gtk_entry_set_text (GTK_ENTRY (proxy_entry), proxy);
                 }
@@ -806,10 +806,7 @@ proxy_toggled_cb (GtkWidget *data, gpointer toggle)
         gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
         gtk_widget_set_sensitive (GTK_WIDGET (data), on);
 
-#ifndef WIN32
-	gconf_client_set_bool
-		(client, "/apps/" PACKAGE "/use_proxy", on, NULL);
-#endif /* WIN32 */
+        set_use_proxy (on);
 } /* lang_changed_cb */
 
 
@@ -819,16 +816,8 @@ proxy_toggled_cb (GtkWidget *data, gpointer toggle)
 G_MODULE_EXPORT void
 proxy_changed_cb (GtkWidget *entry, gpointer data)
 {
-        const gchar *proxy_new = gtk_entry_get_text (GTK_ENTRY (entry));
-        if (proxy) {
-        	g_free (proxy);
-        }
-        proxy = g_strdup (proxy_new);
-
-#ifndef WIN32
-	gconf_client_set_string
-		(client, "/apps/" PACKAGE "/proxy", proxy, NULL);
-#endif /* WIN32 */
+        const gchar *proxy = gtk_entry_get_text (GTK_ENTRY (entry));
+        set_proxy (proxy);
 } /* lang_changed_cb */
 
 
@@ -895,19 +884,42 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
  * callback function for autostart changes.
  */
 G_MODULE_EXPORT void
-autostart_cb (GtkWidget *toggle, gpointer data)
+autostart_cb (GtkWidget *data, gpointer toggle)
 {
         autostart_new = gtk_toggle_button_get_active (
                 GTK_TOGGLE_BUTTON (toggle));
         if (autostart_new != autostart) {
                 if (autostart_new) {
                         /* TODO handle return type */
-                        add_to_autostart ();
+                        add_to_autostart (gtk_toggle_button_get_active (
+						 GTK_TOGGLE_BUTTON (data)));
                 } else {
                         /* TODO handle return type */
                         remove_from_autostart ();
                 }
                 autostart = autostart_new;
+        }
+	gtk_widget_set_sensitive (GTK_WIDGET (data), autostart_new);
+} /* autostart_cb */
+
+
+/*
+ * callback function for autostart changes.
+ */
+G_MODULE_EXPORT void
+autostart_once_cb (GtkWidget *toggle, gpointer data)
+{
+        autostart_once_new = gtk_toggle_button_get_active (
+                GTK_TOGGLE_BUTTON (toggle));
+        if (autostart_once_new != autostart_once) {
+                if (autostart_once_new) {
+                        /* TODO handle return type */
+                        add_to_autostart (TRUE);
+                } else {
+                        /* TODO handle return type */
+                        add_to_autostart (FALSE);
+                }
+                autostart_once = autostart_once_new;
         }
 } /* autostart_cb */
 

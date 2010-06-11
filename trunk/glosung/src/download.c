@@ -34,6 +34,7 @@
 
 #include "download.h"
 #include "collections.h"
+#include "settings.h"
 
 #define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
 #define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
@@ -214,11 +215,9 @@ real_download (const gchar *url)
                                   (void *)&chunk);
                 curl_easy_setopt (curl_handle, CURLOPT_USERAGENT,
                                   "glosung/" VERSION);
-                /*
-                if (proxy) {
-                	curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
+                if (get_use_proxy () && get_proxy () != NULL && strlen (get_proxy ()) > 0) {
+                	curl_easy_setopt (curl_handle, CURLOPT_PROXY, get_proxy ());
                 }
-                */
 
                 res = curl_easy_perform (curl_handle);
                 curl_easy_cleanup (curl_handle);

@@ -23,7 +23,7 @@
 
 
 gboolean       is_in_autostart ();
-gboolean      add_to_autostart ();
+gboolean      add_to_autostart (gboolean once);
 gboolean remove_from_autostart ();
 
 

@@ -5,14 +5,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-09 18:35+0200\n"
+"POT-Creation-Date: 2010-06-10 17:10+0200\n"
 "PO-Revision-Date: 2010-06-10 17:13+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 #
 #
 #
@@ -26,12 +25,16 @@ msgstr ""
 # File: src/glosung.c, line: 563
 msgid "Gods word for every day"
 msgstr "Gottes Wort für jeden Tag"
-
 #
 # File: src/about.c, line: 86
-msgid "The watchwords (german: Losungen) are words out of the bible, one from the Old and one from the New Testament.  They are choosen by lot since 1731.  By now they are provided in about 50 languages."
-msgstr "Die Losungen sind Worte aus der Bibel, eines aus dem Alten und eins aus dem Neuen Testament.  Sie werden per Los seit 1731 gezogen.  Inzwischen gibt es sie in etwa 50 Sprachen."
-
+msgid ""
+"The watchwords (german: Losungen) are words out of the bible, one from the "
+"Old and one from the New Testament.  They are choosen by lot since 1731.  By "
+"now they are provided in about 50 languages."
+msgstr ""
+"Die Losungen sind Worte aus der Bibel, eines aus dem Alten und eins aus dem "
+"Neuen Testament.  Sie werden per Los seit 1731 gezogen.  Inzwischen gibt es "
+"sie in etwa 50 Sprachen."
 #
 # File: src/about.c, line: 88
 msgid ""
@@ -40,12 +43,10 @@ msgid ""
 msgstr ""
 "Losungen: (C) Evangelische Brüder-Unität – Herrnhuter Brüdergemeine\n"
 "Bibeltexte: (C) Deutschen Bibelgesellschaft, Stuttgart"
-
 #
 #, c-format
 msgid "No '%s' texts found for %d!\n"
 msgstr "Keine '%s' Texte für das Jahr %d gefunden!\n"
-
 #
 #
 #
@@ -53,7 +54,6 @@ msgstr "Keine '%s' Texte für das Jahr %d gefunden!\n"
 # File: src/glosung.c, line: 203
 msgid "_File"
 msgstr "_Datei"
-
 #
 #
 #
@@ -66,24 +66,20 @@ msgstr "_Datei"
 #
 msgid "_Edit"
 msgstr "_Bearbeiten"
-
 #
 #
 #
 # File: src/glosung.c, line: 205
 msgid "_Help"
 msgstr "_Hilfe"
-
 #
 msgid "_Calendar"
 msgstr "_Kalender"
-
 #
 # File: src/glosung.c, line: 194
 # File: src/glosung.c, line: 196
 msgid "select date from calendar"
 msgstr "wähle Datum aus dem Kalender heraus"
-
 #
 #
 #
@@ -96,7 +92,6 @@ msgstr "wähle Datum aus dem Kalender heraus"
 #
 msgid "_Today"
 msgstr "_Heute"
-
 #
 #
 #
@@ -109,7 +104,6 @@ msgstr "_Heute"
 #
 msgid "Show losung of today"
 msgstr "Zeigt die Losung von heute"
-
 #
 #
 #
@@ -118,7 +112,6 @@ msgstr "Zeigt die Losung von heute"
 #
 msgid "_Next Day"
 msgstr "_Nächster Tag"
-
 #
 #
 #
@@ -132,7 +125,6 @@ msgstr "_Nächster Tag"
 #
 msgid "Show losung of next day"
 msgstr "Zeigt die Losung des nächsten Tages"
-
 #
 #
 #
@@ -146,7 +138,6 @@ msgstr "Zeigt die Losung des nächsten Tages"
 #
 msgid "_Previous Day"
 msgstr "_Voriger Tag"
-
 #
 #
 #
@@ -160,7 +151,6 @@ msgstr "_Voriger Tag"
 #
 msgid "Show losung of previous day"
 msgstr "Zeigt die Losung des vorigen Tages"
-
 #
 #
 #
@@ -169,7 +159,6 @@ msgstr "Zeigt die Losung des vorigen Tages"
 #
 msgid "_Next Month"
 msgstr "_Nächster Monat"
-
 #
 #
 #
@@ -183,7 +172,6 @@ msgstr "_Nächster Monat"
 #
 msgid "Show losung of next month"
 msgstr "Zeigt die Losung des nächsten Monats"
-
 #
 #
 #
@@ -192,7 +180,6 @@ msgstr "Zeigt die Losung des nächsten Monats"
 #
 msgid "_Previous Month"
 msgstr "_Voriger Monat"
-
 #
 #
 #
@@ -206,27 +193,22 @@ msgstr "_Voriger Monat"
 #
 msgid "Show losung of previous month"
 msgstr "Zeigt die Losung des vorigen Monats"
-
 #
 # File: src/glosung.c, line: 228
 msgid "Quit the application"
 msgstr "Beendet das Programm"
-
 #
 # File: src/glosung.c, line: 213
 msgid "_Copy text"
 msgstr "Text _kopieren"
-
 #
 # File: src/glosung.c, line: 194
 msgid "copy the text to clipboard"
 msgstr "Text in die Zwischenablage kopieren"
-
 #
 # File: src/glosung.c, line: 222
 msgid "_Organize Watchwords..."
 msgstr "Losungstexte _organisieren"
-
 #
 #
 #
@@ -242,7 +224,6 @@ msgstr "Losungstexte _organisieren"
 # File: src/glosung.c, line: 181
 msgid "update/install text files"
 msgstr "aktualisieren/installieren von Texten"
-
 #
 #
 #
@@ -257,12 +238,10 @@ msgstr "aktualisieren/installieren von Texten"
 #
 msgid "Edit the preferences"
 msgstr "Einstellungen ändern"
-
 #
 # File: src/glosung.c, line: 219
 msgid "About _Herrnhut"
 msgstr "Über _Herrnhut"
-
 #
 #
 #
@@ -273,7 +252,6 @@ msgstr "Über _Herrnhut"
 #
 msgid "about Losungen"
 msgstr "_über Losungen"
-
 #
 #
 #
@@ -284,7 +262,6 @@ msgstr "_über Losungen"
 #
 msgid "About _GLosung"
 msgstr "Über _GLosung"
-
 #
 #
 #
@@ -295,17 +272,14 @@ msgstr "Über _GLosung"
 #
 msgid "about GLosung"
 msgstr "_über GLosung"
-
 #
 # File: src/glosung.c, line: 257
 msgid "Start only once a day"
 msgstr "Starte nur ein mal pro Tag"
-
 #
 #. should be translated to corresponding language, e.g. 'de'
 msgid "en"
 msgstr "de"
-
 #
 msgid ""
 "No text files found!\n"
@@ -313,145 +287,116 @@ msgid ""
 msgstr ""
 "Keine Text-Dateien gefunden!\n"
 "Bitte installieren Sie Ihre bevorzugte Sprache."
-
 #
 # File: src/glosung.c, line: 288
 msgid "afrikaans"
 msgstr "afrikaans"
-
 #
 # File: src/glosung.c, line: 289
 msgid "arabic"
 msgstr "arabisch"
-
 #
 msgid "czech"
 msgstr "tschechisch"
-
 #
 msgid "german"
 msgstr "deutsch"
-
 #
 msgid "english"
 msgstr "englisch"
-
 #
 msgid "spanish"
 msgstr "spanisch"
-
 #
 # File: src/glosung.c, line: 294
 msgid "french"
 msgstr "französisch"
-
 #
 # File: src/glosung.c, line: 295
 msgid "hebrew"
 msgstr "hebräisch"
-
 #
 # File: src/glosung.c, line: 296
 msgid "hungarian"
 msgstr "ungarisch"
-
 #
 # File: src/glosung.c, line: 297
 msgid "italian"
 msgstr "italienisch"
-
 #
 # File: src/glosung.c, line: 298
 msgid "dutch"
 msgstr "holländisch"
-
 #
 # File: src/glosung.c, line: 299
 msgid "norwegian"
 msgstr "norwegisch"
-
 #
 # File: src/glosung.c, line: 300
 msgid "portuguese"
 msgstr "portugiesisch"
-
 #
 # File: src/glosung.c, line: 301
 msgid "romanian"
 msgstr "rumänisch"
-
 #
 # File: src/glosung.c, line: 302
 msgid "russian"
 msgstr "russisch"
-
 #
 # File: src/glosung.c, line: 370
 msgid "swahili"
 msgstr "suaheli"
-
 #
 # File: src/glosung.c, line: 303
 msgid "tamil"
 msgstr "tamilisch"
-
 #
 # File: src/glosung.c, line: 304
 msgid "turkish"
 msgstr "türkisch"
-
 #
 # File: src/glosung.c, line: 305
 msgid "vietnamese"
 msgstr "vietnamesisch"
-
 #
 # File: src/glosung.c, line: 306
 #. FIXME
 msgid "chinese simplified"
 msgstr "vereinfachtes chinesisch"
-
 #
 # File: src/glosung.c, line: 307
 msgid "chinese traditional"
 msgstr "traditionelles chinesisch"
-
 #
 #, c-format
 msgid "No %s texts found for %d!"
 msgstr "Keine %s Texte für das Jahr %d gefunden!"
-
 #
 msgid "Calendar"
 msgstr "Kalender"
-
 #
 # File: src/glosung.c, line: 1068
 msgid "Languages"
 msgstr "Sprachen"
-
 #
 # File: src/glosung.c, line: 1107
 msgid "Installed Languages"
 msgstr "Installierte Sprachen"
-
 #
 # File: src/parser.c, line: 334
 msgid "Watchword for %A, %e. %B %Y"
 msgstr "Losung für %A, %e. %B %Y"
-
 #
 #
 #
 # File: src/glosung.c, line: 1141
 msgid "Add Languages"
 msgstr "Sprachen hinzufügen"
-
 #
 # File: ui/add_language.glade, line: 31
 msgid "Source"
 msgstr "Quelle"
-
 #
 #
 #
@@ -477,73 +422,65 @@ msgstr "Quelle"
 # File: src/glosung.c, line: 1150
 msgid "Language"
 msgstr "Sprache"
-
 #
 #
 #
 # File: src/glosung.c, line: 1152
 msgid "Year"
 msgstr "Jahr"
-
 #
 #
 #
 # File: src/glosung.c, line: 1144
 msgid "Download"
 msgstr "Herunterladen"
-
 #
 # File: ui/add_language.glade, line: 105
 msgid "download selected verse collection"
 msgstr "herunterladen der ausgewählten Verszusammenstellung"
-
 #
 # File: ui/add_language.glade, line: 100
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
-
 #
 #
 msgid "Preferences"
 msgstr "Einstellungen"
-
 #
 #
 msgid "Displayed Language:"
 msgstr "Sprache des Textes:"
-
 #
 # File: ui/preferences.glade, line: 33
 msgid "Font:"
 msgstr "Schriftart:"
-
 #
 #
 # File: src/glosung.c, line: 917
 msgid "Start GLosung at login time"
 msgstr "Starte GLosung beim Einloggen"
-
 #
 #
 # File: src/glosung.c, line: 791
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Verbinde Stellenangaben mit Xiphos/Gnomesword"
-
 #
 # File: ui/preferences.glade, line: 95
 msgid "View"
 msgstr "Ansicht"
-
 #
 # File: ui/preferences.glade, line: 107
 msgid "Proxy"
 msgstr "Proxy"
-
+#
+# File: ui/preferences.glade, line: 120
+msgid "host:port"
+msgstr ""
 #
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr "Netzwerk"
-
+#
 #
 #
 #
@@ -559,6 +496,7 @@ msgstr "Netzwerk"
 # File: src/glosung.c, line: 1283
 #~ msgid "Herrnhuter Losungen (deutsch)"
 #~ msgstr "Herrnhuter Losungen (deutsch)"
+#
 #
 #
 #
@@ -588,9 +526,11 @@ msgstr "Netzwerk"
 #
 #
 #
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
 #
 #
 #
@@ -643,8 +583,10 @@ msgstr "Netzwerk"
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
 #
 #
 #
@@ -698,9 +640,11 @@ msgstr "Netzwerk"
 #
 #
 #
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
 #
 #
 #
@@ -787,8 +731,10 @@ msgstr "Netzwerk"
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -900,10 +846,11 @@ msgstr "Netzwerk"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
-
+#
 #
 #
 #
@@ -966,7 +913,7 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/_Edit/_Preferences..."
 #~ msgstr "Einstellungen..."
-
+#
 #
 #
 #
@@ -1028,7 +975,7 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
-
+#
 #
 #
 #
@@ -1091,7 +1038,7 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/Toolbar/_Next Day"
 #~ msgstr "Nächster Tag"
-
+#
 #
 #
 #
@@ -1154,7 +1101,7 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
-
+#
 #
 #
 #
@@ -1217,7 +1164,7 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
-
+#
 #
 #
 #
@@ -1280,4 +1227,3 @@ msgstr "Netzwerk"
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Month"
 #~ msgstr "Vorheriger Monat"
-
