@@ -23,7 +23,9 @@
 #include "collections.h"
 
 
-int download                (const Source *cs, const gchar *language, guint year);
+int download                (const Source *cs, const gchar *lang, guint year);
 int get_bible20_collections (Source* cs);
+
+const gchar* get_last_error_message   ();
 
 #endif /* GLOSUNG_DOWNLOAD__H */

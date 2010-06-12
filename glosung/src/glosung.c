@@ -1284,7 +1284,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint i = 0;
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
-                download (server_list, langu, year);
+                int error = download (server_list, langu, year);
+                if (error) {
+                	g_message ("%s", get_last_error_message ());
+                }
 
                 // TODO check return value of download
                 source_add_collection (local_collections, langu, year);
@@ -1332,6 +1335,9 @@ sources_changed (GtkWidget *w, gpointer data)
         server_list = g_ptr_array_index (get_sources (), index);
         GPtrArray *langs = source_get_languages (server_list);
 
+        if (! langs) {
+        	return;
+        }
         gint i;
         if (langs->len > 1) {
                 gtk_combo_box_append_text (lang_combo, "");
