@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-10 17:10+0200\n"
+"POT-Creation-Date: 2010-06-12 21:53+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -336,6 +336,11 @@ msgstr ""
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Liens vers gnomesword"
 #
+#
+#, fuzzy
+msgid "Prefered Source:"
+msgstr "Préférences"
+#
 # File: ui/preferences.glade, line: 95
 msgid "View"
 msgstr ""
@@ -364,8 +369,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
+#
 #
 #
 #
@@ -414,8 +423,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
 #
 #
 #
@@ -489,9 +502,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
 #
 #
 #
@@ -598,9 +615,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
 #
 #
 #

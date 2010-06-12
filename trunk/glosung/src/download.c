@@ -39,7 +39,9 @@
 #define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
 #define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
 
-static gchar *glosung_dir = NULL;
+static gchar      *glosung_dir = NULL;
+static int         error = 0;
+static GHashTable *error_messages = NULL;
 
 typedef struct Memory {
         char *memory;
@@ -48,11 +50,12 @@ typedef struct Memory {
 
 
 static void   init     ();
-static int    to_file_losungen     (Memory mem, const guint year);
+static void   to_file_losungen     (Memory mem, const guint year);
 static Memory real_download        (const gchar *url);
 static void   analyse_bible20_list (Source* cs, Memory mem);
-static int    download_losungen    (guint year);
-static int    download_bible20     (const Source* cs, const gchar *lang, guint year);
+static void   download_losungen    (guint year);
+static void   download_bible20     (const Source* cs, const gchar *lang, guint year);
+static void   init_error_messages  ();
 
 
 static size_t
@@ -72,7 +75,7 @@ WriteMemoryCallback (void *ptr, size_t size, size_t nmemb, void *data)
 }
 
 
-static int
+static void
 to_file (Memory chunk, gchar *filename)
 {
         FILE *file = fopen (filename, "wb");
@@ -84,14 +87,13 @@ to_file (Memory chunk, gchar *filename)
                         g_message ("download error - bytes written: %d",
                                    (int) written);
                         remove (filename);
-                        return -2;
+                        error = -2;
                 }
         }
-        return 0;
 }
 
 
-static int
+static void
 to_file_losungen (Memory mem, const guint year)
 {
         init ();
@@ -104,17 +106,17 @@ to_file_losungen (Memory mem, const guint year)
 #else /* WIN32 */
         mkdir (tmp_dir, 0777);
 #endif /* WIN32 */
-        int res = to_file (mem, zipfile);
-        if (res) {
+        to_file (mem, zipfile);
+        if (error != 0) {
                 rmdir (tmp_dir);
                 g_free (tmp_dir);
                 g_free (zipfile);
-                return res;
+                return;
         }
 
         // TODO: use getcwd (char *buf, size_t size); and reset afterwards
         if (chdir (tmp_dir) != 0) {
-                return -4;
+                error = -4;
         }
         gchar *command = g_strdup_printf ("unzip %s", zipfile);
         // TODO: handle exit status and error code
@@ -124,7 +126,7 @@ to_file_losungen (Memory mem, const guint year)
         g_free (zipfile);
         if (! success) {
                 g_message ("error while unzip");
-                return -3;
+                error = -3;
         }
 
         GDir *dir = g_dir_open (tmp_dir, 0, NULL);
@@ -149,24 +151,26 @@ to_file_losungen (Memory mem, const guint year)
 
         rmdir (tmp_dir);
         g_free (tmp_dir);
-
-        return 0;
 }
 
 
-static int
+static void
 download_losungen (guint year)
 {
         gchar *url   = g_strdup_printf (LOSUNGEN_URL, year);
         Memory mem = real_download (url);
+	g_free (url);
 
-        to_file_losungen (mem, year);
-        g_free (mem.memory);
-        return 0;
+        if (error == 0) {
+		to_file_losungen (mem, year);
+        }
+        if (mem.memory) {
+        	g_free (mem.memory);
+        }
 }
 
 
-static int
+static void
 download_bible20  (const Source *cs, const gchar *lang, guint year)
 {
         GPtrArray* css = source_get_collections (cs, lang);
@@ -182,13 +186,17 @@ download_bible20  (const Source *cs, const gchar *lang, guint year)
         }
 
         Memory mem = real_download (vc->url);
-        init ();
-        gchar *filename =
-        	g_strdup_printf ("%s%s", glosung_dir, strrchr (vc->url, '/'));
+        if (error == 0) {
+		init ();
+		gchar *filename =
+			g_strdup_printf ("%s%s", glosung_dir, strrchr (vc->url, '/'));
 
-        to_file (mem, filename);
-        g_free (mem.memory);
-        return 0;
+		to_file (mem, filename);
+		g_free (filename);
+        }
+        if (mem.memory) {
+        	g_free (mem.memory);
+        }
 }
 
 
@@ -199,7 +207,7 @@ static Memory
 real_download (const gchar *url)
 {
         CURL     *curl_handle;
-        CURLcode  res = -1;
+        /* CURLcode  res = -1; */
         Memory    chunk;
 
         chunk.memory = NULL;
@@ -215,19 +223,15 @@ real_download (const gchar *url)
                                   (void *)&chunk);
                 curl_easy_setopt (curl_handle, CURLOPT_USERAGENT,
                                   "glosung/" VERSION);
-                if (get_use_proxy () && get_proxy () != NULL && strlen (get_proxy ()) > 0) {
-                	curl_easy_setopt (curl_handle, CURLOPT_PROXY, get_proxy ());
-                }
-
-                res = curl_easy_perform (curl_handle);
-                curl_easy_cleanup (curl_handle);
-
-                /*
-                if (res == CURLE_OK) {
-                        return chunk;
-                }
-                */
-        }
+		gchar *proxy = get_proxy();
+		if (get_use_proxy () && proxy && strlen (proxy) > 0) {
+			curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
+		}
+		error = curl_easy_perform (curl_handle);
+		curl_easy_cleanup (curl_handle);
+	} else {
+		error = -1;
+	}
         return chunk;
 } /* real download */
 
@@ -237,6 +241,10 @@ analyse_bible20_list (Source* cs, Memory mem)
 {
 	g_assert (cs->type == SOURCE_BIBLE20);
 
+	if (mem.size <= 0) {
+		g_message ("no text to analyze!");
+		return;
+	}
 	gchar** lines = g_strsplit (mem.memory, "\n", -1);
         gint col_year    = 0;
         gint col_lang    = 0;
@@ -303,32 +311,37 @@ analyse_bible20_list (Source* cs, Memory mem)
 int
 get_bible20_collections (Source* cs)
 {
+        error = 0;
         Memory mem = real_download (BIBLE20_BASE_URL);
-        analyse_bible20_list (cs, mem);
-        g_free (mem.memory);
+        if (mem.memory) {
+		analyse_bible20_list (cs, mem);
+		g_free (mem.memory);
+        }
 
         // FIXME return real values
-        return 0;
+        error = 0;
+        return error;
 }
 
 
 int
 download (const Source *cs, const gchar *language, guint year)
 {
-	int result;
+        error = 0;
 	switch (cs->type) {
 	case SOURCE_LOSUNGEN:
-		result = download_losungen (year);
+		download_losungen (year);
 		break;
 	case SOURCE_BIBLE20:
-		result = download_bible20 (cs, language, year);
+		download_bible20 (cs, language, year);
 		break;
 	default:
 		g_message ("unknown source type '%s'", cs->name);
 		return -1;
 	}
 
-        return result;
+	error = 5;
+        return error;
 } /* download */
 
 
@@ -353,3 +366,32 @@ init (void)
                 }
         }
 } /* init */
+
+
+const gchar*
+get_last_error_message ()
+{
+	if (error == 0) {
+		return "";
+	}
+	if (! error_messages) {
+		init_error_messages ();
+	}
+	const gchar* msg = (const gchar*)
+		g_hash_table_lookup (error_messages, &error);
+	if (! msg) {
+		// TODO: CURLOPT_ERRORBUFFER
+		return "";
+	}
+	return msg;
+} /* get_last_error_string */
+
+
+static void
+init_error_messages ()
+{
+	error_messages = g_hash_table_new (g_int_hash, g_int_equal);
+	int *idcopy = (int *) g_malloc (sizeof (int));
+	*idcopy = CURLE_COULDNT_RESOLVE_PROXY;
+	g_hash_table_insert (error_messages, idcopy, _("Couln't resolve proxy"));
+} /* init_error_messages */

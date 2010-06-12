@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-10 17:10+0200\n"
+"POT-Creation-Date: 2010-06-12 21:53+0200\n"
 "PO-Revision-Date: 2010-06-10 17:13+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -465,6 +465,11 @@ msgstr "Starte GLosung beim Einloggen"
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Verbinde Stellenangaben mit Xiphos/Gnomesword"
 #
+#
+#, fuzzy
+msgid "Prefered Source:"
+msgstr "Einstellungen"
+#
 # File: ui/preferences.glade, line: 95
 msgid "View"
 msgstr "Ansicht"
@@ -493,9 +498,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 1283
 #~ msgid "Herrnhuter Losungen (deutsch)"
 #~ msgstr "Herrnhuter Losungen (deutsch)"
+#
+#
 #
 #
 #
@@ -527,9 +536,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
+#
 #
 #
 #
@@ -584,8 +597,12 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
+#
 #
 #
 #
@@ -641,9 +658,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
+#
 #
 #
 #
@@ -732,8 +753,12 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
+#
 #
 #
 #
@@ -847,9 +872,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
+#
+#
 #
 #
 #
@@ -972,9 +1001,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
+#
+#
 #
 #
 #
@@ -1098,6 +1131,8 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1161,9 +1196,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
+#
+#
 #
 #
 #
