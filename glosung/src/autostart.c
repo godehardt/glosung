@@ -21,6 +21,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "autostart.h"
 
@@ -29,16 +30,29 @@ static void init ();
 
 static gchar *config_path = NULL;
 
+#define AUTOSTART_BEGIN "\n[Desktop Entry]\nType=Application\nName=GLosung\n"
+#define AUTOSTART_END "\nIcon=system-run\nComment=Watchwords for GNOME\nComment[de]=Losungen für GNOME\n"
 
-gboolean
+GLosungAutostartType
 is_in_autostart ()
 {
+	GLosungAutostartType result = GLOSUNG_NO_AUTOSTART;
         init ();
 
-        return g_file_test (config_path, G_FILE_TEST_IS_REGULAR);
-        /* TODO g_file_get_contents (config_path, gchar **contents,
-                                gsize *length, NULL); */
-}
+        if (g_file_test (config_path, G_FILE_TEST_IS_REGULAR)) {
+        	result = GLOSUNG_AUTOSTART;
+
+        	gchar *content;
+                g_file_get_contents (config_path, &content, NULL, NULL);
+        	if (strstr (content, "--once")) {
+        		result = GLOSUNG_AUTOSTART_ONCE;
+        	}
+        	if (content) {
+        		g_free (content);
+        	}
+        }
+        return result;
+} /* is_in_autostart */
 
 
 /*
@@ -49,12 +63,16 @@ add_to_autostart (gboolean once)
 {
         init ();
 
-        return g_file_set_contents (config_path,
-                 "\n[Desktop Entry]\nType=Application\nName=GLosung\n"
-                 "Exec=glosung --once\nIcon=system-run\n"
-                 "Comment=Watchwords for GNOME\nComment[de]=Losungen für GNOME",
-                 -1, NULL); /* TODO GError **error */
-}
+        if (once) {
+                return g_file_set_contents (config_path,
+			AUTOSTART_BEGIN "Exec=glosung --once"
+			AUTOSTART_END, -1, NULL); /* TODO GError **error */
+        } else {
+                return g_file_set_contents (config_path,
+			AUTOSTART_BEGIN "Exec=glosung"
+			AUTOSTART_END, -1, NULL); /* TODO GError **error */
+        }
+} /* add_to_autostart */
 
 
 /*
@@ -70,7 +88,7 @@ remove_from_autostart ()
                 return FALSE;
         }
         return TRUE;
-}
+} /* remove_from_autostart */
 
 
 static void
@@ -94,4 +112,4 @@ init (void)
         		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"));
 #endif /* WIN32 */
         }
-}
+} /* init */

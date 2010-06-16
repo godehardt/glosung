@@ -21,10 +21,15 @@
 
 #include <glib.h>
 
+typedef enum {
+	GLOSUNG_NO_AUTOSTART   = 0,
+	GLOSUNG_AUTOSTART      = 1,
+	GLOSUNG_AUTOSTART_ONCE = (GLOSUNG_AUTOSTART << 1) + 1
+} GLosungAutostartType;
 
-gboolean       is_in_autostart ();
-gboolean      add_to_autostart (gboolean once);
-gboolean remove_from_autostart ();
+GLosungAutostartType  is_in_autostart       ();
+gboolean              add_to_autostart      (gboolean once);
+gboolean              remove_from_autostart ();
 
 
 #endif /* GLOSUNG_AUTOSTART__H */
