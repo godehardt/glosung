@@ -226,6 +226,21 @@ real_download (const gchar *url)
 		gchar *proxy = get_proxy();
 		if (get_use_proxy () && proxy && strlen (proxy) > 0) {
 			curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
+			gchar *proxy_user = get_proxy_user ();
+			if (proxy_user && strlen (proxy_user) > 0) {
+				gchar *str;
+				gchar *proxy_password = get_proxy_password ();
+				if (proxy_password) {
+				        str = g_strdup_printf
+				                ("%s:%s", proxy_user, proxy_password);
+				} else {
+				        str = g_strdup_printf
+				                ("%s:", proxy_user);
+				}
+				curl_easy_setopt (curl_handle,
+						CURLOPT_PROXYUSERPWD, str);
+				g_free (str);
+			}
 		}
 		error = curl_easy_perform (curl_handle);
 		curl_easy_cleanup (curl_handle);

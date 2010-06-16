@@ -712,6 +712,7 @@ property_cb (GtkWidget *w, gpointer data)
                 GtkWidget *table;
                 GtkWidget *proxy_entry;
                 GtkWidget *proxy_checkbox;
+                GtkWidget *proxy_authentication_frame;
                 gint       i;
 
                 if (new_font != NULL) {
@@ -722,7 +723,7 @@ property_cb (GtkWidget *w, gpointer data)
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
                 gchar *ui_file = find_ui_file ("preferences.glade");
-                guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
+                guint build = gtk_builder_add_from_file (builder, ui_file,NULL);
                 g_free (ui_file);
                 if (! build) {
                         g_message ("Error while loading UI definition file");
@@ -730,13 +731,18 @@ property_cb (GtkWidget *w, gpointer data)
                 }
 
                 property = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "preferences_dialog"));
+                        (gtk_builder_get_object (builder,"preferences_dialog"));
                 table = GTK_WIDGET
                         (gtk_builder_get_object (builder, "preferences_table"));
                 proxy_checkbox = GTK_WIDGET
                         (gtk_builder_get_object (builder, "proxy_checkbox"));
                 proxy_entry = GTK_WIDGET
                         (gtk_builder_get_object (builder, "proxy_entry"));
+                proxy_authentication_frame = GTK_WIDGET
+                        (gtk_builder_get_object (GTK_BUILDER (builder),
+                        		"proxy_authentication_frame"));
+                g_signal_connect (G_OBJECT (proxy_checkbox), "toggled",
+                                 G_CALLBACK (proxy_toggled_cb), builder);
 
                 combo = gtk_combo_box_new_text ();
                 for (i = 0; i < (local_collections->languages)->len; i++) {
@@ -759,11 +765,25 @@ property_cb (GtkWidget *w, gpointer data)
                 	gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON (proxy_checkbox), TRUE);
                 	gtk_widget_set_sensitive (proxy_entry, TRUE);
+                	gtk_widget_set_sensitive (proxy_authentication_frame, TRUE);
                 }
                 gchar *proxy = get_proxy ();
                 if (proxy && strlen (proxy) > 0) {
                 	gtk_entry_set_text (GTK_ENTRY (proxy_entry), proxy);
                 }
+                gchar *proxy_user = get_proxy_user ();
+                if (proxy_user && strlen (proxy_user) > 0) {
+                	gtk_entry_set_text (GTK_ENTRY
+				(gtk_builder_get_object (GTK_BUILDER (builder),
+                        		"proxy_user_entry")), proxy_user);
+                }
+                gchar *proxy_password = get_proxy_password ();
+                if (proxy_password && strlen (proxy_password) > 0) {
+                	gtk_entry_set_text (GTK_ENTRY
+				(gtk_builder_get_object (GTK_BUILDER (builder),
+                        		"proxy_password_entry")), proxy_password);
+                }
+
                 if (font != NULL) {
                         gtk_font_button_set_font_name (GTK_FONT_BUTTON
                            (gtk_builder_get_object (builder, "fontbutton")),
@@ -807,10 +827,17 @@ property_cb (GtkWidget *w, gpointer data)
  * callback function for preferences dialog.
  */
 G_MODULE_EXPORT void
-proxy_toggled_cb (GtkWidget *data, gpointer toggle)
+proxy_toggled_cb (GtkWidget *toggle, gpointer builder)
 {
         gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-        gtk_widget_set_sensitive (GTK_WIDGET (data), on);
+
+        GtkWidget *proxy_entry = GTK_WIDGET
+                (gtk_builder_get_object (GTK_BUILDER (builder), "proxy_entry"));
+        gtk_widget_set_sensitive (proxy_entry, on);
+
+        GtkWidget *proxy_authentication_frame = GTK_WIDGET
+                (gtk_builder_get_object (GTK_BUILDER (builder), "proxy_authentication_frame"));
+        gtk_widget_set_sensitive (proxy_authentication_frame, on);
 
         set_use_proxy (on);
 } /* lang_changed_cb */
@@ -824,7 +851,29 @@ proxy_changed_cb (GtkWidget *entry, gpointer data)
 {
         const gchar *proxy = gtk_entry_get_text (GTK_ENTRY (entry));
         set_proxy (proxy);
-} /* lang_changed_cb */
+} /* proxy_changed_cb */
+
+
+/*
+ * callback function for preferences dialog.
+ */
+G_MODULE_EXPORT void
+proxy_user_changed_cb (GtkWidget *entry, gpointer data)
+{
+        const gchar *proxy_user = gtk_entry_get_text (GTK_ENTRY (entry));
+        set_proxy_user (proxy_user);
+} /* proxy_user_changed_cb */
+
+
+/*
+ * callback function for preferences dialog.
+ */
+G_MODULE_EXPORT void
+proxy_password_changed_cb (GtkWidget *entry, gpointer data)
+{
+        const gchar *proxy_password = gtk_entry_get_text (GTK_ENTRY (entry));
+        set_proxy_password (proxy_password);
+} /* proxy_password_changed_cb */
 
 
 /*
