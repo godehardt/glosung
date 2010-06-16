@@ -52,8 +52,6 @@
 #include "settings.h"
 #include "util.h"
 
-
-static const int WRAP_LENGTH = 47;
 /****************************\
    Variables & Definitions
 \****************************/
@@ -76,6 +74,8 @@ enum {
 #ifndef WIN32
 	static GConfClient *client;
 #endif /* WIN32 */
+
+static const int WRAP_LENGTH = 47;
 
 static GtkWidget *app;
 static GDate     *date;
@@ -103,12 +103,8 @@ static gchar     *lang = NULL;
 static GHashTable*lang_translations;
 static Source    *server_list = NULL;
 
-
-/* static GnomeHelpMenuEntry help_ref = { "glosung", "pbox.html" }; */
-
-
-/* compatibility with older Gtk+s */
 #if ! GTK_CHECK_VERSION(2,20,0)
+	/* compatibility with older of Gtk+ */
 	#define gtk_widget_get_realized GTK_WIDGET_REALIZED
 #endif
 
@@ -117,18 +113,18 @@ static Source    *server_list = NULL;
       Function prototypes
 \****************************/
 
-static GHashTable *init_languages            (void);
+static GHashTable *init_languages       (void);
 
-static void       get_time              (void);
-static void       show_text             (void);
-static void       create_app            (void);
+static void        get_time             (void);
+static void        show_text            (void);
+static void        create_app           (void);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
 static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
 static void calendar_cb          (GtkWidget *w,   gpointer data);
-static void calendar_select_cb   (GtkWidget *calendar, gpointer data);
-static GString* create_years_string (gchar *langu);
+static void calendar_select_cb   (GtkWidget *cal, gpointer data);
+static GString* create_years_string (gchar *lang);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
 static void lang_manager_cb      (GtkWidget *w,   gpointer data);
@@ -139,8 +135,11 @@ static void prev_day_cb          (GtkWidget *w,   gpointer data);
 static void prev_month_cb        (GtkWidget *w,   gpointer data);
 static void property_cb          (GtkWidget *w,   gpointer data);
 static void today_cb             (GtkWidget *w,   gpointer data);
-static void update_language_store ();
+static void update_language_store();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
+static void window_scroll_cb     (GtkWidget      *widget,
+                                  GdkEventScroll *event,
+                                  gpointer        user_data);
 
 void autostart_cb           (GtkWidget *w,        gpointer data);
 void autostart_once_cb      (GtkWidget *w,        gpointer data);
@@ -495,6 +494,10 @@ create_app (void)
                 gtk_widget_hide (label [X3]);
                 gtk_widget_hide (label [READING]);
         }
+        g_signal_connect (G_OBJECT (app), "scroll_event",
+                          G_CALLBACK (window_scroll_cb),
+                          NULL);
+        gdk_window_set_events (GDK_WINDOW (app->window), GDK_ALL_EVENTS_MASK);
 } /* create_app */
 
 
@@ -529,14 +532,13 @@ show_text (void)
                         ww = get_the_word (new_date, lang);
                 }
                 if (ww) {
-                	if ((strlen (ww->ot.text) > WRAP_LENGTH + 5)
+                	if (((strlen (ww->ot.text) > WRAP_LENGTH + 13)
                 			&& ! strstr (ww->ot.text, "\n"))
+                	  ||
+                	    ((strlen (ww->nt.text) > WRAP_LENGTH + 13)
+                			&& ! strstr (ww->nt.text, "\n")))
                 	{
                         	wrap_text (ww->ot.text, WRAP_LENGTH);
-                	}
-                	if ((strlen (ww->nt.text) > WRAP_LENGTH + 5)
-                			&& ! strstr (ww->nt.text, "\n"))
-                	{
                         	wrap_text (ww->nt.text, WRAP_LENGTH);
                 	}
                 }
@@ -1446,3 +1448,16 @@ clipboard_cb (GtkWidget *w, gpointer data)
         gtk_clipboard_set_text (clipboard,
                                 losung_simple_text, losung_simple_text_len);
 } /* clipboard_cb */
+
+
+static void
+window_scroll_cb (GtkWidget      *widget,
+                  GdkEventScroll *event,
+                  gpointer        user_data)
+{
+	if (event->direction == GDK_SCROLL_UP) {
+		prev_day_cb (widget, user_data);
+	} else {
+		next_day_cb (widget, user_data);
+	}
+}
