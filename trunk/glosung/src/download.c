@@ -240,11 +240,8 @@ static void
 analyse_bible20_list (Source* cs, Memory mem)
 {
 	g_assert (cs->type == SOURCE_BIBLE20);
+	g_assert (mem.size > 0);
 
-	if (mem.size <= 0) {
-		g_message ("no text to analyze!");
-		return;
-	}
 	gchar** lines = g_strsplit (mem.memory, "\n", -1);
         gint col_year    = 0;
         gint col_lang    = 0;

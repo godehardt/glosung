@@ -87,10 +87,6 @@ static GtkWidget *property = NULL;
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
 static gchar     *new_font;
-static gboolean   autostart;
-static gboolean   autostart_new;
-static gboolean   autostart_once;
-static gboolean   autostart_once_new;
 static gboolean   calendar_close = TRUE;
 static gboolean   show_readings = TRUE;
 static gboolean   show_sword;
@@ -773,10 +769,18 @@ property_cb (GtkWidget *w, gpointer data)
                            (gtk_builder_get_object (builder, "fontbutton")),
                             font);
                 }
-                if (is_in_autostart ()) {
+                GLosungAutostartType autostart = is_in_autostart ();
+                if (autostart != GLOSUNG_NO_AUTOSTART) {
                         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                           (gtk_builder_get_object (builder, "autostart_checkbox")),
+                           (gtk_builder_get_object (builder,
+                        		            "autostart_checkbox")),
                             TRUE);
+                }
+                if (autostart == GLOSUNG_AUTOSTART_ONCE) {
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+                           (gtk_builder_get_object (builder,
+                        		            "autostart_once_checkbox")),
+			    TRUE);
                 }
 #ifdef VERSE_LINK
                 if (show_sword) {
@@ -888,20 +892,17 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 G_MODULE_EXPORT void
 autostart_cb (GtkWidget *data, gpointer toggle)
 {
-        autostart_new = gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (toggle));
-        if (autostart_new != autostart) {
-                if (autostart_new) {
-                        /* TODO handle return type */
-                        add_to_autostart (gtk_toggle_button_get_active (
-						 GTK_TOGGLE_BUTTON (data)));
-                } else {
-                        /* TODO handle return type */
-                        remove_from_autostart ();
-                }
-                autostart = autostart_new;
-        }
-	gtk_widget_set_sensitive (GTK_WIDGET (data), autostart_new);
+        gboolean autostart =
+        	gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+	if (autostart) {
+		/* TODO handle return type */
+		add_to_autostart (gtk_toggle_button_get_active (
+					GTK_TOGGLE_BUTTON (data)));
+	} else {
+		/* TODO handle return type */
+		remove_from_autostart ();
+	}
+	gtk_widget_set_sensitive (GTK_WIDGET (data), autostart);
 } /* autostart_cb */
 
 
@@ -911,18 +912,15 @@ autostart_cb (GtkWidget *data, gpointer toggle)
 G_MODULE_EXPORT void
 autostart_once_cb (GtkWidget *toggle, gpointer data)
 {
-        autostart_once_new = gtk_toggle_button_get_active (
-                GTK_TOGGLE_BUTTON (toggle));
-        if (autostart_once_new != autostart_once) {
-                if (autostart_once_new) {
-                        /* TODO handle return type */
-                        add_to_autostart (TRUE);
-                } else {
-                        /* TODO handle return type */
-                        add_to_autostart (FALSE);
-                }
-                autostart_once = autostart_once_new;
-        }
+        gboolean autostart_once =
+		gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+	if (autostart_once) {
+		/* TODO handle return type */
+		add_to_autostart (TRUE);
+	} else {
+		/* TODO handle return type */
+		add_to_autostart (FALSE);
+	}
 } /* autostart_cb */
 
 

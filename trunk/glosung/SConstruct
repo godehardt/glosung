@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.5.3'
+version = '3.6pre'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -82,6 +82,9 @@ if (ARGUMENTS.get ('dev')):
     	 '-Werror',
     	 '-DG_DISABLE_DEPRECATED', '-DGDK_PIXBUF_DISABLE_DEPRECATED',
      	 '-DGDK_DISABLE_DEPRECATED', '-DGTK_DISABLE_DEPRECATED']
+else:
+    ccflags   += [
+		'-DG_DISABLE_ASSERT']
 
 tar_file = '#../glosung-' + version + '.tar.bz2'
 
