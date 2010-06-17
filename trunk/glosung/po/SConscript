@@ -21,9 +21,14 @@ Import ('env install_dir prefix tar_file')
 languages = ['cs', 'de', 'fr', 'hu']
 
 pot = env.Command ('glosung.pot', ['#/src/about.c',
-                                   '#/src/losung.c',
+                                   '#/src/autostart.c',
+                                   '#/src/collections.c',
+                                   '#/src/download.c',
                                    '#/src/glosung.c',
+                                   '#/src/losung.c',
                                    '#/src/parser.c',
+                                   '#/src/settings.c',
+                                   '#/src/util.c',
                                    '#/ui/add_language.glade',
                                    '#/ui/preferences.glade'],
           "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");

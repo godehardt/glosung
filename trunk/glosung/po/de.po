@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-16 23:28+0200\n"
-"PO-Revision-Date: 2010-06-16 23:30+0100\n"
+"POT-Creation-Date: 2010-06-17 21:19+0200\n"
+"PO-Revision-Date: 2010-06-17 21:22+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,9 +42,38 @@ msgstr ""
 "Bibeltexte: (C) Deutschen Bibelgesellschaft, Stuttgart"
 
 #
-#, c-format
-msgid "No '%s' texts found for %d!\n"
-msgstr "Keine '%s' Texte für das Jahr %d gefunden!\n"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 1283
+msgid "Herrnhuter Losungen"
+msgstr "Herrnhuter Losungen"
+
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr "Bible 2.0"
+
+#
+# File: src/download.c, line: 408
+msgid "Couln't resolve proxy"
+msgstr "Konnte Proxy nicht auflösen"
 
 #
 #
@@ -436,6 +465,11 @@ msgid "Installed Languages"
 msgstr "Installierte Sprachen"
 
 #
+#, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Keine '%s' Texte für das Jahr %d gefunden!\n"
+
+#
 # File: src/parser.c, line: 334
 msgid "Watchword for %A, %e. %B %Y"
 msgstr "Losung für %A, %e. %B %Y"
@@ -543,10 +577,13 @@ msgstr "Proxy"
 # File: ui/preferences.glade, line: 128
 msgid ""
 "Use proxy to connect to the internet.\n"
-"Be careful in restricted countries, as\n"
+"Be careful in persecuted countries, as\n"
 "downloading biblical texts may be\n"
 "against the law!"
-msgstr "Verwende einen Proxy, um sich mit dem Internet zu verbinden.Achtung! Das Herunterladen von biblischen Texten kann inmanchen Ländern gegen das Gesetz sein!"
+msgstr ""
+"Verwende einen Proxy, um sich mit dem Internet zu verbinden.\n"
+"Achtung! Das Herunterladen von biblischen Texten kann in \n"
+"manchen Ländern gegen das Gesetz sein!"
 
 #
 # File: ui/preferences.glade, line: 140
@@ -589,32 +626,14 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Einstellungen"
 
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# File: src/glosung.c, line: 1283
-#~ msgid "Herrnhuter Losungen (deutsch)"
-#~ msgstr "Herrnhuter Losungen (deutsch)"
 #
 #
 #
@@ -658,9 +677,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
+#
 #
 #
 #
@@ -727,8 +750,12 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
+#
 #
 #
 #
@@ -796,9 +823,13 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
+#
 #
 #
 #
@@ -899,8 +930,12 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
+#
 #
 #
 #
@@ -1026,10 +1061,14 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
 #
 #
 #
@@ -1165,10 +1204,14 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
 
+#
+#
 #
 #
 #
@@ -1305,6 +1348,8 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1375,10 +1420,14 @@ msgstr "Netzwerk"
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
 
+#
+#
 #
 #
 #
