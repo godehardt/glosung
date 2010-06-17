@@ -126,7 +126,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="tooltip_text" translatable="yes">Use proxy to connect to the internet.
-Be careful in restricted countries, as
+Be careful in persecuted countries, as
 downloading biblical texts may be
 against the law!</property>
                     <property name="draw_indicator">True</property>

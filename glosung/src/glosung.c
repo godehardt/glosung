@@ -1333,9 +1333,19 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint i = 0;
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
+		/* <b>Warning:</b> If you live in a persecuted country and do not wish to risk detection you should NOT use  the remote installation feature!
+		   <b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden könnten und nicht riskieren wollen, entdeckt zu werden, sollten sie KEINE fernen Quellen verwenden!  */
+
                 int error = download (server_list, langu, year);
                 if (error) {
-                	g_message ("%s", get_last_error_message ());
+                	dialog = gtk_message_dialog_new (GTK_WINDOW (app),
+                	                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                	                                 GTK_MESSAGE_ERROR,
+                	                                 GTK_BUTTONS_CLOSE,
+                	                                 "%s (%d)",
+                	                                 get_last_error_message (), error);
+                	gtk_dialog_run (GTK_DIALOG (dialog));
+                	gtk_widget_destroy (dialog);
                 }
 
                 // TODO check return value of download

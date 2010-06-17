@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-16 23:28+0200\n"
+"POT-Creation-Date: 2010-06-17 21:19+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -41,9 +41,17 @@ msgid ""
 "Bible texts: (C) German Bible Association, Stuttgart"
 msgstr ""
 #
-#, fuzzy, c-format
-msgid "No '%s' texts found for %d!\n"
-msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
+#, fuzzy
+msgid "Herrnhuter Losungen"
+msgstr "_Losung"
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr ""
+#
+# File: src/download.c, line: 408
+msgid "Couln't resolve proxy"
+msgstr ""
 #
 # File: src/glosung.c, line: 209
 msgid "_File"
@@ -253,6 +261,10 @@ msgstr "Traductions"
 msgid "Installed Languages"
 msgstr "Traductions installées"
 #
+#, fuzzy, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
+#
 # File: src/parser.c, line: 334
 msgid "Watchword for %A, %e. %B %Y"
 msgstr ""
@@ -347,7 +359,7 @@ msgstr ""
 # File: ui/preferences.glade, line: 128
 msgid ""
 "Use proxy to connect to the internet.\n"
-"Be careful in restricted countries, as\n"
+"Be careful in persecuted countries, as\n"
 "downloading biblical texts may be\n"
 "against the law!"
 msgstr ""
@@ -385,6 +397,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Préférences"
@@ -407,8 +421,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
+#
 #
 #
 #
@@ -469,8 +487,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
 #
 #
 #
@@ -556,9 +578,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
 #
 #
 #
@@ -677,9 +703,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
 #
 #
 #
