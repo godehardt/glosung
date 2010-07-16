@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-17 21:19+0200\n"
+"POT-Creation-Date: 2010-07-16 22:19+0200\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -510,10 +510,6 @@ msgstr "Stáhnout"
 msgid "download selected verse collection"
 msgstr "stáhnout vybranou sbírku veršů"
 #
-# File: ui/add_language.glade, line: 100
-msgid "gtk-cancel"
-msgstr "zrušit"
-#
 #
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
@@ -560,30 +556,23 @@ msgstr ""
 msgid "host[:port]"
 msgstr ""
 #
-# File: ui/preferences.glade, line: 165
-msgid "User:"
-msgstr ""
-#
-# File: ui/preferences.glade, line: 173
-msgid "Password:"
-msgstr ""
-#
-# File: ui/preferences.glade, line: 189
-msgid "user name for proxy authentification"
-msgstr ""
-#
-# File: ui/preferences.glade, line: 202
-msgid "password name for proxy authentification"
-msgstr ""
-#
-# File: src/glosung.c, line: 228
-#, fuzzy
-msgid "Authentication"
-msgstr "Ukončit aplikaci"
-#
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr ""
+#
+#
+# File: ui/add_language.glade, line: 100
+#~ msgid "gtk-cancel"
+#~ msgstr "zrušit"
+#
+#
+#
+# File: src/glosung.c, line: 228
+#, fuzzy
+#~ msgid "Authentication"
+#~ msgstr "Ukončit aplikaci"
+#
+#
 #
 #
 #
@@ -598,6 +587,8 @@ msgstr ""
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Nastavení"
+#
+#
 #
 #
 #
@@ -637,10 +628,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:500
 # File: src/glosung.c, line: 581
 #~ msgid "Choose Font:"
 #~ msgstr "Výběr písma:"
+#
+#
 #
 #
 #
@@ -716,6 +711,8 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 #~ msgid "Show selective and continuing reading"
@@ -755,10 +752,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:509
 # File: src/glosung.c, line: 594
 #~ msgid "Close calendar by double click"
 #~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
+#
 #
 #
 #
@@ -852,12 +853,16 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
+#
 #
 #
 #
@@ -989,12 +994,16 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
+#
 #
 #
 #
@@ -1138,12 +1147,16 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
+#
 #
 #
 #
@@ -1288,6 +1301,8 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
@@ -1362,11 +1377,15 @@ msgstr ""
 #
 #
 #
+#
+#
 # src/glosung.c:83
 # File: src/glosung.c, line: 133
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Následující měsíc"
+#
+#
 #
 #
 #
