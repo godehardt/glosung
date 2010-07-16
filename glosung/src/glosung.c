@@ -137,6 +137,8 @@ static void window_scroll_cb     (GtkWidget      *widget,
                                   GdkEventScroll *event,
                                   gpointer        user_data);
 
+
+void show_warning_cb        (GtkWidget *w,        gpointer data);
 void autostart_cb           (GtkWidget *w,        gpointer data);
 void autostart_once_cb      (GtkWidget *w,        gpointer data);
 void font_sel_cb            (GtkWidget *button,   gpointer data);
@@ -1333,10 +1335,19 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint i = 0;
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
-		/* <b>Warning:</b> If you live in a persecuted country and do not wish to risk detection you should NOT use  the remote installation feature!
-		   <b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden könnten und nicht riskieren wollen, entdeckt zu werden, sollten sie KEINE fernen Quellen verwenden!  */
+		/* <b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden könnten und nicht riskieren wollen, entdeckt zu werden, sollten sie KEINE fernen Quellen verwenden!  */
 
-                int error = download (server_list, langu, year);
+		if (TRUE) {
+			ui_file = find_ui_file ("warning_dialog.glade");
+			gtk_builder_add_from_file (builder, ui_file, NULL);
+			g_free (ui_file);
+			GtkDialog *warning = GTK_DIALOG
+			   (gtk_builder_get_object (builder, "warning_dialog"));
+			gtk_dialog_run (warning);
+			gtk_widget_destroy (GTK_WIDGET (warning));
+		}
+
+	        int error = download (server_list, langu, year);
                 if (error) {
                 	dialog = gtk_message_dialog_new (GTK_WINDOW (app),
                 	                                 GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1364,6 +1375,13 @@ add_lang_cb (GtkWidget *w, gpointer data)
         }
         gtk_widget_destroy (dialog);
 } /* add_lang_cb */
+
+
+G_MODULE_EXPORT void
+show_warning_cb (GtkWidget *w, gpointer data)
+{
+        /* TODO save settings */
+} /* show_warning_cb */
 
 
 static void

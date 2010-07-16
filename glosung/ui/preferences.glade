@@ -117,7 +117,6 @@
             <child>
               <object class="GtkTable" id="network_table">
                 <property name="visible">True</property>
-                <property name="n_rows">2</property>
                 <property name="n_columns">2</property>
                 <child>
                   <object class="GtkCheckButton" id="proxy_checkbox">
@@ -145,87 +144,6 @@ against the law!</property>
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkFrame" id="proxy_authentication_frame">
-                    <property name="visible">True</property>
-                    <property name="sensitive">False</property>
-                    <property name="label_xalign">0</property>
-                    <child>
-                      <object class="GtkAlignment" id="alignment1">
-                        <property name="visible">True</property>
-                        <property name="left_padding">12</property>
-                        <child>
-                          <object class="GtkTable" id="table1">
-                            <property name="visible">True</property>
-                            <property name="border_width">3</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">2</property>
-                            <child>
-                              <object class="GtkLabel" id="user_label">
-                                <property name="visible">True</property>
-                                <property name="xalign">1</property>
-                                <property name="xpad">8</property>
-                                <property name="label" translatable="yes">User:</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="password_label">
-                                <property name="visible">True</property>
-                                <property name="xalign">1</property>
-                                <property name="xpad">8</property>
-                                <property name="label" translatable="yes">Password:</property>
-                              </object>
-                              <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkEntry" id="proxy_user_entry">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">user name for proxy authentification</property>
-                                <property name="invisible_char">&#x25CF;</property>
-                                <signal name="changed" handler="proxy_user_changed_cb"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkEntry" id="proxy_password_entry">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">password name for proxy authentification</property>
-                                <property name="invisible_char">&#x25CF;</property>
-                                <signal name="changed" handler="proxy_password_changed_cb"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child type="label">
-                      <object class="GtkLabel" id="proxy_authentication_label">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Authentication</property>
-                        <property name="use_markup">True</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
                   </packing>
                 </child>
               </object>
