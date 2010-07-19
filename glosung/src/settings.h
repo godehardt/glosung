@@ -22,13 +22,15 @@
 #include <glib.h>
 
 
-gboolean get_use_proxy      ();
-void     set_use_proxy      (gboolean use_proxy);
+gboolean is_proxy_in_use    ();
+void     set_proxy_in_use   (gboolean use_proxy);
 gchar*   get_proxy          ();
 void     set_proxy          (const gchar *proxy);
 gchar*   get_proxy_user     ();
 void     set_proxy_user     (const gchar *proxy);
 gchar*   get_proxy_password ();
 void     set_proxy_password (const gchar *proxy);
+gboolean is_hide_warning    ();
+void     set_hide_warning   (gboolean hide_warning);
 
 #endif /* GLOSUNG_SETTINGS__H */

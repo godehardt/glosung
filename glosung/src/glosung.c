@@ -714,7 +714,6 @@ property_cb (GtkWidget *w, gpointer data)
                 GtkWidget *table;
                 GtkWidget *proxy_entry;
                 GtkWidget *proxy_checkbox;
-                GtkWidget *proxy_authentication_frame;
                 gint       i;
 
                 if (new_font != NULL) {
@@ -740,9 +739,6 @@ property_cb (GtkWidget *w, gpointer data)
                         (gtk_builder_get_object (builder, "proxy_checkbox"));
                 proxy_entry = GTK_WIDGET
                         (gtk_builder_get_object (builder, "proxy_entry"));
-                proxy_authentication_frame = GTK_WIDGET
-                        (gtk_builder_get_object (GTK_BUILDER (builder),
-                        		"proxy_authentication_frame"));
                 g_signal_connect (G_OBJECT (proxy_checkbox), "toggled",
                                  G_CALLBACK (proxy_toggled_cb), builder);
 
@@ -763,27 +759,14 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_widget_show (combo);
                 gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
-                if (get_use_proxy ()) {
+                if (is_proxy_in_use ()) {
                 	gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON (proxy_checkbox), TRUE);
                 	gtk_widget_set_sensitive (proxy_entry, TRUE);
-                	gtk_widget_set_sensitive (proxy_authentication_frame, TRUE);
                 }
                 gchar *proxy = get_proxy ();
                 if (proxy && strlen (proxy) > 0) {
                 	gtk_entry_set_text (GTK_ENTRY (proxy_entry), proxy);
-                }
-                gchar *proxy_user = get_proxy_user ();
-                if (proxy_user && strlen (proxy_user) > 0) {
-                	gtk_entry_set_text (GTK_ENTRY
-				(gtk_builder_get_object (GTK_BUILDER (builder),
-                        		"proxy_user_entry")), proxy_user);
-                }
-                gchar *proxy_password = get_proxy_password ();
-                if (proxy_password && strlen (proxy_password) > 0) {
-                	gtk_entry_set_text (GTK_ENTRY
-				(gtk_builder_get_object (GTK_BUILDER (builder),
-                        		"proxy_password_entry")), proxy_password);
                 }
 
                 if (font != NULL) {
@@ -837,11 +820,7 @@ proxy_toggled_cb (GtkWidget *toggle, gpointer builder)
                 (gtk_builder_get_object (GTK_BUILDER (builder), "proxy_entry"));
         gtk_widget_set_sensitive (proxy_entry, on);
 
-        GtkWidget *proxy_authentication_frame = GTK_WIDGET
-                (gtk_builder_get_object (GTK_BUILDER (builder), "proxy_authentication_frame"));
-        gtk_widget_set_sensitive (proxy_authentication_frame, on);
-
-        set_use_proxy (on);
+        set_proxy_in_use (on);
 } /* lang_changed_cb */
 
 
@@ -854,28 +833,6 @@ proxy_changed_cb (GtkWidget *entry, gpointer data)
         const gchar *proxy = gtk_entry_get_text (GTK_ENTRY (entry));
         set_proxy (proxy);
 } /* proxy_changed_cb */
-
-
-/*
- * callback function for preferences dialog.
- */
-G_MODULE_EXPORT void
-proxy_user_changed_cb (GtkWidget *entry, gpointer data)
-{
-        const gchar *proxy_user = gtk_entry_get_text (GTK_ENTRY (entry));
-        set_proxy_user (proxy_user);
-} /* proxy_user_changed_cb */
-
-
-/*
- * callback function for preferences dialog.
- */
-G_MODULE_EXPORT void
-proxy_password_changed_cb (GtkWidget *entry, gpointer data)
-{
-        const gchar *proxy_password = gtk_entry_get_text (GTK_ENTRY (entry));
-        set_proxy_password (proxy_password);
-} /* proxy_password_changed_cb */
 
 
 /*
@@ -1253,6 +1210,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 	gint i;
 
         GtkBuilder* builder = gtk_builder_new ();
+        gtk_builder_set_translation_domain (builder, PACKAGE);
         gchar *ui_file = find_ui_file ("add_language.glade");
         guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
         g_free (ui_file);
@@ -1260,6 +1218,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 g_message ("Error while loading UI definition file");
                 return;
         }
+        gtk_builder_connect_signals (builder, NULL);
         dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
@@ -1320,7 +1279,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 // gchar *langu = "de";
-                gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
+                gint index  =
+                	gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
                 if (index == -1) {
                 	return;
                 }
@@ -1335,43 +1295,45 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 gint i = 0;
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
-		/* <b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden könnten und nicht riskieren wollen, entdeckt zu werden, sollten sie KEINE fernen Quellen verwenden!  */
-
-		if (TRUE) {
+		if (! is_hide_warning ()) {
 			ui_file = find_ui_file ("warning_dialog.glade");
 			gtk_builder_add_from_file (builder, ui_file, NULL);
 			g_free (ui_file);
+	                gtk_builder_connect_signals (builder, NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
-			gtk_dialog_run (warning);
+			gint res = gtk_dialog_run (warning);
 			gtk_widget_destroy (GTK_WIDGET (warning));
+		        gtk_widget_destroy (dialog);
+		        if (res == GTK_RESPONSE_CANCEL) {
+		        	return;
+		        }
 		}
 
 	        int error = download (server_list, langu, year);
                 if (error) {
-                	dialog = gtk_message_dialog_new (GTK_WINDOW (app),
-                	                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                	                                 GTK_MESSAGE_ERROR,
-                	                                 GTK_BUTTONS_CLOSE,
-                	                                 "%s (%d)",
-                	                                 get_last_error_message (), error);
-                	gtk_dialog_run (GTK_DIALOG (dialog));
-                	gtk_widget_destroy (dialog);
+                	GtkWidget *msg = gtk_message_dialog_new
+                	     (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                	      GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
+                	      get_last_error_message (), error);
+                	gtk_dialog_run (GTK_DIALOG (msg));
+                	gtk_widget_destroy (msg);
+        	        gtk_widget_destroy (dialog);
+                	return;
                 }
 
-                // TODO check return value of download
                 source_add_collection (local_collections, langu, year);
-                source_finialize      (local_collections);
+		source_finialize      (local_collections);
 
-                update_language_store ();
-                if (local_collections->languages->len == 1) {
-                        lang = langu;
+		update_language_store ();
+		if (local_collections->languages->len == 1) {
+			lang = langu;
 #ifndef WIN32
-                        gconf_client_set_string
-                            (client, "/apps/" PACKAGE "/language", lang, NULL);
+			gconf_client_set_string
+			    (client, "/apps/" PACKAGE "/language", lang, NULL);
 #endif /* WIN32 */
-                }
-                show_text ();
+		}
+		show_text ();
         }
         gtk_widget_destroy (dialog);
 } /* add_lang_cb */
@@ -1380,7 +1342,9 @@ add_lang_cb (GtkWidget *w, gpointer data)
 G_MODULE_EXPORT void
 show_warning_cb (GtkWidget *w, gpointer data)
 {
-        /* TODO save settings */
+        gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+
+	set_hide_warning (on);
 } /* show_warning_cb */
 
 

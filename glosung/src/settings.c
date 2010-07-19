@@ -39,7 +39,7 @@ static gchar     *proxy = NULL;
 
 
 gboolean
-get_use_proxy ()
+is_proxy_in_use ()
 {
 #ifndef WIN32
 	INIT_CLIENT ();
@@ -49,14 +49,14 @@ get_use_proxy ()
 
 
 void
-set_use_proxy (gboolean use_proxy)
+set_proxy_in_use (gboolean use_proxy)
 {
 #ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/use_proxy", use_proxy, NULL);
 #endif /* WIN32 */
-} /* set_use_proxy */
+} /* set_proxy_in_use */
 
 
 gchar*
@@ -123,3 +123,24 @@ set_proxy_password (const gchar *proxy_password)
 	     (client, "/apps/" PACKAGE "/proxy_password", proxy_password, NULL);
 #endif /* WIN32 */
 } /* set_proxy_password */
+
+
+gboolean
+is_hide_warning ()
+{
+#ifndef WIN32
+	INIT_CLIENT ();
+	return gconf_client_get_bool (client, "/apps/" PACKAGE "/hide_warning", NULL);
+#endif /* WIN32 */
+} /* is_hide_warning */
+
+
+void
+set_hide_warning (gboolean hide_warning)
+{
+#ifndef WIN32
+	INIT_CLIENT ();
+	gconf_client_set_bool
+		(client, "/apps/" PACKAGE "/hide_warning", hide_warning, NULL);
+#endif /* WIN32 */
+} /* set_hide_warning */
