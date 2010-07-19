@@ -11,7 +11,7 @@
     <property name="skip_taskbar_hint">True</property>
     <property name="urgency_hint">True</property>
     <property name="message_type">warning</property>
-    <property name="buttons">close</property>
+    <property name="buttons">ok-cancel</property>
     <property name="text" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt; If you live in a persecuted country and do not wish to
 risk detection you should NOT use this feature!</property>
     <property name="use_markup">True</property>
@@ -27,6 +27,7 @@ risk detection you should NOT use this feature!</property>
             <property name="receives_default">False</property>
             <property name="tooltip_text" translatable="yes">Check this box if you do not want to see this dialog again</property>
             <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="show_warning_cb"/>
           </object>
           <packing>
             <property name="pack_type">end</property>

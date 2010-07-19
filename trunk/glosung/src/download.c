@@ -224,7 +224,7 @@ real_download (const gchar *url)
                 curl_easy_setopt (curl_handle, CURLOPT_USERAGENT,
                                   "glosung/" VERSION);
 		gchar *proxy = get_proxy();
-		if (get_use_proxy () && proxy && strlen (proxy) > 0) {
+		if (is_proxy_in_use () && proxy && strlen (proxy) > 0) {
 			curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
 			gchar *proxy_user = get_proxy_user ();
 			if (proxy_user && strlen (proxy_user) > 0) {
