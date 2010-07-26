@@ -55,17 +55,16 @@ msgstr ""
 #
 # src/glosung.c:116
 # File: src/glosung.c, line: 166
-#, fuzzy
 msgid "Herrnhuter Losungen"
-msgstr "o Heslech"
+msgstr "Hesla"
 #
 # File: src/collections.c, line: 276
 msgid "Bible 2.0"
-msgstr ""
+msgstr "Bible 2.0"
 #
 # File: src/download.c, line: 408
 msgid "Couln't resolve proxy"
-msgstr ""
+msgstr "Nemohu přeložit adresu proxy"
 #
 # File: src/glosung.c, line: 209
 msgid "_File"
@@ -538,11 +537,11 @@ msgstr "Odkaz na Xiphos/Gnomesword"
 #
 # File: ui/preferences.glade, line: 95
 msgid "View"
-msgstr ""
+msgstr "Zobrazení"
 #
 # File: ui/preferences.glade, line: 107
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 #
 # File: ui/preferences.glade, line: 128
 msgid ""
@@ -551,28 +550,34 @@ msgid ""
 "downloading biblical texts may be\n"
 "against the law!"
 msgstr ""
+"Používat proxy k připojení na internet.\n"
+"Buďte opatrní v zemích kde dochází\n"
+"k pronásledování křesťanů, protože stahování\n"
+"biblických textů může být proti zákonu!"
 #
 # File: ui/preferences.glade, line: 140
 msgid "host[:port]"
-msgstr ""
+msgstr "počítač[:port]"
 #
 # File: ui/preferences.glade, line: 135
 msgid "Network"
-msgstr ""
+msgstr "Síť"
 #
 # File: ui/warning_dialog.glade, line: 15
 msgid ""
 "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
 "risk detection you should NOT use this feature!"
 msgstr ""
+"<b>Varování:</b> Pokud žijete v zemi kde jsou křesťané pronásledováni\n"
+"a nechcete riskovat dopadení NEPOUŽÍVEJTE tuto funkci!"
 #
 # File: ui/warning_dialog.glade, line: 24
 msgid "Don't show this message again."
-msgstr ""
+msgstr "Později již nezobrazovat tuto zprávu."
 #
 # File: ui/warning_dialog.glade, line: 28
 msgid "Check this box if you do not want to see this dialog again"
-msgstr ""
+msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
