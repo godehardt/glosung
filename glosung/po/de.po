@@ -72,7 +72,7 @@ msgstr "Bibel 2.0"
 
 #
 # File: src/download.c, line: 408
-msgid "Couln't resolve proxy"
+msgid "Couldn't resolve proxy"
 msgstr "Konnte Proxy nicht auflösen"
 
 #
