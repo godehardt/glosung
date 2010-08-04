@@ -63,7 +63,7 @@ msgid "Bible 2.0"
 msgstr "Bible 2.0"
 #
 # File: src/download.c, line: 408
-msgid "Couln't resolve proxy"
+msgid "Couldn't resolve proxy"
 msgstr "Nemohu přeložit adresu proxy"
 #
 # File: src/glosung.c, line: 209
