@@ -23,12 +23,6 @@
 
 #define ENABLE_NLS
 
-#include <gtk/gtkversion.h>
-
-#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
-  #define VERSE_LINK 1
-#endif
-
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -36,10 +30,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#ifndef WIN32
-	#include <gconf/gconf-client.h>
-#endif
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
@@ -51,6 +41,10 @@
 #include "collections.h"
 #include "settings.h"
 #include "util.h"
+
+#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
+  #define VERSE_LINK 1
+#endif
 
 /****************************\
    Variables & Definitions
@@ -70,10 +64,6 @@ enum {
         READING,
         NUMBER_OF_LABELS
 };
-
-#ifndef WIN32
-	static GConfClient *client;
-#endif /* WIN32 */
 
 static const int WRAP_LENGTH = 47;
 
@@ -269,29 +259,17 @@ main (int argc, char **argv)
                 exit (1);
         }
 
-#ifndef WIN32
-        client = gconf_client_get_default ();
-#endif /* WIN32 */
-
         date = g_date_new ();
         get_time ();
         new_date = g_date_new_julian (g_date_get_julian (date));
 #ifndef WIN32
         if (once) {
-                gchar *last_time_str = gconf_client_get_string
-                        (client, "/apps/" PACKAGE "/last_time", NULL);
-                if (last_time_str) {
-                        GDate *last_time = g_date_new ();
-                        g_date_set_parse (last_time, last_time_str);
-                        if (g_date_compare (last_time, date) >= 0) {
-                                exit (0);
-                        }
+		GDate *last_time = get_last_usage ();
+		if (last_time && g_date_compare (last_time, date) >= 0) {
+			exit (0);
                 }
         }
-        gchar *time_str = g_malloc (11); /* "YYYY-MM-DD"; */
-        g_date_strftime (time_str, 11, "%Y-%m-%d", date);
-        gconf_client_set_string
-                (client, "/apps/" PACKAGE "/last_time", time_str, NULL);
+        set_last_usage (date);
 #endif /* WIN32 */
 
         gtk_window_set_default_icon_from_file
@@ -300,10 +278,7 @@ main (int argc, char **argv)
         lang_translations = init_languages ();
         local_collections = get_local_collections ();
 
-#ifndef WIN32
-        lang = gconf_client_get_string
-                (client, "/apps/" PACKAGE "/language", NULL);
-#endif /* WIN32 */
+        lang = get_language ();
         if (lang == NULL) {
                 /* should be translated to corresponding language, e.g. 'de' */
                 lang = _("en");
@@ -320,19 +295,9 @@ main (int argc, char **argv)
         }
 
         printf ("Choosen language: %s\n", lang);
-#ifndef WIN32
-        calendar_close = gconf_client_get_bool
-                (client, "/apps/" PACKAGE "/calendar_close_by_double_click",
-                 NULL);
-        font      = gconf_client_get_string
-        		(client, "/apps/" PACKAGE "/font", NULL);
-#endif /* WIN32 */
-#if (defined (VERSE_LINK) && ! defined (WIN32))
-        show_sword = show_sword_new = gconf_client_get_bool
-                (client, "/apps/" PACKAGE "/link_sword", NULL);
-#else
-        show_sword = show_sword_new = FALSE;
-#endif /* VERSE_LINK, WIN32 */
+        calendar_close = is_calender_double_click ();
+        font = get_font ();
+        show_sword = show_sword_new = is_link_sword ();
 
         create_app ();
         if (local_collections->languages->len == 0) {
@@ -846,10 +811,7 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
         if (new_lang != NULL) {
                 lang = new_lang;
                 new_lang = NULL;
-#ifndef WIN32
-                gconf_client_set_string
-                        (client, "/apps/" PACKAGE "/language", lang, NULL);
-#endif /* WIN32 */
+                set_language (lang);
                 show_text ();
         }
 } /* lang_changed_cb */
@@ -879,10 +841,7 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
                         }
                         font = new_font;
                         new_font = NULL;
-#ifndef WIN32
-                        gconf_client_set_string
-                                (client, "/apps/" PACKAGE "/font", font, NULL);
-#endif /* WIN32 */
+                        set_font (font);
 
                         font_desc = pango_font_description_from_string (font);
                         for (i = 0; i < NUMBER_OF_LABELS; i++) {
@@ -944,10 +903,7 @@ sword_cb (GtkWidget *toggle, gpointer data)
 #ifdef VERSE_LINK
         if (show_sword_new != show_sword) {
                 show_sword = show_sword_new;
-#ifndef WIN32
-                gconf_client_set_bool (client, "/apps/" PACKAGE "/link_sword",
-                                       show_sword, NULL);
-#endif /* WIN32 */
+                set_link_sword (show_sword);
                 if (show_sword) {
                         gtk_widget_hide (label [OT_LOC]);
                         gtk_widget_show (label [OT_LOC_SWORD]);
@@ -1328,10 +1284,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 		update_language_store ();
 		if (local_collections->languages->len == 1) {
 			lang = langu;
-#ifndef WIN32
-			gconf_client_set_string
-			    (client, "/apps/" PACKAGE "/language", lang, NULL);
-#endif /* WIN32 */
+			set_language (lang);
 		}
 		show_text ();
         }
