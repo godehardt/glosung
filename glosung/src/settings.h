@@ -26,11 +26,17 @@ gboolean is_proxy_in_use    ();
 void     set_proxy_in_use   (gboolean use_proxy);
 gchar*   get_proxy          ();
 void     set_proxy          (const gchar *proxy);
-gchar*   get_proxy_user     ();
-void     set_proxy_user     (const gchar *proxy);
-gchar*   get_proxy_password ();
-void     set_proxy_password (const gchar *proxy);
 gboolean is_hide_warning    ();
 void     set_hide_warning   (gboolean hide_warning);
+GDate*   get_last_usage     ();
+void     set_last_usage     (const GDate *date);
+gchar*   get_language       ();
+void     set_language       (const gchar *language);
+gboolean is_calender_double_click ();
+void     set_calender_double_click (gboolean calendar_close_by_double_click);
+gboolean is_link_sword      ();
+void     set_link_sword     (gboolean link_sword);
+gchar*   get_font           ();
+void     set_font           (const gchar *font);
 
 #endif /* GLOSUNG_SETTINGS__H */

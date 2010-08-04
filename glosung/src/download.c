@@ -226,6 +226,7 @@ real_download (const gchar *url)
 		gchar *proxy = get_proxy();
 		if (is_proxy_in_use () && proxy && strlen (proxy) > 0) {
 			curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
+			/*
 			gchar *proxy_user = get_proxy_user ();
 			if (proxy_user && strlen (proxy_user) > 0) {
 				gchar *str;
@@ -241,6 +242,7 @@ real_download (const gchar *url)
 						CURLOPT_PROXYUSERPWD, str);
 				g_free (str);
 			}
+			*/
 		}
 		error = curl_easy_perform (curl_handle);
 		curl_easy_cleanup (curl_handle);
@@ -405,5 +407,5 @@ init_error_messages ()
 	error_messages = g_hash_table_new (g_int_hash, g_int_equal);
 	int *idcopy = (int *) g_malloc (sizeof (int));
 	*idcopy = CURLE_COULDNT_RESOLVE_PROXY;
-	g_hash_table_insert (error_messages, idcopy, _("Couln't resolve proxy"));
+	g_hash_table_insert (error_messages, idcopy, _("Couldn't resolve proxy"));
 } /* init_error_messages */
