@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.5.3
+%define version 3.6
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -75,16 +75,22 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
-* 2010-05-03  eicke
+*2010-08-04 Eicke
+- add Hungarian translation (thanks Mate)
+- use scroll wheel to browse through dates
+- add proxy support (no authentication so far)
+- add option for auto start once a day or at every login
+
+* 2010-05-03  Eicke
 - release version 3.5.3
 - fix compilation problem under lucid/new gtk versions
 
-* 2010-02-13  eicke
+* 2010-02-13  Eicke
 - release version 3.5.2
 - [r267] update debian changelog
 - [r266] fix #2947728 and #2935243 (open xiphos and urls in about)
 
-* 2010-01-22  eicke
+* 2010-01-22  Eicke
 - release version 3.5.1
 - [r264] fix access key for about menu items
 - [r263] fix crash in download manager when selecting bible20

@@ -1,3 +1,12 @@
+glosung (3.6~karmic) karmic; urgency=low
+
+  * add Hungarian translation (thanks Mate)
+  * use scroll wheel to browse through dates
+  * add proxy support (no authentication so far)
+  * add option for auto start once a day or at every login
+
+ -- Eicke Godehardt <sf@godehardt.org>  Wed, 04 Aug 2010 22:13:00 +0200
+
 glosung (3.5.3~lucid) lucid; urgency=low
 
   * fix compilation problem under lucid/new gtk versions

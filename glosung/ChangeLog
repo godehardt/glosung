@@ -1,7 +1,59 @@
+2010-08-04  eicke
+
+    * release 3.6
+    * [r287] fix typo
+    * [r286] move all gconf stuff to settings.[hc]
+    * [r285] Hungarian translation upate (thanks Mate)
+
+2010-07-26  eicke
+
+    * [r284] update Czech translation (thanks Marek)
+
+2010-07-19  eicke
+
+    * [r283] finish warning dialog for download
+
+2010-07-16  eicke
+
+    * [r282] work on warning message dialog
+
+2010-06-17  eicke
+
+    * [r281] add error dialog after download
+    * fix some texts
+
+2010-06-16  eicke
+
+    * [r280] update German translation
+    * [r279] add proxy authentication
+    * [r278] offer configuration option for starting once or always the
+      user logs in
+    * [r277] add scrolling to main window to browse through the texts
+    * improve detection of unwrapped texts
+
+2010-06-12  eicke
+
+    * [r276] work on error messages in download
+
+2010-06-11  eicke
+
+    * [r275] work on proxy, settings in new module
+
+2010-06-10  eicke
+
+    * [r274] add wrapping of too long lines (occured in Czech texts of
+      Watchwords)
+    * [r273] prepare use of proxy (only settings and preferences dialog
+      so far)
+    * [r272] add Mate to credits
+
+2010-06-08  eicke
+
+    * [r271] add Hungarian translation (thanks Mate)
+
 2010-05-03  eicke
 
-	* release version 3.5.3
-	* fix compilation problem under lucid/new gtk versions
+    * [r269] fix compilation problem under lucid/new gtk versions
 
 2010-02-13  eicke
 
