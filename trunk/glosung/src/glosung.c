@@ -1447,9 +1447,17 @@ window_scroll_cb (GtkWidget      *widget,
                   GdkEventScroll *event,
                   gpointer        user_data)
 {
-	if (event->direction == GDK_SCROLL_UP) {
-		prev_day_cb (widget, user_data);
+	if (event->state & GDK_CONTROL_MASK) {
+		if (event->direction == GDK_SCROLL_UP) {
+			prev_month_cb (widget, user_data);
+		} else {
+			next_month_cb (widget, user_data);
+		}
 	} else {
-		next_day_cb (widget, user_data);
+		if (event->direction == GDK_SCROLL_UP) {
+			prev_day_cb (widget, user_data);
+		} else {
+			next_day_cb (widget, user_data);
+		}
 	}
 }

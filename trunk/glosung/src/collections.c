@@ -300,9 +300,8 @@ source_get_languages (Source* cs)
                                 t = time (NULL);
                                 now = *localtime (&t);
                                 year = now.tm_year + 1900;
-                                if (now.tm_mon >= 10) {
-                                	// in November and December offer
-                                	// download next year's texts
+                        	// from October offer download next year's texts
+                                if (now.tm_mon >= 9) {
                                 	year++;
                                 }
                 	}
