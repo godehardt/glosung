@@ -62,6 +62,7 @@ STATE_START,
           TW_EM,
         TW_REF,
   LOS_DATAROOT,
+  LOS_FREE_XML,
     LOS_LOSUNGEN,
       LOS_DATUM,
       LOS_WTAG,
@@ -102,6 +103,7 @@ static gchar const * const states [] = {
           "em",
         "ref",
   "dataroot",
+  "FreeXml",
     "Losungen",
       "Datum",
       "Wtag",
@@ -339,11 +341,13 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
         case STATE_START:
                 if (switch_state (name, STATE_LOSFILE)) {
                 } else if (switch_state (name, TW_THE_WORD_FILE)) {
-                } else if (switch_state (name, LOS_DATAROOT)) {}
+                } else if (switch_state (name, LOS_DATAROOT)) {
+		} else if (switch_state (name, LOS_FREE_XML)) {}
                 break;
         case STATE_LOSFILE:
         case TW_THE_WORD_FILE:
         case LOS_DATAROOT:
+        case LOS_FREE_XML:
                 if (switch_state (name, STATE_HEAD)
                   || switch_state (name, STATE_YEAR)
                   || switch_state (name, STATE_MONTH)
