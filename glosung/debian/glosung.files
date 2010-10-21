@@ -1,8 +1,9 @@
 /usr/bin/glosung
 /usr/bin/losung
 /usr/share/applications/glosung.desktop
-/usr/share/glosung/add_language.glade
-/usr/share/glosung/preferences.glade
+/usr/share/glosung/add_language.ui
+/usr/share/glosung/preferences.ui
+/usr/share/glosung/warning_dialog.ui
 /usr/share/glosung/herrnhut.png
 /usr/share/glosung/glosung.png
 /usr/share/glosung/glosung-big.png

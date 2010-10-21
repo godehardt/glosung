@@ -688,7 +688,7 @@ property_cb (GtkWidget *w, gpointer data)
 
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
-                gchar *ui_file = find_ui_file ("preferences.glade");
+                gchar *ui_file = find_ui_file ("preferences.ui");
                 guint build = gtk_builder_add_from_file (builder, ui_file,NULL);
                 g_free (ui_file);
                 if (! build) {
@@ -1167,7 +1167,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("add_language.glade");
+        gchar *ui_file = find_ui_file ("add_language.ui");
         guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
         g_free (ui_file);
         if (! build) {
@@ -1252,7 +1252,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
 		if (! is_hide_warning ()) {
-			ui_file = find_ui_file ("warning_dialog.glade");
+			ui_file = find_ui_file ("warning_dialog.ui");
 			gtk_builder_add_from_file (builder, ui_file, NULL);
 			g_free (ui_file);
 	                gtk_builder_connect_signals (builder, NULL);

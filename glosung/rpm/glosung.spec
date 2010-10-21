@@ -57,8 +57,9 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/share/glosung/glosung.png
 /usr/share/glosung/glosung-big.png
 /usr/share/glosung/herrnhut.png
-/usr/share/glosung/add_language.glade
-/usr/share/glosung/preferences.glade
+/usr/share/glosung/add_language.ui
+/usr/share/glosung/preferences.ui
+/usr/share/glosung/warning_dialog.ui
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
