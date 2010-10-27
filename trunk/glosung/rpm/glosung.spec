@@ -76,6 +76,10 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+*2010-10-27 Eicke
+- fix XML handling, as file format was slightly by losungen.de
+- add [control] modifier to scroll wheel to navigate monthly
+
 *2010-08-04 Eicke
 - add Hungarian translation (thanks Mate)
 - use scroll wheel to browse through dates

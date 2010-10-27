@@ -1,3 +1,10 @@
+glosung (3.6.1~maverick) maverick; urgency=low
+
+  * fix XML handling, as file format was slightly by losungen.de
+  * add [control] modifier to scroll wheel to navigate monthly
+
+ -- Eicke Godehardt <icke@lambda>  Wed, 27 Oct 2010 21:50:47 +0200
+
 glosung (3.6~maverick) maverick; urgency=low
 
   * add Hungarian translation (thanks Mate)

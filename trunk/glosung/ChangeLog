@@ -1,3 +1,13 @@
+2010-10-27  eicke
+
+    * release 3.6.1 
+
+2010-10-21  eicke
+
+    * [r291] fix XML handling, as file format was slightly by losungen.de
+    * add [control] modifier to scroll wheel to navigate monthly
+    * [r290] rename file extension of UI definition files
+
 2010-08-04  eicke
 
     * release 3.6
