@@ -3,7 +3,7 @@ glosung (3.6.2~maverick) maverick; urgency=low
   * fix error reporting problem after download (proxy)
   * fix translation problem
 
- -- Eicke Godehardt <icke@lambda>  Mon, 01 Nov 2010 20:52:54 +0100
+ -- Eicke Godehardt <sf@godehardt.org>  Mon, 01 Nov 2010 20:52:54 +0100
 
 glosung (3.6.1~maverick) maverick; urgency=low
 
