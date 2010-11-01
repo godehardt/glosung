@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-21 20:22+0200\n"
+"POT-Creation-Date: 2010-11-01 20:29+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -275,8 +275,12 @@ msgstr ""
 #
 # File: src/glosung.c, line: 1141
 #, fuzzy
-#~ msgid "Add Languages"
-#~ msgstr "Ajouter de nouvelles traductions"
+msgid "Add Languages"
+msgstr "Ajouter de nouvelles traductions"
+#
+# File: ui/add_language.glade, line: 30
+msgid "Source"
+msgstr ""
 #
 #
 #
@@ -301,40 +305,91 @@ msgstr ""
 #
 #
 # File: src/glosung.c, line: 1150
-#~ msgid "Language"
-#~ msgstr "Traduction"
+msgid "Language"
+msgstr "Traduction"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1152
-#~ msgid "Year"
-#~ msgstr "Année"
+msgid "Year"
+msgstr "Année"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1144
-#~ msgid "Download"
-#~ msgstr "Télécharger"
+msgid "Download"
+msgstr "Télécharger"
+#
+# File: ui/add_language.glade, line: 104
+msgid "download selected verse collection"
+msgstr ""
 #
 #
 #
-#~ msgid "Preferences"
-#~ msgstr "Préférences"
+msgid "Preferences"
+msgstr "Préférences"
 #
 #
 #
 #, fuzzy
-#~ msgid "Displayed Language:"
-#~ msgstr "Langue :"
+msgid "Displayed Language:"
+msgstr "Langue :"
+#
+# File: ui/preferences.glade, line: 35
+msgid "Font:"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 59
+msgid "Start GLosung at login time"
+msgstr ""
 #
 #
 #
 # File: src/glosung.c, line: 791
 #, fuzzy
-#~ msgid "Link location to Xiphos/Gnomesword"
-#~ msgstr "Liens vers gnomesword"
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Liens vers gnomesword"
+#
+# File: ui/preferences.glade, line: 111
+msgid "View"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 123
+msgid "Proxy"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 127
+msgid ""
+"Use proxy to connect to the internet.\n"
+"Be careful in persecuted countries, as\n"
+"downloading biblical texts may be\n"
+"against the law!"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 139
+msgid "host[:port]"
+msgstr ""
+#
+# File: ui/preferences.glade, line: 157
+msgid "Network"
+msgstr ""
+#
+# File: ui/warning_dialog.glade, line: 15
+msgid ""
+"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
+"risk detection you should NOT use this feature!"
+msgstr ""
+#
+# File: ui/warning_dialog.glade, line: 24
+msgid "Don't show this message again."
+msgstr ""
+#
+# File: ui/warning_dialog.glade, line: 28
+msgid "Check this box if you do not want to see this dialog again"
+msgstr ""
+#
 #
 #
 #
@@ -377,8 +432,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
 #
 #
 #
@@ -453,8 +510,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
 #
 #
 #
@@ -554,9 +613,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
 #
 #
 #
@@ -689,9 +750,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
 #
 #
 #

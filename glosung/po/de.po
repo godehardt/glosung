@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-21 20:22+0200\n"
+"POT-Creation-Date: 2010-11-01 20:29+0100\n"
 "PO-Revision-Date: 2010-07-19 22:02+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -424,13 +424,13 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 # File: src/glosung.c, line: 1141
-#~ msgid "Add Languages"
-#~ msgstr "Sprachen hinzufügen"
+msgid "Add Languages"
+msgstr "Sprachen hinzufügen"
 #
 #
 # File: ui/add_language.glade, line: 31
-#~ msgid "Source"
-#~ msgstr "Quelle"
+msgid "Source"
+msgstr "Quelle"
 #
 #
 #
@@ -455,108 +455,108 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 # File: src/glosung.c, line: 1150
-#~ msgid "Language"
-#~ msgstr "Sprache"
+msgid "Language"
+msgstr "Sprache"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1152
-#~ msgid "Year"
-#~ msgstr "Jahr"
+msgid "Year"
+msgstr "Jahr"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1144
-#~ msgid "Download"
-#~ msgstr "Herunterladen"
+msgid "Download"
+msgstr "Herunterladen"
 #
 #
 # File: ui/add_language.glade, line: 105
-#~ msgid "download selected verse collection"
-#~ msgstr "herunterladen der ausgewählten Verszusammenstellung"
+msgid "download selected verse collection"
+msgstr "herunterladen der ausgewählten Verszusammenstellung"
 #
 #
 #
-#~ msgid "Preferences"
-#~ msgstr "Einstellungen"
+msgid "Preferences"
+msgstr "Einstellungen"
 #
 #
 #
-#~ msgid "Displayed Language:"
-#~ msgstr "Sprache des Textes:"
+msgid "Displayed Language:"
+msgstr "Sprache des Textes:"
 #
 #
 # File: ui/preferences.glade, line: 33
-#~ msgid "Font:"
-#~ msgstr "Schriftart:"
+msgid "Font:"
+msgstr "Schriftart:"
 #
 #
 #
 # File: src/glosung.c, line: 917
-#~ msgid "Start GLosung at login time"
-#~ msgstr "Starte GLosung beim Einloggen"
+msgid "Start GLosung at login time"
+msgstr "Starte GLosung beim Einloggen"
 #
 #
 #
 # File: src/glosung.c, line: 791
-#~ msgid "Link location to Xiphos/Gnomesword"
-#~ msgstr "Verbinde Stellenangaben mit Xiphos/Gnomesword"
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Verbinde Stellenangaben mit Xiphos/Gnomesword"
 #
 #
 # File: ui/preferences.glade, line: 95
-#~ msgid "View"
-#~ msgstr "Ansicht"
+msgid "View"
+msgstr "Ansicht"
 #
 #
 # File: ui/preferences.glade, line: 107
-#~ msgid "Proxy"
-#~ msgstr "Proxy"
+msgid "Proxy"
+msgstr "Proxy"
 #
 #
 # File: ui/preferences.glade, line: 128
-#~ msgid ""
-#~ "Use proxy to connect to the internet.\n"
-#~ "Be careful in persecuted countries, as\n"
-#~ "downloading biblical texts may be\n"
-#~ "against the law!"
-#~ msgstr ""
-#~ "Verwende einen Proxy, um sich mit dem Internet zu verbinden.\n"
-#~ "Achtung! Das Herunterladen von biblischen Texten kann in \n"
-#~ "manchen Ländern gegen das Gesetz sein!"
+msgid ""
+"Use proxy to connect to the internet.\n"
+"Be careful in persecuted countries, as\n"
+"downloading biblical texts may be\n"
+"against the law!"
+msgstr ""
+"Verwende einen Proxy, um sich mit dem Internet zu verbinden.\n"
+"Achtung! Das Herunterladen von biblischen Texten kann in \n"
+"manchen Ländern gegen das Gesetz sein!"
 #
 #
 # File: ui/preferences.glade, line: 140
-#~ msgid "host[:port]"
-#~ msgstr "host[:port]"
+msgid "host[:port]"
+msgstr "host[:port]"
 #
 #
 # File: ui/preferences.glade, line: 135
-#~ msgid "Network"
-#~ msgstr "Netzwerk"
+msgid "Network"
+msgstr "Netzwerk"
 #
 #
 # File: ui/warning_dialog.glade, line: 15
-#~ msgid ""
-#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-#~ "risk detection you should NOT use this feature!"
-#~ msgstr ""
-#~ "<b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt "
-#~ "werden könnten und nicht riskieren wollen entdeckt zu werden, sollten sie "
-#~ "diese Funktion NICHT verwenden!"
+msgid ""
+"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
+"risk detection you should NOT use this feature!"
+msgstr ""
+"<b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden "
+"könnten und nicht riskieren wollen entdeckt zu werden, sollten sie diese "
+"Funktion NICHT verwenden!"
 #
 #
 # File: ui/warning_dialog.glade, line: 24
-#~ msgid "Don't show this message again."
-#~ msgstr "Diese Meldung nicht mehr anzeigen."
+msgid "Don't show this message again."
+msgstr "Diese Meldung nicht mehr anzeigen."
 #
 #
 # File: ui/warning_dialog.glade, line: 28
-#~ msgid "Check this box if you do not want to see this dialog again"
-#~ msgstr ""
-#~ "Schalten sie das Häkchen an, wenn sie diesen Dialog nicht mehr sehen "
-#~ "möchten"
+msgid "Check this box if you do not want to see this dialog again"
+msgstr ""
+"Schalten sie das Häkchen an, wenn sie diesen Dialog nicht mehr sehen möchten"
+#
 #
 #
 #
@@ -564,6 +564,7 @@ msgstr "Losung für %A, %e. %B %Y"
 # File: ui/add_language.glade, line: 100
 #~ msgid "gtk-cancel"
 #~ msgstr "gtk-cancel"
+#
 #
 #
 #
@@ -577,9 +578,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 # File: ui/preferences.glade, line: 173
 #~ msgid "Password:"
 #~ msgstr "Passwort:"
+#
 #
 #
 #
@@ -593,9 +596,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 # File: ui/preferences.glade, line: 202
 #~ msgid "password name for proxy authentification"
 #~ msgstr "Passwort für die Proxy-Authentifizierung"
+#
 #
 #
 #
@@ -616,9 +621,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Einstellungen"
+#
 #
 #
 #
@@ -674,9 +681,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
 #
 #
 #
@@ -755,8 +764,10 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
 #
 #
 #
@@ -836,9 +847,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
 #
 #
 #
@@ -951,8 +964,10 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -1090,9 +1105,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
+#
 #
 #
 #
@@ -1239,9 +1256,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
+#
 #
 #
 #
@@ -1389,6 +1408,7 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1464,9 +1484,11 @@ msgstr "Losung für %A, %e. %B %Y"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
+#
 #
 #
 #

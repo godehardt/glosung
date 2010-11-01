@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.6.1'
+version = '3.6.2'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -121,7 +121,7 @@ env.Install (dir = install_dir + prefix + '/share/applications',
 env.Install (dir = install_dir + pixmap_dir,
         source = ['herrnhut.png', 'glosung.png', 'glosung-big.png'])
 env.Install (dir = install_dir + data_dir,
-        source = ['ui/add_language.ui', 'ui/preferences.ui', 'ui/warning_dialog.ui'])
+        source = ['ui/add_language.glade', 'ui/preferences.glade', 'ui/warning_dialog.glade'])
 
 # TODO put everything into a folder "glosung-<VERSION>" and rename build to src
 if env['PLATFORM'] != 'win32':
@@ -136,9 +136,9 @@ if env['PLATFORM'] != 'win32':
                     'glosung-big.png',
                     'glosung.desktop',
                     'glosung.png',
-                    'ui/add_language.ui',
-                    'ui/preferences.ui',
-                    'ui/warning_dialog.ui',
+                    'ui/add_language.glade',
+                    'ui/preferences.glade',
+                    'ui/warning_dialog.glade',
                     'debian/glosung.files',
                     'debian/control',
                     'debian/changelog',

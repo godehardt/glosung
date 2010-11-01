@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-21 20:22+0200\n"
+"POT-Creation-Date: 2010-11-01 20:29+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -280,106 +280,107 @@ msgstr "Napi ige a %A, %e. %B %Y-ra"
 #
 #
 # File: src/glosung.c, line: 1063
-#~ msgid "Add Languages"
-#~ msgstr "Nyelv hozzáadása"
+msgid "Add Languages"
+msgstr "Nyelv hozzáadása"
 #
 #
-#~ msgid "Source"
-#~ msgstr "Forrás"
+msgid "Source"
+msgstr "Forrás"
 #
 #
 # File: src/glosung.c, line: 1063
-#~ msgid "Language"
-#~ msgstr "Nyelv"
+msgid "Language"
+msgstr "Nyelv"
 #
 #
-#~ msgid "Year"
-#~ msgstr "Év"
+msgid "Year"
+msgstr "Év"
 #
 #
-#~ msgid "Download"
-#~ msgstr "Letöltés"
+msgid "Download"
+msgstr "Letöltés"
 #
 #
-#~ msgid "download selected verse collection"
-#~ msgstr "A kiválasztott versösszeállítás letöltése"
+msgid "download selected verse collection"
+msgstr "A kiválasztott versösszeállítás letöltése"
 #
 #
 # File: src/glosung.c, line: 217
-#~ msgid "Preferences"
-#~ msgstr "Beállítások"
+msgid "Preferences"
+msgstr "Beállítások"
 #
 #
 # File: src/glosung.c, line: 1090
-#~ msgid "Displayed Language:"
-#~ msgstr "Telepített nyelvek:"
+msgid "Displayed Language:"
+msgstr "Telepített nyelvek:"
 #
 #
-#~ msgid "Font:"
-#~ msgstr "Betűkészlet:"
+msgid "Font:"
+msgstr "Betűkészlet:"
 #
 #
-#~ msgid "Start GLosung at login time"
-#~ msgstr "GLosung indítása bejelentkezéskor"
+msgid "Start GLosung at login time"
+msgstr "GLosung indítása bejelentkezéskor"
 #
 #
-#~ msgid "Link location to Xiphos/Gnomesword"
-#~ msgstr "Igehelyek linkelése Xiphos/GnomeSword-al"
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Igehelyek linkelése Xiphos/GnomeSword-al"
 #
 #
 # File: ui/preferences.glade, line: 95
-#~ msgid "View"
-#~ msgstr "Nézet"
+msgid "View"
+msgstr "Nézet"
 #
 #
 # File: ui/preferences.glade, line: 107
-#~ msgid "Proxy"
-#~ msgstr "Proxy"
+msgid "Proxy"
+msgstr "Proxy"
 #
 #
 # File: ui/preferences.glade, line: 128
-#~ msgid ""
-#~ "Use proxy to connect to the internet.\n"
-#~ "Be careful in persecuted countries, as\n"
-#~ "downloading biblical texts may be\n"
-#~ "against the law!"
-#~ msgstr ""
-#~ "Proxy használata az internet kapcsolathoz.\n"
-#~ "Legyen óvatos az olyan országokban, ahol\n"
-#~ "kereszt(y)én(y) üldözés van, mert bibliai szövegek\n"
-#~ "letöltése törvénybe ütközhet!"
+msgid ""
+"Use proxy to connect to the internet.\n"
+"Be careful in persecuted countries, as\n"
+"downloading biblical texts may be\n"
+"against the law!"
+msgstr ""
+"Proxy használata az internet kapcsolathoz.\n"
+"Legyen óvatos az olyan országokban, ahol\n"
+"kereszt(y)én(y) üldözés van, mert bibliai szövegek\n"
+"letöltése törvénybe ütközhet!"
 #
 #
 # File: ui/preferences.glade, line: 140
-#~ msgid "host[:port]"
-#~ msgstr "hoszt[:port]"
+msgid "host[:port]"
+msgstr "hoszt[:port]"
 #
 #
 # File: ui/preferences.glade, line: 135
-#~ msgid "Network"
-#~ msgstr "Hálózat"
+msgid "Network"
+msgstr "Hálózat"
 #
 #
 # File: ui/warning_dialog.glade, line: 15
-#~ msgid ""
-#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-#~ "risk detection you should NOT use this feature!"
-#~ msgstr ""
-#~ "<b>Figyelem:</b> ha Ön olyan országban él, ahol kereszt(y)én(y) üldözés "
-#~ "van,\n"
-#~ "és nem akarja megkockáztatni, hogy felfedezzék, akkor NE használja ezt a "
-#~ "funkciót!"
+msgid ""
+"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
+"risk detection you should NOT use this feature!"
+msgstr ""
+"<b>Figyelem:</b> ha Ön olyan országban él, ahol kereszt(y)én(y) üldözés "
+"van,\n"
+"és nem akarja megkockáztatni, hogy felfedezzék, akkor NE használja ezt a "
+"funkciót!"
 #
 #
 # File: ui/warning_dialog.glade, line: 24
-#~ msgid "Don't show this message again."
-#~ msgstr "Ne jelenjen meg újra ez az üzenet."
+msgid "Don't show this message again."
+msgstr "Ne jelenjen meg újra ez az üzenet."
 #
 #
 # File: ui/warning_dialog.glade, line: 28
-#~ msgid "Check this box if you do not want to see this dialog again"
-#~ msgstr ""
-#~ "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
+msgid "Check this box if you do not want to see this dialog again"
+msgstr ""
+"Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
+#
 #
 #
 #
@@ -391,10 +392,12 @@ msgstr "Napi ige a %A, %e. %B %Y-ra"
 #
 #
 #
+#
 # File: src/glosung.c, line: 210
 #, fuzzy
 #~ msgid "Authentication"
 #~ msgstr "Kilépés a programból"
+#
 #
 #
 #

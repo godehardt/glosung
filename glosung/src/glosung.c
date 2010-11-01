@@ -688,7 +688,7 @@ property_cb (GtkWidget *w, gpointer data)
 
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
-                gchar *ui_file = find_ui_file ("preferences.ui");
+                gchar *ui_file = find_ui_file ("preferences.glade");
                 guint build = gtk_builder_add_from_file (builder, ui_file,NULL);
                 g_free (ui_file);
                 if (! build) {
@@ -1167,7 +1167,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("add_language.ui");
+        gchar *ui_file = find_ui_file ("add_language.glade");
         guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
         g_free (ui_file);
         if (! build) {
@@ -1208,23 +1208,6 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
-        time_t     t;
-        struct tm  now;
-
-        t = time (NULL);
-        now = *localtime (&t);
-        gint this_year = now.tm_year + 1900;
-        if (now.tm_mon >= 10) {
-        	// in November and December offer
-        	// download next year's texts
-        	this_year++;
-        }
-/*
-        for (i = this_year; i >= this_year - 2; i--) {
-                gchar *year = g_strdup_printf ("%d", i);
-                gtk_combo_box_append_text (year_combo, year);
-        }
-*/
         gtk_combo_box_set_active (year_combo, 0);
 
         g_signal_connect (G_OBJECT (source_combo), "changed",
@@ -1248,11 +1231,11 @@ add_lang_cb (GtkWidget *w, gpointer data)
         	langu = g_ptr_array_index (langs, index);
 
                 GPtrArray *vc_s = source_get_collections (server_list, langu);
-                gint i = 0;
+                gint i = gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
 		if (! is_hide_warning ()) {
-			ui_file = find_ui_file ("warning_dialog.ui");
+			ui_file = find_ui_file ("warning_dialog.glade");
 			gtk_builder_add_from_file (builder, ui_file, NULL);
 			g_free (ui_file);
 	                gtk_builder_connect_signals (builder, NULL);

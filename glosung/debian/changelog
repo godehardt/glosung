@@ -1,9 +1,16 @@
+glosung (3.6.2~maverick) maverick; urgency=low
+
+  * fix error reporting problem after download (proxy)
+  * fix translation problem
+
+ -- Eicke Godehardt <icke@lambda>  Mon, 01 Nov 2010 20:52:54 +0100
+
 glosung (3.6.1~maverick) maverick; urgency=low
 
   * fix XML handling, as file format was slightly by losungen.de
   * add [control] modifier to scroll wheel to navigate monthly
 
- -- Eicke Godehardt <icke@lambda>  Wed, 27 Oct 2010 21:50:47 +0200
+ -- Eicke Godehardt <sf@godehardt.org>  Wed, 27 Oct 2010 21:50:47 +0200
 
 glosung (3.6~maverick) maverick; urgency=low
 
