@@ -351,10 +351,9 @@ download (const Source *cs, const gchar *language, guint year)
 		break;
 	default:
 		g_message ("unknown source type '%s'", cs->name);
-		return -1;
+		error = -100;
 	}
 
-	error = 5;
         return error;
 } /* download */
 

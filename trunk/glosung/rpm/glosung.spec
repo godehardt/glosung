@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.6
+%define version 3.6.2
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -57,9 +57,9 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/share/glosung/glosung.png
 /usr/share/glosung/glosung-big.png
 /usr/share/glosung/herrnhut.png
-/usr/share/glosung/add_language.ui
-/usr/share/glosung/preferences.ui
-/usr/share/glosung/warning_dialog.ui
+/usr/share/glosung/add_language.glade
+/usr/share/glosung/preferences.glade
+/usr/share/glosung/warning_dialog.glade
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
@@ -76,6 +76,10 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 
 
 %changelog
+*2010-11-01 Eicke
+- fix error reporting problem after download (proxy)
+- fix translation problem
+
 *2010-10-27 Eicke
 - fix XML handling, as file format was slightly by losungen.de
 - add [control] modifier to scroll wheel to navigate monthly

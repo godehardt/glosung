@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-21 20:22+0200\n"
+"POT-Creation-Date: 2010-11-01 20:29+0100\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -463,13 +463,13 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 # File: src/glosung.c, line: 1141
-#~ msgid "Add Languages"
-#~ msgstr "Přidej jazyky"
+msgid "Add Languages"
+msgstr "Přidej jazyky"
 #
 #
 # File: ui/add_language.glade, line: 31
-#~ msgid "Source"
-#~ msgstr "Zdroj"
+msgid "Source"
+msgstr "Zdroj"
 #
 #
 #
@@ -494,110 +494,111 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 # File: src/glosung.c, line: 1150
-#~ msgid "Language"
-#~ msgstr "Jazyk"
+msgid "Language"
+msgstr "Jazyk"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1152
-#~ msgid "Year"
-#~ msgstr "Rok"
+msgid "Year"
+msgstr "Rok"
 #
 #
 #
 #
 # File: src/glosung.c, line: 1144
-#~ msgid "Download"
-#~ msgstr "Stáhnout"
+msgid "Download"
+msgstr "Stáhnout"
 #
 #
 # File: ui/add_language.glade, line: 105
-#~ msgid "download selected verse collection"
-#~ msgstr "stáhnout vybranou sbírku veršů"
+msgid "download selected verse collection"
+msgstr "stáhnout vybranou sbírku veršů"
 #
 #
 #
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
-#~ msgid "Preferences"
-#~ msgstr "Nastavení"
+msgid "Preferences"
+msgstr "Nastavení"
 #
 #
 #
 # src/glosung.c:479
 # File: src/glosung.c, line: 557
-#~ msgid "Displayed Language:"
-#~ msgstr "Výběr jazyka:"
+msgid "Displayed Language:"
+msgstr "Výběr jazyka:"
 #
 #
 # File: ui/preferences.glade, line: 33
-#~ msgid "Font:"
-#~ msgstr "Písmo:"
+msgid "Font:"
+msgstr "Písmo:"
 #
 #
 # File: ui/preferences.glade, line: 57
-#~ msgid "Start GLosung at login time"
-#~ msgstr "Spouštět Glosung při přihlášení"
+msgid "Start GLosung at login time"
+msgstr "Spouštět Glosung při přihlášení"
 #
 #
 #
 # File: src/glosung.c, line: 791
-#~ msgid "Link location to Xiphos/Gnomesword"
-#~ msgstr "Odkaz na Xiphos/Gnomesword"
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Odkaz na Xiphos/Gnomesword"
 #
 #
 # File: ui/preferences.glade, line: 95
-#~ msgid "View"
-#~ msgstr "Zobrazení"
+msgid "View"
+msgstr "Zobrazení"
 #
 #
 # File: ui/preferences.glade, line: 107
-#~ msgid "Proxy"
-#~ msgstr "Proxy"
+msgid "Proxy"
+msgstr "Proxy"
 #
 #
 # File: ui/preferences.glade, line: 128
-#~ msgid ""
-#~ "Use proxy to connect to the internet.\n"
-#~ "Be careful in persecuted countries, as\n"
-#~ "downloading biblical texts may be\n"
-#~ "against the law!"
-#~ msgstr ""
-#~ "Používat proxy k připojení na internet.\n"
-#~ "Buďte opatrní v zemích kde dochází\n"
-#~ "k pronásledování křesťanů, protože stahování\n"
-#~ "biblických textů může být proti zákonu!"
+msgid ""
+"Use proxy to connect to the internet.\n"
+"Be careful in persecuted countries, as\n"
+"downloading biblical texts may be\n"
+"against the law!"
+msgstr ""
+"Používat proxy k připojení na internet.\n"
+"Buďte opatrní v zemích kde dochází\n"
+"k pronásledování křesťanů, protože stahování\n"
+"biblických textů může být proti zákonu!"
 #
 #
 # File: ui/preferences.glade, line: 140
-#~ msgid "host[:port]"
-#~ msgstr "počítač[:port]"
+msgid "host[:port]"
+msgstr "počítač[:port]"
 #
 #
 # File: ui/preferences.glade, line: 135
-#~ msgid "Network"
-#~ msgstr "Síť"
+msgid "Network"
+msgstr "Síť"
 #
 #
 # File: ui/warning_dialog.glade, line: 15
-#~ msgid ""
-#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-#~ "risk detection you should NOT use this feature!"
-#~ msgstr ""
-#~ "<b>Varování:</b> Pokud žijete v zemi kde jsou křesťané pronásledováni\n"
-#~ "a nechcete riskovat dopadení NEPOUŽÍVEJTE tuto funkci!"
+msgid ""
+"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
+"risk detection you should NOT use this feature!"
+msgstr ""
+"<b>Varování:</b> Pokud žijete v zemi kde jsou křesťané pronásledováni\n"
+"a nechcete riskovat dopadení NEPOUŽÍVEJTE tuto funkci!"
 #
 #
 # File: ui/warning_dialog.glade, line: 24
-#~ msgid "Don't show this message again."
-#~ msgstr "Později již nezobrazovat tuto zprávu."
+msgid "Don't show this message again."
+msgstr "Později již nezobrazovat tuto zprávu."
 #
 #
 # File: ui/warning_dialog.glade, line: 28
-#~ msgid "Check this box if you do not want to see this dialog again"
-#~ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
+msgid "Check this box if you do not want to see this dialog again"
+msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
+#
 #
 #
 #
@@ -605,6 +606,7 @@ msgstr "Heslo pro %A, %e. %B %Y"
 # File: ui/add_language.glade, line: 100
 #~ msgid "gtk-cancel"
 #~ msgstr "zrušit"
+#
 #
 #
 #
@@ -626,12 +628,14 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Nastavení"
+#
 #
 #
 #
@@ -679,10 +683,12 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:500
 # File: src/glosung.c, line: 581
 #~ msgid "Choose Font:"
 #~ msgstr "Výběr písma:"
+#
 #
 #
 #
@@ -766,6 +772,7 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 #~ msgid "Show selective and continuing reading"
@@ -809,10 +816,12 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:509
 # File: src/glosung.c, line: 594
 #~ msgid "Close calendar by double click"
 #~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
 #
 #
 #
@@ -914,12 +923,14 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
 #
 #
 #
@@ -1059,12 +1070,14 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
 #
 #
 #
@@ -1216,12 +1229,14 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
 #
 #
 #
@@ -1374,6 +1389,7 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
@@ -1452,11 +1468,13 @@ msgstr "Heslo pro %A, %e. %B %Y"
 #
 #
 #
+#
 # src/glosung.c:83
 # File: src/glosung.c, line: 133
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Následující měsíc"
+#
 #
 #
 #

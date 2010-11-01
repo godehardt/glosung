@@ -1,3 +1,9 @@
+2010-11-01 eicke
+
+    * release 3.6.2
+    * fix error reporting problem after download (proxy)
+    * fix translation problem
+
 2010-10-27  eicke
 
     * release 3.6.1 
