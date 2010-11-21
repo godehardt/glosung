@@ -235,17 +235,6 @@ main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
-        /*
-        {
-        gchar **list = g_get_language_names ();
-        int i;
-
-        for (i = 0; list [i]; i++) {
-                g_message (list [i]);
-        }
-        }
-        */
-
         gboolean once = FALSE;
         GOptionEntry options[] = {
                 { "once", '1', 0, G_OPTION_ARG_NONE, &once,
@@ -368,7 +357,6 @@ create_app (void)
         GtkWidget      *content;
         GtkWidget      *menubar;
         GtkWidget      *toolbar;
-        gint            i;
         PangoFontDescription *font_desc;
 
         app = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -408,7 +396,7 @@ create_app (void)
         gtk_container_set_border_width (GTK_CONTAINER (content), MY_PAD);
         gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, FALSE, 0);
 
-        for (i = 0; i < NUMBER_OF_LABELS; i++) {
+        for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
 #ifdef VERSE_LINK
                         GtkWidget *widget;
@@ -435,7 +423,7 @@ create_app (void)
         }
         if (font != NULL) {
                 font_desc = pango_font_description_from_string (font);
-                for (i = 0; i < NUMBER_OF_LABELS; i++) {
+                for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                         if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
                                 gtk_widget_modify_font (label [i], font_desc);
                         }
@@ -609,8 +597,7 @@ show_text (void)
                 gtk_widget_hide (label [READING]);
         }
 
-        gint i;
-        for (i = 0; i < NUMBER_OF_LABELS; i++) {
+        for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                 if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
                         gtk_label_set_use_markup (GTK_LABEL (label [i]), TRUE);
                 }
@@ -679,7 +666,6 @@ property_cb (GtkWidget *w, gpointer data)
                 GtkWidget *table;
                 GtkWidget *proxy_entry;
                 GtkWidget *proxy_checkbox;
-                gint       i;
 
                 if (new_font != NULL) {
                         g_free (new_font);
@@ -708,7 +694,7 @@ property_cb (GtkWidget *w, gpointer data)
                                  G_CALLBACK (proxy_toggled_cb), builder);
 
                 combo = gtk_combo_box_new_text ();
-                for (i = 0; i < (local_collections->languages)->len; i++) {
+                for (gint i = 0; i < (local_collections->languages)->len; i++) {
                         gchar *langu = g_ptr_array_index
                         		(local_collections->languages, i);
                         gtk_combo_box_append_text
@@ -834,7 +820,6 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
                 new_font = g_strdup (font_name);
                 if (new_font != NULL) {
                         PangoFontDescription *font_desc;
-                        gint i;
 
                         if (font != NULL) {
                                 g_free (font);
@@ -844,7 +829,7 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
                         set_font (font);
 
                         font_desc = pango_font_description_from_string (font);
-                        for (i = 0; i < NUMBER_OF_LABELS; i++) {
+                        for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                                 gtk_widget_modify_font (label [i], font_desc);
                         }
                         pango_font_description_free (font_desc);
@@ -1163,7 +1148,6 @@ static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
-	gint i;
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
@@ -1186,7 +1170,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_combo_box_append_text (source_combo, "");
 
         GPtrArray *sources = get_sources ();
-        for (i = 0; i < sources->len; i++) {
+        for (gint i = 0; i < sources->len; i++) {
                 Source *cs = (Source*) g_ptr_array_index (sources, i);
                 if (cs->type != SOURCE_LOCAL) {
                         gtk_combo_box_append_text (source_combo, cs->name);
@@ -1315,11 +1299,10 @@ sources_changed (GtkWidget *w, gpointer data)
         if (! langs) {
         	return;
         }
-        gint i;
         if (langs->len > 1) {
                 gtk_combo_box_append_text (lang_combo, "");
         }
-        for (i = 0; i < langs->len; i++) {
+        for (gint i = 0; i < langs->len; i++) {
         	gchar *lang_code = (gchar*) g_ptr_array_index (langs, i);
         	gchar *langu = (gchar*)
         		g_hash_table_lookup (lang_translations, lang_code);
@@ -1361,8 +1344,7 @@ language_changed (GtkWidget *w, gpointer data)
         }
 	langu = g_ptr_array_index (langs, index);
         GPtrArray *vc_s = source_get_collections (server_list, langu);
-        gint i = 0;
-        for (i = 0; i < vc_s->len; i++) {
+        for (gint i = 0; i < vc_s->len; i++) {
                 gchar *year = g_strdup_printf
                 	("%d", VC (g_ptr_array_index (vc_s, i))->year);
                 gtk_combo_box_append_text (year_combo, year);
@@ -1381,8 +1363,7 @@ create_years_string (gchar *langu)
         g_string_printf (result, "%d",
                          VC (g_ptr_array_index (years, 0))->year);
 
-        gint i;
-        for (i = 1; i < years->len; i++) {
+        for (gint i = 1; i < years->len; i++) {
                 g_string_append_printf
                         (result, ", %d",
                          VC (g_ptr_array_index (years, i))->year);
@@ -1396,18 +1377,15 @@ static void
 update_language_store ()
 {
         GtkTreeIter   iter1;
-        int i;
 
         gtk_list_store_clear (store);
-        for (i = 0; i < local_collections->languages->len; i++) {
+        for (gint i = 0; i < local_collections->languages->len; i++) {
                 gtk_list_store_append (store, &iter1);
                 gchar *langu = g_ptr_array_index (local_collections->languages, i);
                 GString *years = create_years_string (langu);
-                gtk_list_store_set
-                        (store, &iter1,
+                gtk_list_store_set (store, &iter1,
                          0, g_hash_table_lookup (lang_translations, langu),
-                         1, years->str,
-                         -1);
+                         1, years->str, -1);
                 g_string_free (years, TRUE);
         }
 } /* update_language_store */

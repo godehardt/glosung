@@ -77,8 +77,7 @@ source_add_collection (Source *cs, gchar *lang, gint year)
                 g_hash_table_insert (cs->collections, lang, vc_s);
         }
 
-        int i;
-        for (i = 0; i < vc_s->len; i++) {
+        for (gint i = 0; i < vc_s->len; i++) {
         	result = VC (g_ptr_array_index (vc_s, i));
                 if (year == result->year) {
                         return result;
@@ -153,8 +152,7 @@ scan_for_collections (Source* cs)
         source_finialize (cs);
 
         printf ("Found languages: ");
-        guint i = 0;
-        for (i = 0; i < (cs->languages)->len; i++) {
+        for (gint i = 0; i < (cs->languages)->len; i++) {
                 printf ("%s ",
                         (gchar*) g_ptr_array_index (cs->languages, i));
         }
@@ -306,7 +304,7 @@ source_get_languages (Source* cs)
                                 }
                 	}
 
-                	for (int i = 0; i < 3; i++) {
+                	for (gint i = 0; i < 3; i++) {
         			source_add_collection (cs, "de", year - i);
                 	}
 			source_finialize (cs);

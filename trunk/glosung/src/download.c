@@ -174,9 +174,8 @@ static void
 download_bible20  (const Source *cs, const gchar *lang, guint year)
 {
         GPtrArray* css = source_get_collections (cs, lang);
-	int i;
 	VerseCollection *vc = NULL;
-        for (i = 0; i < css->len; i++) {
+        for (gint i = 0; i < css->len; i++) {
         	vc = (VerseCollection*) g_ptr_array_index (css, i);
         	if (vc->year == year) {
         		break;
@@ -301,7 +300,7 @@ analyse_bible20_list (Source* cs, Memory mem)
 			if (g_str_equal ("file", tokens [0])) {
 				i = 0;
 				guint year;
-				sscanf (tokens [col_year], "%d", &year);
+				sscanf (tokens [col_year], "%u", &year);
 				VerseCollection* vc = source_add_collection
 					(cs, tokens [col_lang], year);
 				vc->url     = tokens [col_url];
