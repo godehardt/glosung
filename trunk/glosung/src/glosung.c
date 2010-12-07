@@ -251,7 +251,6 @@ main (int argc, char **argv)
         date = g_date_new ();
         get_time ();
         new_date = g_date_new_julian (g_date_get_julian (date));
-#ifndef WIN32
         if (once) {
 		GDate *last_time = get_last_usage ();
 		if (last_time && g_date_compare (last_time, date) >= 0) {
@@ -259,7 +258,6 @@ main (int argc, char **argv)
                 }
         }
         set_last_usage (date);
-#endif /* WIN32 */
 
         gtk_window_set_default_icon_from_file
                 (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
@@ -316,30 +314,36 @@ static GHashTable *
 init_languages (void)
 {
         GHashTable *ht = g_hash_table_new (g_str_hash, g_str_equal);
-        g_hash_table_insert (ht, "af",    _("afrikaans"));
-        g_hash_table_insert (ht, "ar",    _("arabic"));
-        g_hash_table_insert (ht, "cs",    _("czech"));
-        g_hash_table_insert (ht, "de",    _("german"));
-        g_hash_table_insert (ht, "en",    _("english"));
-        g_hash_table_insert (ht, "es",    _("spanish"));
-        g_hash_table_insert (ht, "fr",    _("french"));
-        g_hash_table_insert (ht, "he",    _("hebrew"));
-        g_hash_table_insert (ht, "hu",    _("hungarian"));
-        g_hash_table_insert (ht, "it",    _("italian"));
-        g_hash_table_insert (ht, "nl",    _("dutch"));
-        g_hash_table_insert (ht, "no",    _("norwegian"));
-        g_hash_table_insert (ht, "pt",    _("portuguese"));
-        g_hash_table_insert (ht, "ro",    _("romanian"));
-        g_hash_table_insert (ht, "ru",    _("russian"));
-        g_hash_table_insert (ht, "sw",    _("swahili"));
-        g_hash_table_insert (ht, "ta",    _("tamil"));
-        g_hash_table_insert (ht, "tr",    _("turkish"));
-        g_hash_table_insert (ht, "vi",    _("vietnamese"));
-        g_hash_table_insert (ht, "zh-CN", _("chinese simplified"));
-        g_hash_table_insert (ht, "zh-TW", _("chinese traditional"));
-        // FIXME
-        g_hash_table_insert (ht, "zh-Hans", _("chinese simplified"));
-        g_hash_table_insert (ht, "zh-Hant", _("chinese traditional"));
+        g_hash_table_insert (ht, "af",     ("Afrikaans"));
+        g_hash_table_insert (ht, "ar",     ("العربية"));
+        g_hash_table_insert (ht, "bg",     ("Български"));
+        g_hash_table_insert (ht, "cs",     ("Čeština"));
+        g_hash_table_insert (ht, "de",     ("Deutsch"));
+        g_hash_table_insert (ht, "el",     ("Ελληνικά"));
+        g_hash_table_insert (ht, "en",     ("English"));
+        g_hash_table_insert (ht, "es",     ("Español"));
+        g_hash_table_insert (ht, "et",     ("Eesti"));
+        g_hash_table_insert (ht, "fr",     ("Français"));
+        g_hash_table_insert (ht, "he",     ("עברית‏"));
+        g_hash_table_insert (ht, "hu",     ("Magyar"));
+        g_hash_table_insert (ht, "it",     ("Italiano"));
+        g_hash_table_insert (ht, "nl",     ("Nederlands"));
+        g_hash_table_insert (ht, "no",     ("Norsk"));
+        g_hash_table_insert (ht, "nb",     ("Norsk"));
+        g_hash_table_insert (ht, "pt",     ("Português"));
+        g_hash_table_insert (ht, "ro",     ("Română"));
+        g_hash_table_insert (ht, "ru",     ("Русский"));
+        g_hash_table_insert (ht, "sw",     ("Kiswahili"));
+        g_hash_table_insert (ht, "ta",     ("தமிழ்"));
+        g_hash_table_insert (ht, "th",     ("ไทย"));
+        g_hash_table_insert (ht, "tr",     ("Türkçe"));
+        g_hash_table_insert (ht, "vi",     ("Tiếng Việt"));
+        g_hash_table_insert (ht, "zh",     ("中文"));
+        g_hash_table_insert (ht, "zh-CN",  ("中文 (简体)"));
+        g_hash_table_insert (ht, "zh-Hans",("中文 (简体)"));
+        g_hash_table_insert (ht, "hans",   ("中文 (简体)"));
+        g_hash_table_insert (ht, "zh-TW",  ("中文 (繁體)"));
+        g_hash_table_insert (ht, "zh-Hant",("中文 (繁體)"));
 
         return ht;
 } /* init_languages */
