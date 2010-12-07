@@ -16,7 +16,6 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -94,22 +93,15 @@ remove_from_autostart ()
 static void
 init (void)
 {
-        /* TODO: const gchar* g_get_user_config_dir () and g_build_filename () */
         if (config_path) {
                 return; /* config_path already set */
         }
 
-        config_path = getenv ("XDG_CONFIG_HOME");
-        if (config_path) {
-                config_path = g_strdup_printf
-                      ("%s/autostart/glosung.desktop", config_path);
+        if (g_get_user_config_dir ()) {
+                config_path = g_build_filename (g_get_user_config_dir (),
+                	"autostart", "glosung.desktop", NULL);
         } else {
-#ifndef WIN32
-		config_path = g_strdup_printf
-			  ("%s/.config/autostart/glosung.desktop", getenv ("HOME"));
-#else /* WIN32 */
-		config_path = g_strdup_printf ("%s%s/.config/autostart/glosung.desktop",
-        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"));
-#endif /* WIN32 */
+		config_path = g_build_filename (g_get_home_dir (),
+			".config", "autostart", "glosung.desktop", NULL);
         }
 } /* init */

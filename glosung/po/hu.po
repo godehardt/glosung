@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-01 20:29+0100\n"
+"POT-Creation-Date: 2010-12-07 21:28+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -165,93 +165,6 @@ msgstr ""
 "Szöveg fájl nem található!\n"
 "Telepítse a preferált nyelvet."
 #
-# File: src/glosung.c, line: 360
-msgid "afrikaans"
-msgstr "afrikai"
-#
-# File: src/glosung.c, line: 361
-msgid "arabic"
-msgstr "arab"
-#
-# File: src/glosung.c, line: 362
-msgid "czech"
-msgstr "cseh"
-#
-# File: src/glosung.c, line: 363
-msgid "german"
-msgstr "német"
-#
-# File: src/glosung.c, line: 364
-msgid "english"
-msgstr "angol"
-#
-# File: src/glosung.c, line: 365
-msgid "spanish"
-msgstr "spanyol"
-#
-# File: src/glosung.c, line: 366
-msgid "french"
-msgstr "francia"
-#
-# File: src/glosung.c, line: 367
-msgid "hebrew"
-msgstr "héber"
-#
-# File: src/glosung.c, line: 368
-msgid "hungarian"
-msgstr "magyar"
-#
-# File: src/glosung.c, line: 369
-msgid "italian"
-msgstr "olasz"
-#
-# File: src/glosung.c, line: 370
-msgid "dutch"
-msgstr "holland"
-#
-# File: src/glosung.c, line: 371
-msgid "norwegian"
-msgstr "norvég"
-#
-# File: src/glosung.c, line: 372
-msgid "portuguese"
-msgstr "portugál"
-#
-# File: src/glosung.c, line: 373
-msgid "romanian"
-msgstr "román"
-#
-# File: src/glosung.c, line: 374
-msgid "russian"
-msgstr "orosz"
-#
-# File: src/glosung.c, line: 375
-msgid "swahili"
-msgstr "suahili"
-#
-# File: src/glosung.c, line: 376
-msgid "tamil"
-msgstr "tamil"
-#
-# File: src/glosung.c, line: 377
-msgid "turkish"
-msgstr "török"
-#
-# File: src/glosung.c, line: 378
-msgid "vietnamese"
-msgstr "vietnám"
-#
-# File: src/glosung.c, line: 379
-# File: src/glosung.c, line: 382
-#. FIXME
-msgid "chinese simplified"
-msgstr "egyszerűsített kínai"
-#
-# File: src/glosung.c, line: 380
-# File: src/glosung.c, line: 383
-msgid "chinese traditional"
-msgstr "tradicionális kínai"
-#
 # File: src/glosung.c, line: 532
 #, c-format
 msgid "No %s texts found for %d!"
@@ -382,6 +295,126 @@ msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
 #
 #
+# File: src/glosung.c, line: 362
+#~ msgid "czech"
+#~ msgstr "cseh"
+#
+#
+# File: src/glosung.c, line: 365
+#~ msgid "spanish"
+#~ msgstr "spanyol"
+#
+#
+# File: src/glosung.c, line: 366
+#~ msgid "french"
+#~ msgstr "francia"
+#
+#
+# File: src/glosung.c, line: 370
+#~ msgid "dutch"
+#~ msgstr "holland"
+#
+#
+# File: src/glosung.c, line: 371
+#~ msgid "norwegian"
+#~ msgstr "norvég"
+#
+#
+# File: src/glosung.c, line: 372
+#~ msgid "portuguese"
+#~ msgstr "portugál"
+#
+#
+# File: src/glosung.c, line: 373
+#~ msgid "romanian"
+#~ msgstr "román"
+#
+#
+# File: src/glosung.c, line: 375
+#~ msgid "swahili"
+#~ msgstr "suahili"
+#
+#
+# File: src/glosung.c, line: 376
+#~ msgid "tamil"
+#~ msgstr "tamil"
+#
+#
+# File: src/glosung.c, line: 377
+#~ msgid "turkish"
+#~ msgstr "török"
+#
+#
+# File: src/glosung.c, line: 378
+#~ msgid "vietnamese"
+#~ msgstr "vietnám"
+#
+#
+# File: src/glosung.c, line: 379
+# File: src/glosung.c, line: 382
+#~ msgid "chinese simplified"
+#~ msgstr "egyszerűsített kínai"
+#
+#
+# File: src/glosung.c, line: 380
+# File: src/glosung.c, line: 383
+#~ msgid "chinese traditional"
+#~ msgstr "tradicionális kínai"
+#
+#
+#
+# File: src/glosung.c, line: 360
+#~ msgid "afrikaans"
+#~ msgstr "afrikai"
+#
+#
+#
+# File: src/glosung.c, line: 361
+#~ msgid "arabic"
+#~ msgstr "arab"
+#
+#
+#
+# File: src/glosung.c, line: 363
+#, fuzzy
+#~ msgid "German"
+#~ msgstr "német"
+#
+#
+#
+# File: src/glosung.c, line: 364
+#, fuzzy
+#~ msgid "English"
+#~ msgstr "angol"
+#
+#
+#
+# File: src/glosung.c, line: 367
+#~ msgid "hebrew"
+#~ msgstr "héber"
+#
+#
+#
+# File: src/glosung.c, line: 368
+#~ msgid "hungarian"
+#~ msgstr "magyar"
+#
+#
+#
+# File: src/glosung.c, line: 369
+#~ msgid "italian"
+#~ msgstr "olasz"
+#
+#
+#
+# File: src/glosung.c, line: 374
+#~ msgid "russian"
+#~ msgstr "orosz"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -393,10 +426,16 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 # File: src/glosung.c, line: 210
 #, fuzzy
 #~ msgid "Authentication"
 #~ msgstr "Kilépés a programból"
+#
+#
+#
 #
 #
 #

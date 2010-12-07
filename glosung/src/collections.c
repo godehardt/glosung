@@ -18,7 +18,6 @@
 
 
 #include <ctype.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -140,14 +139,8 @@ scan_for_collections (Source* cs)
         gchar *dirname;
 
         scan_for_collections_in_dir (GLOSUNG_DATA_DIR, cs);
-#ifndef WIN32
-        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
+        dirname = g_build_filename (g_get_home_dir (), ".glosung", NULL);
         scan_for_collections_in_dir (dirname, cs);
-#else /* WIN32 */
-        dirname = g_strdup_printf ("%s%s%s",
-        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), "/.glosung");
-        scan_for_collections_in_dir (dirname, cs);
-#endif /* WIN32 */
         g_free (dirname);
         source_finialize (cs);
 

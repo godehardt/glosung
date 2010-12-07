@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-01 20:29+0100\n"
+"POT-Creation-Date: 2010-12-07 21:28+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -166,87 +166,6 @@ msgstr ""
 "Aucuns fichiers de versets trouvés !\n"
 "Veuillez installer les traductions correspondantes."
 #
-# File: src/glosung.c, line: 288
-msgid "afrikaans"
-msgstr "Afrikaans"
-#
-# File: src/glosung.c, line: 289
-msgid "arabic"
-msgstr "Arabe"
-#
-msgid "czech"
-msgstr "Tchèque"
-#
-msgid "german"
-msgstr "Allemand"
-#
-msgid "english"
-msgstr "Anglais"
-#
-msgid "spanish"
-msgstr "Espagnol"
-#
-# File: src/glosung.c, line: 294
-msgid "french"
-msgstr "Français"
-#
-# File: src/glosung.c, line: 295
-msgid "hebrew"
-msgstr "Hébreu"
-#
-# File: src/glosung.c, line: 296
-msgid "hungarian"
-msgstr "Hongrois"
-#
-# File: src/glosung.c, line: 297
-msgid "italian"
-msgstr "Italien"
-#
-# File: src/glosung.c, line: 298
-msgid "dutch"
-msgstr "Hollandais"
-#
-# File: src/glosung.c, line: 299
-msgid "norwegian"
-msgstr "Norvégien"
-#
-# File: src/glosung.c, line: 300
-msgid "portuguese"
-msgstr "Portuguais"
-#
-# File: src/glosung.c, line: 301
-msgid "romanian"
-msgstr "Roumain"
-#
-# File: src/glosung.c, line: 302
-msgid "russian"
-msgstr "Russe"
-#
-# File: src/glosung.c, line: 370
-msgid "swahili"
-msgstr ""
-#
-# File: src/glosung.c, line: 303
-msgid "tamil"
-msgstr "Tamoul"
-#
-# File: src/glosung.c, line: 304
-msgid "turkish"
-msgstr "Turc"
-#
-# File: src/glosung.c, line: 305
-msgid "vietnamese"
-msgstr "Vietnamien"
-#
-# File: src/glosung.c, line: 306
-#. FIXME
-msgid "chinese simplified"
-msgstr "Chinois simplifié"
-#
-# File: src/glosung.c, line: 307
-msgid "chinese traditional"
-msgstr "Chinois traditionnel"
-#
 #, c-format
 msgid "No %s texts found for %d!"
 msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
@@ -391,6 +310,115 @@ msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
 #
 #
+#~ msgid "czech"
+#~ msgstr "Tchèque"
+#
+#
+#~ msgid "spanish"
+#~ msgstr "Espagnol"
+#
+#
+# File: src/glosung.c, line: 294
+#~ msgid "french"
+#~ msgstr "Français"
+#
+#
+# File: src/glosung.c, line: 298
+#~ msgid "dutch"
+#~ msgstr "Hollandais"
+#
+#
+# File: src/glosung.c, line: 299
+#~ msgid "norwegian"
+#~ msgstr "Norvégien"
+#
+#
+# File: src/glosung.c, line: 300
+#~ msgid "portuguese"
+#~ msgstr "Portuguais"
+#
+#
+# File: src/glosung.c, line: 301
+#~ msgid "romanian"
+#~ msgstr "Roumain"
+#
+#
+# File: src/glosung.c, line: 303
+#~ msgid "tamil"
+#~ msgstr "Tamoul"
+#
+#
+# File: src/glosung.c, line: 304
+#~ msgid "turkish"
+#~ msgstr "Turc"
+#
+#
+# File: src/glosung.c, line: 305
+#~ msgid "vietnamese"
+#~ msgstr "Vietnamien"
+#
+#
+# File: src/glosung.c, line: 306
+#~ msgid "chinese simplified"
+#~ msgstr "Chinois simplifié"
+#
+#
+# File: src/glosung.c, line: 307
+#~ msgid "chinese traditional"
+#~ msgstr "Chinois traditionnel"
+#
+#
+#
+# File: src/glosung.c, line: 288
+#~ msgid "afrikaans"
+#~ msgstr "Afrikaans"
+#
+#
+#
+# File: src/glosung.c, line: 289
+#~ msgid "arabic"
+#~ msgstr "Arabe"
+#
+#
+#
+#, fuzzy
+#~ msgid "German"
+#~ msgstr "Allemand"
+#
+#
+#
+#, fuzzy
+#~ msgid "English"
+#~ msgstr "Anglais"
+#
+#
+#
+# File: src/glosung.c, line: 295
+#~ msgid "hebrew"
+#~ msgstr "Hébreu"
+#
+#
+#
+# File: src/glosung.c, line: 296
+#~ msgid "hungarian"
+#~ msgstr "Hongrois"
+#
+#
+#
+# File: src/glosung.c, line: 297
+#~ msgid "italian"
+#~ msgstr "Italien"
+#
+#
+#
+# File: src/glosung.c, line: 302
+#~ msgid "russian"
+#~ msgstr "Russe"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -433,8 +461,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
+#
+#
 #
 #
 #
@@ -511,8 +545,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
+#
 #
 #
 #
@@ -614,9 +654,15 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
+#
 #
 #
 #
@@ -751,9 +797,15 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
+#
 #
 #
 #

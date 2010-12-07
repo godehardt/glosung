@@ -270,12 +270,7 @@ check_file (const gchar *file)
 {
         gchar *filename;
 
-#ifndef WIN32
-        filename = g_strdup_printf ("%s/.glosung/%s", getenv ("HOME"), file);
-#else /* WIN32 */
-        filename = g_strdup_printf ("%s%s/.glosung/%s",
-        		getenv ("HOMEDRIVE"), getenv ("HOMEPATH"), file);
-#endif /* WIN32 */
+        filename = g_build_filename (g_get_home_dir (), ".glosung", file, NULL);
         if (access (filename, F_OK | R_OK)) {
                 g_free (filename);
                 filename = g_strdup_printf (GLOSUNG_DATA_DIR "/%s", file);
@@ -861,7 +856,7 @@ find_the_word_file (gchar *lang, gint year)
         if (filename != NULL) {
                 return filename;
         }
-        dirname = g_strdup_printf ("%s%s", getenv ("HOME"), "/.glosung");
+        dirname = g_build_filename (g_get_home_dir (), ".glosung", NULL);
         filename = find_the_word_file_in_dir (dirname, lang, year);
 
         return filename;

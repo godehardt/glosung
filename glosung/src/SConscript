@@ -22,7 +22,7 @@ Import ('env install_dir tar_file prefix')
 
 glosung = env.Program ('glosung', ['glosung.c', 'parser.c', 'autostart.c',
              'download.c', 'collections.c', 'about.c', 'util.c', 'settings.c'])
-losung  = env.Program ('losung', ['losung.c', 'parser.c', 'util.c'])
+losung  = env.Program ('losung', ['losung.c', 'parser.c', 'util.c', 'settings.c'])
 env.Install (dir = install_dir + prefix + '/bin', source = [losung, glosung])
 
 if env['PLATFORM'] != 'win32':

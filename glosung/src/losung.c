@@ -26,14 +26,11 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#ifndef WIN32
-    #include <gconf/gconf-client.h>
-#endif /* WIN32 */
-
 #include <glib/gi18n.h>
 #include <glib/goption.h>
 
 #include "util.h"
+#include "settings.h"
 
 
 #define PACKAGE "glosung"
@@ -78,11 +75,7 @@ main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
-#ifndef WIN32
-        GConfClient *client = gconf_client_get_default ();
-        lang = gconf_client_get_string
-                (client, "/apps/" PACKAGE "/language", NULL);
-#endif /* WIN32 */
+        lang = get_language ();
         if (lang == NULL) {
                 lang = "de";
         }

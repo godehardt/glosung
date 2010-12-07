@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-01 20:29+0100\n"
+"POT-Creation-Date: 2010-12-07 21:28+0100\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -343,94 +343,6 @@ msgstr ""
 "Žádné textové soubory nebyly nalezeny!\n"
 "Nainstalujte si, prosím, příslušné jazykové soubory."
 #
-# File: src/glosung.c, line: 288
-msgid "afrikaans"
-msgstr "afrikánsky"
-#
-# File: src/glosung.c, line: 289
-msgid "arabic"
-msgstr "arabsky"
-#
-# src/glosung.c:25
-# File: src/glosung.c, line: 79
-msgid "czech"
-msgstr "česky"
-#
-# src/glosung.c:26
-# File: src/glosung.c, line: 80
-msgid "german"
-msgstr "německy"
-#
-# src/glosung.c:27
-# File: src/glosung.c, line: 81
-msgid "english"
-msgstr "anglicky"
-#
-# File: src/glosung.c, line: 293
-msgid "spanish"
-msgstr "španělsky"
-#
-# File: src/glosung.c, line: 294
-msgid "french"
-msgstr "francouzsky"
-#
-# File: src/glosung.c, line: 295
-msgid "hebrew"
-msgstr "hebrejsky"
-#
-# File: src/glosung.c, line: 296
-msgid "hungarian"
-msgstr "maďarsky"
-#
-# File: src/glosung.c, line: 297
-msgid "italian"
-msgstr "italsky"
-#
-# File: src/glosung.c, line: 298
-msgid "dutch"
-msgstr "nizozemsky"
-#
-# File: src/glosung.c, line: 299
-msgid "norwegian"
-msgstr "norsky"
-#
-# File: src/glosung.c, line: 300
-msgid "portuguese"
-msgstr "portugalsky"
-#
-# File: src/glosung.c, line: 301
-msgid "romanian"
-msgstr "rumunsky"
-#
-# File: src/glosung.c, line: 302
-msgid "russian"
-msgstr "rusky"
-#
-# File: src/glosung.c, line: 370
-msgid "swahili"
-msgstr "svahilsky"
-#
-# File: src/glosung.c, line: 303
-msgid "tamil"
-msgstr "tamilsky"
-#
-# File: src/glosung.c, line: 304
-msgid "turkish"
-msgstr "turecky"
-#
-# File: src/glosung.c, line: 305
-msgid "vietnamese"
-msgstr "vietnamsky"
-#
-# File: src/glosung.c, line: 306
-#. FIXME
-msgid "chinese simplified"
-msgstr "čínsky (zjednodušeně)"
-#
-# File: src/glosung.c, line: 307
-msgid "chinese traditional"
-msgstr "čínsky (tradičně)"
-#
 # File: src/glosung.c, line: 316
 #, c-format
 msgid "No %s texts found for %d!"
@@ -600,12 +512,136 @@ msgid "Check this box if you do not want to see this dialog again"
 msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
+# src/glosung.c:25
+# File: src/glosung.c, line: 79
+#~ msgid "czech"
+#~ msgstr "česky"
+#
+#
+# File: src/glosung.c, line: 293
+#~ msgid "spanish"
+#~ msgstr "španělsky"
+#
+#
+# File: src/glosung.c, line: 294
+#~ msgid "french"
+#~ msgstr "francouzsky"
+#
+#
+# File: src/glosung.c, line: 298
+#~ msgid "dutch"
+#~ msgstr "nizozemsky"
+#
+#
+# File: src/glosung.c, line: 299
+#~ msgid "norwegian"
+#~ msgstr "norsky"
+#
+#
+# File: src/glosung.c, line: 300
+#~ msgid "portuguese"
+#~ msgstr "portugalsky"
+#
+#
+# File: src/glosung.c, line: 301
+#~ msgid "romanian"
+#~ msgstr "rumunsky"
+#
+#
+# File: src/glosung.c, line: 370
+#~ msgid "swahili"
+#~ msgstr "svahilsky"
+#
+#
+# File: src/glosung.c, line: 303
+#~ msgid "tamil"
+#~ msgstr "tamilsky"
+#
+#
+# File: src/glosung.c, line: 304
+#~ msgid "turkish"
+#~ msgstr "turecky"
+#
+#
+# File: src/glosung.c, line: 305
+#~ msgid "vietnamese"
+#~ msgstr "vietnamsky"
+#
+#
+# File: src/glosung.c, line: 306
+#~ msgid "chinese simplified"
+#~ msgstr "čínsky (zjednodušeně)"
+#
+#
+# File: src/glosung.c, line: 307
+#~ msgid "chinese traditional"
+#~ msgstr "čínsky (tradičně)"
+#
+#
+#
+# File: src/glosung.c, line: 288
+#~ msgid "afrikaans"
+#~ msgstr "afrikánsky"
+#
+#
+#
+# File: src/glosung.c, line: 289
+#~ msgid "arabic"
+#~ msgstr "arabsky"
+#
+#
+#
+# src/glosung.c:26
+# File: src/glosung.c, line: 80
+#, fuzzy
+#~ msgid "German"
+#~ msgstr "německy"
+#
+#
+#
+# src/glosung.c:27
+# File: src/glosung.c, line: 81
+#, fuzzy
+#~ msgid "English"
+#~ msgstr "anglicky"
+#
+#
+#
+# File: src/glosung.c, line: 295
+#~ msgid "hebrew"
+#~ msgstr "hebrejsky"
+#
+#
+#
+# File: src/glosung.c, line: 296
+#~ msgid "hungarian"
+#~ msgstr "maďarsky"
+#
+#
+#
+# File: src/glosung.c, line: 297
+#~ msgid "italian"
+#~ msgstr "italsky"
+#
+#
+#
+# File: src/glosung.c, line: 302
+#~ msgid "russian"
+#~ msgstr "rusky"
+#
+#
+#
+#
+#
 #
 #
 #
 # File: ui/add_language.glade, line: 100
 #~ msgid "gtk-cancel"
 #~ msgstr "zrušit"
+#
+#
+#
 #
 #
 #
@@ -629,12 +665,18 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Nastavení"
+#
+#
+#
 #
 #
 #
@@ -684,10 +726,16 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:500
 # File: src/glosung.c, line: 581
 #~ msgid "Choose Font:"
 #~ msgstr "Výběr písma:"
+#
+#
+#
 #
 #
 #
@@ -773,6 +821,9 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:519
 # File: src/glosung.c, line: 604
 #~ msgid "Show selective and continuing reading"
@@ -817,10 +868,16 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:509
 # File: src/glosung.c, line: 594
 #~ msgid "Close calendar by double click"
 #~ msgstr "Zavření kalendáře pomocí dvojkliku"
+#
+#
+#
 #
 #
 #
@@ -924,12 +981,18 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
+#
+#
+#
 #
 #
 #
@@ -1071,12 +1134,18 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "/Soubor/Kalendář"
+#
+#
+#
 #
 #
 #
@@ -1230,12 +1299,18 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:93 src/glosung.c:617
 # File: src/glosung.c, line: 143
 # File: src/glosung.c, line: 705
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalendář"
+#
+#
+#
 #
 #
 #
@@ -1390,6 +1465,9 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:86
 # File: src/glosung.c, line: 136
 #, fuzzy
@@ -1469,11 +1547,17 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
+#
+#
+#
 # src/glosung.c:83
 # File: src/glosung.c, line: 133
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Následující měsíc"
+#
+#
+#
 #
 #
 #

@@ -27,6 +27,8 @@
 #include <zlib.h>
 #include <errno.h>
 #include <errno.h>
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <glib/gi18n.h>
 
 //#include <curl/types.h>
@@ -101,11 +103,7 @@ to_file_losungen (Memory mem, const guint year)
         gchar *tmp_dir = g_strdup_printf ("%s/tmp_download", glosung_dir);
         gchar *zipfile = g_strdup_printf ("%s/Losung_XML.zip", tmp_dir);
 
-#ifdef WIN32
-        mkdir (tmp_dir);
-#else /* WIN32 */
-        mkdir (tmp_dir, 0777);
-#endif /* WIN32 */
+        g_mkdir (tmp_dir, 0777);
         to_file (mem, zipfile);
         if (error != 0) {
                 rmdir (tmp_dir);
@@ -290,7 +288,8 @@ analyse_bible20_list (Source* cs, Memory mem)
         g_strfreev (tokens);
         if (! col_year || ! col_lang || ! col_url) {
                 g_message ("Syntax error in first line of CSV!");
-                return /* -42*/;
+                error = -42;
+                return;
         }
 
         j++;
@@ -331,8 +330,7 @@ get_bible20_collections (Source* cs)
 		g_free (mem.memory);
         }
 
-        // FIXME return real values
-        error = 0;
+        // FIXME return real values (check if "error" is set appropriately)
         return error;
 }
 
@@ -367,11 +365,7 @@ init (void)
         glosung_dir = g_strdup_printf
                 ("%s/.glosung", getenv ("HOME"));
         if (! g_file_test (glosung_dir, G_FILE_TEST_IS_DIR)) {
-#ifdef WIN32
-                int error = mkdir (glosung_dir);
-#else /* WIN32 */
-                int error = mkdir (glosung_dir, 0750);
-#endif /* WIN32 */
+                int error = g_mkdir (glosung_dir, 0750);
                 if (error == -1) {
                         g_message ("Error: Could not create directory %s!",
                                    glosung_dir);
