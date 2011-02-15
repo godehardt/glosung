@@ -452,7 +452,7 @@ create_app (void)
         g_signal_connect (G_OBJECT (app), "scroll_event",
                           G_CALLBACK (window_scroll_cb),
                           NULL);
-        gdk_window_set_events (GDK_WINDOW (app->window), GDK_ALL_EVENTS_MASK);
+        gdk_window_set_events (gtk_widget_get_window (app), GDK_ALL_EVENTS_MASK);
 } /* create_app */
 
 
@@ -467,8 +467,7 @@ get_time (void)
 
         t = time (NULL);
         now = *localtime (&t);
-        g_date_set_dmy (date,
-                        now.tm_mday, now.tm_mon + 1, now.tm_year + 1900);
+        g_date_set_dmy (date, now.tm_mday, now.tm_mon + 1, now.tm_year + 1900);
 } /* get_time */
 
 
@@ -663,8 +662,8 @@ property_cb (GtkWidget *w, gpointer data)
 {
         if (property != NULL) {
                 g_assert (gtk_widget_get_realized (property));
-                gdk_window_show  (property->window);
-                gdk_window_raise (property->window);
+                gdk_window_show  (gtk_widget_get_window (property));
+                gdk_window_raise (gtk_widget_get_window (property));
         } else {
                 GtkWidget *combo;
                 GtkWidget *table;
@@ -919,8 +918,8 @@ calendar_cb (GtkWidget *w, gpointer data)
 
         if (dialog != NULL) {
                 g_assert (gtk_widget_get_realized (dialog));
-                gdk_window_show  (dialog->window);
-                gdk_window_raise (dialog->window);
+                gdk_window_show  (gtk_widget_get_window (dialog));
+                gdk_window_raise (gtk_widget_get_window (dialog));
         } else {
                 dialog = gtk_dialog_new ();
                 gtk_window_set_title (GTK_WINDOW (dialog), _("Calendar"));
@@ -941,8 +940,9 @@ calendar_cb (GtkWidget *w, gpointer data)
                                               g_date_get_year (date));
                 gtk_calendar_select_day      (GTK_CALENDAR (calendar),
                                               g_date_get_day (date));
-                gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox),
-                                   calendar);
+                gtk_container_add (GTK_CONTAINER
+                	(gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                         calendar);
                 g_signal_connect (G_OBJECT (dialog), "response",
                                   G_CALLBACK (gtk_widget_destroy), NULL);
                 g_signal_connect (G_OBJECT (dialog), "destroy",
@@ -1140,7 +1140,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_box_pack_start (GTK_BOX (vbox), add_button,
                             FALSE, FALSE, MY_PAD);
 
-        gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+        gtk_container_add (GTK_CONTAINER
+        	(gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox);
 
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (gtk_widget_destroy), NULL);
