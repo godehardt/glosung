@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 
 
-void   wrap_text    (gchar     *string, gint width);
-gchar* find_ui_file (gchar     *filename);
-void   show_uri     (GtkWidget *widget, gchar *uri, gpointer data);
+void   wrap_text    (gchar      *string,  gint   width);
+guint  load_ui_file (GtkBuilder *builder, gchar *filename);
+void   show_uri     (GtkWidget  *widget,  gchar *uri,  gpointer data);
 
 #endif /* GLOSUNG_UTIL__H */

@@ -68,6 +68,7 @@ enum {
 static const int WRAP_LENGTH = 47;
 
 static GtkWidget *app;
+static GtkBuilder*builder;
 static GDate     *date;
 static GDate     *new_date;
 static GtkWidget *calendar;
@@ -105,36 +106,36 @@ static void        get_time             (void);
 static void        show_text            (void);
 static void        create_app           (void);
 
-static void add_lang_cb          (GtkWidget *w,   gpointer data);
-static void about_cb             (GtkWidget *w,   gpointer data);
-static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
-static void calendar_cb          (GtkWidget *w,   gpointer data);
 static void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
-static void lang_manager_cb      (GtkWidget *w,   gpointer data);
-static void next_day_cb          (GtkWidget *w,   gpointer data);
-static void next_month_cb        (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
-static void prev_day_cb          (GtkWidget *w,   gpointer data);
-static void prev_month_cb        (GtkWidget *w,   gpointer data);
-static void property_cb          (GtkWidget *w,   gpointer data);
-static void today_cb             (GtkWidget *w,   gpointer data);
-static void update_language_store();
-static void clipboard_cb         (GtkWidget *w,   gpointer data);
+static void update_language_store(GtkListStore   *store);
 static void window_scroll_cb     (GtkWidget      *widget,
                                   GdkEventScroll *event,
                                   gpointer        user_data);
 
 
-void show_warning_cb        (GtkWidget *w,        gpointer data);
+void about_cb               (GtkWidget *w,   gpointer data);
+void about_herrnhut_cb      (GtkWidget *w,   gpointer data);
+void add_lang_cb            (GtkWidget *w,   gpointer data);
 void autostart_cb           (GtkWidget *w,        gpointer data);
 void autostart_once_cb      (GtkWidget *w,        gpointer data);
+void calendar_cb            (GtkWidget *w,   gpointer data);
+void clipboard_cb           (GtkWidget *w,   gpointer data);
 void font_sel_cb            (GtkWidget *button,   gpointer data);
 void lang_changed_cb        (GtkWidget *item,     gpointer data);
+void lang_manager_cb        (GtkWidget *w,   gpointer data);
+void next_day_cb            (GtkWidget *w,   gpointer data);
+void next_month_cb          (GtkWidget *w,   gpointer data);
+void prev_day_cb            (GtkWidget *w,   gpointer data);
+void prev_month_cb          (GtkWidget *w,   gpointer data);
+void property_cb            (GtkWidget *w,   gpointer data);
 void proxy_toggled_cb       (GtkWidget *toggle,   gpointer data);
 void proxy_changed_cb       (GtkWidget *toggle,   gpointer data);
+void today_cb               (GtkWidget *w,   gpointer data);
+void show_warning_cb        (GtkWidget *w,        gpointer data);
 void sword_cb               (GtkWidget *toggle,   gpointer data);
 
 
@@ -247,6 +248,8 @@ main (int argc, char **argv)
                 g_error_free (error);
                 exit (1);
         }
+        builder = gtk_builder_new ();
+        gtk_builder_set_translation_domain (builder, PACKAGE);
 
         date = g_date_new ();
         get_time ();
@@ -637,7 +640,7 @@ show_text (void)
 /*
  * callback function that displays the about dialog.
  */
-static void
+G_MODULE_EXPORT void
 about_cb (GtkWidget *w, gpointer data)
 {
         about (app);
@@ -647,7 +650,7 @@ about_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that displays the about dialog.
  */
-static void
+G_MODULE_EXPORT void
 about_herrnhut_cb (GtkWidget *w, gpointer data)
 {
         about_herrnhut (app);
@@ -657,7 +660,7 @@ about_herrnhut_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that displays a property dialog.
  */
-static void
+G_MODULE_EXPORT void
 property_cb (GtkWidget *w, gpointer data)
 {
         if (property != NULL) {
@@ -675,11 +678,7 @@ property_cb (GtkWidget *w, gpointer data)
                         new_font = NULL;
                 }
 
-                GtkBuilder* builder = gtk_builder_new ();
-                gtk_builder_set_translation_domain (builder, PACKAGE);
-                gchar *ui_file = find_ui_file ("preferences.glade");
-                guint build = gtk_builder_add_from_file (builder, ui_file,NULL);
-                g_free (ui_file);
+                guint build = load_ui_file (builder, "preferences.glade");
                 if (! build) {
                         g_message ("Error while loading UI definition file");
                         return;
@@ -911,7 +910,7 @@ sword_cb (GtkWidget *toggle, gpointer data)
 /*
  * callback function that displays a calendar.
  */
-static void
+G_MODULE_EXPORT void
 calendar_cb (GtkWidget *w, gpointer data)
 {
         static GtkWidget *dialog = NULL;
@@ -962,7 +961,7 @@ calendar_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that computes Losung for the current date.
  */
-static void
+G_MODULE_EXPORT void
 today_cb (GtkWidget *w, gpointer data)
 {
         date = g_date_new ();
@@ -982,7 +981,7 @@ today_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that increases the day.
  */
-static void
+G_MODULE_EXPORT void
 next_day_cb (GtkWidget *w, gpointer data)
 {
         g_date_add_days (new_date, 1);
@@ -1000,7 +999,7 @@ next_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the day.
  */
-static void
+G_MODULE_EXPORT void
 prev_day_cb (GtkWidget *w, gpointer data)
 {
         g_date_subtract_days (new_date, 1);
@@ -1018,7 +1017,7 @@ prev_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function  that increases the month.
  */
-static void
+G_MODULE_EXPORT void
 next_month_cb (GtkWidget *w, gpointer data)
 {
         g_date_add_months (new_date, 1);
@@ -1036,7 +1035,7 @@ next_month_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the month.
  */
-static void
+G_MODULE_EXPORT void
 prev_month_cb (GtkWidget *w, gpointer data)
 {
         g_date_subtract_months (new_date, 1);
@@ -1080,87 +1079,35 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 // static GtkComboBox  *lang_combo;
 static GtkComboBox  *year_combo;
 static GtkWidget    *download_button;
-static GtkListStore *store;
+// static GtkListStore *store;
 
-
-static void
+G_MODULE_EXPORT void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
-        GtkWidget    *dialog;
-        GtkWidget    *scroll;
-        GtkWidget    *add_button;
-        GtkWidget    *list;
-        GtkWidget    *vbox;
-        GtkCellRenderer   *renderer;
-        GtkTreeViewColumn *column;
+        guint build = load_ui_file (builder, "languages.glade");
+        if (! build) {
+                return;
+        }
+        gtk_builder_connect_signals (builder, NULL);
+        GtkWidget *dialog = GTK_WIDGET
+                (gtk_builder_get_object (builder, "languages_dialog"));
 
-        dialog = gtk_dialog_new_with_buttons
-                (_("Languages"), GTK_WINDOW (app),
-                 // GTK_DIALOG_MODAL |
-                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                 GTK_STOCK_OK, GTK_RESPONSE_NONE, NULL);
-
-        vbox = gtk_vbox_new (FALSE, 0);
-        // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
-        gtk_widget_show (vbox);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
-
-        store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+        GtkListStore *store = GTK_LIST_STORE
+        	(gtk_builder_get_object (builder, "languages_liststore"));
+        	//gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
         update_language_store (store);
 
-        list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
-
-        renderer = gtk_cell_renderer_text_new ();
-        column = gtk_tree_view_column_new_with_attributes
-                (NULL, renderer, "text", 0, NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
-        renderer = gtk_cell_renderer_text_new ();
-        column = gtk_tree_view_column_new_with_attributes
-                (NULL, renderer, "text", 1, NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
-        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
-        gtk_widget_set_size_request (list, 200, 140);
-        gtk_widget_show (list);
-
-        GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
-        gtk_widget_show (lang_frame);
-
-        scroll = gtk_scrolled_window_new (NULL, NULL);
-        gtk_widget_show (scroll);
-
-        gtk_container_add (GTK_CONTAINER (lang_frame), scroll);
-        gtk_container_add (GTK_CONTAINER (scroll), list);
-
-        gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, MY_PAD);
-
-        add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
-        g_signal_connect (G_OBJECT (add_button), "clicked",
-                          G_CALLBACK (add_lang_cb), dialog);
-        gtk_widget_show (add_button);
-        gtk_box_pack_start (GTK_BOX (vbox), add_button,
-                            FALSE, FALSE, MY_PAD);
-
-        gtk_container_add (GTK_CONTAINER
-        	(gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox);
-
-        g_signal_connect (G_OBJECT (dialog), "response",
-                          G_CALLBACK (gtk_widget_destroy), NULL);
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
 
 
-static void
+G_MODULE_EXPORT void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
 
-        GtkBuilder* builder = gtk_builder_new ();
-        gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("add_language.glade");
-        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
-        g_free (ui_file);
+        guint build = load_ui_file (builder, "add_language.glade");
         if (! build) {
-                g_message ("Error while loading UI definition file");
                 return;
         }
         gtk_builder_connect_signals (builder, NULL);
@@ -1224,9 +1171,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
 		guint year = VC (g_ptr_array_index (vc_s, i))->year;
 
 		if (! is_hide_warning ()) {
-			ui_file = find_ui_file ("warning_dialog.glade");
-			gtk_builder_add_from_file (builder, ui_file, NULL);
-			g_free (ui_file);
+			build = load_ui_file (builder, "warning_dialog.glade");
+	                if (! build) {
+	                        return;
+	                }
 	                gtk_builder_connect_signals (builder, NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
@@ -1253,7 +1201,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                 source_add_collection (local_collections, langu, year);
 		source_finialize      (local_collections);
 
-		update_language_store ();
+		update_language_store (GTK_LIST_STORE (data));
 		if (local_collections->languages->len == 1) {
 			lang = langu;
 			set_language (lang);
@@ -1379,7 +1327,7 @@ create_years_string (gchar *langu)
 
 
 static void
-update_language_store ()
+update_language_store (GtkListStore *store)
 {
         GtkTreeIter   iter1;
 
@@ -1396,7 +1344,7 @@ update_language_store ()
 } /* update_language_store */
 
 
-static void
+G_MODULE_EXPORT void
 clipboard_cb (GtkWidget *w, gpointer data)
 {
         GtkClipboard* clipboard = gtk_clipboard_get (GDK_SELECTION_PRIMARY);

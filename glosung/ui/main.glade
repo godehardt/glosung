@@ -21,7 +21,7 @@
                     <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="Calendar">
-                        <property name="label" translatable="yes">_Calendar</property>
+                        <property name="label" translatable="yes">_Calendar...</property>
                         <property name="visible">True</property>
                         <property name="tooltip_text" translatable="yes">Select date from calendar</property>
                         <property name="use_underline">True</property>
@@ -173,7 +173,7 @@
                     <property name="ubuntu_local">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="AboutHerrnhut">
-                        <property name="label">About _Herrnhut</property>
+                        <property name="label">About _Herrnhut...</property>
                         <property name="visible">True</property>
                         <property name="tooltip_text" translatable="yes">About Herrnhuter Losungen</property>
                         <property name="use_underline">True</property>
@@ -184,7 +184,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="About">
-                        <property name="label" translatable="yes">About _GLosung</property>
+                        <property name="label" translatable="yes">About _GLosung...</property>
                         <property name="visible">True</property>
                         <property name="tooltip_text" translatable="yes">About GLosung</property>
                         <property name="use_underline">True</property>
