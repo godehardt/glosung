@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkListStore" id="languages_liststore">
+    <columns>
+      <!-- column-name language -->
+      <column type="gchararray"/>
+      <!-- column-name years -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkDialog" id="languages_dialog">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Languages</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">normal</property>
+    <property name="has_separator">True</property>
+    <signal name="close" handler="gtk_widget_destroy"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkFrame" id="frame1">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <child>
+                  <object class="GtkAlignment" id="alignment1">
+                    <property name="visible">True</property>
+                    <property name="bottom_padding">3</property>
+                    <property name="left_padding">5</property>
+                    <property name="right_padding">5</property>
+                    <child>
+                      <object class="GtkScrolledWindow" id="langscroll">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="hscrollbar_policy">automatic</property>
+                        <property name="vscrollbar_policy">automatic</property>
+                        <child>
+                          <object class="GtkTreeView" id="treeview">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="model">languages_liststore</property>
+                            <property name="headers_visible">False</property>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="language">
+                                <property name="title">language</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="years">
+                                <property name="title">years</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                                  <attributes>
+                                    <attribute name="text">1</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="InstalledLanguagesLable">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Installed Languages</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="add">
+                <property name="label" translatable="yes">_Add...</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_underline">True</property>
+                <signal name="activate" handler="add_lang_cb" object="languages_liststore"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkButton" id="close_languages_button">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <signal name="clicked" handler="gtk_widget_destroy" object="languages_dialog"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">close_languages_button</action-widget>
+    </action-widgets>
+  </object>
+</interface>

@@ -40,19 +40,29 @@ wrap_text (gchar *string, gint width)
 } /* wrap_text */
 
 
-gchar*
-find_ui_file (gchar* filename)
+guint
+load_ui_file (GtkBuilder *builder, gchar* filename)
 {
 	gchar* file;
 
 	if ((file = file_exist ("ui/", filename)) != NULL) {
-		return file;
 	} else if ((file = file_exist (PACKAGE_PIXMAPS_DIR, filename)) != NULL) {
-		return file;
+	} else {
+		return 0;
 	}
 
-	return NULL;
-} /* find_ui_file */
+	GError *error = NULL;
+        guint build = gtk_builder_add_from_file (builder, file, &error);
+        if (! build) {
+                fprintf (stderr, "Failed to load gtk builder file: %s\n",
+                         error->message);
+                g_error_free (error);
+                error = NULL;
+        }
+        g_free (file);
+
+        return build;
+} /* load_ui_file */
 
 
 static gchar*
