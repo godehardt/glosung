@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-07 21:28+0100\n"
+"POT-Creation-Date: 2011-02-16 21:19+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -174,14 +174,6 @@ msgstr "Nem található '%s' szöveg a %d-es/as évre!"
 msgid "Calendar"
 msgstr "Naptár"
 #
-# File: src/glosung.c, line: 1063
-msgid "Languages"
-msgstr "Nyelv"
-#
-# File: src/glosung.c, line: 1090
-msgid "Installed Languages"
-msgstr "Telepített nyelvek"
-#
 # File: src/losung.c, line: 166
 #, c-format
 msgid "No '%s' texts found for %d!\n"
@@ -250,24 +242,6 @@ msgid "Proxy"
 msgstr "Proxy"
 #
 #
-# File: ui/preferences.glade, line: 128
-msgid ""
-"Use proxy to connect to the internet.\n"
-"Be careful in persecuted countries, as\n"
-"downloading biblical texts may be\n"
-"against the law!"
-msgstr ""
-"Proxy használata az internet kapcsolathoz.\n"
-"Legyen óvatos az olyan országokban, ahol\n"
-"kereszt(y)én(y) üldözés van, mert bibliai szövegek\n"
-"letöltése törvénybe ütközhet!"
-#
-#
-# File: ui/preferences.glade, line: 140
-msgid "host[:port]"
-msgstr "hoszt[:port]"
-#
-#
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr "Hálózat"
@@ -295,9 +269,41 @@ msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
 #
 #
+# File: src/glosung.c, line: 1063
+#~ msgid "Languages"
+#~ msgstr "Nyelv"
+#
+#
+# File: src/glosung.c, line: 1090
+#~ msgid "Installed Languages"
+#~ msgstr "Telepített nyelvek"
+#
+#
+#
+# File: ui/preferences.glade, line: 128
+#~ msgid ""
+#~ "Use proxy to connect to the internet.\n"
+#~ "Be careful in persecuted countries, as\n"
+#~ "downloading biblical texts may be\n"
+#~ "against the law!"
+#~ msgstr ""
+#~ "Proxy használata az internet kapcsolathoz.\n"
+#~ "Legyen óvatos az olyan országokban, ahol\n"
+#~ "kereszt(y)én(y) üldözés van, mert bibliai szövegek\n"
+#~ "letöltése törvénybe ütközhet!"
+#
+#
+#
+# File: ui/preferences.glade, line: 140
+#~ msgid "host[:port]"
+#~ msgstr "hoszt[:port]"
+#
+#
+#
 # File: src/glosung.c, line: 362
 #~ msgid "czech"
 #~ msgstr "cseh"
+#
 #
 #
 # File: src/glosung.c, line: 365
@@ -305,9 +311,11 @@ msgstr ""
 #~ msgstr "spanyol"
 #
 #
+#
 # File: src/glosung.c, line: 366
 #~ msgid "french"
 #~ msgstr "francia"
+#
 #
 #
 # File: src/glosung.c, line: 370
@@ -315,9 +323,11 @@ msgstr ""
 #~ msgstr "holland"
 #
 #
+#
 # File: src/glosung.c, line: 371
 #~ msgid "norwegian"
 #~ msgstr "norvég"
+#
 #
 #
 # File: src/glosung.c, line: 372
@@ -325,9 +335,11 @@ msgstr ""
 #~ msgstr "portugál"
 #
 #
+#
 # File: src/glosung.c, line: 373
 #~ msgid "romanian"
 #~ msgstr "román"
+#
 #
 #
 # File: src/glosung.c, line: 375
@@ -335,9 +347,11 @@ msgstr ""
 #~ msgstr "suahili"
 #
 #
+#
 # File: src/glosung.c, line: 376
 #~ msgid "tamil"
 #~ msgstr "tamil"
+#
 #
 #
 # File: src/glosung.c, line: 377
@@ -345,15 +359,18 @@ msgstr ""
 #~ msgstr "török"
 #
 #
+#
 # File: src/glosung.c, line: 378
 #~ msgid "vietnamese"
 #~ msgstr "vietnám"
+#
 #
 #
 # File: src/glosung.c, line: 379
 # File: src/glosung.c, line: 382
 #~ msgid "chinese simplified"
 #~ msgstr "egyszerűsített kínai"
+#
 #
 #
 # File: src/glosung.c, line: 380
@@ -363,15 +380,18 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 360
 #~ msgid "afrikaans"
 #~ msgstr "afrikai"
 #
 #
 #
+#
 # File: src/glosung.c, line: 361
 #~ msgid "arabic"
 #~ msgstr "arab"
+#
 #
 #
 #
@@ -382,10 +402,12 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 364
 #, fuzzy
 #~ msgid "English"
 #~ msgstr "angol"
+#
 #
 #
 #
@@ -395,9 +417,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 368
 #~ msgid "hungarian"
 #~ msgstr "magyar"
+#
 #
 #
 #
@@ -407,9 +431,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 374
 #~ msgid "russian"
 #~ msgstr "orosz"
+#
 #
 #
 #
@@ -429,10 +455,12 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 210
 #, fuzzy
 #~ msgid "Authentication"
 #~ msgstr "Kilépés a programból"
+#
 #
 #
 #

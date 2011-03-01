@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-07 21:28+0100\n"
+"POT-Creation-Date: 2011-02-16 21:19+0100\n"
 "PO-Revision-Date: 2010-07-19 22:02+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -323,14 +323,6 @@ msgstr "Keine %s Texte für das Jahr %d gefunden!"
 msgid "Calendar"
 msgstr "Kalender"
 #
-# File: src/glosung.c, line: 1068
-msgid "Languages"
-msgstr "Sprachen"
-#
-# File: src/glosung.c, line: 1107
-msgid "Installed Languages"
-msgstr "Installierte Sprachen"
-#
 #, c-format
 msgid "No '%s' texts found for %d!\n"
 msgstr "Keine '%s' Texte für das Jahr %d gefunden!\n"
@@ -434,23 +426,6 @@ msgid "Proxy"
 msgstr "Proxy"
 #
 #
-# File: ui/preferences.glade, line: 128
-msgid ""
-"Use proxy to connect to the internet.\n"
-"Be careful in persecuted countries, as\n"
-"downloading biblical texts may be\n"
-"against the law!"
-msgstr ""
-"Verwende einen Proxy, um sich mit dem Internet zu verbinden.\n"
-"Achtung! Das Herunterladen von biblischen Texten kann in \n"
-"manchen Ländern gegen das Gesetz sein!"
-#
-#
-# File: ui/preferences.glade, line: 140
-msgid "host[:port]"
-msgstr "host[:port]"
-#
-#
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr "Netzwerk"
@@ -477,12 +452,44 @@ msgstr ""
 "Schalten sie das Häkchen an, wenn sie diesen Dialog nicht mehr sehen möchten"
 #
 #
+# File: src/glosung.c, line: 1068
+#~ msgid "Languages"
+#~ msgstr "Sprachen"
+#
+#
+# File: src/glosung.c, line: 1107
+#~ msgid "Installed Languages"
+#~ msgstr "Installierte Sprachen"
+#
+#
+#
+# File: ui/preferences.glade, line: 128
+#~ msgid ""
+#~ "Use proxy to connect to the internet.\n"
+#~ "Be careful in persecuted countries, as\n"
+#~ "downloading biblical texts may be\n"
+#~ "against the law!"
+#~ msgstr ""
+#~ "Verwende einen Proxy, um sich mit dem Internet zu verbinden.\n"
+#~ "Achtung! Das Herunterladen von biblischen Texten kann in \n"
+#~ "manchen Ländern gegen das Gesetz sein!"
+#
+#
+#
+# File: ui/preferences.glade, line: 140
+#~ msgid "host[:port]"
+#~ msgstr "host[:port]"
+#
+#
+#
 #~ msgid "czech"
 #~ msgstr "tschechisch"
 #
 #
+#
 #~ msgid "spanish"
 #~ msgstr "spanisch"
+#
 #
 #
 # File: src/glosung.c, line: 294
@@ -490,9 +497,11 @@ msgstr ""
 #~ msgstr "französisch"
 #
 #
+#
 # File: src/glosung.c, line: 298
 #~ msgid "dutch"
 #~ msgstr "holländisch"
+#
 #
 #
 # File: src/glosung.c, line: 299
@@ -500,9 +509,11 @@ msgstr ""
 #~ msgstr "norwegisch"
 #
 #
+#
 # File: src/glosung.c, line: 300
 #~ msgid "portuguese"
 #~ msgstr "portugiesisch"
+#
 #
 #
 # File: src/glosung.c, line: 301
@@ -510,9 +521,11 @@ msgstr ""
 #~ msgstr "rumänisch"
 #
 #
+#
 # File: src/glosung.c, line: 370
 #~ msgid "swahili"
 #~ msgstr "suaheli"
+#
 #
 #
 # File: src/glosung.c, line: 303
@@ -520,9 +533,11 @@ msgstr ""
 #~ msgstr "tamilisch"
 #
 #
+#
 # File: src/glosung.c, line: 304
 #~ msgid "turkish"
 #~ msgstr "türkisch"
+#
 #
 #
 # File: src/glosung.c, line: 305
@@ -530,14 +545,17 @@ msgstr ""
 #~ msgstr "vietnamesisch"
 #
 #
+#
 # File: src/glosung.c, line: 306
 #~ msgid "chinese simplified"
 #~ msgstr "vereinfachtes chinesisch"
 #
 #
+#
 # File: src/glosung.c, line: 307
 #~ msgid "chinese traditional"
 #~ msgstr "traditionelles chinesisch"
+#
 #
 #
 #
@@ -547,9 +565,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 289
 #~ msgid "arabic"
 #~ msgstr "arabisch"
+#
 #
 #
 #
@@ -559,9 +579,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "English"
 #~ msgstr "englisch"
+#
 #
 #
 #
@@ -571,15 +593,18 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 296
 #~ msgid "hungarian"
 #~ msgstr "ungarisch"
 #
 #
 #
+#
 # File: src/glosung.c, line: 297
 #~ msgid "italian"
 #~ msgstr "italienisch"
+#
 #
 #
 #
@@ -594,9 +619,11 @@ msgstr ""
 #
 #
 #
+#
 # File: ui/add_language.glade, line: 100
 #~ msgid "gtk-cancel"
 #~ msgstr "gtk-cancel"
+#
 #
 #
 #
@@ -618,9 +645,11 @@ msgstr ""
 #
 #
 #
+#
 # File: ui/preferences.glade, line: 173
 #~ msgid "Password:"
 #~ msgstr "Passwort:"
+#
 #
 #
 #
@@ -642,9 +671,11 @@ msgstr ""
 #
 #
 #
+#
 # File: ui/preferences.glade, line: 202
 #~ msgid "password name for proxy authentification"
 #~ msgstr "Passwort für die Proxy-Authentifizierung"
+#
 #
 #
 #
@@ -673,9 +704,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Prefered Source:"
 #~ msgstr "Einstellungen"
+#
 #
 #
 #
@@ -739,9 +772,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/about.c, line: 86
 #~ msgid "Since 1731 in about 50 languages."
 #~ msgstr "Seit 1731 in etwa 50 Sprachen."
+#
 #
 #
 #
@@ -828,8 +863,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Zeige Lesehinweise"
+#
 #
 #
 #
@@ -917,9 +954,11 @@ msgstr ""
 #
 #
 #
+#
 # File: src/glosung.c, line: 193
 #~ msgid "_Copy Watchword"
 #~ msgstr "Losung _kopieren"
+#
 #
 #
 #
@@ -1040,8 +1079,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "_Preferences..."
 #~ msgstr "_Einstellungen..."
+#
 #
 #
 #
@@ -1187,9 +1228,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/File/_Calendar"
 #~ msgstr "Kalender"
+#
 #
 #
 #
@@ -1344,9 +1387,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Calendar"
 #~ msgstr "Kalender"
+#
 #
 #
 #
@@ -1502,6 +1547,7 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Previous Day"
 #~ msgstr "Vorheriger Monat"
@@ -1581,9 +1627,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "/Toolbar/_Next Month"
 #~ msgstr "Nächster Monat"
+#
 #
 #
 #
