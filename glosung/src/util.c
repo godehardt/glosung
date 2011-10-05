@@ -60,7 +60,6 @@ load_ui_file (GtkBuilder *builder, gchar* filename)
                 error = NULL;
         }
         g_free (file);
-        gtk_builder_connect_signals (builder, NULL);
 
         return build;
 } /* load_ui_file */

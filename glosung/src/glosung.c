@@ -1149,6 +1149,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         	(gtk_builder_get_object (builder, "languages_liststore"));
         update_language_store (store);
 
+        gtk_builder_connect_signals (builder, NULL);
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
 
@@ -1156,13 +1157,10 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 G_MODULE_EXPORT void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
-        g_message ("uidaenduiaendiu tareniaen");
         GtkWidget    *dialog;
-        g_message ("uidaenduiaendiu tareniaen");
 
         guint build = load_ui_file (builder, "add_language.glade");
         if (! build) {
-                g_message ("uidaenduiaendiu tareniaen");
                 return;
         }
         dialog = GTK_WIDGET
@@ -1192,6 +1190,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
+        gtk_builder_connect_signals (builder, NULL);
         gtk_widget_show_all (dialog);
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
