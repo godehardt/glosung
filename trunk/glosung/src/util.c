@@ -60,6 +60,7 @@ load_ui_file (GtkBuilder *builder, gchar* filename)
                 error = NULL;
         }
         g_free (file);
+        gtk_builder_connect_signals (builder, NULL);
 
         return build;
 } /* load_ui_file */
@@ -84,7 +85,7 @@ file_exist (gchar* path, gchar* filename)
 void
 show_uri (GtkWidget *widget, gchar *uri, gpointer data)
 {
-#if (GTK_MINOR_VERSION >= (14))
+#if GTK_CHECK_VERSION(2,14,0)
         gboolean result =
         	gtk_show_uri (NULL, (const gchar*) uri, GDK_CURRENT_TIME, NULL);
         if (result) {
