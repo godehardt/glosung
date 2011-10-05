@@ -126,7 +126,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
-                <signal name="activate" handler="add_lang_cb" object="languages_liststore" swapped="yes"/>
+                <signal name="clicked" handler="add_lang_cb" object="languages_liststore" swapped="yes"/>
               </object>
               <packing>
                 <property name="expand">False</property>
