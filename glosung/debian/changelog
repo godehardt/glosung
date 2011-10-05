@@ -1,4 +1,4 @@
-glosung (3.6.2~maverick) maverick; urgency=low
+glosung (3.6.2~oneiric) oneiric; urgency=low
 
   * fix error reporting problem after download (proxy)
   * fix translation problem

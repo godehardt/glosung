@@ -26,7 +26,7 @@
 #endif
 
 
-#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
+#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32))
   #define VERSE_LINK 1
 #endif
 

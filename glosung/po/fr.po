@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-16 21:19+0100\n"
+"POT-Creation-Date: 2011-10-04 17:13+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -54,103 +54,6 @@ msgstr ""
 msgid "Couldn't resolve proxy"
 msgstr ""
 #
-# File: src/glosung.c, line: 209
-msgid "_File"
-msgstr ""
-#
-#
-#, fuzzy
-msgid "_Edit"
-msgstr "Quitter"
-#
-# File: src/glosung.c, line: 211
-msgid "_Help"
-msgstr ""
-#
-#, fuzzy
-msgid "_Calendar"
-msgstr "Calendrier"
-#
-# File: src/glosung.c, line: 208
-msgid "select date from calendar"
-msgstr ""
-#
-#, fuzzy
-msgid "_Today"
-msgstr "Aujourd'hui"
-#
-msgid "Show losung of today"
-msgstr "Afficher les versets d'aujourd'hui"
-#
-#, fuzzy
-msgid "_Next Day"
-msgstr "Jour suivant"
-#
-msgid "Show losung of next day"
-msgstr "Afficher les versets du jour suivant"
-#
-#, fuzzy
-msgid "_Previous Day"
-msgstr "Jour précédent"
-#
-msgid "Show losung of previous day"
-msgstr "Afficher les versets du jour précédent"
-#
-#, fuzzy
-msgid "_Next Month"
-msgstr "Mois suivant"
-#
-msgid "Show losung of next month"
-msgstr "Afficher les versets du mois suivant"
-#
-#, fuzzy
-msgid "_Previous Month"
-msgstr "Mois précédent"
-#
-msgid "Show losung of previous month"
-msgstr "Afficher les versets du mois précédent"
-#
-# File: src/glosung.c, line: 228
-msgid "Quit the application"
-msgstr ""
-#
-# File: src/glosung.c, line: 213
-msgid "_Copy text"
-msgstr ""
-#
-# File: src/glosung.c, line: 214
-msgid "copy the text to clipboard"
-msgstr ""
-#
-# File: src/glosung.c, line: 226
-msgid "_Organize Watchwords..."
-msgstr ""
-#
-# File: src/glosung.c, line: 181
-#, fuzzy
-msgid "update/install text files"
-msgstr "Mettre à jour/ajouter de nouvelles traductions"
-#
-#, fuzzy
-msgid "Edit the preferences"
-msgstr "Modifier les préférences"
-#
-# File: src/glosung.c, line: 214
-msgid "About _Herrnhut"
-msgstr ""
-#
-#, fuzzy
-msgid "about Losungen"
-msgstr "_Losung"
-#
-#, fuzzy
-msgid "About _GLosung"
-msgstr "_Losung"
-#
-#, fuzzy
-msgid "about GLosung"
-msgstr "_Losung"
-#
 # File: src/glosung.c, line: 257
 msgid "Start only once a day"
 msgstr ""
@@ -189,6 +92,17 @@ msgstr ""
 msgid "Add Languages"
 msgstr "Ajouter de nouvelles traductions"
 #
+#
+#
+#
+# File: src/glosung.c, line: 1144
+msgid "Download"
+msgstr "Télécharger"
+#
+# File: ui/add_language.glade, line: 104
+msgid "download selected verse collection"
+msgstr ""
+#
 # File: ui/add_language.glade, line: 30
 msgid "Source"
 msgstr ""
@@ -225,17 +139,6 @@ msgstr "Traduction"
 # File: src/glosung.c, line: 1152
 msgid "Year"
 msgstr "Année"
-#
-#
-#
-#
-# File: src/glosung.c, line: 1144
-msgid "Download"
-msgstr "Télécharger"
-#
-# File: ui/add_language.glade, line: 104
-msgid "download selected verse collection"
-msgstr ""
 #
 #
 #
@@ -290,9 +193,112 @@ msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
 #
 #
+#
+#
+#, fuzzy
+#~ msgid "_Edit"
+#~ msgstr "Quitter"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Calendar"
+#~ msgstr "Calendrier"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Today"
+#~ msgstr "Aujourd'hui"
+#
+#
+#
+#~ msgid "Show losung of today"
+#~ msgstr "Afficher les versets d'aujourd'hui"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Next Day"
+#~ msgstr "Jour suivant"
+#
+#
+#
+#~ msgid "Show losung of next day"
+#~ msgstr "Afficher les versets du jour suivant"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Previous Day"
+#~ msgstr "Jour précédent"
+#
+#
+#
+#~ msgid "Show losung of previous day"
+#~ msgstr "Afficher les versets du jour précédent"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Next Month"
+#~ msgstr "Mois suivant"
+#
+#
+#
+#~ msgid "Show losung of next month"
+#~ msgstr "Afficher les versets du mois suivant"
+#
+#
+#
+#, fuzzy
+#~ msgid "_Previous Month"
+#~ msgstr "Mois précédent"
+#
+#
+#
+#~ msgid "Show losung of previous month"
+#~ msgstr "Afficher les versets du mois précédent"
+#
+#
+#
+# File: src/glosung.c, line: 181
+#, fuzzy
+#~ msgid "update/install text files"
+#~ msgstr "Mettre à jour/ajouter de nouvelles traductions"
+#
+#
+#
+#, fuzzy
+#~ msgid "Edit the preferences"
+#~ msgstr "Modifier les préférences"
+#
+#
+#
+#, fuzzy
+#~ msgid "about Losungen"
+#~ msgstr "_Losung"
+#
+#
+#
+#, fuzzy
+#~ msgid "About _GLosung"
+#~ msgstr "_Losung"
+#
+#
+#
+#, fuzzy
+#~ msgid "about GLosung"
+#~ msgstr "_Losung"
+#
+#
+#
+#
 # File: src/glosung.c, line: 1068
 #~ msgid "Languages"
 #~ msgstr "Traductions"
+#
+#
 #
 #
 # File: src/glosung.c, line: 1107
@@ -301,13 +307,19 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "czech"
 #~ msgstr "Tchèque"
 #
 #
 #
+#
+#
 #~ msgid "spanish"
 #~ msgstr "Espagnol"
+#
+#
 #
 #
 #
@@ -317,9 +329,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 298
 #~ msgid "dutch"
 #~ msgstr "Hollandais"
+#
+#
 #
 #
 #
@@ -329,9 +345,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 300
 #~ msgid "portuguese"
 #~ msgstr "Portuguais"
+#
+#
 #
 #
 #
@@ -341,9 +361,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 303
 #~ msgid "tamil"
 #~ msgstr "Tamoul"
+#
+#
 #
 #
 #
@@ -353,9 +377,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 305
 #~ msgid "vietnamese"
 #~ msgstr "Vietnamien"
+#
+#
 #
 #
 #
@@ -365,9 +393,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 307
 #~ msgid "chinese traditional"
 #~ msgstr "Chinois traditionnel"
+#
+#
 #
 #
 #
@@ -379,9 +411,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 289
 #~ msgid "arabic"
 #~ msgstr "Arabe"
+#
+#
 #
 #
 #
@@ -393,9 +429,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "English"
 #~ msgstr "Anglais"
+#
+#
 #
 #
 #
@@ -407,9 +447,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 296
 #~ msgid "hungarian"
 #~ msgstr "Hongrois"
+#
+#
 #
 #
 #
@@ -421,9 +465,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 302
 #~ msgid "russian"
 #~ msgstr "Russe"
+#
+#
 #
 #
 #
@@ -476,8 +524,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Choose Font:"
 #~ msgstr "Police :"
+#
+#
 #
 #
 #
@@ -562,8 +614,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Show selective and continuing reading"
 #~ msgstr "Afficher les suggestions de lecture suivie"
+#
+#
 #
 #
 #
@@ -673,9 +729,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Préférences..."
+#
+#
 #
 #
 #
@@ -818,9 +878,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 180
 #~ msgid "Languages..."
 #~ msgstr "Traductions"
+#
+#
 #
 #
 #

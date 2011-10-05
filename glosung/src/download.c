@@ -147,7 +147,7 @@ to_file_losungen (Memory mem, const guint year)
                 }
         }
 
-        rmdir (tmp_dir);
+        g_rmdir (tmp_dir);
         g_free (tmp_dir);
 }
 

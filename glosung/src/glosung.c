@@ -42,7 +42,7 @@
 #include "settings.h"
 #include "util.h"
 
-#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
+#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32))
   #define VERSE_LINK 1
 #endif
 
@@ -108,8 +108,6 @@ static void        create_app           (void);
 
 static void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
-static void sources_changed      (GtkWidget *w,   gpointer data);
-static void language_changed     (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
 static void update_language_store(GtkListStore   *store);
 static void window_scroll_cb     (GtkWidget      *widget,
@@ -127,6 +125,7 @@ void clipboard_cb           (GtkWidget *w,   gpointer data);
 void font_sel_cb            (GtkWidget *button,   gpointer data);
 void lang_changed_cb        (GtkWidget *item,     gpointer data);
 void lang_manager_cb        (GtkWidget *w,   gpointer data);
+void language_changed_cb    (GtkWidget *w,   gpointer data);
 void next_day_cb            (GtkWidget *w,   gpointer data);
 void next_month_cb          (GtkWidget *w,   gpointer data);
 void prev_day_cb            (GtkWidget *w,   gpointer data);
@@ -136,6 +135,7 @@ void proxy_toggled_cb       (GtkWidget *toggle,   gpointer data);
 void proxy_changed_cb       (GtkWidget *toggle,   gpointer data);
 void today_cb               (GtkWidget *w,   gpointer data);
 void show_warning_cb        (GtkWidget *w,        gpointer data);
+void sources_changed_cb     (GtkWidget *w,   gpointer data);
 void sword_cb               (GtkWidget *toggle,   gpointer data);
 
 
@@ -145,7 +145,7 @@ void sword_cb               (GtkWidget *toggle,   gpointer data);
 
 #define MY_PAD 10
 
-
+/*
 static gchar* uistring =
         "<ui>"
         "  <menubar name='MenuBar'>"
@@ -218,8 +218,8 @@ static GtkActionEntry entries[] = {
           N_("about GLosung"), G_CALLBACK (about_cb) },
 };
 
-
 static guint n_entries = G_N_ELEMENTS (entries);
+*/
 
 
 
@@ -358,6 +358,68 @@ init_languages (void)
 static void
 create_app (void)
 {
+        guint build = load_ui_file (builder, "main.glade");
+        if (! build) {
+                g_message ("Error while loading UI definition file");
+                return;
+        }
+
+        app = GTK_WIDGET
+                (gtk_builder_get_object (builder,"main_window"));
+        label [TITLE] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"label_title"));
+        label [X1] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"X1"));
+        label [OT_TEXT] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"label1"));
+        label [OT_LOC] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"linklabel1"));
+        label [OT_LOC_SWORD] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"linkbutton1"));
+        label [X2] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"X2"));
+        label [NT_TEXT] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"label2"));
+        label [NT_LOC] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"linklabel2"));
+        label [NT_LOC_SWORD] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"linkbutton2"));
+        label [X3] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"X3"));
+        label [READING] = GTK_WIDGET
+                (gtk_builder_get_object (builder,"label_reading"));
+
+        if (font != NULL) {
+                PangoFontDescription *font_desc
+			= pango_font_description_from_string (font);
+                for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
+                        if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
+                                gtk_widget_modify_font (label [i], font_desc);
+                        }
+                }
+                pango_font_description_free (font_desc);
+        }
+
+        gtk_builder_connect_signals (builder, NULL);
+        gtk_widget_show_all (app);
+        if (! show_readings) {
+                gtk_widget_hide (label [X3]);
+                gtk_widget_hide (label [READING]);
+        }
+
+        g_signal_connect (G_OBJECT (app), "scroll_event",
+                          G_CALLBACK (window_scroll_cb),
+                          NULL);
+        gdk_window_set_events (gtk_widget_get_window(app), GDK_ALL_EVENTS_MASK);
+} /* create_app */
+
+
+/*
+ * does all the GUI stuff.
+ *
+static void
+create_app_old (void)
+{
         GtkActionGroup *action;
         GtkUIManager   *uiman;
         GtkWidget      *vbox;
@@ -456,7 +518,7 @@ create_app (void)
                           G_CALLBACK (window_scroll_cb),
                           NULL);
         gdk_window_set_events (gtk_widget_get_window (app), GDK_ALL_EVENTS_MASK);
-} /* create_app */
+} * create_app */
 
 
 /*
@@ -668,10 +730,9 @@ property_cb (GtkWidget *w, gpointer data)
                 gdk_window_show  (gtk_widget_get_window (property));
                 gdk_window_raise (gtk_widget_get_window (property));
         } else {
-                GtkWidget *combo;
-                GtkWidget *table;
-                GtkWidget *proxy_entry;
-                GtkWidget *proxy_checkbox;
+        	GtkComboBoxText *combo;
+                GtkWidget       *proxy_entry;
+                GtkWidget       *proxy_checkbox;
 
                 if (new_font != NULL) {
                         g_free (new_font);
@@ -686,8 +747,6 @@ property_cb (GtkWidget *w, gpointer data)
 
                 property = GTK_WIDGET
                         (gtk_builder_get_object (builder,"preferences_dialog"));
-                table = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "preferences_table"));
                 proxy_checkbox = GTK_WIDGET
                         (gtk_builder_get_object (builder, "proxy_checkbox"));
                 proxy_entry = GTK_WIDGET
@@ -695,22 +754,17 @@ property_cb (GtkWidget *w, gpointer data)
                 g_signal_connect (G_OBJECT (proxy_checkbox), "toggled",
                                  G_CALLBACK (proxy_toggled_cb), builder);
 
-                combo = gtk_combo_box_new_text ();
+                combo = GTK_COMBO_BOX_TEXT
+			(gtk_builder_get_object (builder, "language_combo"));
                 for (gint i = 0; i < (local_collections->languages)->len; i++) {
                         gchar *langu = g_ptr_array_index
                         		(local_collections->languages, i);
-                        gtk_combo_box_append_text
-                                (GTK_COMBO_BOX (combo),
-                                 g_hash_table_lookup (lang_translations, langu));
+                        gtk_combo_box_text_append_text (combo,
+                                g_hash_table_lookup (lang_translations, langu));
                         if (strcmp (lang, langu) == 0) {
-                                gtk_combo_box_set_active
-                                        (GTK_COMBO_BOX (combo), i);
+                            gtk_combo_box_set_active (GTK_COMBO_BOX (combo), i);
                         }
                 }
-                g_signal_connect (G_OBJECT (combo), "changed",
-                                  G_CALLBACK (lang_changed_cb), NULL);
-                gtk_widget_show (combo);
-                gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
 
                 if (is_proxy_in_use ()) {
                 	gtk_toggle_button_set_active
@@ -1076,9 +1130,9 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-// static GtkComboBox  *lang_combo;
-static GtkComboBox  *year_combo;
-static GtkWidget    *download_button;
+// static GtkComboBox   *lang_combo;
+static GtkComboBoxText  *year_combo;
+static GtkWidget        *download_button;
 // static GtkListStore *store;
 
 G_MODULE_EXPORT void
@@ -1088,13 +1142,11 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         if (! build) {
                 return;
         }
-        gtk_builder_connect_signals (builder, NULL);
         GtkWidget *dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "languages_dialog"));
 
         GtkListStore *store = GTK_LIST_STORE
         	(gtk_builder_get_object (builder, "languages_liststore"));
-        	//gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
         update_language_store (store);
 
         gtk_widget_show (dialog);
@@ -1104,52 +1156,42 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 G_MODULE_EXPORT void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
+        g_message ("uidaenduiaendiu tareniaen");
         GtkWidget    *dialog;
+        g_message ("uidaenduiaendiu tareniaen");
 
         guint build = load_ui_file (builder, "add_language.glade");
         if (! build) {
+                g_message ("uidaenduiaendiu tareniaen");
                 return;
         }
-        gtk_builder_connect_signals (builder, NULL);
         dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
-        GtkFrame *source_frame = GTK_FRAME
-                (gtk_builder_get_object (builder, "source_frame"));
-        GtkComboBox *source_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
-        gtk_container_add (GTK_CONTAINER (source_frame),
-                           GTK_WIDGET (source_combo));
-        gtk_combo_box_append_text (source_combo, "");
+        GtkComboBoxText *source_combo = GTK_COMBO_BOX_TEXT
+		(gtk_builder_get_object (builder, "source_combo"));
+//        gtk_combo_box_append_text (source_combo, "");
 
         GPtrArray *sources = get_sources ();
         for (gint i = 0; i < sources->len; i++) {
                 Source *cs = (Source*) g_ptr_array_index (sources, i);
                 if (cs->type != SOURCE_LOCAL) {
-                        gtk_combo_box_append_text (source_combo, cs->name);
+                	gtk_combo_box_text_append_text (source_combo, cs->name);
                 }
         }
-        gtk_combo_box_set_active (source_combo, 0);
+        gtk_combo_box_set_active (GTK_COMBO_BOX (source_combo), 0);
 
-        GtkFrame *lang_frame = GTK_FRAME
-                (gtk_builder_get_object (builder, "lang_frame"));
-        GtkComboBox *lang_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
-        gtk_container_add (GTK_CONTAINER (lang_frame), GTK_WIDGET (lang_combo));
+        GtkComboBoxText *lang_combo = GTK_COMBO_BOX_TEXT
+        		(gtk_builder_get_object (builder, "lang_combo"));
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
 
-        GtkFrame *year_frame = GTK_FRAME
-                (gtk_builder_get_object (builder, "year_frame"));
         download_button = GTK_WIDGET
                 (gtk_builder_get_object (builder, "download_button"));
-	year_combo = GTK_COMBO_BOX (gtk_combo_box_new_text ());
-        gtk_container_add (GTK_CONTAINER (year_frame), GTK_WIDGET (year_combo));
+	year_combo = GTK_COMBO_BOX_TEXT
+        		(gtk_builder_get_object (builder, "year_combo"));
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
-        gtk_combo_box_set_active (year_combo, 0);
-
-        g_signal_connect (G_OBJECT (source_combo), "changed",
-                          G_CALLBACK (sources_changed), lang_combo);
-        g_signal_connect (G_OBJECT (lang_combo), "changed",
-                          G_CALLBACK (language_changed), year_combo);
+        gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
         gtk_widget_show_all (dialog);
 
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
@@ -1229,12 +1271,12 @@ no_languages_cb (GtkWidget *w, gpointer data)
 } /* no_languages_cb */
 
 
-static void
-sources_changed (GtkWidget *w, gpointer data)
+G_MODULE_EXPORT void
+sources_changed_cb (GtkWidget *w, gpointer data)
 {
-        GtkComboBox    *lang_combo = GTK_COMBO_BOX (data);
+        GtkComboBox *lang_combo = GTK_COMBO_BOX (data);
         while (gtk_combo_box_get_active (lang_combo) != -1) {
-                gtk_combo_box_remove_text (lang_combo, 0);
+        	gtk_combo_box_text_remove (GTK_COMBO_BOX_TEXT (lang_combo), 0);
                 gtk_combo_box_set_active (lang_combo, 0);
         }
 
@@ -1253,7 +1295,8 @@ sources_changed (GtkWidget *w, gpointer data)
         	return;
         }
         if (langs->len > 1) {
-                gtk_combo_box_append_text (lang_combo, "");
+        	gtk_combo_box_text_append_text
+			(GTK_COMBO_BOX_TEXT (lang_combo), "");
         }
         for (gint i = 0; i < langs->len; i++) {
         	gchar *lang_code = (gchar*) g_ptr_array_index (langs, i);
@@ -1263,19 +1306,20 @@ sources_changed (GtkWidget *w, gpointer data)
         		// continue;
         		langu = lang_code;
         	}
-                gtk_combo_box_append_text (lang_combo, langu);
+        	gtk_combo_box_text_append_text
+			(GTK_COMBO_BOX_TEXT (lang_combo), langu);
         }
         gtk_combo_box_set_active (lang_combo, 0);
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), TRUE);
-} /* sources_changed */
+} /* sources_changed_cb */
 
 
-static void
-language_changed (GtkWidget *w, gpointer data)
+G_MODULE_EXPORT void
+language_changed_cb (GtkWidget *w, gpointer data)
 {
         GtkComboBox    *year_combo = GTK_COMBO_BOX (data);
         while (gtk_combo_box_get_active  (year_combo) != -1) {
-               gtk_combo_box_remove_text (year_combo, 0);
+        	gtk_combo_box_text_remove (GTK_COMBO_BOX_TEXT (year_combo), 0);
                gtk_combo_box_set_active  (year_combo, 0);
         }
 
@@ -1283,7 +1327,7 @@ language_changed (GtkWidget *w, gpointer data)
         if (index == -1) {
         	return;
         }
-        gchar *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (w));
+        gchar *text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (w));
         if (index == 0 && g_str_equal ("", text)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
@@ -1300,12 +1344,13 @@ language_changed (GtkWidget *w, gpointer data)
         for (gint i = 0; i < vc_s->len; i++) {
                 gchar *year = g_strdup_printf
                 	("%d", VC (g_ptr_array_index (vc_s, i))->year);
-                gtk_combo_box_append_text (year_combo, year);
+                gtk_combo_box_text_append_text
+			(GTK_COMBO_BOX_TEXT (year_combo), year);
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), TRUE);
         gtk_widget_set_sensitive (GTK_WIDGET (download_button), TRUE);
-} /* language_changed */
+} /* language_changed_cb */
 
 
 static GString*

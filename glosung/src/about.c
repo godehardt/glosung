@@ -36,18 +36,22 @@ about (GtkWidget *app)
 {
         const gchar *authors [] = {
                 "Eicke Godehardt",
-                "Sebastian Pätzold (rpm packages)",
+                "Sebastian P��tzold (rpm packages)",
                 NULL
         };
         gchar *translators =
-            "Marek Drápal\nNicolas\nEmanuel Feruzi\nMáté Nagy\nEicke Godehardt";
+            "Marek Dr��pal\nNicolas\nEmanuel Feruzi\nM��t�� Nagy\nEicke Godehardt";
 
         GError *error = NULL;
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
+#if ! (GTK_CHECK_VERSION(2,24,0))
         gtk_about_dialog_set_url_hook
 		((GtkAboutDialogActivateLinkFunc) show_uri,
 		 GINT_TO_POINTER (1), NULL);
+#else
+
+#endif
 
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
@@ -76,8 +80,10 @@ about_herrnhut (GtkWidget *app)
         GdkPixbuf *logo =  gdk_pixbuf_new_from_file
                 (PACKAGE_PIXMAPS_DIR "/herrnhut.png", &error);
 
+#if ! (GTK_CHECK_VERSION(2,24,0))
         gtk_about_dialog_set_url_hook
 		((GtkAboutDialogActivateLinkFunc) show_uri, NULL, NULL);
+#endif
         herrnhut = gtk_about_dialog_new ();
         gtk_about_dialog_set_program_name
                 (GTK_ABOUT_DIALOG (herrnhut), "Herrnhuter Losungen");

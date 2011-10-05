@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-16 21:19+0100\n"
+"POT-Creation-Date: 2011-10-04 17:13+0200\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -48,106 +48,6 @@ msgstr "Bible 2.0"
 msgid "Couldn't resolve proxy"
 msgstr "Proxy feloldása nem sikerült"
 #
-# File: src/glosung.c, line: 191
-msgid "_File"
-msgstr "_Fájl"
-#
-# File: src/glosung.c, line: 192
-msgid "_Edit"
-msgstr "_Szerkesztés"
-#
-# File: src/glosung.c, line: 193
-msgid "_Help"
-msgstr "_Segítség"
-#
-# File: src/glosung.c, line: 195
-msgid "_Calendar"
-msgstr "_Naptár"
-#
-# File: src/glosung.c, line: 196
-msgid "select date from calendar"
-msgstr "nap választása a naptárból"
-#
-# File: src/glosung.c, line: 197
-msgid "_Today"
-msgstr "_Ma"
-#
-# File: src/glosung.c, line: 198
-msgid "Show losung of today"
-msgstr "A mai ige megjelenítése"
-#
-# File: src/glosung.c, line: 199
-msgid "_Next Day"
-msgstr "_Következő nap"
-#
-# File: src/glosung.c, line: 200
-msgid "Show losung of next day"
-msgstr "A holnapi ige megjelenítése"
-#
-# File: src/glosung.c, line: 201
-msgid "_Previous Day"
-msgstr "_Előző nap"
-#
-# File: src/glosung.c, line: 202
-msgid "Show losung of previous day"
-msgstr "A tegnapi ige megjelenítése"
-#
-# File: src/glosung.c, line: 203
-msgid "_Next Month"
-msgstr "_Következő hónap"
-#
-# File: src/glosung.c, line: 205
-msgid "Show losung of next month"
-msgstr "A következő havi ige megjelenítése"
-#
-# File: src/glosung.c, line: 206
-msgid "_Previous Month"
-msgstr "_Előző hónap"
-#
-# File: src/glosung.c, line: 208
-msgid "Show losung of previous month"
-msgstr "Az előző havi ige megjelenítése"
-#
-# File: src/glosung.c, line: 210
-msgid "Quit the application"
-msgstr "Kilépés a programból"
-#
-# File: src/glosung.c, line: 212
-msgid "_Copy text"
-msgstr "_Szöveg másolása"
-#
-# File: src/glosung.c, line: 213
-msgid "copy the text to clipboard"
-msgstr "szöveg másolása vágólapra"
-#
-# File: src/glosung.c, line: 214
-msgid "_Organize Watchwords..."
-msgstr "_Útmutatók organizálása"
-#
-# File: src/glosung.c, line: 215
-msgid "update/install text files"
-msgstr "szövegfájlok frissítése/telepítése"
-#
-# File: src/glosung.c, line: 217
-msgid "Edit the preferences"
-msgstr "Beállítások szerkesztése"
-#
-# File: src/glosung.c, line: 219
-msgid "About _Herrnhut"
-msgstr "_Hernhutról"
-#
-# File: src/glosung.c, line: 220
-msgid "about Losungen"
-msgstr "az Útmutatóról"
-#
-# File: src/glosung.c, line: 221
-msgid "About _GLosung"
-msgstr "GLosungról"
-#
-# File: src/glosung.c, line: 222
-msgid "about GLosung"
-msgstr "GLosungról"
-#
 # File: src/glosung.c, line: 257
 msgid "Start only once a day"
 msgstr "Indítás naponta egyszer"
@@ -189,6 +89,14 @@ msgid "Add Languages"
 msgstr "Nyelv hozzáadása"
 #
 #
+msgid "Download"
+msgstr "Letöltés"
+#
+#
+msgid "download selected verse collection"
+msgstr "A kiválasztott versösszeállítás letöltése"
+#
+#
 msgid "Source"
 msgstr "Forrás"
 #
@@ -200,14 +108,6 @@ msgstr "Nyelv"
 #
 msgid "Year"
 msgstr "Év"
-#
-#
-msgid "Download"
-msgstr "Letöltés"
-#
-#
-msgid "download selected verse collection"
-msgstr "A kiválasztott versösszeállítás letöltése"
 #
 #
 # File: src/glosung.c, line: 217
@@ -269,14 +169,170 @@ msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
 #
 #
+#
+# File: src/glosung.c, line: 191
+#~ msgid "_File"
+#~ msgstr "_Fájl"
+#
+#
+#
+# File: src/glosung.c, line: 192
+#~ msgid "_Edit"
+#~ msgstr "_Szerkesztés"
+#
+#
+#
+# File: src/glosung.c, line: 193
+#~ msgid "_Help"
+#~ msgstr "_Segítség"
+#
+#
+#
+# File: src/glosung.c, line: 195
+#~ msgid "_Calendar"
+#~ msgstr "_Naptár"
+#
+#
+#
+# File: src/glosung.c, line: 196
+#~ msgid "select date from calendar"
+#~ msgstr "nap választása a naptárból"
+#
+#
+#
+# File: src/glosung.c, line: 197
+#~ msgid "_Today"
+#~ msgstr "_Ma"
+#
+#
+#
+# File: src/glosung.c, line: 198
+#~ msgid "Show losung of today"
+#~ msgstr "A mai ige megjelenítése"
+#
+#
+#
+# File: src/glosung.c, line: 199
+#~ msgid "_Next Day"
+#~ msgstr "_Következő nap"
+#
+#
+#
+# File: src/glosung.c, line: 200
+#~ msgid "Show losung of next day"
+#~ msgstr "A holnapi ige megjelenítése"
+#
+#
+#
+# File: src/glosung.c, line: 201
+#~ msgid "_Previous Day"
+#~ msgstr "_Előző nap"
+#
+#
+#
+# File: src/glosung.c, line: 202
+#~ msgid "Show losung of previous day"
+#~ msgstr "A tegnapi ige megjelenítése"
+#
+#
+#
+# File: src/glosung.c, line: 203
+#~ msgid "_Next Month"
+#~ msgstr "_Következő hónap"
+#
+#
+#
+# File: src/glosung.c, line: 205
+#~ msgid "Show losung of next month"
+#~ msgstr "A következő havi ige megjelenítése"
+#
+#
+#
+# File: src/glosung.c, line: 206
+#~ msgid "_Previous Month"
+#~ msgstr "_Előző hónap"
+#
+#
+#
+# File: src/glosung.c, line: 208
+#~ msgid "Show losung of previous month"
+#~ msgstr "Az előző havi ige megjelenítése"
+#
+#
+#
+# File: src/glosung.c, line: 210
+#~ msgid "Quit the application"
+#~ msgstr "Kilépés a programból"
+#
+#
+#
+# File: src/glosung.c, line: 212
+#~ msgid "_Copy text"
+#~ msgstr "_Szöveg másolása"
+#
+#
+#
+# File: src/glosung.c, line: 213
+#~ msgid "copy the text to clipboard"
+#~ msgstr "szöveg másolása vágólapra"
+#
+#
+#
+# File: src/glosung.c, line: 214
+#~ msgid "_Organize Watchwords..."
+#~ msgstr "_Útmutatók organizálása"
+#
+#
+#
+# File: src/glosung.c, line: 215
+#~ msgid "update/install text files"
+#~ msgstr "szövegfájlok frissítése/telepítése"
+#
+#
+#
+# File: src/glosung.c, line: 217
+#~ msgid "Edit the preferences"
+#~ msgstr "Beállítások szerkesztése"
+#
+#
+#
+# File: src/glosung.c, line: 219
+#~ msgid "About _Herrnhut"
+#~ msgstr "_Hernhutról"
+#
+#
+#
+# File: src/glosung.c, line: 220
+#~ msgid "about Losungen"
+#~ msgstr "az Útmutatóról"
+#
+#
+#
+# File: src/glosung.c, line: 221
+#~ msgid "About _GLosung"
+#~ msgstr "GLosungról"
+#
+#
+#
+# File: src/glosung.c, line: 222
+#~ msgid "about GLosung"
+#~ msgstr "GLosungról"
+#
+#
+#
+#
 # File: src/glosung.c, line: 1063
 #~ msgid "Languages"
 #~ msgstr "Nyelv"
 #
 #
+#
+#
 # File: src/glosung.c, line: 1090
 #~ msgid "Installed Languages"
 #~ msgstr "Telepített nyelvek"
+#
+#
 #
 #
 #
@@ -294,9 +350,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: ui/preferences.glade, line: 140
 #~ msgid "host[:port]"
 #~ msgstr "hoszt[:port]"
+#
+#
 #
 #
 #
@@ -306,9 +366,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 365
 #~ msgid "spanish"
 #~ msgstr "spanyol"
+#
+#
 #
 #
 #
@@ -318,9 +382,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 370
 #~ msgid "dutch"
 #~ msgstr "holland"
+#
+#
 #
 #
 #
@@ -330,9 +398,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 372
 #~ msgid "portuguese"
 #~ msgstr "portugál"
+#
+#
 #
 #
 #
@@ -342,9 +414,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 375
 #~ msgid "swahili"
 #~ msgstr "suahili"
+#
+#
 #
 #
 #
@@ -354,9 +430,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 377
 #~ msgid "turkish"
 #~ msgstr "török"
+#
+#
 #
 #
 #
@@ -366,10 +446,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 379
 # File: src/glosung.c, line: 382
 #~ msgid "chinese simplified"
 #~ msgstr "egyszerűsített kínai"
+#
+#
 #
 #
 #
@@ -381,6 +465,8 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 360
 #~ msgid "afrikaans"
 #~ msgstr "afrikai"
@@ -388,9 +474,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 361
 #~ msgid "arabic"
 #~ msgstr "arab"
+#
+#
 #
 #
 #
@@ -403,10 +493,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 364
 #, fuzzy
 #~ msgid "English"
 #~ msgstr "angol"
+#
+#
 #
 #
 #
@@ -418,9 +512,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 368
 #~ msgid "hungarian"
 #~ msgstr "magyar"
+#
+#
 #
 #
 #
@@ -432,9 +530,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 374
 #~ msgid "russian"
 #~ msgstr "orosz"
+#
+#
 #
 #
 #
@@ -456,10 +558,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 210
 #, fuzzy
 #~ msgid "Authentication"
 #~ msgstr "Kilépés a programból"
+#
+#
 #
 #
 #
