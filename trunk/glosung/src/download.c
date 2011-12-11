@@ -306,7 +306,7 @@ analyse_bible20_list (Source* cs, Memory mem)
 				vc->bible   = tokens [col_bible];
 				vc->info    = tokens [col_info];
 				// vc->updated = g_date_new ();
-				// g_date_set_parse (vc->updated, tokens [col_updated]);
+				g_date_set_parse (vc->updated, tokens [col_updated]);
 			}
 			g_free (tokens [0]);
 			g_free (tokens [col_year]);
