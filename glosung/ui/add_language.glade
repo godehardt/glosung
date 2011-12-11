@@ -71,6 +71,9 @@
                   <object class="GtkComboBoxText" id="source_combo">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <items>
+                      <item translatable="yes"/>
+                    </items>
                     <signal name="changed" handler="sources_changed_cb" object="lang_combo" swapped="no"/>
                   </object>
                 </child>

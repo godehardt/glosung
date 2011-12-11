@@ -46,6 +46,20 @@
   #define VERSE_LINK 1
 #endif
 
+#if (! GTK_CHECK_VERSION(2,24,0))
+  #define gtk_combo_box_append_text(combo_box, text) \
+		gtk_combo_box_text_append_text(combo_box, text)
+
+  #define gtk_combo_box_get_active_text(combo_box) \
+		gtk_combo_box_text_get_active_text(combo_box)
+
+  #define gtk_combo_box_remove_text(combo_box, position) \
+		gtk_combo_box_text_remove(combo_box, position)
+
+  #define GTK_COMBO_BOX_TEXT(w) \
+		GTK_COMBO_BOX(w)
+#endif
+
 /****************************\
    Variables & Definitions
 \****************************/
@@ -1168,7 +1182,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkComboBoxText *source_combo = GTK_COMBO_BOX_TEXT
 		(gtk_builder_get_object (builder, "source_combo"));
-//        gtk_combo_box_append_text (source_combo, "");
+        gtk_combo_box_text_append_text (source_combo, "");
 
         GPtrArray *sources = get_sources ();
         for (gint i = 0; i < sources->len; i++) {
@@ -1319,7 +1333,7 @@ language_changed_cb (GtkWidget *w, gpointer data)
         GtkComboBox    *year_combo = GTK_COMBO_BOX (data);
         while (gtk_combo_box_get_active  (year_combo) != -1) {
         	gtk_combo_box_text_remove (GTK_COMBO_BOX_TEXT (year_combo), 0);
-               gtk_combo_box_set_active  (year_combo, 0);
+        	gtk_combo_box_set_active  (year_combo, 0);
         }
 
         gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
@@ -1327,11 +1341,12 @@ language_changed_cb (GtkWidget *w, gpointer data)
         	return;
         }
         gchar *text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (w));
-        if (index == 0 && g_str_equal ("", text)) {
+        g_message("foo %s", text);
+        /*if (index == 0 && g_str_equal ("", text)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
-        }
+        }*/
 
         GPtrArray *langs = source_get_languages (server_list);
         gchar *langu;
