@@ -55,7 +55,7 @@ else:
 	doc_dir     = '/share/doc/glosung-' + version
 
 
-BuildDir ('build', 'src')
+VariantDir('build', 'src')
 
 cpppath = ['#', '#build']
 ccflags   = ['-O2', '-std=c99', '-Wall', '-g', '-Wl,--export-dynamic',
