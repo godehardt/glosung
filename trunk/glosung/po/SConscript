@@ -33,13 +33,17 @@ pot = env.Command ('glosung.pot', ['#/src/about.c',
                                    '#/ui/preferences.glade',
                                    '#/ui/warning_dialog.glade'],
           "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
+#Clean (pot, 'glosung.pot')
 for lang in languages:
-    po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
-#    po = env.Command (lang + '.po',  'glosung.pot', "msgmerge --update --strict --verbose $TARGET $SOURCES");
-#    env.Depends (po, pot)
+    env.Precious(lang + '.po')
+    env.NoClean(lang + '.po')
+#    po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
+    po = env.Command (lang + '.po',  'glosung.pot', "msgmerge --update --strict --verbose $TARGET $SOURCES");
+    env.Depends (po, pot)
     mo = env.Command (lang + '.mo', lang + '.po',
             "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
-#    env.Depends (mo, po)
+#    Clean (mo, lang + '.mo')
+    env.Depends (mo, po)
     env.InstallAs (target = install_dir + prefix + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 
