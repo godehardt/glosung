@@ -40,7 +40,6 @@ env = Environment (
   ENV       = os.environ,
   TARFLAGS  = '-c -j')
 
-
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
@@ -104,8 +103,19 @@ else:
 
 
 conf = Configure (env)
-if not conf.CheckLib ('libxml2'):
-	print 'Did not find libxml2.a or xml2.lib, exiting!'
+if not conf.CheckLibWithHeader ('curl', 'curl/curl.h', 'c'):
+    print 'Did not find libcurl, exiting!'
+    Exit(1)
+if not conf.CheckLibWithHeader ('xml2', 'libxml/parser.h', 'c'):
+    print 'Did not find libxml2, exiting!'
+    Exit(1)
+if not conf.CheckLibWithHeader ('glib-2.0', 'glib.h', 'c'):
+    print 'Did not find GLib, exiting!'
+    Exit(1)
+if not conf.CheckLibWithHeader ('gtk-x11-2.0', 'gtk/gtk.h', 'c') and not conf.CheckLibWithHeader ('gtk-3', 'gtk/gtk.h', 'c'):
+    print 'Did not find GTK+, exiting!'
+    Exit(1)
+env = conf.Finish()
 
 Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file')
 
