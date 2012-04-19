@@ -25,9 +25,13 @@
 	#include <gtk/gtk.h>
 	#if (GTK_CHECK_VERSION(2,10,0))
 		#define VERSE_LINK 1
+	#else
+		#undef VERSE_LINK
 	#endif
 
 	static GConfClient *client = NULL;
+#else
+	#undef VERSE_LINK
 #endif /* not Windows nor MacOSX */
 
 #define INIT_CLIENT() \

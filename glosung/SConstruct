@@ -19,6 +19,7 @@
 import os
 
 version = '3.9alpha'
+gtk_version = "3"
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -91,10 +92,13 @@ env.Append (
   LINKFLAGS = linkflags,
   CCFLAGS   = ccflags)
 
+if ARGUMENTS.get ('gtk'):
+	gtk_version = ARGUMENTS.get ('gtk')
+
 if env['PLATFORM'] == 'win32' or (env['PLATFORM'] == 'darwin'):
-        env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
+        env.ParseConfig ('pkg-config gtk+-' + gtk_version + '.0 libxml-2.0 libcurl --cflags --libs')
 else:
-        env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl gconf-2.0 gmodule-export-2.0 --cflags --libs')
+        env.ParseConfig ('pkg-config gtk+-' + gtk_version + '.0 libxml-2.0 libcurl gconf-2.0 gmodule-export-2.0 --cflags --libs')
 
 if env['PLATFORM'] == 'win32':
         Tool('mingw')(env)
