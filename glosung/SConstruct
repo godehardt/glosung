@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.6.3pre'
+version = '3.9alpha'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -57,22 +57,19 @@ else:
 VariantDir('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = ['-O2', '-std=c99', '-Wall', '-g', '-Wl,--export-dynamic',
+ccflags   = ['-O2', '-std=c99', '-Wall', '-g',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
 		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
 
-linkflags = ['-Wl,--export-dynamic', '-L.']
-#  -L/usr/lib'
-#             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`
-             
+linkflags = ['-L.']             
 
 if ARGUMENTS.get ('profile'):
     ccflags.append   ('-pg', '-fprofile-arcs')
-    linkflags.append ('-pg', '-fprofile-arcs')
+    linkflags.append ('-pg', '-fprofile-arcs', '-Wl,--export-dynamic',)
 
-if env['PLATFORM'] != 'win32':
+if (env['PLATFORM'] != 'win32') and (env['PLATFORM'] != 'darwin'):
         linkflags.append ('-Wl,--as-needed')
 
 #if not (ARGUMENTS.get ('dev')):
@@ -94,11 +91,14 @@ env.Append (
   LINKFLAGS = linkflags,
   CCFLAGS   = ccflags)
 
-if env['PLATFORM'] == 'win32':
+if env['PLATFORM'] == 'win32' or (env['PLATFORM'] == 'darwin'):
         env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
-        Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
+        env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl gconf-2.0 gmodule-export-2.0 --cflags --libs')
+
+if env['PLATFORM'] == 'win32':
+        Tool('mingw')(env)
+#else:
 #        Tool('posix')(env)
 
 
