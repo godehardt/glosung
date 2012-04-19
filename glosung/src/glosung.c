@@ -42,8 +42,11 @@
 #include "settings.h"
 #include "util.h"
 
-#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32))
-  #define VERSE_LINK 1
+
+#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32) && ! defined (__APPLE__))
+    #define VERSE_LINK 1
+#else
+    #undef VERSE_LINK
 #endif
 
 #if (! GTK_CHECK_VERSION(2,24,0))
@@ -59,6 +62,12 @@
   #define GTK_COMBO_BOX_TEXT(w) \
 		GTK_COMBO_BOX(w)
 #endif
+
+#if (! GTK_CHECK_VERSION(3,0,0))
+  #define gtk_widget_override_font(w,f) \
+	gtk_widget_modify_font(w,f)
+#endif
+
 
 /****************************\
    Variables & Definitions
@@ -283,18 +292,17 @@ main (int argc, char **argv)
         local_collections = get_local_collections ();
 
         lang = get_language ();
-        if (lang == NULL) {
+        if (! lang) {
                 /* should be translated to corresponding language, e.g. 'de' */
                 lang = _("en");
 
-                /* is requested language available,
+                /* is requested language available use it,
                    if not use first available language instead */
-
                 if (local_collections->languages->len > 0 &&
                     ! source_get_collections (local_collections, lang))
                 {
-                        lang = VC (g_ptr_array_index
-                        	(local_collections->languages, 0))->language;
+                        lang = (gchar *) g_ptr_array_index
+                        	(local_collections->languages, 0);
                 }
         }
 
@@ -408,7 +416,7 @@ create_app (void)
 			= pango_font_description_from_string (font);
                 for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                         if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
-                                gtk_widget_modify_font (label [i], font_desc);
+                                gtk_widget_override_font (label [i], font_desc);
                         }
                 }
                 pango_font_description_free (font_desc);
@@ -564,7 +572,7 @@ show_text (void)
                 if (! ww) {
                         ww = get_the_word (new_date, lang);
                 }
-                if (ww) {
+                if (ww && ww->ot.text && ww->nt.text) {
                 	if (((strlen (ww->ot.text) > WRAP_LENGTH + 13)
                 			&& ! strstr (ww->ot.text, "\n"))
                 	  ||
@@ -900,7 +908,7 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
 
                         font_desc = pango_font_description_from_string (font);
                         for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
-                                gtk_widget_modify_font (label [i], font_desc);
+                                gtk_widget_override_font (label [i], font_desc);
                         }
                         pango_font_description_free (font_desc);
                 }
@@ -947,7 +955,7 @@ autostart_once_cb (GtkWidget *toggle, gpointer data)
 
 
 /*
- * callback function for gnomwsword option change.
+ * callback function for xiphos option change.
  */
 G_MODULE_EXPORT void
 sword_cb (GtkWidget *toggle, gpointer data)
@@ -998,7 +1006,6 @@ calendar_cb (GtkWidget *w, gpointer data)
                 calendar = gtk_calendar_new ();
                 gtk_calendar_set_display_options
                         (GTK_CALENDAR (calendar),
-                         GTK_CALENDAR_WEEK_START_MONDAY |
                          GTK_CALENDAR_SHOW_WEEK_NUMBERS |
                          GTK_CALENDAR_SHOW_HEADING |
                          GTK_CALENDAR_SHOW_DAY_NAMES);
@@ -1309,7 +1316,7 @@ sources_changed_cb (GtkWidget *w, gpointer data)
         }
         if (langs->len > 1) {
         	gtk_combo_box_text_append_text
-			(GTK_COMBO_BOX_TEXT (lang_combo), "");
+                (GTK_COMBO_BOX_TEXT (lang_combo), "");
         }
         for (gint i = 0; i < langs->len; i++) {
         	gchar *lang_code = (gchar*) g_ptr_array_index (langs, i);
@@ -1320,7 +1327,7 @@ sources_changed_cb (GtkWidget *w, gpointer data)
         		langu = lang_code;
         	}
         	gtk_combo_box_text_append_text
-			(GTK_COMBO_BOX_TEXT (lang_combo), langu);
+                (GTK_COMBO_BOX_TEXT (lang_combo), langu);
         }
         gtk_combo_box_set_active (lang_combo, 0);
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), TRUE);
@@ -1340,9 +1347,11 @@ language_changed_cb (GtkWidget *w, gpointer data)
         if (index == -1) {
         	return;
         }
+        /*
         gchar *text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (w));
+        g_message("foo %d", gtk_tree_model_get_column_type (gtk_combo_box_get_model (GTK_COMBO_BOX (w)), 0));
         g_message("foo %s", text);
-        /*if (index == 0 && g_str_equal ("", text)) {
+        if (index == 0 && g_str_equal ("", text)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
