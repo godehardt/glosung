@@ -20,19 +20,15 @@
 #define PACKAGE "glosung"
 
 #include "settings.h"
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	#include <gconf/gconf-client.h>
 	#include <gtk/gtk.h>
-#endif
+	#if (GTK_CHECK_VERSION(2,10,0))
+		#define VERSE_LINK 1
+	#endif
 
-
-#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32))
-  #define VERSE_LINK 1
-#endif
-
-#ifndef WIN32
 	static GConfClient *client = NULL;
-#endif /* WIN32 */
+#endif /* not Windows nor MacOSX */
 
 #define INIT_CLIENT() \
 	if (! client) { \
@@ -43,7 +39,7 @@
 gboolean
 is_proxy_in_use ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/use_proxy", NULL);
 #else
@@ -55,7 +51,7 @@ is_proxy_in_use ()
 void
 set_proxy_in_use (gboolean use_proxy)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/use_proxy", use_proxy, NULL);
@@ -66,7 +62,7 @@ set_proxy_in_use (gboolean use_proxy)
 gchar*
 get_proxy ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
         return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/proxy", NULL);
@@ -79,7 +75,7 @@ get_proxy ()
 void
 set_proxy (const gchar *proxy)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_string
 		(client, "/apps/" PACKAGE "/proxy", proxy, NULL);
@@ -90,7 +86,7 @@ set_proxy (const gchar *proxy)
 gboolean
 is_hide_warning ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/hide_warning", NULL);
 #else
@@ -102,7 +98,7 @@ is_hide_warning ()
 void
 set_hide_warning (gboolean hide_warning)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/hide_warning", hide_warning, NULL);
@@ -114,7 +110,7 @@ GDate*
 get_last_usage ()
 {
         GDate *last_time = NULL;
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
         gchar *last_time_str = gconf_client_get_string
                 (client, "/apps/" PACKAGE "/last_time", NULL);
@@ -130,7 +126,7 @@ get_last_usage ()
 void
 set_last_usage (const GDate *date)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
         gchar *time_str = g_malloc (11); /* "YYYY-MM-DD"; */
         g_date_strftime (time_str, 11, "%Y-%m-%d", date);
@@ -143,7 +139,7 @@ set_last_usage (const GDate *date)
 gchar*
 get_language ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
         return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/language", NULL);
@@ -156,7 +152,7 @@ get_language ()
 void
 set_language (const gchar *language)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_string
 	     (client, "/apps/" PACKAGE "/language", language, NULL);
@@ -167,11 +163,11 @@ set_language (const gchar *language)
 gboolean
 is_calender_double_click ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/calendar_close_by_double_click", NULL);
 #else
-	return FALSE;
+	return TRUE;
 #endif /* WIN32 */
 } /* is_calender_double_click */
 
@@ -179,7 +175,7 @@ is_calender_double_click ()
 void
 set_calender_double_click (gboolean calendar_close_by_double_click)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/calendar_close_by_double_click", calendar_close_by_double_click, NULL);
@@ -190,7 +186,7 @@ set_calender_double_click (gboolean calendar_close_by_double_click)
 gboolean
 is_link_sword ()
 {
-#if (defined (VERSE_LINK) && ! defined (WIN32))
+#if (defined (VERSE_LINK) && ! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/link_sword", NULL);
 #else
@@ -202,7 +198,7 @@ is_link_sword ()
 void
 set_link_sword (gboolean link_sword)
 {
-#if (defined (VERSE_LINK) && ! defined (WIN32))
+#if (defined (VERSE_LINK) && ! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/link_sword", link_sword, NULL);
@@ -213,7 +209,7 @@ set_link_sword (gboolean link_sword)
 gchar*
 get_font ()
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
         return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/font", NULL);
@@ -226,7 +222,7 @@ get_font ()
 void
 set_font (const gchar *font)
 {
-#ifndef WIN32
+#if (! defined (WIN32) && ! defined (__APPLE__))
 	INIT_CLIENT ();
 	gconf_client_set_string
 	     (client, "/apps/" PACKAGE "/font", font, NULL);
