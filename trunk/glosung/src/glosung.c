@@ -424,6 +424,10 @@ create_app (void)
 
         gtk_builder_connect_signals (builder, NULL);
         gtk_widget_show_all (app);
+#ifndef VERSE_LINK
+        gtk_widget_hide (label [OT_LOC_SWORD]);
+        gtk_widget_hide (label [NT_LOC_SWORD]);
+#endif
         if (! show_readings) {
                 gtk_widget_hide (label [X3]);
                 gtk_widget_hide (label [READING]);
