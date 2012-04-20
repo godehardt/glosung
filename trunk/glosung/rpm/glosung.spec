@@ -21,9 +21,9 @@ Requires:       unzip, xdg-utils
 Prefix:         %{_prefix}
 # BuildArchitectures: i386
 # Distribution:
-Copyright:      (C) 1999-2011 Eicke Godehardt
+Copyright:      (C) 1999-2012 Eicke Godehardt
 License:        GPL
-# This Software is copyright (c) 1999-2011 by Eicke Godehardt.
+# This Software is copyright (c) 1999-2012 by Eicke Godehardt.
 # You are free to distribute this software under the terms
 # of the GNU General Public License.
 
