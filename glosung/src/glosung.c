@@ -101,7 +101,6 @@ static GtkWidget *property = NULL;
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
 static gchar     *new_font;
-static gboolean   calendar_close = TRUE;
 static gboolean   show_readings = TRUE;
 static gboolean   show_sword;
 static gboolean   show_sword_new;
@@ -307,7 +306,6 @@ main (int argc, char **argv)
         }
 
         printf ("Choosen language: %s\n", lang);
-        calendar_close = is_calender_double_click ();
         font = get_font ();
         show_sword = show_sword_new = is_link_sword ();
 
@@ -1138,15 +1136,11 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
         guint y, m, d;
 
         gtk_calendar_get_date (GTK_CALENDAR (calendar), &y, &m, &d);
-
         g_date_set_day (new_date, d);
         g_date_set_month (new_date, m + 1);
         g_date_set_year (new_date, y);
         show_text ();
-
-        if (calendar_close) {
-                gtk_widget_destroy (GTK_WIDGET (data));
-        }
+        gtk_widget_destroy (GTK_WIDGET (data));
 } /* calendar_select_cb */
 
 
