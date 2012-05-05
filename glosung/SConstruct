@@ -95,6 +95,8 @@ env.Append (
 if ARGUMENTS.get ('gtk'):
 	gtk_version = ARGUMENTS.get ('gtk')
 
+#print gtk_version
+
 if env['PLATFORM'] == 'win32' or (env['PLATFORM'] == 'darwin'):
         env.ParseConfig ('pkg-config gtk+-' + gtk_version + '.0 libxml-2.0 libcurl --cflags --libs')
 else:
@@ -116,7 +118,7 @@ if not conf.CheckLibWithHeader ('xml2', 'libxml/parser.h', 'c'):
 if not conf.CheckLibWithHeader ('glib-2.0', 'glib.h', 'c'):
     print 'Did not find GLib, exiting!'
     Exit(1)
-if not conf.CheckLibWithHeader ('gtk-x11-2.0', 'gtk/gtk.h', 'c') and not conf.CheckLibWithHeader ('gtk-3', 'gtk/gtk.h', 'c'):
+if not conf.CheckLibWithHeader ('gtk-3', 'gtk/gtk.h', 'c') and not conf.CheckLibWithHeader ('gtk-x11-2.0', 'gtk/gtk.h', 'c'):
     print 'Did not find GTK+, exiting!'
     Exit(1)
 env = conf.Finish()
