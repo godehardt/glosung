@@ -1,39 +1,39 @@
 <schemalist>
   <schema gettext-domain="glosung" id="org.godehardt.glosung" path="/org/godehardt/glosung/">
-    <!--key name="use-proxy" type="b">
+    <key name="use-proxy" type="b">
       <default>false</default>
       <summary>Use Proxy</summary>
-      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+      <description>Whether to use a proxy.</description>
     </key>
     <key name="proxy" type="s">
-      <default l10n="messages">proxy</default>
+      <default l10n="messages">'proxy'</default>
       <summary>Proxy</summary>
-      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
-    </key-->
+      <description>The proxy to be used.</description>
+    </key>
     <key name="hide-warning" type="b">
       <default>false</default>
       <summary>Hide Warning</summary>
-      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+      <description>Whether to show a warning of loading biblical content in persecuted countries.</description>
     </key>
     <key name="last-usage" type="s">
       <default>''</default>
       <summary>Date of last usage</summary>
-      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+      <description>Store time of last use.</description>
     </key>
     <key name="language" type="s">
       <default l10n="messages">'en'</default>
-      <summary>Editor Font</summary>
-      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+      <summary>Language</summary>
+      <description>The language of the presented biblical texts.</description>
     </key>
     <key name="link-to-sword" type="b">
       <default>false</default>
-      <summary>Use Default Font</summary>
-      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+      <summary>Link to sword programs</summary>
+      <description>Whether to provide links to sword programs, e.g. Xiphos (a.k.a. gnome-sword).</description>
     </key>
     <key name="font" type="s">
-      <default l10n="messages">'Monospace 12'</default>
-      <summary>Editor Font</summary>
-      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+      <default l10n="messages">'Sans 16'</default>
+      <summary>Font</summary>
+      <description>A custom font that will be used for watch words.</description>
     </key>
   </schema>
 </schemalist>

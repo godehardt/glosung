@@ -36,8 +36,7 @@ static void
 init ()
 {
 	if (! gsettings) {
-//		gsettings = g_settings_new ("org.godehardt.glosung");
-		gsettings = g_settings_new_with_path ("org.godehardt.glosung", "//Users/d047370/gtk/inst/share/glib-2.0/schemas/gschemas.compiled");
+		gsettings = g_settings_new ("org.godehardt.glosung");
 	}
 }
 
@@ -46,7 +45,7 @@ gboolean
 is_proxy_in_use ()
 {
 	init ();
-	return g_settings_get_boolean (gsettings, "/apps/" PACKAGE "/use_proxy");
+	return g_settings_get_boolean (gsettings, "use-proxy");
 } /* use_proxy */
 
 
@@ -54,8 +53,7 @@ void
 set_proxy_in_use (gboolean use_proxy)
 {
 	init ();
-	g_settings_set_boolean
-		(gsettings, "/apps/" PACKAGE "/use_proxy", use_proxy);
+	g_settings_set_boolean (gsettings, "use-proxy", use_proxy);
 } /* set_proxy_in_use */
 
 
@@ -63,8 +61,7 @@ gchar*
 get_proxy ()
 {
 	init ();
-        return g_settings_get_string
-		(gsettings, "/apps/" PACKAGE "/proxy");
+        return g_settings_get_string (gsettings, "proxy");
 } /* get_proxy */
 
 
@@ -72,8 +69,7 @@ void
 set_proxy (const gchar *proxy)
 {
 	init ();
-	g_settings_set_string
-		(gsettings, "/apps/" PACKAGE "/proxy", proxy);
+	g_settings_set_string (gsettings, "proxy", proxy);
 } /* set_proxy */
 
 
@@ -81,7 +77,7 @@ gboolean
 is_hide_warning ()
 {
 	init ();
-	return g_settings_get_boolean (gsettings, "/apps/" PACKAGE "/hide_warning");
+	return g_settings_get_boolean (gsettings, "hide-warning");
 } /* is_hide_warning */
 
 
@@ -89,8 +85,7 @@ void
 set_hide_warning (gboolean hide_warning)
 {
 	init ();
-	g_settings_set_boolean
-		(gsettings, "/apps/" PACKAGE "/hide_warning", hide_warning);
+	g_settings_set_boolean (gsettings, "hide-warning", hide_warning);
 } /* set_hide_warning */
 
 
@@ -99,8 +94,7 @@ get_last_usage ()
 {
         GDate *last_time = NULL;
 	init ();
-        gchar *last_time_str = g_settings_get_string
-                (gsettings, "/apps/" PACKAGE "/last_time");
+        gchar *last_time_str = g_settings_get_string (gsettings, "last-usage");
         if (last_time_str) {
                 last_time = g_date_new ();
                 g_date_set_parse (last_time, last_time_str);
@@ -115,8 +109,7 @@ set_last_usage (const GDate *date)
 	init ();
         gchar *time_str = g_malloc (11); /* "YYYY-MM-DD"; */
         g_date_strftime (time_str, 11, "%Y-%m-%d", date);
-        g_settings_set_string
-                (gsettings, "/apps/" PACKAGE "/last_time", time_str);
+        g_settings_set_string (gsettings, "last-usage", time_str);
 } /* set_last_usage */
 
 
@@ -124,9 +117,7 @@ gchar*
 get_language ()
 {
 	init ();
-        return g_settings_get_string
-		(gsettings, "/apps/" PACKAGE "/language");
-
+        return g_settings_get_string (gsettings, "language");
 } /* get_language */
 
 
@@ -134,8 +125,7 @@ void
 set_language (const gchar *language)
 {
 	init ();
-	g_settings_set_string
-	     (gsettings, "/apps/" PACKAGE "/language", language);
+	g_settings_set_string (gsettings, "language", language);
 } /* set_language */
 
 
@@ -143,7 +133,7 @@ gboolean
 is_link_sword ()
 {
 	init ();
-	return g_settings_get_boolean (gsettings, "/apps/" PACKAGE "/link_sword");
+	return g_settings_get_boolean (gsettings, "link-to-sword");
 } /* is_link_sword */
 
 
@@ -151,8 +141,7 @@ void
 set_link_sword (gboolean link_sword)
 {
 	init ();
-	g_settings_set_boolean
-		(gsettings, "/apps/" PACKAGE "/link_sword", link_sword);
+	g_settings_set_boolean (gsettings, "link-to-sword", link_sword);
 } /* set_link_sword */
 
 
@@ -160,8 +149,7 @@ gchar*
 get_font ()
 {
 	init ();
-        return g_settings_get_string
-		(gsettings, "/apps/" PACKAGE "/font");
+        return g_settings_get_string (gsettings, "font");
 } /* get_font */
 
 
@@ -169,8 +157,7 @@ void
 set_font (const gchar *font)
 {
 	init ();
-	g_settings_set_string
-	     (gsettings, "/apps/" PACKAGE "/font", font);
+	g_settings_set_string (gsettings, "font", font);
 } /* set_font */
 
 
