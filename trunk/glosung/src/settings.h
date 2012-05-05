@@ -32,8 +32,6 @@ GDate*   get_last_usage     ();
 void     set_last_usage     (const GDate *date);
 gchar*   get_language       ();
 void     set_language       (const gchar *language);
-gboolean is_calender_double_click ();
-void     set_calender_double_click (gboolean calendar_close_by_double_click);
 gboolean is_link_sword      ();
 void     set_link_sword     (gboolean link_sword);
 gchar*   get_font           ();

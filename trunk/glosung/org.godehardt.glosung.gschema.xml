@@ -1,0 +1,39 @@
+<schemalist>
+  <schema gettext-domain="glosung" id="org.godehardt.glosung" path="/org/godehardt/glosung/">
+    <!--key name="use-proxy" type="b">
+      <default>false</default>
+      <summary>Use Proxy</summary>
+      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+    </key>
+    <key name="proxy" type="s">
+      <default l10n="messages">proxy</default>
+      <summary>Proxy</summary>
+      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+    </key-->
+    <key name="hide-warning" type="b">
+      <default>false</default>
+      <summary>Hide Warning</summary>
+      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+    </key>
+    <key name="last-usage" type="s">
+      <default>''</default>
+      <summary>Date of last usage</summary>
+      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+    </key>
+    <key name="language" type="s">
+      <default l10n="messages">'en'</default>
+      <summary>Editor Font</summary>
+      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+    </key>
+    <key name="link-to-sword" type="b">
+      <default>false</default>
+      <summary>Use Default Font</summary>
+      <description>Whether to use the system's default fixed width font for editing text instead of a font specific to gedit. If this option is turned off, then the font named in the "Editor Font" option will be used instead of the system font.</description>
+    </key>
+    <key name="font" type="s">
+      <default l10n="messages">'Monospace 12'</default>
+      <summary>Editor Font</summary>
+      <description>A custom font that will be used for the editing area. This will only take effect if the "Use Default Font" option is turned off.</description>
+    </key>
+  </schema>
+</schemalist>

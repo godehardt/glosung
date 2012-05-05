@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 #include <glib/gi18n.h>
-#include <glib/goption.h>
+#include <glib.h>
 
 #include "util.h"
 #include "settings.h"
