@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkAction" id="action1"/>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="yalign">0.44999998807907104</property>
-    <property name="stock">gtk-justify-fill</property>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-refresh</property>
-  </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -28,26 +17,6 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-about</property>
   </object>
-  <object class="GtkImage" id="image6">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-go-forward</property>
-  </object>
-  <object class="GtkImage" id="image7">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-go-back</property>
-  </object>
-  <object class="GtkImage" id="image8">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-goto-first</property>
-  </object>
-  <object class="GtkImage" id="image9">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-goto-last</property>
-  </object>
   <object class="GtkWindow" id="main_window">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
@@ -61,165 +30,22 @@
           <object class="GtkMenuBar" id="menubar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="ubuntu_local">True</property>
             <child>
               <object class="GtkMenuItem" id="File">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="menu1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="ubuntu_local">True</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="Calendar">
-                        <property name="label" translatable="yes">_Calendar...</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Select date from calendar</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image1</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="calendar_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="sep11">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="Today">
-                        <property name="label">_Today</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Show losung of today</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image2</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="today_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="NextDay">
-                        <property name="label">_Next Day</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image6</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="next_day_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="PrevDay">
-                        <property name="label" translatable="yes">_Previous Day</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image7</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="prev_day_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="NextMonth">
-                        <property name="label" translatable="yes">_Next Month</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image8</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="next_month_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="PrevMonth">
-                        <property name="label">_Previous Month</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="image">image9</property>
-                        <property name="use_stock">False</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="prev_month_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="sep12">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem5">
-                        <property name="label">gtk-quit</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="gtk_main_quit" swapped="no"/>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="EditMenu">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_Edit</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu" id="menu2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="ubuntu_local">True</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="Copy">
-                        <property name="label">gtk-copy</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Copy the text to clipboard</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="activate" handler="clipboard_cb" swapped="no"/>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="sep21">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                    </child>
                     <child>
                       <object class="GtkImageMenuItem" id="Organize">
                         <property name="label">_Organize Watchwords...</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Update/install text files</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="image">image3</property>
                         <property name="use_stock">False</property>
@@ -232,36 +58,24 @@
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <property name="always_show_image">True</property>
                         <signal name="activate" handler="property_cb" swapped="no"/>
                       </object>
                     </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="HelpMenu">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu" id="menu3">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="ubuntu_local">True</property>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="sep12">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkImageMenuItem" id="AboutHerrnhut">
                         <property name="label">About _Herrnhut...</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">About Herrnhuter Losungen</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="image">image4</property>
                         <property name="use_stock">False</property>
@@ -275,12 +89,22 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">About GLosung</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="image">image5</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
                         <signal name="activate" handler="about_cb" swapped="no"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="imagemenuitem5">
+                        <property name="label">gtk-quit</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <property name="always_show_image">True</property>
+                        <signal name="activate" handler="gtk_main_quit" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -302,7 +126,6 @@
               <object class="GtkToolButton" id="Quit">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Quit</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-quit</property>
@@ -314,10 +137,24 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="PrevMonth2">
+              <object class="GtkToolButton" id="Calendar">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
+                <property name="tooltip_text" translatable="yes">Select date from calendar</property>
+                <property name="label" translatable="yes">Calendar</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-justify-fill</property>
+                <signal name="clicked" handler="calendar_cb" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="PrevMonth">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Previous Month</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-goto-first</property>
@@ -329,10 +166,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="PrevDay2">
+              <object class="GtkToolButton" id="PrevDay">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Previous Day</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-go-back</property>
@@ -344,10 +180,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="Today2">
+              <object class="GtkToolButton" id="Today">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Today</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-refresh</property>
@@ -359,10 +194,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="NextDay1">
+              <object class="GtkToolButton" id="NextDay">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Next Day</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-go-forward</property>
@@ -374,14 +208,28 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="NextMonth1">
+              <object class="GtkToolButton" id="NextMonth">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Next Month</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-goto-last</property>
                 <signal name="clicked" handler="next_month_cb" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="Copy">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Copy the text to clipboard</property>
+                <property name="label" translatable="yes">Copy</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-copy</property>
+                <signal name="clicked" handler="clipboard_cb" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -447,12 +295,10 @@
         <child>
           <object class="GtkLinkButton" id="linkbutton1">
             <property name="label" translatable="yes">sword link 1</property>
-            <property name="visible">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="has_tooltip">True</property>
             <property name="tooltip_text" translatable="yes">open in Xiphos bible study</property>
-            <property name="use_action_appearance">False</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="show_uri" swapped="no"/>
           </object>
@@ -502,12 +348,10 @@
         <child>
           <object class="GtkLinkButton" id="linkbutton2">
             <property name="label" translatable="yes">sword link 2</property>
-            <property name="visible">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="has_tooltip">True</property>
             <property name="tooltip_text" translatable="yes">open in Xiphos bible study</property>
-            <property name="use_action_appearance">False</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="show_uri" swapped="no"/>
           </object>
