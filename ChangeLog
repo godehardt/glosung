@@ -1,3 +1,8 @@
+2013-05-20 eicke
+
+    * release 3.6.3
+    * fix compilation problem under recent ubuntu
+
 2010-11-01 eicke
 
     * release 3.6.2
