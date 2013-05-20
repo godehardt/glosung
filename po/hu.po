@@ -1,0 +1,454 @@
+# This are the german translations for glosung.
+# Copyright (C) 2000-2009 Eicke Godehardt <sf@godehardt.org>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: glosung 3.5.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-07 21:28+0100\n"
+"PO-Revision-Date: 2010-07-27 13:38+0100\n"
+"Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
+"Language-Team: hungarian <hu@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#
+# File: src/about.c, line: 54
+msgid "Gods word for every day"
+msgstr "Isten Igéje minden napra"
+#
+# File: src/about.c, line: 86
+msgid ""
+"The watchwords (german: Losungen) are words out of the bible, one from the "
+"Old and one from the New Testament.  They are choosen by lot since 1731.  By "
+"now they are provided in about 50 languages."
+msgstr ""
+"A Útmutató (németül Losungen) bibliai igéket tartalmaz, egyet az Ó- és egyet "
+"az Újszövetségből. Sorsolással választják ki őket 1731 óta. Ma már közel 50 "
+"nyelven érhető el."
+#
+# File: src/about.c, line: 91
+msgid ""
+"Watchwords: (C) Moravian Church\n"
+"Bible texts: (C) German Bible Association, Stuttgart"
+msgstr ""
+"Útmutató: (C) Herrnhuter Testvérgyülekezet\n"
+"Bibliai szöveg: (C) Magyar Bibliatársulat, Budapest"
+#
+# File: src/glosung.c, line: 220
+msgid "Herrnhuter Losungen"
+msgstr "Az Útmutatóról"
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr "Bible 2.0"
+#
+# File: src/download.c, line: 408
+msgid "Couldn't resolve proxy"
+msgstr "Proxy feloldása nem sikerült"
+#
+# File: src/glosung.c, line: 191
+msgid "_File"
+msgstr "_Fájl"
+#
+# File: src/glosung.c, line: 192
+msgid "_Edit"
+msgstr "_Szerkesztés"
+#
+# File: src/glosung.c, line: 193
+msgid "_Help"
+msgstr "_Segítség"
+#
+# File: src/glosung.c, line: 195
+msgid "_Calendar"
+msgstr "_Naptár"
+#
+# File: src/glosung.c, line: 196
+msgid "select date from calendar"
+msgstr "nap választása a naptárból"
+#
+# File: src/glosung.c, line: 197
+msgid "_Today"
+msgstr "_Ma"
+#
+# File: src/glosung.c, line: 198
+msgid "Show losung of today"
+msgstr "A mai ige megjelenítése"
+#
+# File: src/glosung.c, line: 199
+msgid "_Next Day"
+msgstr "_Következő nap"
+#
+# File: src/glosung.c, line: 200
+msgid "Show losung of next day"
+msgstr "A holnapi ige megjelenítése"
+#
+# File: src/glosung.c, line: 201
+msgid "_Previous Day"
+msgstr "_Előző nap"
+#
+# File: src/glosung.c, line: 202
+msgid "Show losung of previous day"
+msgstr "A tegnapi ige megjelenítése"
+#
+# File: src/glosung.c, line: 203
+msgid "_Next Month"
+msgstr "_Következő hónap"
+#
+# File: src/glosung.c, line: 205
+msgid "Show losung of next month"
+msgstr "A következő havi ige megjelenítése"
+#
+# File: src/glosung.c, line: 206
+msgid "_Previous Month"
+msgstr "_Előző hónap"
+#
+# File: src/glosung.c, line: 208
+msgid "Show losung of previous month"
+msgstr "Az előző havi ige megjelenítése"
+#
+# File: src/glosung.c, line: 210
+msgid "Quit the application"
+msgstr "Kilépés a programból"
+#
+# File: src/glosung.c, line: 212
+msgid "_Copy text"
+msgstr "_Szöveg másolása"
+#
+# File: src/glosung.c, line: 213
+msgid "copy the text to clipboard"
+msgstr "szöveg másolása vágólapra"
+#
+# File: src/glosung.c, line: 214
+msgid "_Organize Watchwords..."
+msgstr "_Útmutatók organizálása"
+#
+# File: src/glosung.c, line: 215
+msgid "update/install text files"
+msgstr "szövegfájlok frissítése/telepítése"
+#
+# File: src/glosung.c, line: 217
+msgid "Edit the preferences"
+msgstr "Beállítások szerkesztése"
+#
+# File: src/glosung.c, line: 219
+msgid "About _Herrnhut"
+msgstr "_Hernhutról"
+#
+# File: src/glosung.c, line: 220
+msgid "about Losungen"
+msgstr "az Útmutatóról"
+#
+# File: src/glosung.c, line: 221
+msgid "About _GLosung"
+msgstr "GLosungról"
+#
+# File: src/glosung.c, line: 222
+msgid "about GLosung"
+msgstr "GLosungról"
+#
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr "Indítás naponta egyszer"
+#
+# File: src/glosung.c, line: 304
+#. should be translated to corresponding language, e.g. 'de'
+msgid "en"
+msgstr "en"
+#
+# File: src/glosung.c, line: 337
+msgid ""
+"No text files found!\n"
+"Please install your prefered languages."
+msgstr ""
+"Szöveg fájl nem található!\n"
+"Telepítse a preferált nyelvet."
+#
+# File: src/glosung.c, line: 532
+#, c-format
+msgid "No %s texts found for %d!"
+msgstr "Nem található '%s' szöveg a %d-es/as évre!"
+#
+# File: src/glosung.c, line: 891
+msgid "Calendar"
+msgstr "Naptár"
+#
+# File: src/glosung.c, line: 1063
+msgid "Languages"
+msgstr "Nyelv"
+#
+# File: src/glosung.c, line: 1090
+msgid "Installed Languages"
+msgstr "Telepített nyelvek"
+#
+# File: src/losung.c, line: 166
+#, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Nem található '%s' szöveg a %d-es/as évre!\n"
+#
+# File: src/parser.c, line: 378
+msgid "Watchword for %A, %e. %B %Y"
+msgstr "Napi ige a %A, %e. %B %Y-ra"
+#
+#
+# File: src/glosung.c, line: 1063
+msgid "Add Languages"
+msgstr "Nyelv hozzáadása"
+#
+#
+msgid "Source"
+msgstr "Forrás"
+#
+#
+# File: src/glosung.c, line: 1063
+msgid "Language"
+msgstr "Nyelv"
+#
+#
+msgid "Year"
+msgstr "Év"
+#
+#
+msgid "Download"
+msgstr "Letöltés"
+#
+#
+msgid "download selected verse collection"
+msgstr "A kiválasztott versösszeállítás letöltése"
+#
+#
+# File: src/glosung.c, line: 217
+msgid "Preferences"
+msgstr "Beállítások"
+#
+#
+# File: src/glosung.c, line: 1090
+msgid "Displayed Language:"
+msgstr "Telepített nyelvek:"
+#
+#
+msgid "Font:"
+msgstr "Betűkészlet:"
+#
+#
+msgid "Start GLosung at login time"
+msgstr "GLosung indítása bejelentkezéskor"
+#
+#
+msgid "Link location to Xiphos/Gnomesword"
+msgstr "Igehelyek linkelése Xiphos/GnomeSword-al"
+#
+#
+# File: ui/preferences.glade, line: 95
+msgid "View"
+msgstr "Nézet"
+#
+#
+# File: ui/preferences.glade, line: 107
+msgid "Proxy"
+msgstr "Proxy"
+#
+#
+# File: ui/preferences.glade, line: 128
+msgid ""
+"Use proxy to connect to the internet.\n"
+"Be careful in persecuted countries, as\n"
+"downloading biblical texts may be\n"
+"against the law!"
+msgstr ""
+"Proxy használata az internet kapcsolathoz.\n"
+"Legyen óvatos az olyan országokban, ahol\n"
+"kereszt(y)én(y) üldözés van, mert bibliai szövegek\n"
+"letöltése törvénybe ütközhet!"
+#
+#
+# File: ui/preferences.glade, line: 140
+msgid "host[:port]"
+msgstr "hoszt[:port]"
+#
+#
+# File: ui/preferences.glade, line: 135
+msgid "Network"
+msgstr "Hálózat"
+#
+#
+# File: ui/warning_dialog.glade, line: 15
+msgid ""
+"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
+"risk detection you should NOT use this feature!"
+msgstr ""
+"<b>Figyelem:</b> ha Ön olyan országban él, ahol kereszt(y)én(y) üldözés "
+"van,\n"
+"és nem akarja megkockáztatni, hogy felfedezzék, akkor NE használja ezt a "
+"funkciót!"
+#
+#
+# File: ui/warning_dialog.glade, line: 24
+msgid "Don't show this message again."
+msgstr "Ne jelenjen meg újra ez az üzenet."
+#
+#
+# File: ui/warning_dialog.glade, line: 28
+msgid "Check this box if you do not want to see this dialog again"
+msgstr ""
+"Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
+#
+#
+# File: src/glosung.c, line: 362
+#~ msgid "czech"
+#~ msgstr "cseh"
+#
+#
+# File: src/glosung.c, line: 365
+#~ msgid "spanish"
+#~ msgstr "spanyol"
+#
+#
+# File: src/glosung.c, line: 366
+#~ msgid "french"
+#~ msgstr "francia"
+#
+#
+# File: src/glosung.c, line: 370
+#~ msgid "dutch"
+#~ msgstr "holland"
+#
+#
+# File: src/glosung.c, line: 371
+#~ msgid "norwegian"
+#~ msgstr "norvég"
+#
+#
+# File: src/glosung.c, line: 372
+#~ msgid "portuguese"
+#~ msgstr "portugál"
+#
+#
+# File: src/glosung.c, line: 373
+#~ msgid "romanian"
+#~ msgstr "román"
+#
+#
+# File: src/glosung.c, line: 375
+#~ msgid "swahili"
+#~ msgstr "suahili"
+#
+#
+# File: src/glosung.c, line: 376
+#~ msgid "tamil"
+#~ msgstr "tamil"
+#
+#
+# File: src/glosung.c, line: 377
+#~ msgid "turkish"
+#~ msgstr "török"
+#
+#
+# File: src/glosung.c, line: 378
+#~ msgid "vietnamese"
+#~ msgstr "vietnám"
+#
+#
+# File: src/glosung.c, line: 379
+# File: src/glosung.c, line: 382
+#~ msgid "chinese simplified"
+#~ msgstr "egyszerűsített kínai"
+#
+#
+# File: src/glosung.c, line: 380
+# File: src/glosung.c, line: 383
+#~ msgid "chinese traditional"
+#~ msgstr "tradicionális kínai"
+#
+#
+#
+# File: src/glosung.c, line: 360
+#~ msgid "afrikaans"
+#~ msgstr "afrikai"
+#
+#
+#
+# File: src/glosung.c, line: 361
+#~ msgid "arabic"
+#~ msgstr "arab"
+#
+#
+#
+# File: src/glosung.c, line: 363
+#, fuzzy
+#~ msgid "German"
+#~ msgstr "német"
+#
+#
+#
+# File: src/glosung.c, line: 364
+#, fuzzy
+#~ msgid "English"
+#~ msgstr "angol"
+#
+#
+#
+# File: src/glosung.c, line: 367
+#~ msgid "hebrew"
+#~ msgstr "héber"
+#
+#
+#
+# File: src/glosung.c, line: 368
+#~ msgid "hungarian"
+#~ msgstr "magyar"
+#
+#
+#
+# File: src/glosung.c, line: 369
+#~ msgid "italian"
+#~ msgstr "olasz"
+#
+#
+#
+# File: src/glosung.c, line: 374
+#~ msgid "russian"
+#~ msgstr "orosz"
+#
+#
+#
+#
+#
+#
+#
+#
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-cancel"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 210
+#, fuzzy
+#~ msgid "Authentication"
+#~ msgstr "Kilépés a programból"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 217
+#, fuzzy
+#~ msgid "Prefered Source:"
+#~ msgstr "Beállítások"
