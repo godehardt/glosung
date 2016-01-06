@@ -1,0 +1,53 @@
+define global exit status in download.h (with i18n error message?)
+split download manager GUI into its own file
+
+check last mod time of local files against "updated"
+
+use uppercase language names
+
+
+
+
+
+
+add unzip/zip to debian dependencies
+
+
+better error handling on download
+        add global download constants (OK, DL_FAILED, INSTALL_FAILED ...)
+
+add global include.h
+shrink Add button
+download from bible20.net
+
+
+add sword translation
+add alert if using sword texts (not authorized)
+separator in language list (preferences)
+
+announce at gnomesword mailing list
+update ebuild etc
+
+upload into system wide folder?
+"remove language" functionality
+
+
+
+
+
+
+gconftool-2 --unset /apps/glosung/language
+
+
+
+
+DONE
+
+
+compilation flag (#ifdef sword)
+enhance parser to store more detailed location information
+enhance original Losung rendering (\it, ", ...)
+   # bold
+   / it
+add parsing of verse location of original Losung XML
+organize watchwords: add sword line
