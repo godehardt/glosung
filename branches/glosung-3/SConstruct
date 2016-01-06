@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2010 Eicke Godehardt
+# Copyright (C) 1999-2016 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 import os
 
-version = '3.6.3'
+version = '3.6.4'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -40,7 +40,6 @@ env = Environment (
   ENV       = os.environ,
   TARFLAGS  = '-c -j')
 
-
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
@@ -55,23 +54,20 @@ else:
 	doc_dir     = '/share/doc/glosung-' + version
 
 
-BuildDir ('build', 'src')
+VariantDir('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = ['-O2', '-std=c99', '-Wall', '-g', '-Wl,--export-dynamic',
+ccflags   = ['-O2', '-std=c99', '-Wall', '-g',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
 		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
 
-linkflags = ['-Wl,--export-dynamic', '-L.']
-#  -L/usr/lib'
-#             `pkg-config --libs gtk+-2.0 libxml-2.0 gconf-2.0 libcurl`
-             
+linkflags = ['-L.']             
 
 if ARGUMENTS.get ('profile'):
     ccflags.append   ('-pg', '-fprofile-arcs')
-    linkflags.append ('-pg', '-fprofile-arcs')
+    linkflags.append ('-pg', '-fprofile-arcs', '-Wl,--export-dynamic')
 
 if env['PLATFORM'] != 'win32':
         linkflags.append ('-Wl,--as-needed')
@@ -82,7 +78,8 @@ if (ARGUMENTS.get ('dev')):
 #         '-Werror',
 #         '-pedantic',
     	 '-DG_DISABLE_DEPRECATED', '-DGDK_PIXBUF_DISABLE_DEPRECATED',
-     	 '-DGDK_DISABLE_DEPRECATED', '-DGTK_DISABLE_DEPRECATED']
+     	 '-DGDK_DISABLE_DEPRECATED', '-DGTK_DISABLE_DEPRECATED',
+     	 '-DGTK_DISABLE_SINGLE_INCLUDES', '-DGSEAL_ENABLE']
 else:
     ccflags   += [
 		'-DG_DISABLE_ASSERT']
