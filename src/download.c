@@ -1,5 +1,5 @@
 /* download.c
- * Copyright (C) 2006-2010 Eicke Godehardt
+ * Copyright (C) 2006-2016 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,7 +262,7 @@ analyse_bible20_list (Source* cs, Memory mem)
         gint col_url     = 0;
         gint col_bible   = 0;
         gint col_info    = 0;
-        gint col_updated = 0;
+        /* gint col_updated = 0; */
 
         gint j = 0;
         gint i = 0;
@@ -280,9 +280,9 @@ analyse_bible20_list (Source* cs, Memory mem)
                         col_bible = i;
                 } else if (g_str_equal ("info",    token)) {
                         col_info = i;
-                } else if (g_str_equal ("updated", token)) {
+                } /* else if (g_str_equal ("updated", token)) {
                         col_updated = i;
-                }
+                } */
                 i++;
         }
         g_strfreev (tokens);

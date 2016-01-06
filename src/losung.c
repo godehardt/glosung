@@ -1,5 +1,5 @@
 /* losung.c
- * Copyright (C) 2006-2010 Eicke Godehardt
+ * Copyright (C) 2006-2016 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 #include <glib/gi18n.h>
-#include <glib/goption.h>
+#include <glib.h>
 
 #include "util.h"
 #include "settings.h"

@@ -1,5 +1,5 @@
 /* about.c
- * Copyright (C) 2007-2013 Eicke Godehardt
+ * Copyright (C) 2007-2016 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ about (GtkWidget *app)
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
                  "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2013 Eicke Godehardt",
+                 "copyright", "(C) 1999-2016 Eicke Godehardt",
                  // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
                  "logo", logo,
                  "name", APPNAME,

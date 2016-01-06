@@ -1,4 +1,4 @@
-glosung (3.6.3~raring) raring; urgency=low
+glosung (3.6.3~raring-2) raring; urgency=low
 
   * fix compilation problem under recent ubuntu
 
