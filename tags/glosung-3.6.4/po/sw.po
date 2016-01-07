@@ -1,0 +1,298 @@
+# This is the Swahili translation for glosung.
+# Copyright (C) 2005 i-Tri Labs
+# This file is distributed under the same license as the PACKAGE package.
+# Feruzi EK <feruzi@itrilabs.za.net>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: glosung 2.1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-12-28 17:39+0100\n"
+"PO-Revision-Date: 2006-11-29 22:28+0100\n"
+"Last-Translator: Eicke Godehardt <eicke@godehardt.org>\n"
+"Language-Team: Swahili <sw@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#
+# File: src/glosung.c, line: 203
+msgid "_File"
+msgstr ""
+#
+# File: src/glosung.c, line: 177
+#, fuzzy
+msgid "_Edit"
+msgstr "Toka"
+#
+# File: src/glosung.c, line: 205
+msgid "_Help"
+msgstr ""
+#
+# File: src/glosung.c, line: 147
+# File: src/glosung.c, line: 775
+#, fuzzy
+msgid "_Calendar"
+msgstr "Kalenda"
+#
+# File: src/glosung.c, line: 208
+msgid "select date from calendar"
+msgstr ""
+#
+# File: src/glosung.c, line: 128
+# File: src/glosung.c, line: 184
+#, fuzzy
+msgid "_Today"
+msgstr "Leo"
+#
+# File: src/glosung.c, line: 129
+# File: src/glosung.c, line: 185
+msgid "Show losung of today"
+msgstr "Onyesha losung ya leo"
+#
+# File: src/glosung.c, line: 131
+# File: src/glosung.c, line: 187
+#, fuzzy
+msgid "_Next Day"
+msgstr "Siku inayofuata"
+#
+# File: src/glosung.c, line: 132
+# File: src/glosung.c, line: 188
+msgid "Show losung of next day"
+msgstr "Onyesha losung ya siku inayofuata"
+#
+# File: src/glosung.c, line: 134
+# File: src/glosung.c, line: 181
+#, fuzzy
+msgid "_Previous Day"
+msgstr "Siku iliyopita"
+#
+# File: src/glosung.c, line: 135
+# File: src/glosung.c, line: 182
+msgid "Show losung of previous day"
+msgstr "Onyesha losung ya siku iliyopita"
+#
+# File: src/glosung.c, line: 137
+#, fuzzy
+msgid "_Next Month"
+msgstr "Mwezi Ujao"
+#
+# File: src/glosung.c, line: 138
+msgid "Show losung of next month"
+msgstr "Onyesha losung ya mwezi ujao"
+#
+# File: src/glosung.c, line: 140
+#, fuzzy
+msgid "_Previous Month"
+msgstr "Mwezi Uliopita"
+#
+# File: src/glosung.c, line: 141
+msgid "Show losung of previous month"
+msgstr "Onyesha losung ya mwezi uliopita"
+#
+# File: src/glosung.c, line: 224
+msgid "_Copy Watchword"
+msgstr ""
+#
+# File: src/glosung.c, line: 225
+msgid "copy the Watchword to clipboard"
+msgstr ""
+#
+# File: src/glosung.c, line: 226
+msgid "_Organize Watchwords..."
+msgstr ""
+#
+# File: src/glosung.c, line: 227
+msgid "update/install watchword files"
+msgstr ""
+#
+# File: src/glosung.c, line: 157
+# File: src/glosung.c, line: 497
+#, fuzzy
+msgid "_Preferences..."
+msgstr "Aula..."
+#
+# File: src/glosung.c, line: 158
+#, fuzzy
+msgid "Edit the preferences"
+msgstr "Hariri Aula"
+#
+# File: src/glosung.c, line: 170
+#, fuzzy
+msgid "about GLosung"
+msgstr "_Losung"
+#
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr ""
+#
+# File: src/glosung.c, line: 218
+#. should be translated to corresponding language, e.g. 'de'
+msgid "en"
+msgstr "sw"
+#
+# File: src/glosung.c, line: 252
+#, fuzzy
+msgid ""
+"No text files found!\n"
+"Please install your prefered languages."
+msgstr ""
+"Hakuna Faili matini lililopatikana!\n"
+"Tafadhali wasiliana na mtawala wako."
+#
+# File: src/glosung.c, line: 288
+msgid "afrikaans"
+msgstr ""
+#
+# File: src/glosung.c, line: 289
+msgid "arabic"
+msgstr ""
+#
+# File: src/glosung.c, line: 81
+msgid "czech"
+msgstr "checo"
+#
+# File: src/glosung.c, line: 80
+msgid "german"
+msgstr "kijerumani"
+#
+# File: src/glosung.c, line: 82
+msgid "english"
+msgstr "kingereza"
+#
+# File: src/glosung.c, line: 83
+msgid "spanish"
+msgstr "kispanishi"
+#
+# File: src/glosung.c, line: 294
+msgid "french"
+msgstr ""
+#
+# File: src/glosung.c, line: 295
+msgid "hebrew"
+msgstr ""
+#
+# File: src/glosung.c, line: 296
+msgid "hungarian"
+msgstr ""
+#
+# File: src/glosung.c, line: 297
+msgid "italian"
+msgstr ""
+#
+# File: src/glosung.c, line: 298
+msgid "dutch"
+msgstr ""
+#
+# File: src/glosung.c, line: 299
+msgid "norwegian"
+msgstr ""
+#
+# File: src/glosung.c, line: 300
+msgid "portuguese"
+msgstr ""
+#
+# File: src/glosung.c, line: 301
+msgid "romanian"
+msgstr ""
+#
+# File: src/glosung.c, line: 302
+msgid "russian"
+msgstr ""
+#
+# File: src/glosung.c, line: 303
+msgid "tamil"
+msgstr ""
+#
+# File: src/glosung.c, line: 304
+msgid "turkish"
+msgstr ""
+#
+# File: src/glosung.c, line: 305
+msgid "vietnamese"
+msgstr ""
+#
+# File: src/glosung.c, line: 306
+msgid "chinese simplified"
+msgstr ""
+#
+# File: src/glosung.c, line: 307
+msgid "chinese traditional"
+msgstr ""
+#
+# File: src/glosung.c, line: 381
+#, c-format
+msgid "No %s texts found for %d!"
+msgstr "Matini %s za %d  [u/zi]mepatikana!"
+#
+# File: src/glosung.c, line: 733
+msgid "Gods word for every day"
+msgstr ""
+#
+# File: src/glosung.c, line: 157
+# File: src/glosung.c, line: 497
+msgid "Preferences"
+msgstr "Aula"
+#
+# File: src/glosung.c, line: 625
+#. gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD);
+msgid "Choose displayed language:"
+msgstr "Badili lugha:"
+#
+# File: src/glosung.c, line: 651
+msgid "Choose Font:"
+msgstr "Badili fonti:"
+#
+# File: src/glosung.c, line: 664
+msgid "Close calendar by double click"
+msgstr "Funga Kalenda kwa kubofyabofya"
+#
+# File: src/glosung.c, line: 674
+msgid "Show selective and continuing reading"
+msgstr "muestra (los) consejos de leer"
+#
+# File: src/glosung.c, line: 791
+msgid "Link location to gnomesword"
+msgstr ""
+#
+# File: src/glosung.c, line: 147
+# File: src/glosung.c, line: 775
+msgid "Calendar"
+msgstr "Kalenda"
+#
+# File: src/glosung.c, line: 1068
+msgid "Languages"
+msgstr ""
+#
+# File: src/glosung.c, line: 1107
+msgid "Installed Languages"
+msgstr ""
+#
+# File: src/glosung.c, line: 1141
+msgid "Add Languages"
+msgstr ""
+#
+# File: src/glosung.c, line: 1144
+msgid "Download"
+msgstr ""
+#
+# File: src/glosung.c, line: 1150
+msgid "Language"
+msgstr ""
+#
+# File: src/glosung.c, line: 1152
+msgid "Year"
+msgstr ""
+#
+#
+#
+#
+# File: src/glosung.c, line: 148
+#~ msgid "Open a calendar-widget"
+#~ msgstr "Fungua Kalenda"
+#
+#
+#
+#
+# File: src/glosung.c, line: 178
+#~ msgid "Exit the Program"
+#~ msgstr "Finga programu"
