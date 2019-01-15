@@ -394,7 +394,7 @@ create_app (void)
                           NULL);
         gtk_window_set_title (GTK_WINDOW (app), APPNAME);
         gtk_window_set_default_size (GTK_WINDOW (app), 500, 400);
-        gtk_window_set_position (GTK_WINDOW (app), GTK_WIN_POS_CENTER);
+        gtk_window_set_position (GTK_WINDOW (app), GTK_WIN_POS_CENTER_ALWAYS);
 
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
