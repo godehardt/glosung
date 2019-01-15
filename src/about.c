@@ -1,5 +1,5 @@
 /* about.c
- * Copyright (C) 2007-2016 Eicke Godehardt
+ * Copyright (C) 2007-2019 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ about (GtkWidget *app)
 {
         const gchar *authors [] = {
                 "Eicke Godehardt",
+                "Johannes Hausensteiner",
                 "Sebastian Pätzold (rpm packages)",
                 NULL
         };
