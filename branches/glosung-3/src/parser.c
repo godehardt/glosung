@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #include <libxml/tree.h>
 #include <libxml/parser.h>
@@ -337,7 +338,7 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 if (switch_state (name, STATE_LOSFILE)) {
                 } else if (switch_state (name, TW_THE_WORD_FILE)) {
                 } else if (switch_state (name, LOS_DATAROOT)) {
-		} else if (switch_state (name, LOS_FREE_XML)) {}
+                } else if (switch_state (name, LOS_FREE_XML)) {}
                 break;
         case STATE_LOSFILE:
         case TW_THE_WORD_FILE:
@@ -744,7 +745,7 @@ static const gchar*
 sword_book_title (const xmlChar* book)
 {
         int i = 0;
-        while (books [i] != NULL) {
+        while (books [i][0] != NULL) {
                 if (strcmp ((char *) books [i][1], (char *) book) == 0) {
                         return books [i][0];
                 }
@@ -757,11 +758,24 @@ sword_book_title (const xmlChar* book)
 static const gchar*
 sword_book_title_for_original_losung (const gchar *book)
 {
+        gchar *book_title;
         int i = 0;
         int len = 4; // strlen (book);
 
-        while (books [i] != NULL) {
-                if (strncmp ((char *) books [i][2], (char *) book, len) == 0) {
+        book_title = (gchar *)book;
+        while (*book_title && ! isalpha (*book_title)) {
+                book_title++;
+        }
+
+        while (books [i][0] != NULL) {
+                if (isdigit(books[i][2][0])) {
+                        if (strncmp ((char *) books [i][2] + 2, (char *) book_title, len) == 0) {
+                                /* base name matches; check for index (one digit only) */
+                                if (books [i][2][0] == book [0]) {
+                                        return books [i][0];
+                                }
+                        }
+                } else if (strncmp ((char *) books [i][2], (char *) book, len) == 0) {
                         return books [i][0];
                 }
                 i++;
