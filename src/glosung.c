@@ -90,6 +90,7 @@ enum {
         NUMBER_OF_LABELS
 };
 
+static const int UPDATE_TIME = 60;  /* in secs */
 static const int WRAP_LENGTH = 47;
 
 static GtkWidget *app;
@@ -151,6 +152,7 @@ static void clipboard_cb         (GtkWidget *w,   gpointer data);
 static void window_scroll_cb     (GtkWidget      *widget,
                                   GdkEventScroll *event,
                                   gpointer        user_data);
+static gboolean  check_new_date_cb (gpointer data);
 
 
 void show_warning_cb        (GtkWidget *w,        gpointer data);
@@ -254,6 +256,7 @@ int
 main (int argc, char **argv)
 {
         GError *error = NULL;
+        guint timeout;
 
         /* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, "/usr/share/locale");
@@ -327,6 +330,10 @@ main (int argc, char **argv)
         } else {
                 show_text ();
         }
+        /* start timeout for detecting date change */
+		timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
+        /* call the date check with not NULL as arg to initialize */
+        check_new_date_cb (&timeout);
 
         gtk_main ();
 
@@ -873,19 +880,18 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
  * callback function for autostart changes.
  */
 G_MODULE_EXPORT void
-autostart_cb (GtkWidget *data, gpointer toggle)
-{
+autostart_cb (GtkWidget *data, gpointer toggle) {
         gboolean autostart =
-        	gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-	if (autostart) {
-		/* TODO handle return type */
-		add_to_autostart (gtk_toggle_button_get_active (
-					GTK_TOGGLE_BUTTON (data)));
-	} else {
-		/* TODO handle return type */
-		remove_from_autostart ();
-	}
-	gtk_widget_set_sensitive (GTK_WIDGET (data), autostart);
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+        if (autostart) {
+                /* TODO handle return type */
+                add_to_autostart (gtk_toggle_button_get_active (
+                        GTK_TOGGLE_BUTTON (data)));
+        } else {
+                /* TODO handle return type */
+                remove_from_autostart ();
+        }
+        gtk_widget_set_sensitive (GTK_WIDGET (data), autostart);
 } /* autostart_cb */
 
 
@@ -893,17 +899,17 @@ autostart_cb (GtkWidget *data, gpointer toggle)
  * callback function for autostart changes.
  */
 G_MODULE_EXPORT void
-autostart_once_cb (GtkWidget *toggle, gpointer data)
-{
+autostart_once_cb (GtkWidget *toggle, gpointer data) {
         gboolean autostart_once =
-		gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-	if (autostart_once) {
-		/* TODO handle return type */
-		add_to_autostart (TRUE);
-	} else {
-		/* TODO handle return type */
-		add_to_autostart (FALSE);
-	}
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+        remove_from_autostart ();
+        if (autostart_once) {
+                /* TODO handle return type */
+                add_to_autostart (TRUE);
+        } else {
+                /* TODO handle return type */
+                add_to_autostart (FALSE);
+        }
 } /* autostart_cb */
 
 
@@ -1458,3 +1464,34 @@ window_scroll_cb (GtkWidget      *widget,
 		}
 	}
 }
+
+static gboolean
+check_new_date_cb (gpointer first)
+{
+        /* check for current date. If it is different than last time,
+         * call the today-button callback to display the corresponding text
+         */
+        static GDate last_date;
+        GDate        now_date;
+        time_t       t;
+        struct tm    now;
+
+        t = time (NULL);
+        now = *localtime (&t);
+        g_date_set_dmy (&now_date, now.tm_mday,
+                now.tm_mon + 1, now.tm_year + 1900);
+        if (first) {
+                g_date_set_dmy (&last_date, now.tm_mday,
+                        now.tm_mon + 1, now.tm_year + 1900);
+        }
+        if (g_date_get_day (&last_date)   != g_date_get_day (&now_date)
+         || g_date_get_month (&last_date) != g_date_get_month (&now_date)
+         || g_date_get_year (&last_date)  != g_date_get_year (&now_date))
+        {
+                /* date has changed */
+                today_cb (NULL, NULL);
+
+                last_date = now_date;
+        }
+        return TRUE;
+} /* check_new_date_cb */

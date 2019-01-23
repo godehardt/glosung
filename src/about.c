@@ -55,7 +55,7 @@ about (GtkWidget *app)
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
                  "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2016 Eicke Godehardt",
+                 "copyright", "(C) 1999-2019 Eicke Godehardt",
                  // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
                  "logo", logo,
                  "name", APPNAME,

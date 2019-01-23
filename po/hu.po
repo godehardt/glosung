@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-07 21:28+0100\n"
+"POT-Creation-Date: 2019-01-14 17:49+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -192,13 +192,16 @@ msgid "Watchword for %A, %e. %B %Y"
 msgstr "Napi ige a %A, %e. %B %Y-ra"
 #
 #
+#
 # File: src/glosung.c, line: 1063
 msgid "Add Languages"
 msgstr "Nyelv hozzáadása"
 #
 #
+#
 msgid "Source"
 msgstr "Forrás"
+#
 #
 #
 # File: src/glosung.c, line: 1063
@@ -206,16 +209,20 @@ msgid "Language"
 msgstr "Nyelv"
 #
 #
+#
 msgid "Year"
 msgstr "Év"
+#
 #
 #
 msgid "Download"
 msgstr "Letöltés"
 #
 #
+#
 msgid "download selected verse collection"
 msgstr "A kiválasztott versösszeállítás letöltése"
+#
 #
 #
 # File: src/glosung.c, line: 217
@@ -223,21 +230,26 @@ msgid "Preferences"
 msgstr "Beállítások"
 #
 #
+#
 # File: src/glosung.c, line: 1090
 msgid "Displayed Language:"
 msgstr "Telepített nyelvek:"
+#
 #
 #
 msgid "Font:"
 msgstr "Betűkészlet:"
 #
 #
+#
 msgid "Start GLosung at login time"
 msgstr "GLosung indítása bejelentkezéskor"
 #
 #
+#
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Igehelyek linkelése Xiphos/GnomeSword-al"
+#
 #
 #
 # File: ui/preferences.glade, line: 95
@@ -245,9 +257,11 @@ msgid "View"
 msgstr "Nézet"
 #
 #
+#
 # File: ui/preferences.glade, line: 107
 msgid "Proxy"
 msgstr "Proxy"
+#
 #
 #
 # File: ui/preferences.glade, line: 128
@@ -263,14 +277,17 @@ msgstr ""
 "letöltése törvénybe ütközhet!"
 #
 #
+#
 # File: ui/preferences.glade, line: 140
 msgid "host[:port]"
 msgstr "hoszt[:port]"
 #
 #
+#
 # File: ui/preferences.glade, line: 135
 msgid "Network"
 msgstr "Hálózat"
+#
 #
 #
 # File: ui/warning_dialog.glade, line: 15
@@ -284,9 +301,11 @@ msgstr ""
 "funkciót!"
 #
 #
+#
 # File: ui/warning_dialog.glade, line: 24
 msgid "Don't show this message again."
 msgstr "Ne jelenjen meg újra ez az üzenet."
+#
 #
 #
 # File: ui/warning_dialog.glade, line: 28
@@ -295,9 +314,13 @@ msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
 #
 #
+#
+#
 # File: src/glosung.c, line: 362
 #~ msgid "czech"
 #~ msgstr "cseh"
+#
+#
 #
 #
 # File: src/glosung.c, line: 365
@@ -305,9 +328,13 @@ msgstr ""
 #~ msgstr "spanyol"
 #
 #
+#
+#
 # File: src/glosung.c, line: 366
 #~ msgid "french"
 #~ msgstr "francia"
+#
+#
 #
 #
 # File: src/glosung.c, line: 370
@@ -315,9 +342,13 @@ msgstr ""
 #~ msgstr "holland"
 #
 #
+#
+#
 # File: src/glosung.c, line: 371
 #~ msgid "norwegian"
 #~ msgstr "norvég"
+#
+#
 #
 #
 # File: src/glosung.c, line: 372
@@ -325,9 +356,13 @@ msgstr ""
 #~ msgstr "portugál"
 #
 #
+#
+#
 # File: src/glosung.c, line: 373
 #~ msgid "romanian"
 #~ msgstr "román"
+#
+#
 #
 #
 # File: src/glosung.c, line: 375
@@ -335,9 +370,13 @@ msgstr ""
 #~ msgstr "suahili"
 #
 #
+#
+#
 # File: src/glosung.c, line: 376
 #~ msgid "tamil"
 #~ msgstr "tamil"
+#
+#
 #
 #
 # File: src/glosung.c, line: 377
@@ -345,15 +384,21 @@ msgstr ""
 #~ msgstr "török"
 #
 #
+#
+#
 # File: src/glosung.c, line: 378
 #~ msgid "vietnamese"
 #~ msgstr "vietnám"
+#
+#
 #
 #
 # File: src/glosung.c, line: 379
 # File: src/glosung.c, line: 382
 #~ msgid "chinese simplified"
 #~ msgstr "egyszerűsített kínai"
+#
+#
 #
 #
 # File: src/glosung.c, line: 380
@@ -363,15 +408,21 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 360
 #~ msgid "afrikaans"
 #~ msgstr "afrikai"
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 361
 #~ msgid "arabic"
 #~ msgstr "arab"
+#
+#
 #
 #
 #
@@ -382,10 +433,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 364
 #, fuzzy
 #~ msgid "English"
 #~ msgstr "angol"
+#
+#
 #
 #
 #
@@ -395,9 +450,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 368
 #~ msgid "hungarian"
 #~ msgstr "magyar"
+#
+#
 #
 #
 #
@@ -407,9 +466,13 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 374
 #~ msgid "russian"
 #~ msgstr "orosz"
+#
+#
 #
 #
 #
@@ -429,10 +492,14 @@ msgstr ""
 #
 #
 #
+#
+#
 # File: src/glosung.c, line: 210
 #, fuzzy
 #~ msgid "Authentication"
 #~ msgstr "Kilépés a programból"
+#
+#
 #
 #
 #
