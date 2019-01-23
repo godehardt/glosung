@@ -1,4 +1,13 @@
+2019-01-23 Johannes
+
+    * release 3.6.5
+    * fix segfault when book not found
+    * improve book search algorithm in sword_book_title(),
+      sword_book_title_for_original_losung()
+    * add automatic refresh on date change
+
 2016-01-06 eicke
+
     * release 3.6.4
     * fix compilation warnings due to newer GTK version
     * update copyright information
