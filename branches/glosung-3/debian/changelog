@@ -2,8 +2,9 @@ glosung (3.6.5~bionic) bionic; urgency=low
 
   * fix segfault when book not found
   * improve book search algorithm in sword_book_title(), sword_book_title_for_original_losung()
+  * add automatic refresh on date change
 
- -- Johannes Hausensteiner <johannes@eclipso.at>  Thu, 10 Jan 2019 20:30:00 +0100
+ -- Johannes Hausensteiner <johannes@eclipso.at>  Thu, 23 Jan 2019 20:30:00 +0100
 
 glosung (3.6.4~xenial) xenial; urgency=low
 

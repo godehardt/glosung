@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.6.4
+%define version 3.6.5
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -23,7 +23,7 @@ Prefix:         %{_prefix}
 # Distribution:
 Copyright:      (C) 1999-2019 Eicke Godehardt
 License:        GPL
-# This Software is copyright (c) 1999-2010 by Eicke Godehardt.
+# This Software is copyright (c) 1999-2019 by Eicke Godehardt.
 # You are free to distribute this software under the terms
 # of the GNU General Public License.
 
