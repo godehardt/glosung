@@ -1,5 +1,5 @@
 %define name glosung
-%define version 3.6.5
+%define version 3.6.6
 %define release 1
 
 Summary:        Gtk+ Version of watch words (german: Losung)
@@ -21,9 +21,9 @@ Requires:       unzip, xdg-utils
 Prefix:         %{_prefix}
 # BuildArchitectures: i386
 # Distribution:
-Copyright:      (C) 1999-2019 Eicke Godehardt
+Copyright:      (C) 1999-2021 Eicke Godehardt
 License:        GPL
-# This Software is copyright (c) 1999-2019 by Eicke Godehardt.
+# This Software is copyright (c) 1999-2021 by Eicke Godehardt.
 # You are free to distribute this software under the terms
 # of the GNU General Public License.
 
@@ -64,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT $RPM_BUILD_DIR/%{name}-%{version}
 /usr/share/locale/de/LC_MESSAGES/glosung.mo
 /usr/share/locale/fr/LC_MESSAGES/glosung.mo
 
-#%doc README AUTHORS COPYING ChangeLog NEWS TODO
+#%doc README AUTHORS COPYING ChangeLog TODO
 #%doc /usr/share/doc/glosung/README /usr/share/doc/glosung/AUTHORS
 #%doc /usr/share/doc/glosung/COPYING /usr/share/doc/glosung/ChangeLog
 
