@@ -1,4 +1,10 @@
-glosung (3.6.5~bionic) bionic; urgency=low
+glosung (3.6.6~focal) focal; urgency=low
+
+  * several config/build fixes (thanks Andreas Kemnade)
+
+ -- Eicke Godehardt <sf@godehardt.org>  Wed, 20 Oct 2021 14:31:54 +0100
+
+glosung (3.6.5~hirsute) hirsute; urgency=low
 
   * fix segfault when book not found
   * improve book search algorithm in sword_book_title(), sword_book_title_for_original_losung()
