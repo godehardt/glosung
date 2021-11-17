@@ -38,7 +38,8 @@ env = Environment (
   LINKFLAGS = '',
   CCFLAGS   = '',
   ENV       = os.environ,
-  TARFLAGS  = '-c -j')
+  TARFLAGS  = '-c -j',
+  tools     = ["default", "gettext"])
 
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
@@ -103,7 +104,7 @@ conf = Configure (env)
 if not conf.CheckLib ('libxml2'):
 	print('Did not find libxml2.a or xml2.lib, exiting!')
 
-Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file')
+Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file version')
 
 SConscript ('build/SConscript')
 SConscript ('po/SConscript')
