@@ -74,13 +74,11 @@ file_exist (gchar* path, gchar* filename)
 void
 show_uri (GtkWidget *widget, gchar *uri, gpointer data)
 {
-#if (GTK_MINOR_VERSION >= (14))
         gboolean result =
-        	gtk_show_uri (NULL, (const gchar*) uri, GDK_CURRENT_TIME, NULL);
+        	gtk_show_uri_on_window (NULL, (const gchar*) uri, GDK_CURRENT_TIME, NULL);
         if (result) {
         	return;
         }
-#endif
         /* this is only executed for older gtk+ or if gtk_show_uri failed */
         if (strncmp (uri, "http://", 7) == 0) {
                 char *argv [3];

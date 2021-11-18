@@ -48,28 +48,6 @@
     #undef VERSE_LINK
 #endif
 
-#if (! GTK_CHECK_VERSION(2,24,0))
-  #define gtk_combo_box_text_append_text(combo_box, text) \
-		gtk_combo_box_append_text(combo_box, text)
-
-  #define gtk_combo_box_text_get_active_text(combo_box) \
-		gtk_combo_box_get_active_text(combo_box)
-
-  #define gtk_combo_box_text_remove_text(combo_box, position) \
-		gtk_combo_box_remove(combo_box, position)
-
-  #define GTK_COMBO_BOX_TEXT(w) \
-		GTK_COMBO_BOX(w)
-
-  #define gtk_combo_box_text_new() \
-	gtk_combo_box_new_text()
-#endif
-
-#if (! GTK_CHECK_VERSION(3,0,0))
-  #define gtk_widget_override_font(w,f) \
-	gtk_widget_modify_font(w,f)
-#endif
-
 
 /****************************\
    Variables & Definitions
@@ -403,7 +381,7 @@ create_app (void)
         gtk_window_set_default_size (GTK_WINDOW (app), 500, 400);
         gtk_window_set_position (GTK_WINDOW (app), GTK_WIN_POS_CENTER_ALWAYS);
 
-        vbox = gtk_vbox_new (FALSE, 0);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
         gtk_container_add (GTK_CONTAINER (app), vbox);
 
@@ -428,7 +406,7 @@ create_app (void)
         toolbar = gtk_ui_manager_get_widget (uiman, "/ToolBar");
         gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, TRUE, 0);
 
-        content = gtk_vbox_new (FALSE, 0);
+        content = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         gtk_container_set_border_width (GTK_CONTAINER (content), MY_PAD);
         gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, FALSE, 0);
 
@@ -436,7 +414,7 @@ create_app (void)
                 if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
 #ifdef VERSE_LINK
                         GtkWidget *widget;
-                        widget = gtk_hbutton_box_new ();
+                        widget = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
                         gtk_button_box_set_layout
                                 (GTK_BUTTON_BOX (widget),
                                  GTK_BUTTONBOX_SPREAD);
@@ -460,12 +438,15 @@ create_app (void)
                 }
         }
         if (font != NULL) {
+                PangoAttrList *const attrs = pango_attr_list_new();
                 font_desc = pango_font_description_from_string (font);
+                pango_attr_list_insert(attrs, pango_attr_font_desc_new(font_desc));
                 for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
                         if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
-                                gtk_widget_modify_font (label [i], font_desc);
+                                gtk_label_set_attributes (GTK_LABEL (label [i]), attrs);
                         }
                 }
+                pango_attr_list_unref(attrs);
                 pango_font_description_free (font_desc);
         }
 
@@ -759,7 +740,7 @@ property_cb (GtkWidget *w, gpointer data)
                 }
 
                 if (font != NULL) {
-                        gtk_font_button_set_font_name (GTK_FONT_BUTTON
+                        gtk_font_chooser_set_font (GTK_FONT_CHOOSER
                            (gtk_builder_get_object (builder, "fontbutton")),
                             font);
                 }
@@ -845,10 +826,11 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
  * callback function when font is selected.
  */
 G_MODULE_EXPORT void
-font_sel_cb (GtkWidget *gfb, gpointer data)
+font_sel_cb (GtkWidget *gfc, gpointer data)
 {
-        const gchar* font_name = gtk_font_button_get_font_name
-                (GTK_FONT_BUTTON (gfb));
+        // TODO check wether gtk_font_chooser_get_font_desc is better
+        const gchar* font_name = gtk_font_chooser_get_font
+                (GTK_FONT_CHOOSER (gfc));
         if (font_name != NULL
             && (font == NULL || strcmp (font, font_name) != 0))
         {
@@ -866,10 +848,13 @@ font_sel_cb (GtkWidget *gfb, gpointer data)
                         new_font = NULL;
                         set_font (font);
 
+                        PangoAttrList *const attrs = pango_attr_list_new();
                         font_desc = pango_font_description_from_string (font);
+                        pango_attr_list_insert(attrs, pango_attr_font_desc_new(font_desc));
                         for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
-                                gtk_widget_modify_font (label [i], font_desc);
+                                gtk_label_set_attributes (GTK_LABEL (label [i]), attrs);
                         }
+                        pango_attr_list_unref(attrs);
                         pango_font_description_free (font_desc);
                 }
         }
@@ -959,13 +944,12 @@ calendar_cb (GtkWidget *w, gpointer data)
                 gtk_window_set_title (GTK_WINDOW (dialog), _("Calendar"));
                 gtk_dialog_add_action_widget (
                         GTK_DIALOG (dialog),
-                        gtk_button_new_from_stock (GTK_STOCK_CLOSE),
+                        gtk_button_new_with_label ("_Close"),
                         GTK_RESPONSE_CLOSE);
 
                 calendar = gtk_calendar_new ();
                 gtk_calendar_set_display_options
                         (GTK_CALENDAR (calendar),
-                         GTK_CALENDAR_WEEK_START_MONDAY |
                          GTK_CALENDAR_SHOW_WEEK_NUMBERS |
                          GTK_CALENDAR_SHOW_HEADING |
                          GTK_CALENDAR_SHOW_DAY_NAMES);
@@ -1134,7 +1118,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                  GTK_DIALOG_DESTROY_WITH_PARENT,
                  GTK_STOCK_OK, GTK_RESPONSE_NONE, NULL);
 
-        vbox = gtk_vbox_new (FALSE, 0);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
         gtk_widget_show (vbox);
         gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
@@ -1167,7 +1151,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         gtk_box_pack_start (GTK_BOX (vbox), lang_frame, TRUE, TRUE, MY_PAD);
 
-        add_button = gtk_button_new_from_stock (GTK_STOCK_ADD);
+        add_button = gtk_button_new_with_label ("_Add");
         g_signal_connect (G_OBJECT (add_button), "clicked",
                           G_CALLBACK (add_lang_cb), dialog);
         gtk_widget_show (add_button);
