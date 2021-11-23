@@ -16,11 +16,21 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
-Import ('env install_dir prefix tar_file')
+Import ('env install_dir prefix tar_file version')
 
 languages = ['cs', 'de', 'fr', 'hu']
 
-pot = env.Command ('glosung.pot', ['#/src/about.c',
+#env = Environment( tools = ["default", "gettext"] )
+#env.Append(tools = ["default", "gettext"])
+env['POAUTOINIT'] = 1
+
+env['XGETTEXTFLAGS'] = [
+  '--package-name=%s' % 'glosung',
+  '--package-version=%s' % version,
+  '--add-comment'
+]
+
+po = env.Translate(languages, ['#/src/about.c',
                                    '#/src/autostart.c',
                                    '#/src/collections.c',
                                    '#/src/download.c',
@@ -31,15 +41,32 @@ pot = env.Command ('glosung.pot', ['#/src/about.c',
                                    '#/src/util.c',
                                    '#/ui/add_language.glade',
                                    '#/ui/preferences.glade',
-                                   '#/ui/warning_dialog.glade'],
-          "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
+                                   '#/ui/warning_dialog.glade']) 
+mo = env.MOFiles(po)
+
+#
+#pot = env.Command ('glosung.pot', ['#/src/about.c',
+#                                   '#/src/autostart.c',
+#                                   '#/src/collections.c',
+#                                   '#/src/download.c',
+#                                   '#/src/glosung.c',
+#                                   '#/src/losung.c',
+#                                   '#/src/parser.c',
+#                                   '#/src/settings.c',
+#                                   '#/src/util.c',
+#                                   '#/ui/add_language.glade',
+#                                   '#/ui/preferences.glade',
+#                                   '#/ui/warning_dialog.glade'],
+#          "xgettext --add-comments --keyword=_ --keyword=N_ --add-location --strict --output=$TARGET $SOURCES");
+#env.AlwaysBuild(pot)
+#
 for lang in languages:
-    po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
-#    po = env.Command (lang + '.po',  'glosung.pot', "msgmerge --update --strict --verbose $TARGET $SOURCES");
-#    env.Depends (po, pot)
-    mo = env.Command (lang + '.mo', lang + '.po',
-            "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
-#    env.Depends (mo, po)
+#    po = env.Execute (action = "msgmerge --update --strict --verbose " + lang + ".po glosung.pot");
+##    po = env.Command (lang + '.po',  'glosung.pot', "msgmerge --update --strict --verbose $TARGET $SOURCES");
+##    env.Depends (po, pot)
+#    mo = env.Command (lang + '.mo', lang + '.po',
+#            "msgfmt --statistics --verbose --strict --check --output=$TARGET $SOURCES");
+##    env.Depends (mo, po)
     env.InstallAs (target = install_dir + prefix + '/share/locale/' + lang + '/LC_MESSAGES/glosung.mo',
                   source = lang + '.mo')
 

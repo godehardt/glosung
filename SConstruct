@@ -38,7 +38,8 @@ env = Environment (
   LINKFLAGS = '',
   CCFLAGS   = '',
   ENV       = os.environ,
-  TARFLAGS  = '-c -j')
+  TARFLAGS  = '-c -j',
+  tools     = ["default", "gettext"])
 
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
@@ -92,10 +93,10 @@ env.Append (
   CCFLAGS   = ccflags)
 
 if env['PLATFORM'] == 'win32':
-        env.ParseConfig ('pkg-config gtk+-2.0 libxml-2.0 libcurl --cflags --libs')
+        env.ParseConfig ('pkg-config gtk+-3.0 libxml-2.0 libcurl --cflags --libs')
         Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk+-2.0 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
+        env.ParseConfig('pkg-config gtk+-3.0 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
 #        Tool('posix')(env)
 
 
@@ -103,7 +104,7 @@ conf = Configure (env)
 #if not conf.CheckLib ('libxml2'):
 #	print('Did not find libxml2.a or xml2.lib, exiting!')
 
-Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file')
+Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file version')
 
 SConscript ('build/SConscript')
 SConscript ('po/SConscript')

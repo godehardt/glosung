@@ -1,7 +1,7 @@
 GENERAL INFORMATION
 
-    This is version 3.6.x of glosung.  Its goal is to make a
-    user-friendly and powerful losungs program for the Linux desktop.
+	Its goal is to make a user-friendly and powerful watch word (losung)
+	program for the Linux desktop.
 
     The official web site is:
 	http://www.godehardt.org/losung.html
@@ -37,9 +37,8 @@ INSTALLATION
 
 HOW TO REPORT BUGS
 
-    Please use the bug tracking system at SourceForge:
-    https://sourceforge.net/tracker/?group_id=180931&atid=895161
-
+	Please use the GitHub's issue tracking system:
+	https://github.com/godehardt/glosung/issues
 
 CONTACTING THE AUTHORS
 
@@ -53,4 +52,3 @@ URLS
 
     glosung : http://www.godehardt.org/losung.html
     GTK+    : http://www.gtk.org/
-    FSF     : http://www.gnu.org/
