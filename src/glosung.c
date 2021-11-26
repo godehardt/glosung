@@ -68,6 +68,8 @@ enum {
 static const int UPDATE_TIME = 60;  /* in secs */
 static const int WRAP_LENGTH = 47;
 
+static gboolean   once = FALSE;
+
 static GtkWidget *app;
 static GDate     *date;
 static GDate     *new_date;
@@ -223,6 +225,28 @@ static GtkActionEntry entries[] = {
 static guint n_entries = G_N_ELEMENTS (entries);
 
 
+static gint
+handle_local_options (GtkApplication *app,
+                      GVariantDict   *options,
+                      gpointer        user_data)
+{
+        date = g_date_new ();
+        get_time ();
+        new_date = g_date_new_julian (g_date_get_julian (date));
+
+        g_print ("handle_local_options %d\n", once);
+        if (once) {
+		GDate *last_time = get_last_usage ();
+		if (last_time && g_date_compare (last_time, date) >= 0) {
+			return EXIT_SUCCESS;
+                }
+        }
+        set_last_usage (date);
+
+        return -1;
+} /* handle_local_options */
+
+
 
 static void
 activate (GtkApplication *app,
@@ -300,7 +324,8 @@ activate (GtkApplication *app,
 
         /* We do not need the builder any more */
         g_object_unref (builder);
-}
+} /* activate */
+
 
 /*
  * the one and only main function :-)
@@ -312,38 +337,16 @@ int main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
-        date = g_date_new ();
-        get_time ();
-        new_date = g_date_new_julian (g_date_get_julian (date));
-        /*
-        if (once) {
-		GDate *last_time = get_last_usage ();
-		if (last_time && g_date_compare (last_time, date) >= 0) {
-			exit (0);
-                }
-        }
-        */
-        set_last_usage (date);
-
         GtkApplication *app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_FLAGS_NONE);
         g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+        g_signal_connect (app, "handle-local-options", G_CALLBACK (handle_local_options), NULL);
 
-        gboolean once = FALSE;
         GOptionEntry options[] = {
                 { "once", '1', 0, G_OPTION_ARG_NONE, &once,
                   N_("Start only once a day"), NULL },
                 { NULL }
         };
- 
-        /*
-        g_appliction_add_main_option_entries (G_APPLICATION (app), options);
-        gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
-        if (error) {
-                fprintf (stderr, "Error: %s\n", error->message);
-                g_error_free (error);
-                exit (1);
-        }
-        */
+        g_application_add_main_option_entries (G_APPLICATION (app), options);
 
         int status = g_application_run (G_APPLICATION (app), argc, argv);
         g_object_unref (app);
