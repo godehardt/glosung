@@ -63,14 +63,16 @@
             <property name="can-focus">True</property>
             <child>
               <!-- n-columns=2 n-rows=5 -->
-              <object class="GtkGrid">
+              <object class="GtkGrid" id="preferences_table">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="border-width">3</property>
                 <property name="row-spacing">3</property>
                 <child>
                   <object class="GtkLabel" id="language_label">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="margin-end">5</property>
                     <property name="label" translatable="yes">Displayed Language:</property>
                     <property name="xalign">0</property>
                   </object>
@@ -169,6 +171,7 @@
               <object class="GtkGrid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="border-width">3</property>
                 <child>
                   <object class="GtkCheckButton" id="proxy_checkbox">
                     <property name="label" translatable="yes">Proxy</property>
