@@ -101,8 +101,8 @@ else:
 
 
 conf = Configure (env)
-if not conf.CheckLib ('libxml2'):
-	print('Did not find libxml2.a or xml2.lib, exiting!')
+#if not conf.CheckLib ('libxml2'):
+#	print('Did not find libxml2.a or xml2.lib, exiting!')
 
 Export ('env cpppath ccflags install_dir prefix pixmap_dir tar_file version')
 
@@ -141,6 +141,7 @@ if env['PLATFORM'] != 'win32':
                     'debian/control',
                     'debian/changelog',
                     'debian/copyright',
+                    'debian/compat',
                     'debian/rules',
                     'rpm/glosung.spec'])
 

@@ -55,15 +55,12 @@
 
 enum {
         TITLE,
-        X1,
         OT_TEXT,
         OT_LOC,
         OT_LOC_SWORD,
-        X2,
         NT_TEXT,
         NT_LOC,
         NT_LOC_SWORD,
-        X3,
         READING,
         NUMBER_OF_LABELS
 };
@@ -227,46 +224,11 @@ static guint n_entries = G_N_ELEMENTS (entries);
 
 
 
-/*
- * the one and only main function :-)
- */
-int
-main (int argc, char **argv)
+static void
+activate (GtkApplication *app,
+          gpointer        user_data)
 {
-        GError *error = NULL;
         guint timeout;
-
-        /* Initialize the i18n stuff */
-        bindtextdomain (PACKAGE, "/usr/share/locale");
-        bind_textdomain_codeset (PACKAGE, "UTF-8");
-        textdomain (PACKAGE);
-
-        gboolean once = FALSE;
-        GOptionEntry options[] = {
-                { "once", '1', 0, G_OPTION_ARG_NONE, &once,
-                  N_("Start only once a day"), NULL },
-                { NULL }
-        };
-        gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
-        if (error) {
-                fprintf (stderr, "Error: %s\n", error->message);
-                g_error_free (error);
-                exit (1);
-        }
-
-        date = g_date_new ();
-        get_time ();
-        new_date = g_date_new_julian (g_date_get_julian (date));
-        if (once) {
-		GDate *last_time = get_last_usage ();
-		if (last_time && g_date_compare (last_time, date) >= 0) {
-			exit (0);
-                }
-        }
-        set_last_usage (date);
-
-        gtk_window_set_default_icon_from_file
-                (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
         lang_translations = init_languages ();
         local_collections = get_local_collections ();
@@ -292,7 +254,26 @@ main (int argc, char **argv)
         font = get_font ();
         show_sword = show_sword_new = is_link_sword ();
 
-        create_app ();
+        GtkBuilder *builder = gtk_builder_new ();
+        gtk_builder_add_from_file (builder, "ui/glosung.ui", NULL);
+
+        /* Connect signal handlers to the constructed widgets. */
+        GObject *window = gtk_builder_get_object (builder, "window");
+        gtk_window_set_application (GTK_WINDOW (window), app);
+
+        //GObject *button;
+        //button = gtk_builder_get_object (builder, "button2");
+        
+        label [TITLE] = GTK_WIDGET (gtk_builder_get_object (builder, "date"));
+
+        label [OT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "losung"));
+        label [OT_LOC] = GTK_WIDGET (gtk_builder_get_object (builder, "losung_address"));
+        label [OT_LOC_SWORD] = GTK_WIDGET (gtk_builder_get_object (builder, "losung_address_link"));
+
+        label [NT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext"));
+        label [NT_LOC] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address"));
+        label [NT_LOC_SWORD] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address_link"));
+
         if (local_collections->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -309,14 +290,65 @@ main (int argc, char **argv)
                 show_text ();
         }
         /* start timeout for detecting date change */
-		timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
+	timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
         /* call the date check with not NULL as arg to initialize */
         check_new_date_cb (&timeout);
 
-        gtk_main ();
+        gtk_widget_show (GTK_WIDGET (window));
+        // gtk_window_set_default_icon_from_file
+        //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
-        /* exit (EXIT_SUCCESS); */
-        return 0;
+        /* We do not need the builder any more */
+        g_object_unref (builder);
+}
+
+/*
+ * the one and only main function :-)
+ */
+int main (int argc, char **argv)
+{
+        /* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, "/usr/share/locale");
+        bind_textdomain_codeset (PACKAGE, "UTF-8");
+        textdomain (PACKAGE);
+
+        date = g_date_new ();
+        get_time ();
+        new_date = g_date_new_julian (g_date_get_julian (date));
+        /*
+        if (once) {
+		GDate *last_time = get_last_usage ();
+		if (last_time && g_date_compare (last_time, date) >= 0) {
+			exit (0);
+                }
+        }
+        */
+        set_last_usage (date);
+
+        GtkApplication *app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_FLAGS_NONE);
+        g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
+        gboolean once = FALSE;
+        GOptionEntry options[] = {
+                { "once", '1', 0, G_OPTION_ARG_NONE, &once,
+                  N_("Start only once a day"), NULL },
+                { NULL }
+        };
+ 
+        /*
+        g_appliction_add_main_option_entries (G_APPLICATION (app), options);
+        gtk_init_with_args (&argc, &argv, "[--once]", options, NULL, &error);
+        if (error) {
+                fprintf (stderr, "Error: %s\n", error->message);
+                g_error_free (error);
+                exit (1);
+        }
+        */
+
+        int status = g_application_run (G_APPLICATION (app), argc, argv);
+        g_object_unref (app);
+
+        return status;
 } /* main */
 
 
@@ -357,118 +389,6 @@ init_languages (void)
 
         return ht;
 } /* init_languages */
-
-
-/*
- * does all the GUI stuff.
- */
-static void
-create_app (void)
-{
-        GtkActionGroup *action;
-        GtkUIManager   *uiman;
-        GtkWidget      *vbox;
-        GtkWidget      *content;
-        GtkWidget      *menubar;
-        GtkWidget      *toolbar;
-        PangoFontDescription *font_desc;
-
-        app = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        g_signal_connect (G_OBJECT (app), "destroy",
-                          G_CALLBACK (gtk_main_quit),
-                          NULL);
-        gtk_window_set_title (GTK_WINDOW (app), APPNAME);
-        gtk_window_set_default_size (GTK_WINDOW (app), 500, 400);
-        gtk_window_set_position (GTK_WINDOW (app), GTK_WIN_POS_CENTER_ALWAYS);
-
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
-        gtk_container_add (GTK_CONTAINER (app), vbox);
-
-        action = gtk_action_group_new ("GLosungActions");
-        gtk_action_group_set_translation_domain (action, PACKAGE);
-        gtk_action_group_add_actions (action, entries, n_entries, NULL);
-
-        uiman = gtk_ui_manager_new ();
-        gtk_ui_manager_insert_action_group (uiman, action, 0);
-        gtk_window_add_accel_group (GTK_WINDOW (app),
-                                    gtk_ui_manager_get_accel_group (uiman));
-
-        GError *error;
-        if (! gtk_ui_manager_add_ui_from_string (uiman, uistring, -1, &error))
-        {
-                g_message ("building menus failed: %s", error->message);
-                g_error_free (error);
-        }
-        menubar = gtk_ui_manager_get_widget (uiman, "/MenuBar");
-        gtk_box_pack_start (GTK_BOX (vbox), menubar, FALSE, TRUE, 0);
-
-        toolbar = gtk_ui_manager_get_widget (uiman, "/ToolBar");
-        gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, TRUE, 0);
-
-        content = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (content), MY_PAD);
-        gtk_box_pack_start (GTK_BOX (vbox), content, FALSE, FALSE, 0);
-
-        for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
-                if (i == OT_LOC_SWORD || i == NT_LOC_SWORD) {
-#ifdef VERSE_LINK
-                        GtkWidget *widget;
-                        widget = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-                        gtk_button_box_set_layout
-                                (GTK_BUTTON_BOX (widget),
-                                 GTK_BUTTONBOX_SPREAD);
-                        label [i] = gtk_link_button_new ("");
-                        /*
-			gtk_link_button_set_uri_hook
-                                ((GtkLinkButtonUriFunc) show_uri, app, NULL);
-			*/
-                        gtk_widget_set_tooltip_text
-				(label [i], "open in Xiphos bible study");
-                        gtk_container_add (GTK_CONTAINER (widget), label [i]);
-                        gtk_box_pack_start (GTK_BOX (content), widget,
-                                            FALSE, FALSE, 0);
-#endif
-                } else {
-                        label [i] = gtk_label_new ("");
-                        gtk_label_set_justify (GTK_LABEL (label [i]),
-                                               GTK_JUSTIFY_CENTER);
-                        gtk_box_pack_start (GTK_BOX (content), label [i],
-                                            FALSE, FALSE, 0);
-                }
-        }
-        if (font != NULL) {
-                PangoAttrList *const attrs = pango_attr_list_new();
-                font_desc = pango_font_description_from_string (font);
-                pango_attr_list_insert(attrs, pango_attr_font_desc_new(font_desc));
-                for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
-                        if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
-                                gtk_label_set_attributes (GTK_LABEL (label [i]), attrs);
-                        }
-                }
-                pango_attr_list_unref(attrs);
-                pango_font_description_free (font_desc);
-        }
-
-        gtk_widget_show_all (app);
-        if (show_sword) {
-                gtk_widget_hide (label [OT_LOC]);
-                gtk_widget_hide (label [NT_LOC]);
-        } else {
-#ifdef VERSE_LINK
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_hide (label [NT_LOC_SWORD]);
-#endif
-        }
-        if (! show_readings) {
-                gtk_widget_hide (label [X3]);
-                gtk_widget_hide (label [READING]);
-        }
-        g_signal_connect (G_OBJECT (app), "scroll_event",
-                          G_CALLBACK (window_scroll_cb),
-                          NULL);
-        gdk_window_set_events (gtk_widget_get_window (app), GDK_ALL_EVENTS_MASK);
-} /* create_app */
 
 
 /*
@@ -612,7 +532,6 @@ show_text (void)
                 g_free (text);
         } else {
                 gtk_label_set_text  (GTK_LABEL (label [READING]), "");
-                gtk_widget_hide (label [X3]);
                 gtk_widget_hide (label [READING]);
         }
 
@@ -682,7 +601,7 @@ property_cb (GtkWidget *w, gpointer data)
                 gdk_window_raise (gtk_widget_get_window (property));
         } else {
                 GtkWidget *combo;
-                GtkWidget *table;
+                GtkWidget *grid;
                 GtkWidget *proxy_entry;
                 GtkWidget *proxy_checkbox;
 
@@ -703,7 +622,7 @@ property_cb (GtkWidget *w, gpointer data)
 
                 property = GTK_WIDGET
                         (gtk_builder_get_object (builder,"preferences_dialog"));
-                table = GTK_WIDGET
+                grid = GTK_WIDGET
                         (gtk_builder_get_object (builder, "preferences_table"));
                 proxy_checkbox = GTK_WIDGET
                         (gtk_builder_get_object (builder, "proxy_checkbox"));
@@ -727,7 +646,7 @@ property_cb (GtkWidget *w, gpointer data)
                 g_signal_connect (G_OBJECT (combo), "changed",
                                   G_CALLBACK (lang_changed_cb), NULL);
                 gtk_widget_show (combo);
-                gtk_table_attach_defaults (GTK_TABLE (table), combo, 1, 2, 0, 1);
+                gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
 
                 if (is_proxy_in_use ()) {
                 	gtk_toggle_button_set_active
@@ -852,7 +771,9 @@ font_sel_cb (GtkWidget *gfc, gpointer data)
                         font_desc = pango_font_description_from_string (font);
                         pango_attr_list_insert(attrs, pango_attr_font_desc_new(font_desc));
                         for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
-                                gtk_label_set_attributes (GTK_LABEL (label [i]), attrs);
+                                if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
+                                        gtk_label_set_attributes (GTK_LABEL (label [i]), attrs);
+                                }
                         }
                         pango_attr_list_unref(attrs);
                         pango_font_description_free (font_desc);
