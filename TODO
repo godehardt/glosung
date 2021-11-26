@@ -1,3 +1,42 @@
+File download curl -> Gio
+
+https://stackoverflow.com/questions/10622642/fetch-a-file-from-web-using-glib-gio-from-c
+
+https://wiki.gnome.org/Projects/Vala/GIOSamples
+
+GFile*
+g_file_new_for_uri (
+  const char* uri
+)
+
+        // Make a copy of file
+        var destination = File.new_for_path ("samplefile.bak");
+        file.copy (destination, FileCopyFlags.NONE);
+
+        // Delete copy
+        destination.delete ();
+
+
+gboolean
+g_file_copy (
+  GFile* source,
+  GFile* destination,
+  GFileCopyFlags flags,
+  GCancellable* cancellable, // can be NULL
+  GFileProgressCallback progress_callback, // can be NULL
+  gpointer progress_callback_data,
+  GError** error
+)
+
+void
+(* GFileProgressCallback) (
+  goffset current_num_bytes,
+  goffset total_num_bytes,
+  gpointer user_data
+)
+
+
+
 define global exit status in download.h (with i18n error message?)
 split download manager GUI into its own file
 
