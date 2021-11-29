@@ -42,7 +42,7 @@
 #include "settings.h"
 #include "util.h"
 
-#if (GTK_CHECK_VERSION(2,10,0) && ! defined (WIN32) && ! defined (__APPLE__))
+#if (! defined (WIN32) && ! defined (__APPLE__))
     #define VERSE_LINK 1
 #else
     #undef VERSE_LINK
@@ -284,10 +284,10 @@ activate (GtkApplication *app,
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
         gtk_window_set_application (GTK_WINDOW (window), app);
+        g_signal_connect (G_OBJECT (window), "scroll_event",
+                          G_CALLBACK (window_scroll_cb),
+                          NULL);
 
-        //GObject *button;
-        //button = gtk_builder_get_object (builder, "button2");
-        
         label [TITLE] = GTK_WIDGET (gtk_builder_get_object (builder, "date"));
 
         label [OT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "losung"));
@@ -297,6 +297,8 @@ activate (GtkApplication *app,
         label [NT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext"));
         label [NT_LOC] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address"));
         label [NT_LOC_SWORD] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address_link"));
+
+        label [READING] = GTK_WIDGET (gtk_builder_get_object (builder, "reading"));
 
         if (local_collections->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new
@@ -313,6 +315,36 @@ activate (GtkApplication *app,
         } else {
                 show_text ();
         }
+        if (font != NULL) {
+                PangoAttrList *const attrs = pango_attr_list_new ();
+                PangoFontDescription *font_desc = pango_font_description_from_string (font);
+                pango_attr_list_insert (attrs, pango_attr_font_desc_new (font_desc));
+                for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
+                        if (i != OT_LOC_SWORD && i != NT_LOC_SWORD) {
+                                gtk_label_set_attributes (GTK_LABEL (label[i]), attrs);
+                        }
+                }
+                pango_attr_list_unref (attrs);
+                pango_font_description_free (font_desc);
+        }
+
+        GObject *button;
+        button = gtk_builder_get_object (builder, "properties");
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (property_cb), NULL);
+        button = gtk_builder_get_object (builder, "previous_day");
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (prev_day_cb), NULL);
+        button = gtk_builder_get_object (builder, "today");
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (today_cb), NULL);
+        button = gtk_builder_get_object (builder, "next_day");
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (next_day_cb), NULL);
+        button = gtk_builder_get_object (builder, "calendar");
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (calendar_cb), NULL);
+
         /* start timeout for detecting date change */
 	timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
         /* call the date check with not NULL as arg to initialize */
@@ -321,6 +353,9 @@ activate (GtkApplication *app,
         gtk_widget_show (GTK_WIDGET (window));
         // gtk_window_set_default_icon_from_file
         //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
+
+        // not working???
+        // gtk_builder_connect_signals (builder, NULL);
 
         /* We do not need the builder any more */
         g_object_unref (builder);
@@ -343,7 +378,7 @@ int main (int argc, char **argv)
 
         GOptionEntry options[] = {
                 { "once", '1', 0, G_OPTION_ARG_NONE, &once,
-                  N_("Start only once a day"), NULL },
+                  N_("Start only  once a day"), NULL },
                 { NULL }
         };
         g_application_add_main_option_entries (G_APPLICATION (app), options);
@@ -615,7 +650,7 @@ property_cb (GtkWidget *w, gpointer data)
 
                 GtkBuilder* builder = gtk_builder_new ();
                 gtk_builder_set_translation_domain (builder, PACKAGE);
-                gchar *ui_file = find_ui_file ("preferences.glade");
+                gchar *ui_file = find_ui_file ("preferences.ui");
                 guint build = gtk_builder_add_from_file (builder, ui_file,NULL);
                 g_free (ui_file);
                 if (! build) {

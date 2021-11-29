@@ -40,7 +40,8 @@ po = env.Translate(languages, ['#/src/about.c',
                                    '#/src/settings.c',
                                    '#/src/util.c',
                                    '#/ui/add_language.glade',
-                                   '#/ui/preferences.glade',
+                                   '#/ui/glosung.ui',
+                                   '#/ui/preferences.ui',
                                    '#/ui/warning_dialog.glade']) 
 mo = env.MOFiles(po)
 

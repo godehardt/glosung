@@ -109,6 +109,19 @@
                 <property name="position">6</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkLabel" id="reading">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">10</property>
+                <property name="label">Lehrtext</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">7</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -129,7 +142,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="properties">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -157,7 +170,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="previous_day">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -176,7 +189,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="today">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -195,7 +208,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="next_day">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
@@ -214,7 +227,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="calendar">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
