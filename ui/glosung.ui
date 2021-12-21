@@ -20,6 +20,9 @@
                 <property name="name">losung</property>
                 <property name="margin-top">10</property>
                 <property name="label">Losung</property>
+                <style>
+                  <class name="spaceabove"/>
+                </style>
               </object>
             </child>
             <child>
@@ -41,6 +44,9 @@
                 <property name="name">lehrtext</property>
                 <property name="margin-top">10</property>
                 <property name="label">Lehrtext</property>
+                <style>
+                  <class name="spaceabove"/>
+                </style>
               </object>
             </child>
             <child>
