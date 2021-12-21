@@ -44,8 +44,8 @@ struct _Losung {
 
 
 void          losung_free     (const Losung *ww);
-const Losung *get_orig_losung (GDate *date, gchar *lang);
-const Losung *get_losung      (GDate *date, gchar *lang);
-const Losung *get_the_word    (GDate *date, gchar *lang);
+const Losung *get_orig_losung (GDateTime *date, gchar *lang);
+const Losung *get_losung      (GDateTime *date, gchar *lang);
+const Losung *get_the_word    (GDateTime *date, gchar *lang);
 
 #endif /* GLOSUNG_PARSER__H */

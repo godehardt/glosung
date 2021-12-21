@@ -40,9 +40,9 @@
    Variables & Definitions
 \****************************/
 
-static GDate *date;
-static gchar *lang = NULL;
-static gchar *date_param = NULL;
+static GDateTime *date;
+static gchar     *lang = NULL;
+static gchar     *date_param = NULL;
 
 
 /****************************\
@@ -98,20 +98,13 @@ static void
 get_time (void)
 {
         if (date_param != NULL) {
-                date = g_date_new ();
-                g_date_set_parse (date, date_param);
-                if (g_date_valid (date)) {
+                date = g_date_time_new_from_iso8601 (date_param, NULL);
+                if (date != NULL) {
                         return;
                 }
         }
 
-        time_t     t;
-        struct tm  zeit;
-
-        t = time (NULL);
-        zeit = *localtime (&t);
-        date = g_date_new_dmy
-                (zeit.tm_mday, zeit.tm_mon + 1, zeit.tm_year + 1900);
+        date = g_date_time_new_now_local ();
         if (date_param != NULL &&
             (date_param [0] == '+' || date_param [0] == '-'))
         {
@@ -120,17 +113,9 @@ get_time (void)
                 if (date_param [strlen (date_param) - 1] == 'm' ||
                     date_param [strlen (date_param) - 1] == 'M')
                 {
-                        if (offset > 0) {
-                                g_date_add_months (date, offset);
-                        } else {
-                                g_date_subtract_months (date, -offset);
-                        }
+                        date = g_date_time_add_months (date, offset);
                 } else {
-                        if (offset > 0) {
-                                g_date_add_days (date, offset);
-                        } else {
-                                g_date_subtract_days (date, -offset);
-                        }
+                        date = g_date_time_add_days (date, offset);
                 }
         }
 } /* get_time */
@@ -157,7 +142,7 @@ show_text (void)
 
         if (ww == NULL) {
                 printf (_("No '%s' texts found for %d!\n"),
-                        lang, g_date_get_year (date));
+                        lang, g_date_time_get_year (date));
                 return;
         }
 

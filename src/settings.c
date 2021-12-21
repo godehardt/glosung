@@ -68,7 +68,7 @@ get_proxy ()
 {
 #ifndef WIN32
 	INIT_CLIENT ();
-        return gconf_client_get_string
+	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/proxy", NULL);
 #else
 	return "";
@@ -110,32 +110,32 @@ set_hide_warning (gboolean hide_warning)
 } /* set_hide_warning */
 
 
-GDate*
+GDateTime*
 get_last_usage ()
 {
-        GDate *last_time = NULL;
+    GDateTime *last_time = NULL;
 #ifndef WIN32
 	INIT_CLIENT ();
-        gchar *last_time_str = gconf_client_get_string
-                (client, "/apps/" PACKAGE "/last_time", NULL);
-        if (last_time_str) {
-                last_time = g_date_new ();
-                g_date_set_parse (last_time, last_time_str);
-        }
+	gchar *last_time_str = gconf_client_get_string
+			(client, "/apps/" PACKAGE "/last_time", NULL);
+	if (last_time_str) {
+		last_time = g_date_time_new_from_iso8601 (last_time_str, NULL);
+	}
+	g_free (last_time_str);
 #endif /* WIN32 */
-        return last_time;
+	return last_time;
 } /* get_last_usage */
 
 
 void
-set_last_usage (const GDate *date)
+set_last_usage (const GDateTime *date)
 {
 #ifndef WIN32
 	INIT_CLIENT ();
-        gchar *time_str = g_malloc (11); /* "YYYY-MM-DD"; */
-        g_date_strftime (time_str, 11, "%Y-%m-%d", date);
-        gconf_client_set_string
-                (client, "/apps/" PACKAGE "/last_time", time_str, NULL);
+	gchar *time_str = g_date_time_format_iso8601 ((GDateTime *)date);
+	gconf_client_set_string
+			(client, "/apps/" PACKAGE "/last_time", time_str, NULL);
+	g_free (time_str);
 #endif /* WIN32 */
 } /* set_last_usage */
 
@@ -145,7 +145,7 @@ get_language ()
 {
 #ifndef WIN32
 	INIT_CLIENT ();
-        return gconf_client_get_string
+	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/language", NULL);
 #else
 	return NULL;
@@ -215,7 +215,7 @@ get_font ()
 {
 #ifndef WIN32
 	INIT_CLIENT ();
-        return gconf_client_get_string
+	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/font", NULL);
 #else
 	return NULL;

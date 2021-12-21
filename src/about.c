@@ -100,7 +100,7 @@ about_herrnhut (GtkWidget *app)
                 (GTK_ABOUT_DIALOG (herrnhut), "http://www.losungen.de");
         gtk_widget_show (herrnhut);
         g_signal_connect (G_OBJECT (herrnhut), "response",
-                          G_CALLBACK (gtk_widget_destroy), NULL);
+                          G_CALLBACK (gtk_window_destroy), NULL);
         g_signal_connect (G_OBJECT (herrnhut), "destroy",
-                          G_CALLBACK (gtk_widget_destroyed), &herrnhut);
+                          G_CALLBACK (g_object_unref), &herrnhut);
 } /* about_herrnhut */

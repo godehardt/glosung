@@ -64,7 +64,7 @@ ccflags   = ['-O2', '-std=c99', '-Wall', '-g',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
 		'-DPACKAGE_PIXMAPS_DIR=\\"' + pixmap_dir + '\\"']
 
-linkflags = ['-L.']             
+linkflags = []          # '-L.'
 
 if ARGUMENTS.get ('profile'):
     ccflags.append   ('-pg', '-fprofile-arcs')
@@ -93,10 +93,10 @@ env.Append (
   CCFLAGS   = ccflags)
 
 if env['PLATFORM'] == 'win32':
-        env.ParseConfig ('pkg-config gtk+-3.0 libxml-2.0 libcurl --cflags --libs')
+        env.ParseConfig ('pkg-config gtk4 libxml-2.0 libcurl --cflags --libs')
         Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk+-3.0 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
+        env.ParseConfig('pkg-config gtk4 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
 #        Tool('posix')(env)
 
 
@@ -135,8 +135,10 @@ if env['PLATFORM'] != 'win32':
                     'glosung.desktop',
                     'glosung.png',
                     'ui/add_language.glade',
-                    'ui/preferences.glade',
+                    'ui/glosung.ui',
+                    'ui/preferences.ui',
                     'ui/warning_dialog.glade',
+                    'ui/style.css',
                     'debian/glosung.files',
                     'debian/control',
                     'debian/changelog',

@@ -119,24 +119,24 @@ static gchar const * const states [] = {
 /* buf_len for the string which contains the text while parsing */
 #define LINE_LEN 255
 
-static State     state;
-static GSList   *stack;
-static gint      depth;
-static GDate    *datum;
-static gint      day;
-static gboolean  found;
-static gchar    *date_string;
-static Losung   *ww = NULL;
-static Passage  *quote = NULL;
-static GString  *string;
-static GString  *location;
+static State      state;
+static GSList    *stack;
+static gint       depth;
+static GDateTime *datum;
+static gint       day;
+static gboolean   found;
+static gchar     *date_string;
+static Losung    *ww = NULL;
+static Passage   *quote = NULL;
+static GString   *string;
+static GString   *location;
 
 
 /****************************                   \
       Function prototypes
 \****************************/
 
-static const Losung* parse   (GDate          *date,
+static const Losung* parse   (GDateTime      *date,
                               gchar          *lang,
                               gchar          *filename);
 
@@ -191,7 +191,7 @@ losung_free (const Losung *ww)
  * public function that parses the xml file and return required Losung.
  */
 const Losung*
-get_orig_losung (GDate *date, gchar *lang)
+get_orig_losung (GDateTime *date, gchar *lang)
 {
         gchar            *file;
         gchar            *filename;
@@ -200,7 +200,7 @@ get_orig_losung (GDate *date, gchar *lang)
                 return NULL;
         }
         file = g_strdup_printf ("Losungen Free %d.xml",
-                                g_date_get_year (date));
+                                g_date_time_get_year (date));
         filename = check_file (file);
         g_free (file);
 
@@ -216,13 +216,13 @@ get_orig_losung (GDate *date, gchar *lang)
  * public function that parses the xml file and return required Losung.
  */
 const Losung*
-get_losung (GDate *date, gchar *lang)
+get_losung (GDateTime *date, gchar *lang)
 {
         gchar            *file;
         gchar            *filename;
         guint             year;
 
-        year = g_date_get_year (date) % 100;
+        year = g_date_time_get_year (date) % 100;
         if (year < 10) {
                 file = g_strdup_printf ("%s_los0%d.xml", lang, year);
         } else {
@@ -244,12 +244,12 @@ get_losung (GDate *date, gchar *lang)
  * public function that parses the xml file and return required Losung.
  */
 const Losung*
-get_the_word (GDate *date, gchar *lang)
+get_the_word (GDateTime *date, gchar *lang)
 {
         const gchar *file;
         gchar       *filename;
 
-        file = find_the_word_file (lang, g_date_get_year (date));
+        file = find_the_word_file (lang, g_date_time_get_year (date));
         filename = check_file (file);
 
         if (! filename) {
@@ -289,7 +289,7 @@ check_file (const gchar *file)
  * public function that parses the xml file and return required Losung.
  */
 static const Losung*
-parse (GDate *date, gchar *lang, gchar *filename)
+parse (GDateTime *date, gchar *lang, gchar *filename)
 {
         xmlSAXHandlerPtr  sax;
 
@@ -299,10 +299,9 @@ parse (GDate *date, gchar *lang, gchar *filename)
         sax->characters = character;
         state = STATE_START;
         datum = date;
-        day = g_date_get_day_of_year (date);
+        day = g_date_time_get_day_of_year (date);
         found = FALSE;
-        date_string = g_malloc (11); /* "YYYY-MM-DD"; */
-        g_date_strftime (date_string, 11, "%Y-%m-%d", date);
+        date_string = g_date_time_format (date, "%Y-%m-%d");
         ww = g_new0 (Losung, 1);
         string   = g_string_sized_new (LINE_LEN);
         location = g_string_sized_new (LINE_LEN);
@@ -371,12 +370,8 @@ start_element (void *ctx, const xmlChar *name, const xmlChar **attrs)
                 break;
         case LOS_LOSUNGEN:
         {
-                gchar buf [64];
-
                 /* title: timestring according to 'man strftime' */
-                g_date_strftime (buf, 64,
-                                 _("Watchword for %A, %e. %B %Y"), datum);
-                ww->title = g_strdup (buf);
+                ww->title = g_date_time_format (datum, _("Watchword for %A, %e. %B %Y"));
         }
                 if        (switch_state (name, LOS_DATUM)) {
                 } else if (switch_state (name, LOS_WTAG)) {

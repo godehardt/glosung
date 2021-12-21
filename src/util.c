@@ -72,37 +72,42 @@ file_exist (gchar* path, gchar* filename)
  * callback function to open a specific uri (xiphos or http)
  */
 void
-show_uri (GtkWidget *widget, gchar *uri, gpointer data)
+show_uri (GtkWidget *window, gchar *uri, gpointer data)
 {
-        gboolean result =
-        	gtk_show_uri_on_window (NULL, (const gchar*) uri, GDK_CURRENT_TIME, NULL);
-        if (result) {
-        	return;
-        }
-        /* this is only executed for older gtk+ or if gtk_show_uri failed */
-        if (strncmp (uri, "http://", 7) == 0) {
-                char *argv [3];
-                argv [0] = "xdg-open";
-                argv [1] = (char *) uri;
-                argv [2] = NULL;
+	/* FIXME: handle return in 
+	gtk_show_uri_full (GTK_WINDOW (window), (const char*) uri, GDK_CURRENT_TIME, NULL, callback, NULL);
+	if (result) {
+		return;
+	}
+	*/
 
-                GError *error = NULL;
-                if (! g_spawn_async (NULL, argv, NULL,
-                               G_SPAWN_STDOUT_TO_DEV_NULL
-                                | G_SPAWN_STDERR_TO_DEV_NULL
-                                | G_SPAWN_SEARCH_PATH,
-                               NULL, NULL, NULL, &error)) {
-                        GtkWidget *msg = gtk_message_dialog_new
-                                (NULL, GTK_DIALOG_MODAL,
-                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                                 "%s", error->message);
-                        g_signal_connect (G_OBJECT (msg), "response",
-                                          G_CALLBACK (gtk_widget_destroy),NULL);
-                        gtk_widget_show (msg);
-                        g_error_free (error);
-                }
-                     return;
-        } else {
+	gtk_show_uri (GTK_WINDOW (window), (const char*) uri, GDK_CURRENT_TIME);
+
+
+	/* this is only executed for older gtk+ or if gtk_show_uri failed */
+	if (strncmp (uri, "http://", 7) == 0) {
+		char *argv [3];
+		argv [0] = "xdg-open";
+		argv [1] = (char *) uri;
+		argv [2] = NULL;
+
+		GError *error = NULL;
+		if (! g_spawn_async (NULL, argv, NULL,
+					G_SPAWN_STDOUT_TO_DEV_NULL
+					| G_SPAWN_STDERR_TO_DEV_NULL
+					| G_SPAWN_SEARCH_PATH,
+					NULL, NULL, NULL, &error)) {
+			GtkWidget *msg = gtk_message_dialog_new
+					(NULL, GTK_DIALOG_MODAL,
+						GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+						"%s", error->message);
+			g_signal_connect (G_OBJECT (msg), "response",
+								G_CALLBACK (gtk_window_destroy), NULL);
+			gtk_widget_show (msg);
+			g_error_free (error);
+		}
+			return;
+	} else {
 		char *argv [3];
 		argv [0] = "xiphos";
 		argv [1] = uri;
@@ -110,30 +115,30 @@ show_uri (GtkWidget *widget, gchar *uri, gpointer data)
 
 		GError *error = NULL;
 		if (! g_spawn_async (NULL, argv, NULL,
-			       G_SPAWN_STDOUT_TO_DEV_NULL
+					G_SPAWN_STDOUT_TO_DEV_NULL
 				| G_SPAWN_STDERR_TO_DEV_NULL
 				| G_SPAWN_SEARCH_PATH,
-			       NULL, NULL, NULL, &error))
+					NULL, NULL, NULL, &error))
 		{
 			argv [0] = "gnomesword2";
 			if (! g_spawn_async (NULL, argv, NULL,
-			       G_SPAWN_STDOUT_TO_DEV_NULL
+					G_SPAWN_STDOUT_TO_DEV_NULL
 				| G_SPAWN_STDERR_TO_DEV_NULL
 				| G_SPAWN_SEARCH_PATH,
-			       NULL, NULL, NULL, &error))
+					NULL, NULL, NULL, &error))
 			{
 				GtkWidget *msg = gtk_message_dialog_new
-				    (GTK_WINDOW (data),
-				     GTK_DIALOG_DESTROY_WITH_PARENT,
-				     GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-					 "%s", error->message);
+					(GTK_WINDOW (data),
+						GTK_DIALOG_DESTROY_WITH_PARENT,
+						GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+						"%s", error->message);
 				//_("No text files found!\n");
 				g_signal_connect
 					(G_OBJECT (msg), "response",
-					 G_CALLBACK (gtk_widget_destroy),NULL);
+						G_CALLBACK (gtk_window_destroy),NULL);
 				gtk_widget_show (msg);
 				g_error_free (error);
 			}
 		}
-        }
+	}
 } /* show_uri */
