@@ -86,9 +86,6 @@
               <object class="GtkButton" id="properties">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
-                <style>
-                  <class name="flat"/>
-                </style>
                 <child>
                   <object class="GtkImage">
                     <property name="icon-name">document-properties</property>
@@ -104,9 +101,6 @@
               <object class="GtkButton" id="previous_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
-                <style>
-                  <class name="circle"/>
-                </style>
                 <child>
                   <object class="GtkImage">
                     <property name="icon-name">go-previous</property>

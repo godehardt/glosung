@@ -211,7 +211,9 @@ activate (GtkApplication *app,
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
         gtk_window_set_application (GTK_WINDOW (window), app);
-        // g_signal_connect (G_OBJECT (window), "scroll_event", G_CALLBACK (window_scroll_cb), NULL);
+        // g_signal_connect (G_OBJECT (window), "scroll_event",
+        //                   G_CALLBACK (window_scroll_cb),
+        //                   NULL);
 
         label [TITLE] = GTK_WIDGET (gtk_builder_get_object (builder, "date"));
 
