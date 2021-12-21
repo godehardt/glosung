@@ -1,0 +1,21 @@
+#content {
+    margin: 25px;
+}
+
+#losung {
+    margin-top: 25px;
+}
+
+#lehrtext {
+    margin-top: 25px;
+}
+
+button.minimize {
+    padding: 0;
+    margin: 0;
+}
+
+button.maximize {
+    padding: 0;
+    margin: 0;
+}
