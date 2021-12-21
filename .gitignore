@@ -3,3 +3,4 @@
 .sconsign.dblite
 po/*.mo
 po/messages.pot
+*~
