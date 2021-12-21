@@ -218,14 +218,17 @@ activate (GtkApplication *app,
         label [TITLE] = GTK_WIDGET (gtk_builder_get_object (builder, "date"));
 
         label [OT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "losung"));
+        gtk_widget_add_css_class (GTK_WIDGET (label [OT_TEXT]), "spaceabove");
         label [OT_LOC] = GTK_WIDGET (gtk_builder_get_object (builder, "losung_address"));
         label [OT_LOC_SWORD] = GTK_WIDGET (gtk_builder_get_object (builder, "losung_address_link"));
 
         label [NT_TEXT] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext"));
+        gtk_widget_add_css_class (GTK_WIDGET (label [NT_TEXT]), "spaceabove");
         label [NT_LOC] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address"));
         label [NT_LOC_SWORD] = GTK_WIDGET (gtk_builder_get_object (builder, "lehrtext_address_link"));
 
         label [READING] = GTK_WIDGET (gtk_builder_get_object (builder, "reading"));
+        gtk_widget_add_css_class (GTK_WIDGET (label [READING]), "spaceabove");
 
         if (local_collections->languages->len == 0) {
                 GtkWidget *error = gtk_message_dialog_new

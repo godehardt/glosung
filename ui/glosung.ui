@@ -17,7 +17,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="losung">
-                <property name="name">losung</property>
                 <property name="margin-top">10</property>
                 <property name="label">Losung</property>
                 <style>
@@ -41,7 +40,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="lehrtext">
-                <property name="name">lehrtext</property>
                 <property name="margin-top">10</property>
                 <property name="label">Lehrtext</property>
                 <style>
@@ -64,7 +62,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="reading">
-                <property name="name">reading</property>
                 <property name="margin-top">10</property>
                 <property name="label">Lehrtext</property>
               </object>
@@ -94,7 +91,7 @@
                 <property name="receives-default">1</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon-name">document-properties</property>
+                    <property name="file">ui/icons/gear-solid.svg</property>
                   </object>
                 </child>
               </object>
@@ -109,7 +106,7 @@
                 <property name="receives-default">1</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon-name">go-previous</property>
+                    <property name="file">ui/icons/angle-left-solid.svg</property>
                   </object>
                 </child>
               </object>
@@ -120,7 +117,7 @@
                 <property name="receives-default">1</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon-name">go-bottom</property>
+                    <property name="file">ui/icons/angles-down-solid.svg</property>
                   </object>
                 </child>
               </object>
@@ -131,7 +128,7 @@
                 <property name="receives-default">1</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon-name">go-next</property>
+                    <property name="file">ui/icons/angle-right-solid.svg</property>
                   </object>
                 </child>
               </object>
@@ -142,7 +139,7 @@
                 <property name="receives-default">1</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="icon-name">task-due</property>
+                    <property name="file">ui/icons/calendar-alt-regular.svg</property>
                   </object>
                 </child>
               </object>
