@@ -38,7 +38,8 @@
 #include "collections.h"
 #include "settings.h"
 
-#define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
+//#define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
+#define LOSUNGEN_URL "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip"
 #define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
 
 static gchar      *glosung_dir = NULL;
