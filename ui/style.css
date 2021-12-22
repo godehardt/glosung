@@ -2,7 +2,11 @@
     margin: 25px;
 }
 
-label.spaceabove {
+grid {
+    margin: 10px;
+}
+
+.spaceabove {
     margin-top: 25px;
 }
 

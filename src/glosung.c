@@ -72,7 +72,6 @@ static gboolean   once = FALSE;
 
 static GtkWidget *app;
 static GDateTime *date;
-static GDateTime *new_date;
 static GtkWidget *calendar;
 static GtkWidget *label [NUMBER_OF_LABELS];
 static GtkWidget *property = NULL;
@@ -104,7 +103,7 @@ static Source    *server_list = NULL;
 
 static GHashTable *init_languages       (void);
 
-static void        show_text            (void);
+static void        show_text            (GDateTime *date);
 
 static gint handle_local_options (GtkApplication *app, GVariantDict *options, gpointer data);
 static void activate             (GtkApplication *app, gpointer data);
@@ -154,7 +153,6 @@ handle_local_options (GtkApplication *app,
                       gpointer        user_data)
 {
         date = g_date_time_new_now_local ();
-        new_date = g_date_time_new_now_local ();
 
         g_print ("handle_local_options %d\n", once);
         if (once) {
@@ -168,6 +166,17 @@ handle_local_options (GtkApplication *app,
         return -1;
 } /* handle_local_options */
 
+
+static void
+set_headerbar_button (GtkBuilder *builder,
+                      const char *name,
+                      GCallback  *handler)
+{
+        GObject *button = gtk_builder_get_object (builder, name);
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (handler), NULL);
+        gtk_widget_add_css_class (GTK_WIDGET (button), "flat");
+} /* set_headerbar_button */
 
 
 static void
@@ -243,7 +252,7 @@ activate (GtkApplication *app,
                                // CALLBACK (gtk_main_quit), NULL);
                 gtk_widget_show (error);
         } else {
-                show_text ();
+                show_text (date);
         }
         if (font != NULL) {
                 PangoAttrList *const attrs = pango_attr_list_new ();
@@ -258,28 +267,13 @@ activate (GtkApplication *app,
                 pango_font_description_free (font_desc);
         }
 
-        GObject *button;
-        button = gtk_builder_get_object (builder, "properties");
-
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (property_cb), NULL);
-        gtk_widget_add_css_class (GTK_BUTTON (button), "flat");
-        button = gtk_builder_get_object (builder, "previous_day");
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (prev_day_cb), NULL);
-        gtk_widget_add_css_class (GTK_BUTTON (button), "flat");
-        button = gtk_builder_get_object (builder, "today");
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (today_cb), NULL);
-        gtk_widget_add_css_class (GTK_BUTTON (button), "flat");
-        button = gtk_builder_get_object (builder, "next_day");
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (next_day_cb), NULL);
-        gtk_widget_add_css_class (GTK_BUTTON (button), "flat");
-        button = gtk_builder_get_object (builder, "calendar");
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (calendar_cb), NULL);
-        gtk_widget_add_css_class (GTK_BUTTON (button), "flat");
+        set_headerbar_button (builder, "properties", G_CALLBACK (property_cb));
+        set_headerbar_button (builder, "previous_month", G_CALLBACK (prev_month_cb));
+        set_headerbar_button (builder, "previous_day", G_CALLBACK (prev_day_cb));
+        set_headerbar_button (builder, "today", G_CALLBACK (today_cb));
+        set_headerbar_button (builder, "next_day", G_CALLBACK (next_day_cb));
+        set_headerbar_button (builder, "next_month", G_CALLBACK (next_month_cb));
+        set_headerbar_button (builder, "calendar", G_CALLBACK (calendar_cb));
 
         /* start timeout for detecting date change */
 	timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
@@ -376,9 +370,10 @@ init_languages (void)
 
 /*
  * display the ww for the current date.
+ * must not unref new_date after
  */
 static void
-show_text (void)
+show_text (GDateTime *new_date)
 {
         const Losung *ww;
 
@@ -414,11 +409,15 @@ show_text (void)
                 g_signal_connect (G_OBJECT (error), "response",
                                   G_CALLBACK (g_object_unref), NULL);
                 gtk_widget_show (error);
-                new_date = g_date_time_new_from_unix_local (g_date_time_to_unix (date));
+                g_object_unref (new_date);
                 return;
         }
 
-        date = g_date_time_new_from_unix_local (g_date_time_to_unix (new_date));
+        if (date != new_date) {
+                // FIXME: needed? core dumb
+                //g_object_unref (date);
+                date = new_date;
+        }
 
         gtk_label_set_text (GTK_LABEL (label [TITLE]), ww->title);
         if (ww->ot.say != NULL) {
@@ -706,7 +705,7 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
                 lang = new_lang;
                 new_lang = NULL;
                 set_language (lang);
-                show_text ();
+                show_text (date);
         }
 } /* lang_changed_cb */
 
@@ -826,18 +825,19 @@ calendar_cb (GtkWidget *w, gpointer data)
 {
         static GtkWidget *dialog = NULL;
 
-        if (dialog != NULL) {
+        /* if (dialog != NULL) {
                 g_assert (gtk_widget_get_realized (dialog));
                 gtk_widget_show  (dialog);
                 // FIXME gtk4
                 // gdk_window_raise (gtk_widget_get_window (dialog));
-        } else {
+        } else */ {
                 dialog = gtk_dialog_new ();
                 gtk_window_set_title (GTK_WINDOW (dialog), _("Calendar"));
                 gtk_dialog_add_action_widget (
                         GTK_DIALOG (dialog),
                         gtk_button_new_with_label ("_Close"),
                         GTK_RESPONSE_CLOSE);
+                gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app));
 
                 calendar = gtk_calendar_new ();
                 gtk_calendar_set_show_day_names (GTK_CALENDAR (calendar), TRUE);
@@ -846,13 +846,13 @@ calendar_cb (GtkWidget *w, gpointer data)
                 gtk_calendar_select_day      (GTK_CALENDAR (calendar), date);
                 gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), calendar);
                 g_signal_connect (G_OBJECT (dialog), "response",
-                                  G_CALLBACK (gtk_window_destroy), NULL);
+                                  G_CALLBACK (gtk_window_destroy), &dialog);
                 g_signal_connect (G_OBJECT (dialog), "destroy",
                                   G_CALLBACK (g_object_unref), &dialog);
                 g_signal_connect (G_OBJECT (dialog), "destroy",
                                   G_CALLBACK (g_object_unref), &calendar);
                 g_signal_connect (G_OBJECT (calendar),
-                                  "day_selected_double_click",
+                                  "day_selected", // day_selected_double_click
                                   G_CALLBACK (calendar_select_cb), dialog);
 
                 gtk_widget_show (dialog);
@@ -866,10 +866,11 @@ calendar_cb (GtkWidget *w, gpointer data)
 static void
 today_cb (GtkWidget *w, gpointer data)
 {
+        // FIXME: needed? core dumb
+        // g_object_unref (date);
         date = g_date_time_new_now_local ();
-        new_date = g_date_time_new_now_local ();
 
-        show_text ();
+        show_text (date);
         if (calendar != NULL) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
         }
@@ -882,12 +883,10 @@ today_cb (GtkWidget *w, gpointer data)
 static void
 next_day_cb (GtkWidget *w, gpointer data)
 {
-        GDateTime *d = g_date_time_add_days (new_date, 1);
-        g_date_time_unref (new_date);
-        new_date = d;
-        show_text ();
+        GDateTime *new_date = g_date_time_add_days (date, 1);
+        show_text (new_date);
         if (calendar != NULL) {
-                gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
+                gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* next_day_cb */
 
@@ -898,12 +897,10 @@ next_day_cb (GtkWidget *w, gpointer data)
 static void
 prev_day_cb (GtkWidget *w, gpointer data)
 {
-        GDateTime *d = g_date_time_add_days (new_date, -1);
-        g_date_time_unref (new_date);
-        new_date = d;
-        show_text ();
+        GDateTime *new_date = g_date_time_add_days (date, -1);
+        show_text (new_date);
         if (calendar != NULL) {
-                gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
+                gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* prev_day_cb */
 
@@ -914,12 +911,10 @@ prev_day_cb (GtkWidget *w, gpointer data)
 static void
 next_month_cb (GtkWidget *w, gpointer data)
 {
-        GDateTime *d = g_date_time_add_months (new_date, 1);
-        g_date_time_unref (new_date);
-        new_date = d;
-        show_text ();
+        GDateTime *new_date = g_date_time_add_months (date, 1);
+        show_text (new_date);
         if (calendar != NULL) {
-                gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
+                gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* next_month_cb */
 
@@ -930,12 +925,10 @@ next_month_cb (GtkWidget *w, gpointer data)
 static void
 prev_month_cb (GtkWidget *w, gpointer data)
 {
-        GDateTime *d = g_date_time_add_months (new_date, -1);
-        g_date_time_unref (new_date);
-        new_date = d;
-        show_text ();
+        GDateTime *new_date = g_date_time_add_months (date, -1);
+        show_text (new_date);
         if (calendar != NULL) {
-                gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
+                gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* prev_month_cb */
 
@@ -946,13 +939,11 @@ prev_month_cb (GtkWidget *w, gpointer data)
 static void
 calendar_select_cb (GtkWidget *calendar, gpointer data)
 {
-        g_object_unref (date);
-        date = gtk_calendar_get_date (GTK_CALENDAR (calendar));
-        show_text ();
+        show_text (gtk_calendar_get_date (GTK_CALENDAR (calendar)));
 
-        if (calendar_close) {
-                gtk_window_destroy (GTK_WINDOW (data));
-        }
+//        if (calendar_close) {
+//                gtk_window_destroy (GTK_WINDOW (data));
+//        }
 } /* calendar_select_cb */
 
 

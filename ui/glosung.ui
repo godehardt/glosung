@@ -101,6 +101,17 @@
         <child>
           <object class="GtkBox">
             <child>
+              <object class="GtkButton" id="previous_month">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="file">ui/icons/angles-left-solid.svg</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="GtkButton" id="previous_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
@@ -129,6 +140,17 @@
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angle-right-solid.svg</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="next_month">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="file">ui/icons/angles-right-solid.svg</property>
                   </object>
                 </child>
               </object>
