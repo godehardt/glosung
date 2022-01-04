@@ -19,3 +19,7 @@ button.maximize {
     padding: 0;
     margin: 0;
 }
+
+.indented {
+    margin-left: 20px;
+}

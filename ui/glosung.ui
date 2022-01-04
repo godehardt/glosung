@@ -89,6 +89,7 @@
               <object class="GtkButton" id="properties">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="property_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/gear-solid.svg</property>
@@ -104,6 +105,7 @@
               <object class="GtkButton" id="previous_month">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="prev_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angles-left-solid.svg</property>
@@ -115,6 +117,7 @@
               <object class="GtkButton" id="previous_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="prev_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angle-left-solid.svg</property>
@@ -126,6 +129,7 @@
               <object class="GtkButton" id="today">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="today_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angles-down-solid.svg</property>
@@ -137,6 +141,7 @@
               <object class="GtkButton" id="next_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="next_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angle-right-solid.svg</property>
@@ -148,6 +153,7 @@
               <object class="GtkButton" id="next_month">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="next_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/angles-right-solid.svg</property>
@@ -159,6 +165,7 @@
               <object class="GtkButton" id="calendar">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <signal name="clicked" handler="calendar_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="file">ui/icons/calendar-alt-regular.svg</property>

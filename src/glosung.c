@@ -111,19 +111,19 @@ static void activate             (GtkApplication *app, gpointer data);
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 static void about_cb             (GtkWidget *w,   gpointer data);
 static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
-static void calendar_cb          (GtkWidget *w,   gpointer data);
-static void calendar_select_cb   (GtkWidget *cal, gpointer data);
+void calendar_cb          (GtkWidget *w,   gpointer data);
+void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
 static void lang_manager_cb      (GtkWidget *w,   gpointer data);
-static void next_day_cb          (GtkWidget *w,   gpointer data);
-static void next_month_cb        (GtkWidget *w,   gpointer data);
+void next_day_cb          (GtkWidget *w,   gpointer data);
+void next_month_cb        (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
-static void prev_day_cb          (GtkWidget *w,   gpointer data);
-static void prev_month_cb        (GtkWidget *w,   gpointer data);
-static void property_cb          (GtkWidget *w,   gpointer data);
-static void today_cb             (GtkWidget *w,   gpointer data);
+void prev_day_cb          (GtkWidget *w,   gpointer data);
+void prev_month_cb        (GtkWidget *w,   gpointer data);
+void property_cb          (GtkWidget *w,   gpointer data);
+void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store();
 static void clipboard_cb         (GtkWidget *w,   gpointer data);
 //static void window_scroll_cb     (GtkWidget      *widget, GdkEventScroll *event, gpointer data);
@@ -169,12 +169,9 @@ handle_local_options (GtkApplication *app,
 
 static void
 set_headerbar_button (GtkBuilder *builder,
-                      const char *name,
-                      GCallback  *handler)
+                      const char *name)
 {
         GObject *button = gtk_builder_get_object (builder, name);
-        g_signal_connect (button, "clicked",
-                          G_CALLBACK (handler), NULL);
         gtk_widget_add_css_class (GTK_WIDGET (button), "flat");
 } /* set_headerbar_button */
 
@@ -267,13 +264,13 @@ activate (GtkApplication *app,
                 pango_font_description_free (font_desc);
         }
 
-        set_headerbar_button (builder, "properties", G_CALLBACK (property_cb));
-        set_headerbar_button (builder, "previous_month", G_CALLBACK (prev_month_cb));
-        set_headerbar_button (builder, "previous_day", G_CALLBACK (prev_day_cb));
-        set_headerbar_button (builder, "today", G_CALLBACK (today_cb));
-        set_headerbar_button (builder, "next_day", G_CALLBACK (next_day_cb));
-        set_headerbar_button (builder, "next_month", G_CALLBACK (next_month_cb));
-        set_headerbar_button (builder, "calendar", G_CALLBACK (calendar_cb));
+        set_headerbar_button (builder, "properties");
+        set_headerbar_button (builder, "previous_month");
+        set_headerbar_button (builder, "previous_day");
+        set_headerbar_button (builder, "today");
+        set_headerbar_button (builder, "next_day");
+        set_headerbar_button (builder, "next_month");
+        set_headerbar_button (builder, "calendar");
 
         /* start timeout for detecting date change */
 	timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
@@ -293,10 +290,7 @@ activate (GtkApplication *app,
         // gtk_window_set_default_icon_from_file
         //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
-        // not working???
-        // gtk_builder_connect_signals (builder, NULL);
-
-        /* We do not need the builder any more */
+        /* We don't need the builder any more */
         g_object_unref (builder);
 } /* activate */
 
@@ -558,111 +552,93 @@ about_herrnhut_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that displays a property dialog.
  */
-static void
+G_MODULE_EXPORT void
 property_cb (GtkWidget *w, gpointer data)
 {
-        if (property != NULL) {
-                g_assert (gtk_widget_get_realized (property));
-                gtk_widget_show (property);
-                // gdk_window_raise (gtk_widget_get_window (property));
-                // gtk_widget_show (gtk_widget_get_window (property));
-                // gdk_window_raise (gtk_widget_get_window (property));
-        } else {
-                GtkWidget *combo;
-                GtkWidget *grid;
-                GtkWidget *proxy_entry;
-                GtkWidget *proxy_checkbox;
+        GtkWidget *combo;
+        GtkWidget *grid;
+        GtkWidget *proxy_entry;
+        GtkWidget *proxy_checkbox;
 
-                if (new_font != NULL) {
-                        g_free (new_font);
-                        new_font = NULL;
-                }
+        if (new_font != NULL) {
+                g_free (new_font);
+                new_font = NULL;
+        }
 
-                GtkBuilder* builder = gtk_builder_new ();
-                gtk_builder_set_translation_domain (builder, PACKAGE);
-                gchar *ui_file = find_ui_file ("preferences.ui");
-                guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
-                g_free (ui_file);
-                if (! build) {
-                        g_message ("Error while loading UI definition file");
-                        return;
-                }
+        GtkBuilder* builder = gtk_builder_new ();
+        gtk_builder_set_translation_domain (builder, PACKAGE);
+        gchar *ui_file = find_ui_file ("preferences.ui");
+        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
+        g_free (ui_file);
+        if (! build) {
+                g_message ("Error while loading UI definition file");
+                return;
+        }
 
-                property = GTK_WIDGET
-                        (gtk_builder_get_object (builder,"preferences_dialog"));
-                grid = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "preferences_table"));
-                proxy_checkbox = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "proxy_checkbox"));
-                proxy_entry = GTK_WIDGET
-                        (gtk_builder_get_object (builder, "proxy_entry"));
-                g_signal_connect (G_OBJECT (proxy_checkbox), "toggled",
-                                 G_CALLBACK (proxy_toggled_cb), builder);
+        property = GTK_WIDGET
+                (gtk_builder_get_object (builder, "preferences_dialog"));
+        grid = GTK_WIDGET
+                (gtk_builder_get_object (builder, "preferences_table"));
+        proxy_checkbox = GTK_WIDGET
+                (gtk_builder_get_object (builder, "proxy_checkbox"));
+        proxy_entry = GTK_WIDGET
+                (gtk_builder_get_object (builder, "proxy_entry"));
 
-                combo = gtk_combo_box_text_new ();
-                for (gint i = 0; i < (local_collections->languages)->len; i++) {
-                        gchar *langu = g_ptr_array_index
-                        		(local_collections->languages, i);
-                        gtk_combo_box_text_append_text
-                                (GTK_COMBO_BOX_TEXT (combo),
-                                 g_hash_table_lookup (lang_translations, langu));
-                        if (strcmp (lang, langu) == 0) {
-                                gtk_combo_box_set_active
-                                        (GTK_COMBO_BOX (combo), i);
-                        }
+        combo = GTK_WIDGET
+                (gtk_builder_get_object (builder, "language_combo"));
+        for (gint i = 0; i < (local_collections->languages)->len; i++) {
+                gchar *langu = g_ptr_array_index
+                                (local_collections->languages, i);
+                gtk_combo_box_text_append_text
+                        (GTK_COMBO_BOX_TEXT (combo),
+                                g_hash_table_lookup (lang_translations, langu));
+                if (strcmp (lang, langu) == 0) {
+                        gtk_combo_box_set_active
+                                (GTK_COMBO_BOX (combo), i);
                 }
-                g_signal_connect (G_OBJECT (combo), "changed",
-                                  G_CALLBACK (lang_changed_cb), NULL);
-                gtk_widget_show (combo);
-                gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
+        }
 
-                if (is_proxy_in_use ()) {
-                	gtk_toggle_button_set_active
-				(GTK_TOGGLE_BUTTON (proxy_checkbox), TRUE);
-                	gtk_widget_set_sensitive (proxy_entry, TRUE);
-                }
-                gchar *proxy = get_proxy ();
-                if (proxy && strlen (proxy) > 0) {
-                	gtk_editable_set_text (GTK_EDITABLE (proxy_entry), proxy);
-                }
+        if (is_proxy_in_use ()) {
+                gtk_check_button_set_active
+                        (GTK_CHECK_BUTTON (proxy_checkbox), TRUE);
+                gtk_widget_set_sensitive (proxy_entry, TRUE);
+        }
+        gchar *proxy = get_proxy ();
+        if (proxy && strlen (proxy) > 0) {
+                gtk_editable_set_text (GTK_EDITABLE (proxy_entry), proxy);
+        }
 
-                if (font != NULL) {
-                        gtk_font_chooser_set_font (GTK_FONT_CHOOSER
-                           (gtk_builder_get_object (builder, "fontbutton")),
-                            font);
-                }
-                GLosungAutostartType autostart = is_in_autostart ();
-                if (autostart != GLOSUNG_NO_AUTOSTART) {
-                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                           (gtk_builder_get_object (builder,
-                        		            "autostart_checkbox")),
-                            TRUE);
-                }
-                if (autostart == GLOSUNG_AUTOSTART_ONCE) {
-                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                           (gtk_builder_get_object (builder,
-                        		            "autostart_once_checkbox")),
-			    TRUE);
-                }
+        if (font != NULL) {
+                gtk_font_chooser_set_font (GTK_FONT_CHOOSER
+                        (gtk_builder_get_object (builder, "fontbutton")),
+                        font);
+        }
+        GLosungAutostartType autostart = is_in_autostart ();
+        if (autostart != GLOSUNG_NO_AUTOSTART) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+                        (gtk_builder_get_object (builder,
+                                                "autostart_checkbox")),
+                        TRUE);
+        }
+        if (autostart == GLOSUNG_AUTOSTART_ONCE) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+                        (gtk_builder_get_object (builder,
+                                                "autostart_once_checkbox")),
+                        TRUE);
+        }
 #ifdef VERSE_LINK
-                if (show_sword) {
-                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                           (gtk_builder_get_object (builder, "sword_checkbox")),
-                            TRUE);
-                }
-#else
-                gtk_widget_set_sensitive (GTK_WIDGET
+        if (show_sword) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
                         (gtk_builder_get_object (builder, "sword_checkbox")),
-                         FALSE);
+                        TRUE);
+        }
+#else
+        gtk_widget_set_sensitive (GTK_WIDGET
+                (gtk_builder_get_object (builder, "sword_checkbox")),
+                        FALSE);
 #endif
 
-                g_signal_connect (G_OBJECT (property), "destroy",
-                                 G_CALLBACK (g_object_unref), &property);
-
-                // FIXME gtk4
-                // gtk_builder_connect_signals (builder, NULL);
-                gtk_widget_show (property);
-        }
+        gtk_widget_show (property);
 } /* property_cb */
 
 
@@ -670,16 +646,14 @@ property_cb (GtkWidget *w, gpointer data)
  * callback function for preferences dialog.
  */
 G_MODULE_EXPORT void
-proxy_toggled_cb (GtkWidget *toggle, gpointer builder)
+proxy_toggled_cb (GtkWidget *toggle, gpointer proxy_entry)
 {
-        gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+        gboolean on = gtk_check_button_get_active (GTK_CHECK_BUTTON (toggle));
 
-        GtkWidget *proxy_entry = GTK_WIDGET
-                (gtk_builder_get_object (GTK_BUILDER (builder), "proxy_entry"));
-        gtk_widget_set_sensitive (proxy_entry, on);
+        gtk_widget_set_sensitive (GTK_WIDGET (proxy_entry), on);
 
         set_proxy_in_use (on);
-} /* lang_changed_cb */
+} /* proxy_toggled_cb */
 
 
 /*
@@ -755,13 +729,12 @@ font_sel_cb (GtkWidget *gfc, gpointer data)
  * callback function for autostart changes.
  */
 G_MODULE_EXPORT void
-autostart_cb (GtkWidget *data, gpointer toggle) {
+autostart_cb (GtkWidget *toggle, gpointer data) {
         gboolean autostart =
-                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+                gtk_check_button_get_active (GTK_CHECK_BUTTON (toggle));
         if (autostart) {
                 /* TODO handle return type */
-                add_to_autostart (gtk_toggle_button_get_active (
-                        GTK_TOGGLE_BUTTON (data)));
+                add_to_autostart (gtk_check_button_get_active (GTK_CHECK_BUTTON (data)));
         } else {
                 /* TODO handle return type */
                 remove_from_autostart ();
@@ -775,16 +748,11 @@ autostart_cb (GtkWidget *data, gpointer toggle) {
  */
 G_MODULE_EXPORT void
 autostart_once_cb (GtkWidget *toggle, gpointer data) {
-        gboolean autostart_once =
-                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+        gboolean once = gtk_check_button_get_active (GTK_CHECK_BUTTON (toggle));
         remove_from_autostart ();
-        if (autostart_once) {
-                /* TODO handle return type */
-                add_to_autostart (TRUE);
-        } else {
-                /* TODO handle return type */
-                add_to_autostart (FALSE);
-        }
+
+        /* TODO handle return type */
+        add_to_autostart (once);
 } /* autostart_cb */
 
 
@@ -794,24 +762,20 @@ autostart_once_cb (GtkWidget *toggle, gpointer data) {
 G_MODULE_EXPORT void
 sword_cb (GtkWidget *toggle, gpointer data)
 {
-        show_sword_new = gtk_toggle_button_get_active
-                (GTK_TOGGLE_BUTTON (toggle));
+        show_sword = gtk_check_button_get_active (GTK_CHECK_BUTTON (toggle));
 
 #ifdef VERSE_LINK
-        if (show_sword_new != show_sword) {
-                show_sword = show_sword_new;
-                set_link_sword (show_sword);
-                if (show_sword) {
-                        gtk_widget_hide (label [OT_LOC]);
-                        gtk_widget_show (label [OT_LOC_SWORD]);
-                        gtk_widget_hide (label [NT_LOC]);
-                        gtk_widget_show (label [NT_LOC_SWORD]);
-                } else {
-                        gtk_widget_hide (label [OT_LOC_SWORD]);
-                        gtk_widget_show (label [OT_LOC]);
-                        gtk_widget_hide (label [NT_LOC_SWORD]);
-                        gtk_widget_show (label [NT_LOC]);
-                }
+        set_link_sword (show_sword);
+        if (show_sword) {
+                gtk_widget_hide (label [OT_LOC]);
+                gtk_widget_show (label [OT_LOC_SWORD]);
+                gtk_widget_hide (label [NT_LOC]);
+                gtk_widget_show (label [NT_LOC_SWORD]);
+        } else {
+                gtk_widget_hide (label [OT_LOC_SWORD]);
+                gtk_widget_show (label [OT_LOC]);
+                gtk_widget_hide (label [NT_LOC_SWORD]);
+                gtk_widget_show (label [NT_LOC]);
         }
 #endif
 } /* sword_cb */
@@ -820,50 +784,37 @@ sword_cb (GtkWidget *toggle, gpointer data)
 /*
  * callback function that displays a calendar.
  */
-static void
+G_MODULE_EXPORT void
 calendar_cb (GtkWidget *w, gpointer data)
 {
-        static GtkWidget *dialog = NULL;
+        GtkWidget *dialog = gtk_dialog_new ();
+        gtk_window_set_title (GTK_WINDOW (dialog), _("Calendar"));
+        gtk_dialog_add_action_widget (
+                GTK_DIALOG (dialog),
+                gtk_button_new_with_label ("_Close"),
+                GTK_RESPONSE_CLOSE);
+        gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app));
 
-        /* if (dialog != NULL) {
-                g_assert (gtk_widget_get_realized (dialog));
-                gtk_widget_show  (dialog);
-                // FIXME gtk4
-                // gdk_window_raise (gtk_widget_get_window (dialog));
-        } else */ {
-                dialog = gtk_dialog_new ();
-                gtk_window_set_title (GTK_WINDOW (dialog), _("Calendar"));
-                gtk_dialog_add_action_widget (
-                        GTK_DIALOG (dialog),
-                        gtk_button_new_with_label ("_Close"),
-                        GTK_RESPONSE_CLOSE);
-                gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app));
+        calendar = gtk_calendar_new ();
+        gtk_calendar_set_show_day_names (GTK_CALENDAR (calendar), TRUE);
+        gtk_calendar_set_show_heading (GTK_CALENDAR (calendar), TRUE);
+        gtk_calendar_set_show_week_numbers (GTK_CALENDAR (calendar), TRUE);
+        gtk_calendar_select_day      (GTK_CALENDAR (calendar), date);
+        gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), calendar);
+        g_signal_connect (G_OBJECT (dialog), "response",
+                                G_CALLBACK (gtk_window_destroy), &dialog);
+        g_signal_connect (G_OBJECT (calendar),
+                                "day_selected", // day_selected_double_click
+                                G_CALLBACK (calendar_select_cb), dialog);
 
-                calendar = gtk_calendar_new ();
-                gtk_calendar_set_show_day_names (GTK_CALENDAR (calendar), TRUE);
-                gtk_calendar_set_show_heading (GTK_CALENDAR (calendar), TRUE);
-                gtk_calendar_set_show_week_numbers (GTK_CALENDAR (calendar), TRUE);
-                gtk_calendar_select_day      (GTK_CALENDAR (calendar), date);
-                gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), calendar);
-                g_signal_connect (G_OBJECT (dialog), "response",
-                                  G_CALLBACK (gtk_window_destroy), &dialog);
-                g_signal_connect (G_OBJECT (dialog), "destroy",
-                                  G_CALLBACK (g_object_unref), &dialog);
-                g_signal_connect (G_OBJECT (dialog), "destroy",
-                                  G_CALLBACK (g_object_unref), &calendar);
-                g_signal_connect (G_OBJECT (calendar),
-                                  "day_selected", // day_selected_double_click
-                                  G_CALLBACK (calendar_select_cb), dialog);
-
-                gtk_widget_show (dialog);
-        }
+        gtk_widget_show (dialog);
 } /* calendar_cb */
 
 
 /*
  * callback function that computes Losung for the current date.
  */
-static void
+G_MODULE_EXPORT void
 today_cb (GtkWidget *w, gpointer data)
 {
         // FIXME: needed? core dumb
@@ -880,7 +831,7 @@ today_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that increases the day.
  */
-static void
+G_MODULE_EXPORT void
 next_day_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_days (date, 1);
@@ -894,7 +845,7 @@ next_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the day.
  */
-static void
+G_MODULE_EXPORT void
 prev_day_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_days (date, -1);
@@ -908,7 +859,7 @@ prev_day_cb (GtkWidget *w, gpointer data)
 /*
  * callback function  that increases the month.
  */
-static void
+G_MODULE_EXPORT void
 next_month_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_months (date, 1);
@@ -922,7 +873,7 @@ next_month_cb (GtkWidget *w, gpointer data)
 /*
  * callback function that decreases the month.
  */
-static void
+G_MODULE_EXPORT void
 prev_month_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_months (date, -1);
@@ -936,7 +887,7 @@ prev_month_cb (GtkWidget *w, gpointer data)
 /*
  * callback function for the calendar widget.
  */
-static void
+G_MODULE_EXPORT void
 calendar_select_cb (GtkWidget *calendar, gpointer data)
 {
         show_text (gtk_calendar_get_date (GTK_CALENDAR (calendar)));

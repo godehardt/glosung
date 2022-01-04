@@ -58,7 +58,7 @@ else:
 VariantDir('build', 'src')
 
 cpppath = ['#', '#build']
-ccflags   = ['-O2', '-std=c99', '-Wall', '-g',
+ccflags   = ['-O2', '-std=c99', '-Wall', '-g', '-Wl,—export-dynamic',
 #		'-DLIBXML_STATIC',
 		'-DVERSION=\\"' + version + '\\"',
 		'-DGLOSUNG_DATA_DIR=\\"' + data_dir + '\\"',
@@ -68,10 +68,10 @@ linkflags = []          # '-L.'
 
 if ARGUMENTS.get ('profile'):
     ccflags.append   ('-pg', '-fprofile-arcs')
-    linkflags.append ('-pg', '-fprofile-arcs', '-Wl,--export-dynamic')
+    linkflags.append ('-pg', '-fprofile-arcs')
 
-if env['PLATFORM'] != 'win32':
-        linkflags.append ('-Wl,--as-needed')
+#if env['PLATFORM'] != 'win32':
+#    linkflags.append ('-Wl,--as-needed')
 
 #if not (ARGUMENTS.get ('dev')):
 if (ARGUMENTS.get ('dev')):
@@ -99,6 +99,7 @@ else:
         env.ParseConfig('pkg-config gtk4 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
 #        Tool('posix')(env)
 
+linkflags.append ('-lgmodule-export-2.0')
 
 conf = Configure (env)
 #if not conf.CheckLib ('libxml2'):
