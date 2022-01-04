@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2021 Eicke Godehardt
+ * Copyright (C) 1999-2022 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,6 @@ static GtkWidget *app;
 static GDateTime *date;
 static GtkWidget *calendar;
 static GtkWidget *label [NUMBER_OF_LABELS];
-static GtkWidget *property = NULL;
 
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
@@ -555,11 +554,6 @@ about_herrnhut_cb (GtkWidget *w, gpointer data)
 G_MODULE_EXPORT void
 property_cb (GtkWidget *w, gpointer data)
 {
-        GtkWidget *combo;
-        GtkWidget *grid;
-        GtkWidget *proxy_entry;
-        GtkWidget *proxy_checkbox;
-
         if (new_font != NULL) {
                 g_free (new_font);
                 new_font = NULL;
@@ -575,16 +569,14 @@ property_cb (GtkWidget *w, gpointer data)
                 return;
         }
 
-        property = GTK_WIDGET
+        GtkWidget *property = GTK_WIDGET
                 (gtk_builder_get_object (builder, "preferences_dialog"));
-        grid = GTK_WIDGET
-                (gtk_builder_get_object (builder, "preferences_table"));
-        proxy_checkbox = GTK_WIDGET
+        GtkWidget *proxy_checkbox = GTK_WIDGET
                 (gtk_builder_get_object (builder, "proxy_checkbox"));
-        proxy_entry = GTK_WIDGET
+        GtkWidget *proxy_entry = GTK_WIDGET
                 (gtk_builder_get_object (builder, "proxy_entry"));
 
-        combo = GTK_WIDGET
+        GtkWidget *combo = GTK_WIDGET
                 (gtk_builder_get_object (builder, "language_combo"));
         for (gint i = 0; i < (local_collections->languages)->len; i++) {
                 gchar *langu = g_ptr_array_index
