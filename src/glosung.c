@@ -108,14 +108,14 @@ static gint handle_local_options (GtkApplication *app, GVariantDict *options, gp
 static void activate             (GtkApplication *app, gpointer data);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
-static void about_cb             (GtkWidget *w,   gpointer data);
+void about_cb             (GtkWidget *w,   gpointer data);
 static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
 void calendar_cb          (GtkWidget *w,   gpointer data);
 void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
-static void lang_manager_cb      (GtkWidget *w,   gpointer data);
+void lang_manager_cb      (GtkWidget *w,   gpointer data);
 void next_day_cb          (GtkWidget *w,   gpointer data);
 void next_month_cb        (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
@@ -263,7 +263,9 @@ activate (GtkApplication *app,
                 pango_font_description_free (font_desc);
         }
 
+        set_headerbar_button (builder, "languages");
         set_headerbar_button (builder, "properties");
+        set_headerbar_button (builder, "about");
         set_headerbar_button (builder, "previous_month");
         set_headerbar_button (builder, "previous_day");
         set_headerbar_button (builder, "today");
@@ -531,7 +533,7 @@ show_text (GDateTime *new_date)
 /*
  * callback function that displays the about dialog.
  */
-static void
+G_MODULE_EXPORT void
 about_cb (GtkWidget *w, gpointer data)
 {
         about (app);
@@ -901,7 +903,7 @@ static GtkWidget       *download_button;
 static GtkListStore    *store;
 
 
-static void
+G_MODULE_EXPORT void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;

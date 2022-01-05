@@ -17,15 +17,13 @@
  */
 
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <glib/gi18n.h>
 
 #include "about.h"
 #include "util.h"
 
 #define APPNAME "GLosung"
-
-
-static GtkWidget *herrnhut = NULL;
 
 
 /*
@@ -36,71 +34,37 @@ about (GtkWidget *app)
 {
         const gchar *authors [] = {
                 "Eicke Godehardt",
-                "Andreas Kemnade",
                 "Johannes Hausensteiner",
+                "Andreas Kemnade",
                 "Sebastian Pätzold (rpm packages)",
+                NULL
+        };
+        const gchar *artists [] = {
+                "Icons: Font Awesome https://fontawesome.com/license",
+                "Watchwords: (C) Moravian Church https://www.losungen.de",
+                "Bible 2.0: (C) Bible 2.0 Team http://www.bible20.net",
                 NULL
         };
         gchar *translators =
             "Marek Drápal\nNicolas\nEmanuel Feruzi\nMáté Nagy\nEicke Godehardt";
 
-        GError *error = NULL;
-        GdkPixbuf *logo =  gdk_pixbuf_new_from_file
-                (PACKAGE_PIXMAPS_DIR "/glosung-big.png", &error);
-#if ! (GTK_CHECK_VERSION(2,24,0))
-        gtk_about_dialog_set_url_hook
-		((GtkAboutDialogActivateLinkFunc) show_uri,
-		 GINT_TO_POINTER (1), NULL);
-#endif
+        GdkPaintable *logo = gtk_picture_get_paintable (
+                GTK_PICTURE (gtk_picture_new_for_filename
+                        (PACKAGE_PIXMAPS_DIR "/glosung-big.png")));
 
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,
+                 "artists", artists,
                  "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2021 Eicke Godehardt",
+                 "copyright", "(C) 1999-2022 Eicke Godehardt",
                  // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
                  "logo", logo,
                  "name", APPNAME,
+                 "program-name", APPNAME,
                  "translator-credits", translators,
+                 "title", _("About GLosung"),
                  "version", VERSION,
                  "website", "http://www.godehardt.org/losung.html",
+                 "website-label", "http://www.godehardt.org/losung.html",
                  NULL);
 } /* about */
-
-
-/*
- * callback function that displays the about dialog.
- */
-void
-about_herrnhut (GtkWidget *app)
-{
-        if (herrnhut) {
-                return;
-        }
-        GError *error = NULL;
-        GdkPixbuf *logo =  gdk_pixbuf_new_from_file
-                (PACKAGE_PIXMAPS_DIR "/herrnhut.png", &error);
-
-#if ! (GTK_CHECK_VERSION(2,24,0))
-        gtk_about_dialog_set_url_hook
-		((GtkAboutDialogActivateLinkFunc) show_uri, NULL, NULL);
-#endif
-        herrnhut = gtk_about_dialog_new ();
-        gtk_about_dialog_set_program_name
-                (GTK_ABOUT_DIALOG (herrnhut), "Herrnhuter Losungen");
-        gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (herrnhut), logo);
-        gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (herrnhut),
-                _("The watchwords (german: Losungen) are words out of the "
-                  "bible, one from the Old and one from the New Testament.  "
-                  "They are choosen by lot since 1731.  By now they are "
-                  "provided in about 50 languages."));
-        gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (herrnhut),
-                _("Watchwords: (C) Moravian Church\n"
-                  "Bible texts: (C) German Bible Association, Stuttgart"));
-        gtk_about_dialog_set_website
-                (GTK_ABOUT_DIALOG (herrnhut), "http://www.losungen.de");
-        gtk_widget_show (herrnhut);
-        g_signal_connect (G_OBJECT (herrnhut), "response",
-                          G_CALLBACK (gtk_window_destroy), NULL);
-        g_signal_connect (G_OBJECT (herrnhut), "destroy",
-                          G_CALLBACK (g_object_unref), &herrnhut);
-} /* about_herrnhut */

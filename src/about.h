@@ -22,7 +22,6 @@
 #include <gtk/gtk.h>
 
 
-void about          (GtkWidget *app);
-void about_herrnhut (GtkWidget *app);
+void about (GtkWidget *app);
 
 #endif /* GLOSUNG_ABOUT__H */
