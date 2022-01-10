@@ -12,13 +12,11 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="date">
-                <property name="label">Date</property>
               </object>
             </child>
             <child>
               <object class="GtkLabel" id="losung">
                 <property name="margin-top">10</property>
-                <property name="label">Losung</property>
                 <style>
                   <class name="spaceabove"/>
                 </style>
@@ -27,13 +25,11 @@
             <child>
               <object class="GtkLabel" id="losung_address">
                 <property name="margin-bottom">10</property>
-                <property name="label">Adresse</property>
               </object>
             </child>
             <child>
               <object class="GtkLinkButton" id="losung_address_link">
                 <property name="visible">0</property>
-                <property name="label" translatable="yes">Address</property>
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
               </object>
@@ -41,7 +37,6 @@
             <child>
               <object class="GtkLabel" id="lehrtext">
                 <property name="margin-top">10</property>
-                <property name="label">Lehrtext</property>
                 <style>
                   <class name="spaceabove"/>
                 </style>
@@ -49,13 +44,11 @@
             </child>
             <child>
               <object class="GtkLabel" id="lehrtext_address">
-                <property name="label">Adresse</property>
               </object>
             </child>
             <child>
               <object class="GtkLinkButton" id="lehrtext_address_link">
                 <property name="visible">0</property>
-                <property name="label" translatable="yes">Address</property>
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
               </object>
@@ -63,7 +56,6 @@
             <child>
               <object class="GtkLabel" id="reading">
                 <property name="margin-top">10</property>
-                <property name="label">Lehrtext</property>
               </object>
             </child>
           </object>

@@ -252,7 +252,7 @@ get_the_word (GDateTime *date, gchar *lang)
         file = find_the_word_file (lang, g_date_time_get_year (date));
         filename = check_file (file);
 
-        if (! filename) {
+        if (! file || ! filename) {
                 return NULL;
         }
         // g_message ("the word");
@@ -311,6 +311,7 @@ parse (GDateTime *date, gchar *lang, gchar *filename)
         g_free (filename);
         g_free (date_string);
         g_free (sax);
+
         quote = NULL;
         if (! found) {
                 losung_free (ww);

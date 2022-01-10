@@ -200,7 +200,7 @@ activate (GtkApplication *app,
                 }
         }
 
-        printf ("Choosen language: %s\n", lang);
+        g_message ("Choosen language: %s", lang);
         calendar_close = is_calender_double_click ();
         font = get_font ();
         show_sword = show_sword_new = is_link_sword ();
@@ -209,9 +209,9 @@ activate (GtkApplication *app,
         GtkBuilder *builder = gtk_builder_new ();
         gchar *ui_file = find_ui_file ("glosung.ui");
         guint result = gtk_builder_add_from_file (builder, ui_file, &error);
-        g_free (ui_file);
-        g_print ("%d\n", result);
-        g_print ("%s\n", error->message);
+        // g_free (ui_file);
+        // g_print ("%d\n", result);
+        // g_print ("%s\n", error->message);
 
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
@@ -235,21 +235,6 @@ activate (GtkApplication *app,
         label [READING] = GTK_WIDGET (gtk_builder_get_object (builder, "reading"));
         gtk_widget_add_css_class (GTK_WIDGET (label [READING]), "spaceabove");
 
-        if (local_collections->languages->len == 0) {
-                GtkWidget *error = gtk_message_dialog_new
-                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                         _("No text files found!\n"
-                           "Please install your prefered languages."));
-                g_signal_connect (G_OBJECT (error), "response",
-                                  G_CALLBACK (no_languages_cb), error);
-                               // G_CALLBACK (gtk_widget_destroy), NULL);
-                               // G_CALLBACK (lang_manager_cb), NULL);
-                               // CALLBACK (gtk_main_quit), NULL);
-                gtk_widget_show (error);
-        } else {
-                show_text (date);
-        }
         if (font != NULL) {
                 PangoAttrList *const attrs = pango_attr_list_new ();
                 PangoFontDescription *font_desc = pango_font_description_from_string (font);
@@ -290,6 +275,22 @@ activate (GtkApplication *app,
         gtk_widget_show (GTK_WIDGET (window));
         // gtk_window_set_default_icon_from_file
         //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
+
+        if (local_collections->languages->len == 0) {
+                GtkWidget *error_dialog = gtk_message_dialog_new
+                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                         _("No text files found!\n"
+                           "Please install your prefered languages."));
+                g_signal_connect (G_OBJECT (error_dialog), "response",
+                                  G_CALLBACK (no_languages_cb), NULL);
+                               // G_CALLBACK (gtk_widget_destroy), NULL);
+                               // G_CALLBACK (lang_manager_cb), NULL);
+                               // CALLBACK (gtk_main_quit), NULL);
+                gtk_widget_show (error_dialog);
+        } else {
+                show_text (date);
+        }
 
         /* We don't need the builder any more */
         g_object_unref (builder);
@@ -395,16 +396,18 @@ show_text (GDateTime *new_date)
         }
 
         if (ww == NULL) {
-                GtkWidget *error = gtk_message_dialog_new (
-                        GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                        GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+                GtkWidget *error_dialog = gtk_message_dialog_new
+                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
+                         GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                         _("No %s texts found for %d!"),
                         (gchar*) g_hash_table_lookup (lang_translations, lang),
                         g_date_time_get_year (new_date));
-                g_signal_connect (G_OBJECT (error), "response",
-                                  G_CALLBACK (g_object_unref), NULL);
-                gtk_widget_show (error);
-                g_object_unref (new_date);
+                g_signal_connect (G_OBJECT (error_dialog), "response",
+                                  G_CALLBACK (no_languages_cb), NULL);
+
+                gtk_widget_show (error_dialog);
+                // FIXME: needed? core dumb
+                // g_object_unref (new_date);
                 return;
         }
 
@@ -897,10 +900,82 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-// static GtkComboBox  *lang_combo;
+static GtkComboBox     *lang_combo;
 static GtkComboBoxText *year_combo;
 static GtkWidget       *download_button;
 static GtkListStore    *store;
+
+
+static void
+lang_manager_response (GtkWidget *w, gpointer data)
+{
+        gint response = GPOINTER_TO_INT (data);
+        if (response == GTK_RESPONSE_NONE) {
+                gtk_window_destroy (GTK_WINDOW (w));
+        } else if (response == GTK_RESPONSE_DELETE_EVENT) {
+                // Window close button.  No reaction needed?!?
+        } else if (response == 1) {
+                add_lang_cb (w, w);
+        } else if (response == 2) {
+                g_print ("download %d\n", response);
+
+                gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
+                if (index == -1) {
+                	return;
+                }
+                GPtrArray *langs = source_get_languages (server_list);
+                if (langs->len > 0 && index > 0) {
+                	index--;
+                }
+        	gchar *langu = g_ptr_array_index (langs, index);
+
+                GPtrArray *vc_s = source_get_collections (server_list, langu);
+                gint i = gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
+		guint year = VC (g_ptr_array_index (vc_s, i))->year;
+
+		if (! is_hide_warning ()) {
+                        GtkBuilder* builder = gtk_builder_new ();
+                        gtk_builder_set_translation_domain (builder, PACKAGE);
+			gchar *ui_file = find_ui_file ("warning_dialog.glade");
+			gtk_builder_add_from_file (builder, ui_file, NULL);
+			g_free (ui_file);
+			GtkDialog *warning = GTK_DIALOG
+			   (gtk_builder_get_object (builder, "warning_dialog"));
+/*
+			gint res = gtk_dialog_run (warning);
+			gtk_window_destroy (GTK_WINDOW (warning));
+//		        gtk_window_destroy (GTK_WINDOW (dialog));
+		        if (res == GTK_RESPONSE_CANCEL) {
+		        	return;
+		        }
+*/
+		}
+
+	        int error = download (server_list, langu, year);
+                if (error) {
+                	GtkWidget *msg = gtk_message_dialog_new
+                	     (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                	      GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
+                	      get_last_error_message (), error);
+                	gtk_widget_show (GTK_WIDGET (msg));
+//                 	gtk_window_destroy (GTK_WINDOW (msg));
+                	return;
+                }
+
+                source_add_collection (local_collections, langu, year);
+		source_finialize      (local_collections);
+
+		update_language_store ();
+		if (local_collections->languages->len == 1) {
+			lang = langu;
+			set_language (lang);
+		}
+                gtk_window_destroy (GTK_WINDOW (w));
+                show_text (date);
+        } else {
+                g_print ("%d\n", response);
+        }
+}
 
 
 G_MODULE_EXPORT void
@@ -918,13 +993,12 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                 (_("Languages"), GTK_WINDOW (app),
                  // GTK_DIALOG_MODAL |
                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                 _("_OK"), GTK_RESPONSE_NONE, NULL);
+                 _("_Add"), 1,
+                 _("_OK"), GTK_RESPONSE_NONE,
+                 NULL);
 
         vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
-        gtk_widget_show (vbox);
-        // FIXME gtk4
-        // gtk_container_set_border_width (GTK_CONTAINER (vbox), MY_PAD);
 
         store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
         update_language_store (store);
@@ -941,29 +1015,20 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
         gtk_widget_set_size_request (list, 200, 140);
-        gtk_widget_show (list);
 
         GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
-        gtk_widget_show (lang_frame);
 
         scroll = gtk_scrolled_window_new ();
-        gtk_widget_show (scroll);
 
-        gtk_box_append (GTK_BOX (lang_frame), scroll);
-        gtk_box_append (GTK_BOX (scroll), list);
+        gtk_frame_set_child (GTK_FRAME (lang_frame), scroll);
+        gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scroll), list);
 
-        gtk_box_prepend (GTK_BOX (vbox), lang_frame);
-
-        add_button = gtk_button_new_with_label ("_Add");
-        g_signal_connect (G_OBJECT (add_button), "clicked",
-                          G_CALLBACK (add_lang_cb), dialog);
-        gtk_widget_show (add_button);
-        gtk_box_prepend (GTK_BOX (vbox), add_button);
+        gtk_box_append (GTK_BOX (vbox), lang_frame);
 
         gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox);
 
         g_signal_connect (G_OBJECT (dialog), "response",
-                          G_CALLBACK (gtk_window_destroy), NULL);
+                          G_CALLBACK (lang_manager_response), NULL);
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
 
@@ -975,7 +1040,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("add_language.glade");
+        gchar *ui_file = find_ui_file ("add_language.ui");
         guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
         g_free (ui_file);
         if (! build) {
@@ -986,12 +1051,11 @@ add_lang_cb (GtkWidget *w, gpointer data)
         dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
-        GtkFrame *source_frame = GTK_FRAME
+        GtkBox *source_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "source_frame"));
         GtkComboBoxText *source_combo =
 		GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
-        gtk_frame_set_child (GTK_FRAME (source_frame),
-                             GTK_WIDGET (source_combo));
+        gtk_box_append (source_frame, GTK_WIDGET (source_combo));
         gtk_combo_box_text_append_text (source_combo, "");
 
         GPtrArray *sources = get_sources ();
@@ -1003,19 +1067,19 @@ add_lang_cb (GtkWidget *w, gpointer data)
         }
         gtk_combo_box_set_active (GTK_COMBO_BOX (source_combo), 0);
 
-        GtkFrame *lang_frame = GTK_FRAME
+        GtkBox *lang_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "lang_frame"));
         GtkComboBoxText *lang_combo =
 		GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
-        gtk_box_append (GTK_BOX (lang_frame), GTK_WIDGET (lang_combo));
+        gtk_box_append (lang_frame, GTK_WIDGET (lang_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
 
-        GtkFrame *year_frame = GTK_FRAME
+        GtkBox *year_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "year_frame"));
         download_button = GTK_WIDGET
-                (gtk_builder_get_object (builder, "download_button"));
+                (gtk_builder_get_object (builder, "button_download"));
 	year_combo = GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
-        gtk_box_append (GTK_BOX (year_frame), GTK_WIDGET (year_combo));
+        gtk_box_append (year_frame, GTK_WIDGET (year_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
@@ -1024,63 +1088,14 @@ add_lang_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (sources_changed), lang_combo);
         g_signal_connect (G_OBJECT (lang_combo), "changed",
                           G_CALLBACK (language_changed), year_combo);
+        g_signal_connect (G_OBJECT (dialog), "response",
+                          G_CALLBACK (lang_manager_response), NULL);
         gtk_widget_show (dialog);
 
 /* FIXME gtk4 use callback
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 // gchar *langu = "de";
-                gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
-                if (index == -1) {
-                	return;
-                }
-                GPtrArray *langs = source_get_languages (server_list);
-                gchar *langu;
-                if (langs->len > 0 && index > 0) {
-                	index--;
-                }
-        	langu = g_ptr_array_index (langs, index);
-
-                GPtrArray *vc_s = source_get_collections (server_list, langu);
-                gint i = gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
-		guint year = VC (g_ptr_array_index (vc_s, i))->year;
-
-		if (! is_hide_warning ()) {
-			ui_file = find_ui_file ("warning_dialog.glade");
-			gtk_builder_add_from_file (builder, ui_file, NULL);
-			g_free (ui_file);
-	                gtk_builder_connect_signals (builder, NULL);
-			GtkDialog *warning = GTK_DIALOG
-			   (gtk_builder_get_object (builder, "warning_dialog"));
-			gint res = gtk_dialog_run (warning);
-			gtk_window_destroy (GTK_WINDOW (warning));
-		        gtk_window_destroy (GTK_WINDOW (dialog));
-		        if (res == GTK_RESPONSE_CANCEL) {
-		        	return;
-		        }
-		}
-
-	        int error = download (server_list, langu, year);
-                if (error) {
-                	GtkWidget *msg = gtk_message_dialog_new
-                	     (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                	      GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
-                	      get_last_error_message (), error);
-                	gtk_dialog_run (GTK_DIALOG (msg));
-                	gtk_window_destroy (GTK_WINDOW (msg));
-        	        gtk_window_destroy (GTK_WINDOW (dialog));
-                	return;
-                }
-
-                source_add_collection (local_collections, langu, year);
-		source_finialize      (local_collections);
-
-		update_language_store ();
-		if (local_collections->languages->len == 1) {
-			lang = langu;
-			set_language (lang);
-		}
-		show_text ();
-        }
+       }
         gtk_window_destroy (GTK_WINDOW (dialog));
         */
 } /* add_lang_cb */

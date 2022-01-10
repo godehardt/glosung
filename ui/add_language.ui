@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkDialog" id="add_language_dialog">
+    <property name="title" translatable="yes">Add Language</property>
+    <child internal-child="content_area">
+      <object class="GtkBox" id="dialog-vbox1">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <style>
+              <class name="grid" />
+            </style>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Source</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="source_frame">
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Language</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="lang_frame">
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Year</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="year_frame">
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="button_download">
+        <property name="label" translatable="yes">Download</property>
+        <property name="sensitive">0</property>
+        <property name="focusable">1</property>
+        <property name="receives_default">1</property>
+        <property name="tooltip_text" translatable="yes">download selected verse collection</property>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="button_cancel">
+        <property name="label" translatable="yes">Cancel</property>
+        <property name="focusable">1</property>
+        <property name="receives_default">1</property>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="2">button_download</action-widget>
+      <action-widget response="none" default="true">button_cancel</action-widget>
+    </action-widgets>
+  </object>
+</interface>
