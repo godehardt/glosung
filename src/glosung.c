@@ -982,31 +982,30 @@ G_MODULE_EXPORT void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
         GtkWidget    *dialog;
-        GtkWidget    *scroll;
-        GtkWidget    *add_button;
-        GtkWidget    *list;
-        GtkWidget    *vbox;
-        GtkCellRenderer   *renderer;
-        GtkTreeViewColumn *column;
 
-        dialog = gtk_dialog_new_with_buttons
-                (_("Languages"), GTK_WINDOW (app),
-                 // GTK_DIALOG_MODAL |
-                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                 _("_Add"), 1,
-                 _("_OK"), GTK_RESPONSE_NONE,
-                 NULL);
+        GtkBuilder* builder = gtk_builder_new ();
+        gtk_builder_set_translation_domain (builder, PACKAGE);
+        gchar *ui_file = find_ui_file ("language_manager.ui");
+        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
+        g_free (ui_file);
+        if (! build) {
+                g_message ("Error while loading UI definition file");
+                return;
+        }
+        // gtk_builder_connect_signals (builder, NULL);
+        dialog = GTK_WIDGET
+                (gtk_builder_get_object (builder, "language_manager_dialog"));
 
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-        // gtk_box_set_homogeneous (GTK_BOX (vbox), FALSE);
+        GtkScrolledWindow *scroll = GTK_SCROLLED_WINDOW
+                (gtk_builder_get_object (builder, "installed_lang_scroll"));
 
         store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
         update_language_store (store);
 
-        list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+        GtkWidget *list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
 
-        renderer = gtk_cell_renderer_text_new ();
-        column = gtk_tree_view_column_new_with_attributes
+        GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+        GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes
                 (NULL, renderer, "text", 0, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         renderer = gtk_cell_renderer_text_new ();
@@ -1014,18 +1013,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
                 (NULL, renderer, "text", 1, NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (list), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
-        gtk_widget_set_size_request (list, 200, 140);
 
-        GtkWidget *lang_frame = gtk_frame_new (_("Installed Languages"));
-
-        scroll = gtk_scrolled_window_new ();
-
-        gtk_frame_set_child (GTK_FRAME (lang_frame), scroll);
-        gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scroll), list);
-
-        gtk_box_append (GTK_BOX (vbox), lang_frame);
-
-        gtk_box_append (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), vbox);
+        gtk_scrolled_window_set_child (scroll, list);
 
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);

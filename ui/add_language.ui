@@ -4,7 +4,7 @@
   <object class="GtkDialog" id="add_language_dialog">
     <property name="title" translatable="yes">Add Language</property>
     <child internal-child="content_area">
-      <object class="GtkBox" id="dialog-vbox1">
+      <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox">
@@ -66,7 +66,7 @@
         <property name="sensitive">0</property>
         <property name="focusable">1</property>
         <property name="receives_default">1</property>
-        <property name="tooltip_text" translatable="yes">download selected verse collection</property>
+        <property name="tooltip_text" translatable="yes">Download selected verse collection</property>
       </object>
     </child>
     <child type="action">

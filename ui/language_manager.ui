@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkDialog" id="language_manager_dialog">
+    <property name="title" translatable="yes">Languages</property>
+    <child internal-child="content_area">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <style>
+              <class name="grid" />
+            </style>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Installed Languages</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="installed_lang_scroll">
+                <property name="min-content-width">200</property>
+                <property name="min-content-height">140</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="button_add">
+        <property name="label" translatable="yes">Add</property>
+        <property name="focusable">1</property>
+        <property name="receives_default">1</property>
+        <property name="tooltip_text" translatable="yes">Add another verse collection</property>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="button_close">
+        <property name="label" translatable="yes">Close</property>
+        <property name="focusable">1</property>
+        <property name="receives_default">1</property>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="1">button_add</action-widget>
+      <action-widget response="none" default="true">button_close</action-widget>
+    </action-widgets>
+  </object>
+</interface>
