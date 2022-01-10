@@ -4,3 +4,5 @@
 po/*.mo
 po/messages.pot
 *~
+*.bak
+._*
