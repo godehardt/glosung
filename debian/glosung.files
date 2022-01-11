@@ -1,10 +1,6 @@
 /usr/bin/glosung
 /usr/bin/losung
 /usr/share/applications/glosung.desktop
-/usr/share/glosung/add_language.glade
-/usr/share/glosung/preferences.glade
-/usr/share/glosung/warning_dialog.glade
-/usr/share/glosung/herrnhut.png
 /usr/share/glosung/glosung.png
 /usr/share/glosung/glosung-big.png
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo

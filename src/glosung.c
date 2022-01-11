@@ -153,7 +153,6 @@ handle_local_options (GtkApplication *app,
 {
         date = g_date_time_new_now_local ();
 
-        g_print ("handle_local_options %d\n", once);
         if (once) {
 		GDateTime *last_time = get_last_usage ();
 		if (last_time && g_date_time_compare (last_time, date) >= 0) {
@@ -207,11 +206,7 @@ activate (GtkApplication *app,
 
         GError *error = NULL;
         GtkBuilder *builder = gtk_builder_new ();
-        gchar *ui_file = find_ui_file ("glosung.ui");
-        guint result = gtk_builder_add_from_file (builder, ui_file, &error);
-        // g_free (ui_file);
-        // g_print ("%d\n", result);
-        // g_print ("%s\n", error->message);
+        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/glosung.ui", &error);
 
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
@@ -266,9 +261,10 @@ activate (GtkApplication *app,
         GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (window));
         GtkCssProvider *provider = gtk_css_provider_new ();
         //gtk_css_provider_load_from_data (provider, "#content {margin: 20px;} button.minimize {display: none; margin: 0px; background-color: red;}", -1);
-        gchar *css_file = find_ui_file ("style.css");
-        gtk_css_provider_load_from_path(provider, css_file);
-        g_free (css_file);
+        // gchar *css_file = find_ui_file ("style.css");
+        // gtk_css_provider_load_from_path ( provider, css_file);
+        // g_free (css_file);
+        gtk_css_provider_load_from_resource (provider, "/org/godehardt/glosung/ui/style.css");
         gtk_style_context_add_provider_for_display (display, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 
@@ -566,10 +562,8 @@ property_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("preferences.ui");
-        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
-        g_free (ui_file);
-        if (! build) {
+        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/preferences.ui", NULL);
+        if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }
@@ -936,9 +930,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
 		if (! is_hide_warning ()) {
                         GtkBuilder* builder = gtk_builder_new ();
                         gtk_builder_set_translation_domain (builder, PACKAGE);
-			gchar *ui_file = find_ui_file ("warning_dialog.glade");
-			gtk_builder_add_from_file (builder, ui_file, NULL);
-			g_free (ui_file);
+                        gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
 /*
@@ -985,10 +977,8 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("language_manager.ui");
-        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
-        g_free (ui_file);
-        if (! build) {
+        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/language_manager.ui", NULL);
+        if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }
@@ -1029,10 +1019,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gchar *ui_file = find_ui_file ("add_language.ui");
-        guint build = gtk_builder_add_from_file (builder, ui_file, NULL);
-        g_free (ui_file);
-        if (! build) {
+        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/add_language.ui", NULL);
+        if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }

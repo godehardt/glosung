@@ -84,7 +84,7 @@
                 <signal name="clicked" handler="lang_manager_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/bars-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/bars-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -96,7 +96,7 @@
                 <signal name="clicked" handler="property_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/gear-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/gear-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -111,7 +111,7 @@
                 </style>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/question-circle-regular.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/question-circle-regular.png</property>
                   </object>
                 </child>
               </object>
@@ -127,7 +127,7 @@
                 <signal name="clicked" handler="prev_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/angles-left-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-left-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -139,7 +139,7 @@
                 <signal name="clicked" handler="prev_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/angle-left-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/angle-left-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -151,7 +151,7 @@
                 <signal name="clicked" handler="today_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/angles-down-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-down-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -163,7 +163,7 @@
                 <signal name="clicked" handler="next_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/angle-right-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/angle-right-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -175,7 +175,7 @@
                 <signal name="clicked" handler="next_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/angles-right-solid.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-right-solid.png</property>
                   </object>
                 </child>
               </object>
@@ -187,7 +187,7 @@
                 <signal name="clicked" handler="calendar_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="file">ui/icons/calendar-alt-regular.png</property>
+                    <property name="resource">/org/godehardt/glosung/ui/icons/calendar-alt-regular.png</property>
                   </object>
                 </child>
               </object>

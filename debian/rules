@@ -5,6 +5,7 @@
 
 build:
 	dh_testdir
+#	scons --debug=findlibs
 	scons
 
 clean::

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkMessageDialog" id="warning_dialog">
+    <property name="modal">1</property>
+    <property name="destroy_with_parent">1</property>
+    <property name="message_type">warning</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt; If you live in a persecuted country and do not wish to
+risk detection you should NOT use this feature!</property>
+    <property name="use_markup">1</property>
+    <child>
+      <object class="GtkBox" id="dialog-vbox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkCheckButton" id="warning_checkbutton">
+            <property name="label" translatable="yes">Don&apos;t show this message again.</property>
+            <property name="focusable">1</property>
+            <property name="tooltip_text" translatable="yes">Check this box if you do not want to see this dialog again</property>
+            <signal name="toggled" handler="show_warning_cb"/>
+          </object>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkBox" id="dialog-action_area">
+            <property name="orientation">horizontal</property>
+            <property name="visible">True</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/godehardt/glosung">
+    <file>ui/icons/angle-left-solid.png</file>
+    <file>ui/icons/angle-right-solid.png</file>
+    <file>ui/icons/angles-down-solid.png</file>
+    <file>ui/icons/angles-left-solid.png</file>
+    <file>ui/icons/angles-right-solid.png</file>
+    <file>ui/icons/bars-solid.png</file>
+    <file>ui/icons/calendar-alt-regular.png</file>
+    <file>ui/icons/gear-solid.png</file>
+    <file>ui/icons/question-circle-regular.png</file>
+    <file preprocess="xml-stripblanks">ui/add_language.ui</file>
+    <file preprocess="xml-stripblanks">ui/glosung.ui</file>
+    <file preprocess="xml-stripblanks">ui/language_manager.ui</file>
+    <file preprocess="xml-stripblanks">ui/preferences.ui</file>
+    <file preprocess="xml-stripblanks">ui/warning_dialog.ui</file>
+    <file>ui/style.css</file>
+  </gresource>
+</gresources>
