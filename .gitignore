@@ -6,3 +6,8 @@ po/messages.pot
 *~
 *.bak
 ._*
+.vscode
+*.glade
+
+# generated
+src/resources.c
