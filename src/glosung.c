@@ -100,13 +100,16 @@ static Source    *server_list = NULL;
       Function prototypes
 \****************************/
 
+
 static GHashTable *init_languages       (void);
 
 static void        show_text            (GDateTime *date);
 
 static gint handle_local_options (GtkApplication *app, GVariantDict *options, gpointer data);
 static void activate             (GtkApplication *app, gpointer data);
-
+static void activate_quit        (GSimpleAction  *action,
+                                  GVariant       *parameter,
+                                  gpointer        app);
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 void about_cb             (GtkWidget *w,   gpointer data);
 void calendar_cb          (GtkWidget *w,   gpointer data);
@@ -123,7 +126,6 @@ void prev_month_cb        (GtkWidget *w,   gpointer data);
 void property_cb          (GtkWidget *w,   gpointer data);
 void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store();
-static void clipboard_cb         (GtkWidget *w,   gpointer data);
 //static void window_scroll_cb     (GtkWidget      *widget, GdkEventScroll *event, gpointer data);
 static gboolean check_new_date_cb (gpointer data);
 
@@ -138,11 +140,33 @@ void proxy_changed_cb       (GtkWidget *toggle,   gpointer data);
 void sword_cb               (GtkWidget *toggle,   gpointer data);
 
 
-/******************************\
-       Set up the GUI
-\******************************/
 
-#define MY_PAD 10
+static void
+activate_quit (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       app)
+{
+        g_application_quit (G_APPLICATION (app));
+}
+
+
+static void
+activate_copy (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       app)
+{
+        GdkClipboard* clipboard;
+        GList *list;
+
+        list = gtk_application_get_windows (GTK_APPLICATION (app));
+        if (! list) {
+                return;
+        }
+
+        clipboard = gdk_display_get_clipboard (gtk_widget_get_display (GTK_WIDGET (list->data)));
+        // clipboard = gdk_display_get_primary_clipboard ();
+        gdk_clipboard_set_text (clipboard, losung_simple_text);
+} /* activate_copy */
 
 
 static gint
@@ -289,6 +313,23 @@ activate (GtkApplication *app,
 
         /* We don't need the builder any more */
         g_object_unref (builder);
+
+        const GActionEntry app_entries[] =
+        {
+                { "quit", activate_quit},
+                { "copy", activate_copy }
+        };
+        const char *quit_accels[2] = { "<Control>q", NULL };
+        const char *copy_accels[2] = { "<Control>c", NULL };
+        g_action_map_add_action_entries (G_ACTION_MAP (app),
+                                   app_entries, G_N_ELEMENTS (app_entries),
+                                   app);
+        gtk_application_set_accels_for_action (GTK_APPLICATION (app),
+                                         "app.quit",
+                                         quit_accels);
+        gtk_application_set_accels_for_action (GTK_APPLICATION (app),
+                                         "app.copy",
+                                         copy_accels);
 } /* activate */
 
 
@@ -1199,16 +1240,6 @@ update_language_store ()
                 g_string_free (years, TRUE);
         }
 } /* update_language_store */
-
-
-static void
-clipboard_cb (GtkWidget *w, gpointer data)
-{
-        GdkClipboard* clipboard;
-        clipboard = gdk_display_get_clipboard (GDK_DISPLAY (w));
-        // clipboard = gdk_display_get_primary_clipboard ();
-        gdk_clipboard_set_text (clipboard, losung_simple_text);
-} /* clipboard_cb */
 
 
 /*
