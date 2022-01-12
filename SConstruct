@@ -119,9 +119,12 @@ env.Install (dir = install_dir + prefix + doc_dir,
 env.Install (dir = install_dir + prefix + '/share/applications',
           source = 'glosung.desktop')
 env.Install (dir = install_dir + pixmap_dir,
-        source = ['herrnhut.png', 'glosung.png', 'glosung-big.png'])
+        source = [
+                'herrnhut.png',
+                'glosung.png',
+                'glosung-big.png'])
 env.Install (dir = install_dir + data_dir,
-        source = ['ui/add_language.glade', 'ui/preferences.glade', 'ui/warning_dialog.glade'])
+        source = [])
 
 # TODO put everything into a folder "glosung-<VERSION>" and rename build to src
 if env['PLATFORM'] != 'win32':
@@ -135,11 +138,21 @@ if env['PLATFORM'] != 'win32':
                     'glosung-big.png',
                     'glosung.desktop',
                     'glosung.png',
-                    'ui/add_language.glade',
+                    'glosung.gresource.xml',
+                    'ui/add_language.ui',
                     'ui/glosung.ui',
+                    'ui/language_manager.ui',
                     'ui/preferences.ui',
-                    'ui/warning_dialog.glade',
+                    'ui/warning_dialog.ui',
                     'ui/style.css',
+                    'ui/icons/angle-left-solid.png',
+                    'ui/icons/angle-right-solid.png',
+                    'ui/icons/angles-down-solid.png',
+                    'ui/icons/angles-left-solid.png',
+                    'ui/icons/bars-solid.png',
+                    'ui/icons/calendar-alt-regular.png',
+                    'ui/icons/gear-solid.png',
+                    'ui/icons/question-circle-regular.png',
                     'debian/glosung.files',
                     'debian/control',
                     'debian/changelog',
