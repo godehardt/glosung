@@ -11,7 +11,7 @@ The official web site is: http://www.godehardt.org/losung.html
 
 GLosung requires that you have installed a few working libraries:
 
-* glib/gtk+ 2.10 or higher
+* glib/gtk+ 4.0 or higher
 	See the GTK+ homepage (www.gtk.org) for information on how to
 	download and install GLIB and GTK+. 
 
