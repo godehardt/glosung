@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 08:52+0000\n"
+"POT-Creation-Date: 2022-01-12 14:48+0100\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -20,16 +20,111 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 563
+msgid "Gods word for every day"
+msgstr "Boží slovo pro každý den"
+
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+msgid "About GLosung"
+msgstr "O aplikaci _GLosung"
+
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+msgid "Herrnhuter Losungen"
+msgstr "Hesla"
+
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr "Bible 2.0"
+
+#
+# File: src/download.c, line: 408
+msgid "Couldn't resolve proxy"
+msgstr "Nemohu přeložit adresu proxy"
+
+#
+# File: src/glosung.c, line: 209
+#. should be translated to corresponding language, e.g. 'de'
+msgid "en"
+msgstr "cs"
+
+#
+# File: src/glosung.c, line: 267
+msgid ""
+"No text files found!\n"
+"Please install your prefered languages."
+msgstr ""
+"Žádné textové soubory nebyly nalezeny!\n"
+"Nainstalujte si, prosím, příslušné jazykové soubory."
+
+#
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr "Spouštět jen jednou za den"
+
+#
+# File: src/glosung.c, line: 316
+#, c-format
+msgid "No %s texts found for %d!"
+msgstr "Nebyl nalezen text %s pro %d!"
+
+#
+# src/glosung.c:93 src/glosung.c:617
+# File: src/glosung.c, line: 143
+# File: src/glosung.c, line: 705
+msgid "Calendar"
+msgstr "Kalendář"
+
+#
+# File: src/glosung.c, line: 316
+#, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Nebyl nalezen text '%s' pro %d!\n"
+
+#
+# File: src/parser.c, line: 334
+#. title: timestring according to 'man strftime'
+msgid "Watchword for %A, %e. %B %Y"
+msgstr "Heslo pro %A, %e. %B %Y"
+
+#
+#
+#
+#
+#
 # File: src/glosung.c, line: 1141
-#: ../ui/add_language.glade:7
-msgid "Add Languages"
+#, fuzzy
+msgid "Add Language"
 msgstr "Přidej jazyky"
 
 #
 #
 #
 # File: ui/add_language.glade, line: 31
-#: ../ui/add_language.glade:30
 msgid "Source"
 msgstr "Zdroj"
 
@@ -58,7 +153,6 @@ msgstr "Zdroj"
 #
 #
 # File: src/glosung.c, line: 1150
-#: ../ui/add_language.glade:50
 msgid "Language"
 msgstr "Jazyk"
 
@@ -68,7 +162,6 @@ msgstr "Jazyk"
 #
 #
 # File: src/glosung.c, line: 1152
-#: ../ui/add_language.glade:70
 msgid "Year"
 msgstr "Rok"
 
@@ -78,7 +171,6 @@ msgstr "Rok"
 #
 #
 # File: src/glosung.c, line: 1144
-#: ../ui/add_language.glade:99
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -86,9 +178,68 @@ msgstr "Stáhnout"
 #
 #
 # File: ui/add_language.glade, line: 105
-#: ../ui/add_language.glade:104
-msgid "download selected verse collection"
+#, fuzzy
+msgid "Download selected verse collection"
 msgstr "stáhnout vybranou sbírku veršů"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: ui/add_language.glade, line: 100
+#, fuzzy
+msgid "Cancel"
+msgstr "zrušit"
+
+#
+# File: src/glosung.c, line: 1068
+msgid "Languages"
+msgstr "Jazyky"
+
+#
+# File: src/glosung.c, line: 1107
+msgid "Installed Languages"
+msgstr "Instalované jazyky"
+
+msgid "Add"
+msgstr ""
+
+#
+#
+#
+# File: ui/add_language.glade, line: 105
+#, fuzzy
+msgid "Add another verse collection"
+msgstr "stáhnout vybranou sbírku veršů"
+
+msgid "Close"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+msgid "GLosung"
+msgstr "o aplikaci GLosung"
+
+#
+# File: src/glosung.c, line: 1107
+#, fuzzy
+msgid "Manage Installed Language Files"
+msgstr "Instalované jazyky"
 
 #
 #
@@ -97,7 +248,6 @@ msgstr "stáhnout vybranou sbírku veršů"
 # src/glosung.c:103
 # File: src/glosung.c, line: 153
 # File: src/glosung.c, line: 429
-#: ../ui/preferences.glade:7
 msgid "Preferences"
 msgstr "Nastavení"
 
@@ -105,9 +255,156 @@ msgstr "Nastavení"
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 195
+#, fuzzy
+msgid "About"
+msgstr "O aplikaci"
+
+#
+#
+#
+#
+#
+#
+# src/glosung.c:86
+# File: src/glosung.c, line: 136
+#, fuzzy
+msgid "Previous Month"
+msgstr "Pře_dchozí měsíc"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:80 src/glosung.c:127
+# File: src/glosung.c, line: 130
+# File: src/glosung.c, line: 177
+#, fuzzy
+msgid "Previous Day"
+msgstr "_Předchozí den"
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:74 src/glosung.c:130
+# File: src/glosung.c, line: 124
+# File: src/glosung.c, line: 180
+#, fuzzy
+msgid "Today"
+msgstr "_Dnes"
+
+#
+#
+#
+#
+#
+#
+# src/glosung.c:77 src/glosung.c:133
+# File: src/glosung.c, line: 127
+# File: src/glosung.c, line: 183
+#, fuzzy
+msgid "Next Day"
+msgstr "_Následující den"
+
+#
+#
+#
+#
+#
+#
+# src/glosung.c:83
+# File: src/glosung.c, line: 133
+#, fuzzy
+msgid "Next Month"
+msgstr "Následující _měsíc"
+
+#
+#
+#
+#
 # src/glosung.c:479
 # File: src/glosung.c, line: 557
-#: ../ui/preferences.glade:28
 msgid "Displayed Language:"
 msgstr "Výběr jazyka:"
 
@@ -115,7 +412,6 @@ msgstr "Výběr jazyka:"
 #
 #
 # File: ui/preferences.glade, line: 33
-#: ../ui/preferences.glade:35
 msgid "Font:"
 msgstr "Písmo:"
 
@@ -123,7 +419,6 @@ msgstr "Písmo:"
 #
 #
 # File: ui/preferences.glade, line: 57
-#: ../ui/preferences.glade:59
 msgid "Start GLosung at login time"
 msgstr "Spouštět Glosung při přihlášení"
 
@@ -132,29 +427,44 @@ msgstr "Spouštět Glosung při přihlášení"
 #
 #
 # File: src/glosung.c, line: 791
-#: ../ui/preferences.glade:74
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Odkaz na Xiphos/Gnomesword"
-
-#
-# File: src/glosung.c, line: 257
-#: ../ui/preferences.glade:89
-msgid "Start only once a day"
-msgstr "Spouštět jen jednou za den"
 
 #
 #
 #
 # File: ui/preferences.glade, line: 95
-#: ../ui/preferences.glade:111
 msgid "View"
 msgstr "Zobrazení"
 
 #
 #
 #
+# File: ui/preferences.glade, line: 135
+msgid "Network"
+msgstr "Síť"
+
+#
+#
+#
+#
+#
+#
+#
+#
+# src/glosung.c:116
+# File: src/glosung.c, line: 166
+#, fuzzy
+msgid "Losung URL"
+msgstr "o aplikaci GLosung"
+
+msgid "Enter Download URL for Losung XML file"
+msgstr ""
+
+#
+#
+#
 # File: ui/preferences.glade, line: 107
-#: ../ui/preferences.glade:123
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -162,7 +472,6 @@ msgstr "Proxy"
 #
 #
 # File: ui/preferences.glade, line: 128
-#: ../ui/preferences.glade:127
 msgid ""
 "Use proxy to connect to the internet.\n"
 "Be careful in persecuted countries, as\n"
@@ -178,43 +487,13 @@ msgstr ""
 #
 #
 # File: ui/preferences.glade, line: 140
-#: ../ui/preferences.glade:139
 msgid "host[:port]"
 msgstr "počítač[:port]"
 
 #
 #
 #
-# File: ui/preferences.glade, line: 135
-#: ../ui/preferences.glade:157
-msgid "Network"
-msgstr "Síť"
-
-#
-#
-#
-#
-#
-#
-#
-#
-# src/glosung.c:116
-# File: src/glosung.c, line: 166
-#: ../ui/preferences.glade:226
-msgid "Herrnhuter Losungen"
-msgstr "Hesla"
-
-#
-# File: src/collections.c, line: 276
-#: ../ui/preferences.glade:229
-msgid "Bible 2.0"
-msgstr "Bible 2.0"
-
-#
-#
-#
 # File: ui/warning_dialog.glade, line: 15
-#: ../ui/warning_dialog.glade:15
 msgid ""
 "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
 "risk detection you should NOT use this feature!"
@@ -226,7 +505,6 @@ msgstr ""
 #
 #
 # File: ui/warning_dialog.glade, line: 24
-#: ../ui/warning_dialog.glade:24
 msgid "Don't show this message again."
 msgstr "Později již nezobrazovat tuto zprávu."
 
@@ -234,23 +512,14 @@ msgstr "Později již nezobrazovat tuto zprávu."
 #
 #
 # File: ui/warning_dialog.glade, line: 28
-#: ../ui/warning_dialog.glade:28
 msgid "Check this box if you do not want to see this dialog again"
 msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# File: src/glosung.c, line: 563
-#~ msgid "Gods word for every day"
-#~ msgstr "Boží slovo pro každý den"
+# File: src/glosung.c, line: 257
+#, fuzzy
+#~ msgid "Start only  once a day"
+#~ msgstr "Spouštět jen jednou za den"
 
 #
 # File: src/about.c, line: 86
@@ -272,11 +541,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #~ "Hesla: (C) Ochranovská Jednota bratrská\n"
 #~ "Česká edice: (C) Petr Heřman - DÚLOS\n"
 #~ "Překlad: (C) Miroslav Matouš, Jindřich Halama st. "
-
-#
-# File: src/download.c, line: 408
-#~ msgid "Couldn't resolve proxy"
-#~ msgstr "Nemohu přeložit adresu proxy"
 
 #
 # File: src/glosung.c, line: 209
@@ -326,39 +590,11 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
-# src/glosung.c:74 src/glosung.c:130
-# File: src/glosung.c, line: 124
-# File: src/glosung.c, line: 180
-#~ msgid "_Today"
-#~ msgstr "_Dnes"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 # src/glosung.c:75 src/glosung.c:131
 # File: src/glosung.c, line: 125
 # File: src/glosung.c, line: 181
 #~ msgid "Show losung of today"
 #~ msgstr "Ukázat dnešní hesla"
-
-#
-#
-#
-#
-#
-#
-# src/glosung.c:77 src/glosung.c:133
-# File: src/glosung.c, line: 127
-# File: src/glosung.c, line: 183
-#~ msgid "_Next Day"
-#~ msgstr "_Následující den"
 
 #
 #
@@ -388,39 +624,11 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #
 #
 #
-# src/glosung.c:80 src/glosung.c:127
-# File: src/glosung.c, line: 130
-# File: src/glosung.c, line: 177
-#~ msgid "_Previous Day"
-#~ msgstr "_Předchozí den"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 # src/glosung.c:81 src/glosung.c:128
 # File: src/glosung.c, line: 131
 # File: src/glosung.c, line: 178
 #~ msgid "Show losung of previous day"
 #~ msgstr "Zobrazit hesla na předchozí den"
-
-#
-#
-#
-#
-#
-#
-# src/glosung.c:83
-# File: src/glosung.c, line: 133
-#~ msgid "_Next Month"
-#~ msgstr "Následující _měsíc"
 
 #
 #
@@ -437,17 +645,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 # File: src/glosung.c, line: 134
 #~ msgid "Show losung of next month"
 #~ msgstr "Zobrazit hesla na následující měsíc"
-
-#
-#
-#
-#
-#
-#
-# src/glosung.c:86
-# File: src/glosung.c, line: 136
-#~ msgid "_Previous Month"
-#~ msgstr "Pře_dchozí měsíc"
 
 #
 #
@@ -535,78 +732,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 # File: src/glosung.c, line: 166
 #~ msgid "about Losungen"
 #~ msgstr "o Heslech"
-
-#
-#
-#
-#
-#
-#
-#
-#
-# src/glosung.c:116
-# File: src/glosung.c, line: 166
-#~ msgid "About _GLosung"
-#~ msgstr "O aplikaci _GLosung"
-
-#
-#
-#
-#
-#
-#
-#
-#
-# src/glosung.c:116
-# File: src/glosung.c, line: 166
-#~ msgid "about GLosung"
-#~ msgstr "o aplikaci GLosung"
-
-#
-# File: src/glosung.c, line: 209
-#~ msgid "en"
-#~ msgstr "cs"
-
-#
-# File: src/glosung.c, line: 267
-#~ msgid ""
-#~ "No text files found!\n"
-#~ "Please install your prefered languages."
-#~ msgstr ""
-#~ "Žádné textové soubory nebyly nalezeny!\n"
-#~ "Nainstalujte si, prosím, příslušné jazykové soubory."
-
-#
-# File: src/glosung.c, line: 316
-#~ msgid "No %s texts found for %d!"
-#~ msgstr "Nebyl nalezen text %s pro %d!"
-
-#
-# src/glosung.c:93 src/glosung.c:617
-# File: src/glosung.c, line: 143
-# File: src/glosung.c, line: 705
-#~ msgid "Calendar"
-#~ msgstr "Kalendář"
-
-#
-# File: src/glosung.c, line: 1068
-#~ msgid "Languages"
-#~ msgstr "Jazyky"
-
-#
-# File: src/glosung.c, line: 1107
-#~ msgid "Installed Languages"
-#~ msgstr "Instalované jazyky"
-
-#
-# File: src/glosung.c, line: 316
-#~ msgid "No '%s' texts found for %d!\n"
-#~ msgstr "Nebyl nalezen text '%s' pro %d!\n"
-
-#
-# File: src/parser.c, line: 334
-#~ msgid "Watchword for %A, %e. %B %Y"
-#~ msgstr "Heslo pro %A, %e. %B %Y"
 
 #
 #
@@ -788,20 +913,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 # File: src/glosung.c, line: 302
 #~ msgid "russian"
 #~ msgstr "rusky"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# File: ui/add_language.glade, line: 100
-#~ msgid "gtk-cancel"
-#~ msgstr "zrušit"
 
 #
 #
@@ -1180,81 +1291,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 #, fuzzy
 #~ msgid "_Preferences..."
 #~ msgstr "Nastavení"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# File: src/glosung.c, line: 195
-#~ msgid "_About"
-#~ msgstr "O aplikaci"
 
 #
 #

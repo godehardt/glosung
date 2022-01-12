@@ -196,7 +196,7 @@ against the law!</property>
     </child>
     <child type="action">
       <object class="GtkButton" id="close">
-        <property name="label" translatable="yes">_Close</property>
+        <property name="label" translatable="yes">Close</property>
         <property name="focusable">1</property>
         <property name="receives-default">1</property>
       </object>

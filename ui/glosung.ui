@@ -81,6 +81,7 @@
               <object class="GtkButton" id="languages">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Manage Installed Language Files</property>
                 <signal name="clicked" handler="lang_manager_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -93,6 +94,7 @@
               <object class="GtkButton" id="properties">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Preferences</property>
                 <signal name="clicked" handler="property_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -105,6 +107,7 @@
               <object class="GtkButton" id="about">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">About</property>
                 <signal name="clicked" handler="about_cb" swapped="no"/>
                 <style>
                   <class name="flat"/>
@@ -124,6 +127,7 @@
               <object class="GtkButton" id="previous_month">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Previous Month</property>
                 <signal name="clicked" handler="prev_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -136,6 +140,7 @@
               <object class="GtkButton" id="previous_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Previous Day</property>
                 <signal name="clicked" handler="prev_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -148,6 +153,7 @@
               <object class="GtkButton" id="today">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Today</property>
                 <signal name="clicked" handler="today_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -160,6 +166,7 @@
               <object class="GtkButton" id="next_day">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Next Day</property>
                 <signal name="clicked" handler="next_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -172,6 +179,7 @@
               <object class="GtkButton" id="next_month">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Next Month</property>
                 <signal name="clicked" handler="next_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
@@ -184,6 +192,7 @@
               <object class="GtkButton" id="calendar">
                 <property name="focusable">1</property>
                 <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Calendar</property>
                 <signal name="clicked" handler="calendar_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">

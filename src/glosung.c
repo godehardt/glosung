@@ -109,7 +109,6 @@ static void activate             (GtkApplication *app, gpointer data);
 
 static void add_lang_cb          (GtkWidget *w,   gpointer data);
 void about_cb             (GtkWidget *w,   gpointer data);
-static void about_herrnhut_cb    (GtkWidget *w,   gpointer data);
 void calendar_cb          (GtkWidget *w,   gpointer data);
 void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
@@ -206,7 +205,8 @@ activate (GtkApplication *app,
 
         GError *error = NULL;
         GtkBuilder *builder = gtk_builder_new ();
-        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/glosung.ui", &error);
+        gtk_builder_set_translation_domain (builder, PACKAGE);
+        gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/glosung.ui", &error);
 
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
@@ -267,7 +267,6 @@ activate (GtkApplication *app,
         gtk_css_provider_load_from_resource (provider, "/org/godehardt/glosung/ui/style.css");
         gtk_style_context_add_provider_for_display (display, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-
         gtk_widget_show (GTK_WIDGET (window));
         // gtk_window_set_default_icon_from_file
         //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
@@ -299,6 +298,7 @@ activate (GtkApplication *app,
 int main (int argc, char **argv)
 {
         /* Initialize the i18n stuff */
+        // setlocale (LC_ALL, "");
         bindtextdomain (PACKAGE, "/usr/share/locale");
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
@@ -309,7 +309,7 @@ int main (int argc, char **argv)
 
         GOptionEntry options[] = {
                 { "once", '1', 0, G_OPTION_ARG_NONE, &once,
-                  N_("Start only  once a day"), NULL },
+                  N_("Start only once a day"), NULL },
                 { NULL }
         };
         g_application_add_main_option_entries (G_APPLICATION (app), options);
@@ -540,16 +540,6 @@ about_cb (GtkWidget *w, gpointer data)
 
 
 /*
- * callback function that displays the about dialog.
- */
-static void
-about_herrnhut_cb (GtkWidget *w, gpointer data)
-{
-        about_herrnhut (app);
-} /* about_herrnhut_cb */
-
-
-/*
  * callback function that displays a property dialog.
  */
 G_MODULE_EXPORT void
@@ -562,13 +552,13 @@ property_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/preferences.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/preferences.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }
 
-        GtkWidget *property = GTK_WIDGET
+        GtkWidget *preferences = GTK_WIDGET
                 (gtk_builder_get_object (builder, "preferences_dialog"));
         GtkWidget *proxy_checkbox = GTK_WIDGET
                 (gtk_builder_get_object (builder, "proxy_checkbox"));
@@ -629,7 +619,7 @@ property_cb (GtkWidget *w, gpointer data)
                         FALSE);
 #endif
 
-        gtk_widget_show (property);
+        gtk_widget_show (preferences);
 } /* property_cb */
 
 
@@ -977,7 +967,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/language_manager.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/language_manager.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
@@ -1008,6 +998,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
+
         gtk_widget_show (dialog);
 } /* lang_manager_cb */
 
@@ -1019,7 +1010,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        guint result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/add_language.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/add_language.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 08:52+0000\n"
+"POT-Creation-Date: 2022-01-12 14:48+0100\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -20,15 +20,86 @@ msgstr ""
 #
 #
 #
-# File: src/glosung.c, line: 1141
-#: ../ui/add_language.glade:7
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 563
 #, fuzzy
-msgid "Add Languages"
+msgid "Gods word for every day"
+msgstr "La Parole de Dieu au quotidien"
+
+#
+#, fuzzy
+msgid "About GLosung"
+msgstr "_Losung"
+
+#
+#, fuzzy
+msgid "Herrnhuter Losungen"
+msgstr "_Losung"
+
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr ""
+
+#
+# File: ../src/download.c, line: 403
+msgid "Couldn't resolve proxy"
+msgstr ""
+
+#
+#. should be translated to corresponding language, e.g. 'de'
+msgid "en"
+msgstr "fr"
+
+#
+msgid ""
+"No text files found!\n"
+"Please install your prefered languages."
+msgstr ""
+"Aucuns fichiers de versets trouvés !\n"
+"Veuillez installer les traductions correspondantes."
+
+#
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr ""
+
+#
+#, c-format
+msgid "No %s texts found for %d!"
+msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
+
+#
+msgid "Calendar"
+msgstr "Calendrier"
+
+#
+#, fuzzy, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
+
+#
+# File: ../src/parser.c, line: 375
+#. title: timestring according to 'man strftime'
+msgid "Watchword for %A, %e. %B %Y"
+msgstr ""
+
+#
+#
+#
+#
+#
+# File: src/glosung.c, line: 1141
+#, fuzzy
+msgid "Add Language"
 msgstr "Ajouter de nouvelles traductions"
 
 #
 # File: ui/add_language.glade, line: 30
-#: ../ui/add_language.glade:30
 msgid "Source"
 msgstr ""
 
@@ -57,7 +128,6 @@ msgstr ""
 #
 #
 # File: src/glosung.c, line: 1150
-#: ../ui/add_language.glade:50
 msgid "Language"
 msgstr "Traduction"
 
@@ -67,7 +137,6 @@ msgstr "Traduction"
 #
 #
 # File: src/glosung.c, line: 1152
-#: ../ui/add_language.glade:70
 msgid "Year"
 msgstr "Année"
 
@@ -77,42 +146,97 @@ msgstr "Année"
 #
 #
 # File: src/glosung.c, line: 1144
-#: ../ui/add_language.glade:99
 msgid "Download"
 msgstr "Télécharger"
 
-#
-# File: ui/add_language.glade, line: 104
-#: ../ui/add_language.glade:104
-msgid "download selected verse collection"
+msgid "Download selected verse collection"
 msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#
+# File: src/glosung.c, line: 1068
+msgid "Languages"
+msgstr "Traductions"
+
+#
+# File: src/glosung.c, line: 1107
+msgid "Installed Languages"
+msgstr "Traductions installées"
+
+msgid "Add"
+msgstr ""
+
+msgid "Add another verse collection"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+#
+#, fuzzy
+msgid "GLosung"
+msgstr "_Losung"
+
+#
+# File: src/glosung.c, line: 1107
+#, fuzzy
+msgid "Manage Installed Language Files"
+msgstr "Traductions installées"
 
 #
 #
 #
 #
-#: ../ui/preferences.glade:7
 msgid "Preferences"
 msgstr "Préférences"
 
 #
+# File: ../ui/glosung.ui, line: 110
+msgid "About"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Previous Month"
+msgstr "Mois précédent"
+
+#
+#, fuzzy
+msgid "Previous Day"
+msgstr "Jour précédent"
+
+#
+#, fuzzy
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#
+#, fuzzy
+msgid "Next Day"
+msgstr "Jour suivant"
+
+#
+#, fuzzy
+msgid "Next Month"
+msgstr "Mois suivant"
+
 #
 #
 #
-#: ../ui/preferences.glade:28
+#
 #, fuzzy
 msgid "Displayed Language:"
 msgstr "Langue :"
 
 #
 # File: ui/preferences.glade, line: 35
-#: ../ui/preferences.glade:35
 msgid "Font:"
 msgstr ""
 
 #
 # File: ui/preferences.glade, line: 59
-#: ../ui/preferences.glade:59
 msgid "Start GLosung at login time"
 msgstr ""
 
@@ -121,32 +245,35 @@ msgstr ""
 #
 #
 # File: src/glosung.c, line: 791
-#: ../ui/preferences.glade:74
 #, fuzzy
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Liens vers gnomesword"
 
 #
-# File: src/glosung.c, line: 257
-#: ../ui/preferences.glade:89
-msgid "Start only once a day"
-msgstr ""
-
-#
 # File: ui/preferences.glade, line: 111
-#: ../ui/preferences.glade:111
 msgid "View"
 msgstr ""
 
 #
+# File: ui/preferences.glade, line: 157
+msgid "Network"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Losung URL"
+msgstr "_Losung"
+
+msgid "Enter Download URL for Losung XML file"
+msgstr ""
+
+#
 # File: ui/preferences.glade, line: 123
-#: ../ui/preferences.glade:123
 msgid "Proxy"
 msgstr ""
 
 #
 # File: ui/preferences.glade, line: 127
-#: ../ui/preferences.glade:127
 msgid ""
 "Use proxy to connect to the internet.\n"
 "Be careful in persecuted countries, as\n"
@@ -156,31 +283,11 @@ msgstr ""
 
 #
 # File: ui/preferences.glade, line: 139
-#: ../ui/preferences.glade:139
 msgid "host[:port]"
 msgstr ""
 
 #
-# File: ui/preferences.glade, line: 157
-#: ../ui/preferences.glade:157
-msgid "Network"
-msgstr ""
-
-#
-#: ../ui/preferences.glade:226
-#, fuzzy
-msgid "Herrnhuter Losungen"
-msgstr "_Losung"
-
-#
-# File: src/collections.c, line: 276
-#: ../ui/preferences.glade:229
-msgid "Bible 2.0"
-msgstr ""
-
-#
 # File: ui/warning_dialog.glade, line: 15
-#: ../ui/warning_dialog.glade:15
 msgid ""
 "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
 "risk detection you should NOT use this feature!"
@@ -188,30 +295,13 @@ msgstr ""
 
 #
 # File: ui/warning_dialog.glade, line: 24
-#: ../ui/warning_dialog.glade:24
 msgid "Don't show this message again."
 msgstr ""
 
 #
 # File: ui/warning_dialog.glade, line: 28
-#: ../ui/warning_dialog.glade:28
 msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# File: src/glosung.c, line: 563
-#, fuzzy
-#~ msgid "Gods word for every day"
-#~ msgstr "La Parole de Dieu au quotidien"
 
 #
 #
@@ -225,45 +315,20 @@ msgstr ""
 #~ msgstr "Calendrier"
 
 #
-#, fuzzy
-#~ msgid "_Today"
-#~ msgstr "Aujourd'hui"
-
-#
 #~ msgid "Show losung of today"
 #~ msgstr "Afficher les versets d'aujourd'hui"
-
-#
-#, fuzzy
-#~ msgid "_Next Day"
-#~ msgstr "Jour suivant"
 
 #
 #~ msgid "Show losung of next day"
 #~ msgstr "Afficher les versets du jour suivant"
 
 #
-#, fuzzy
-#~ msgid "_Previous Day"
-#~ msgstr "Jour précédent"
-
-#
 #~ msgid "Show losung of previous day"
 #~ msgstr "Afficher les versets du jour précédent"
 
 #
-#, fuzzy
-#~ msgid "_Next Month"
-#~ msgstr "Mois suivant"
-
-#
 #~ msgid "Show losung of next month"
 #~ msgstr "Afficher les versets du mois suivant"
-
-#
-#, fuzzy
-#~ msgid "_Previous Month"
-#~ msgstr "Mois précédent"
 
 #
 #~ msgid "Show losung of previous month"
@@ -284,51 +349,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "about Losungen"
 #~ msgstr "_Losung"
-
-#
-#, fuzzy
-#~ msgid "About _GLosung"
-#~ msgstr "_Losung"
-
-#
-#, fuzzy
-#~ msgid "about GLosung"
-#~ msgstr "_Losung"
-
-#
-#~ msgid "en"
-#~ msgstr "fr"
-
-#
-#~ msgid ""
-#~ "No text files found!\n"
-#~ "Please install your prefered languages."
-#~ msgstr ""
-#~ "Aucuns fichiers de versets trouvés !\n"
-#~ "Veuillez installer les traductions correspondantes."
-
-#
-#~ msgid "No %s texts found for %d!"
-#~ msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
-
-#
-#~ msgid "Calendar"
-#~ msgstr "Calendrier"
-
-#
-# File: src/glosung.c, line: 1068
-#~ msgid "Languages"
-#~ msgstr "Traductions"
-
-#
-# File: src/glosung.c, line: 1107
-#~ msgid "Installed Languages"
-#~ msgstr "Traductions installées"
-
-#
-#, fuzzy
-#~ msgid "No '%s' texts found for %d!\n"
-#~ msgstr "Aucunes traductions trouvées en %s pour l'année %d !"
 
 #
 #

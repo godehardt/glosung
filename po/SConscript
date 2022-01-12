@@ -27,7 +27,11 @@ env['POAUTOINIT'] = 1
 env['XGETTEXTFLAGS'] = [
   '--package-name=%s' % 'glosung',
   '--package-version=%s' % version,
-  '--add-comment'
+  '--add-comment',
+  '--keyword=_',
+  '--keyword=N_',
+  '--add-location',
+  '--strict'
 ]
 
 po = env.Translate(languages, ['#/src/about.c',
@@ -39,10 +43,11 @@ po = env.Translate(languages, ['#/src/about.c',
                                    '#/src/parser.c',
                                    '#/src/settings.c',
                                    '#/src/util.c',
-                                   '#/ui/add_language.glade',
+                                   '#/ui/add_language.ui',
+                                   '#/ui/language_manager.ui',
                                    '#/ui/glosung.ui',
                                    '#/ui/preferences.ui',
-                                   '#/ui/warning_dialog.glade']) 
+                                   '#/ui/warning_dialog.ui']) 
 mo = env.MOFiles(po)
 
 #

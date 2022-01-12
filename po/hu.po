@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 08:52+0000\n"
+"POT-Creation-Date: 2022-01-12 14:48+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -15,17 +15,85 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #
+# File: src/about.c, line: 54
+msgid "Gods word for every day"
+msgstr "Isten Igéje minden napra"
+
+#
+# File: src/glosung.c, line: 221
+#, fuzzy
+msgid "About GLosung"
+msgstr "GLosungról"
+
+#
+# File: src/glosung.c, line: 220
+msgid "Herrnhuter Losungen"
+msgstr "Az Útmutatóról"
+
+#
+# File: src/collections.c, line: 276
+msgid "Bible 2.0"
+msgstr "Bible 2.0"
+
+#
+# File: src/download.c, line: 408
+msgid "Couldn't resolve proxy"
+msgstr "Proxy feloldása nem sikerült"
+
+#
+# File: src/glosung.c, line: 304
+#. should be translated to corresponding language, e.g. 'de'
+msgid "en"
+msgstr "en"
+
+#
+# File: src/glosung.c, line: 337
+msgid ""
+"No text files found!\n"
+"Please install your prefered languages."
+msgstr ""
+"Szöveg fájl nem található!\n"
+"Telepítse a preferált nyelvet."
+
+#
+# File: src/glosung.c, line: 257
+msgid "Start only once a day"
+msgstr "Indítás naponta egyszer"
+
+#
+# File: src/glosung.c, line: 532
+#, c-format
+msgid "No %s texts found for %d!"
+msgstr "Nem található '%s' szöveg a %d-es/as évre!"
+
+#
+# File: src/glosung.c, line: 891
+msgid "Calendar"
+msgstr "Naptár"
+
+#
+# File: src/losung.c, line: 166
+#, c-format
+msgid "No '%s' texts found for %d!\n"
+msgstr "Nem található '%s' szöveg a %d-es/as évre!\n"
+
+#
+# File: src/parser.c, line: 378
+#. title: timestring according to 'man strftime'
+msgid "Watchword for %A, %e. %B %Y"
+msgstr "Napi ige a %A, %e. %B %Y-ra"
+
+#
 #
 #
 # File: src/glosung.c, line: 1063
-#: ../ui/add_language.glade:7
-msgid "Add Languages"
+#, fuzzy
+msgid "Add Language"
 msgstr "Nyelv hozzáadása"
 
 #
 #
 #
-#: ../ui/add_language.glade:30
 msgid "Source"
 msgstr "Forrás"
 
@@ -33,87 +101,171 @@ msgstr "Forrás"
 #
 #
 # File: src/glosung.c, line: 1063
-#: ../ui/add_language.glade:50
 msgid "Language"
 msgstr "Nyelv"
 
 #
 #
 #
-#: ../ui/add_language.glade:70
 msgid "Year"
 msgstr "Év"
 
 #
 #
 #
-#: ../ui/add_language.glade:99
 msgid "Download"
 msgstr "Letöltés"
 
 #
 #
 #
-#: ../ui/add_language.glade:104
-msgid "download selected verse collection"
+#, fuzzy
+msgid "Download selected verse collection"
 msgstr "A kiválasztott versösszeállítás letöltése"
 
 #
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Cancel"
+msgstr "gtk-cancel"
+
+#
+# File: src/glosung.c, line: 1063
+msgid "Languages"
+msgstr "Nyelv"
+
+#
+# File: src/glosung.c, line: 1090
+msgid "Installed Languages"
+msgstr "Telepített nyelvek"
+
+msgid "Add"
+msgstr ""
+
+#
+#
+#
+#, fuzzy
+msgid "Add another verse collection"
+msgstr "A kiválasztott versösszeállítás letöltése"
+
+msgid "Close"
+msgstr ""
+
+#
+# File: src/glosung.c, line: 222
+#, fuzzy
+msgid "GLosung"
+msgstr "GLosungról"
+
+#
+# File: src/glosung.c, line: 1090
+#, fuzzy
+msgid "Manage Installed Language Files"
+msgstr "Telepített nyelvek"
+
+#
+#
+#
 # File: src/glosung.c, line: 217
-#: ../ui/preferences.glade:7
 msgid "Preferences"
 msgstr "Beállítások"
+
+#
+# File: ../ui/glosung.ui, line: 110
+msgid "About"
+msgstr ""
+
+#
+# File: src/glosung.c, line: 206
+#, fuzzy
+msgid "Previous Month"
+msgstr "_Előző hónap"
+
+#
+# File: src/glosung.c, line: 201
+#, fuzzy
+msgid "Previous Day"
+msgstr "_Előző nap"
+
+#
+# File: src/glosung.c, line: 197
+#, fuzzy
+msgid "Today"
+msgstr "_Ma"
+
+#
+# File: src/glosung.c, line: 199
+#, fuzzy
+msgid "Next Day"
+msgstr "_Következő nap"
+
+#
+# File: src/glosung.c, line: 203
+#, fuzzy
+msgid "Next Month"
+msgstr "_Következő hónap"
 
 #
 #
 #
 # File: src/glosung.c, line: 1090
-#: ../ui/preferences.glade:28
 msgid "Displayed Language:"
 msgstr "Telepített nyelvek:"
 
 #
 #
 #
-#: ../ui/preferences.glade:35
 msgid "Font:"
 msgstr "Betűkészlet:"
 
 #
 #
 #
-#: ../ui/preferences.glade:59
 msgid "Start GLosung at login time"
 msgstr "GLosung indítása bejelentkezéskor"
 
 #
 #
 #
-#: ../ui/preferences.glade:74
 msgid "Link location to Xiphos/Gnomesword"
 msgstr "Igehelyek linkelése Xiphos/GnomeSword-al"
-
-#
-# File: src/glosung.c, line: 257
-#: ../ui/preferences.glade:89
-msgid "Start only once a day"
-msgstr "Indítás naponta egyszer"
 
 #
 #
 #
 # File: ui/preferences.glade, line: 95
-#: ../ui/preferences.glade:111
 msgid "View"
 msgstr "Nézet"
 
 #
 #
 #
+# File: ui/preferences.glade, line: 135
+msgid "Network"
+msgstr "Hálózat"
+
+#
+# File: src/glosung.c, line: 222
+#, fuzzy
+msgid "Losung URL"
+msgstr "GLosungról"
+
+msgid "Enter Download URL for Losung XML file"
+msgstr ""
+
+#
+#
+#
 # File: ui/preferences.glade, line: 107
-#: ../ui/preferences.glade:123
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -121,7 +273,6 @@ msgstr "Proxy"
 #
 #
 # File: ui/preferences.glade, line: 128
-#: ../ui/preferences.glade:127
 msgid ""
 "Use proxy to connect to the internet.\n"
 "Be careful in persecuted countries, as\n"
@@ -137,35 +288,13 @@ msgstr ""
 #
 #
 # File: ui/preferences.glade, line: 140
-#: ../ui/preferences.glade:139
 msgid "host[:port]"
 msgstr "hoszt[:port]"
 
 #
 #
 #
-# File: ui/preferences.glade, line: 135
-#: ../ui/preferences.glade:157
-msgid "Network"
-msgstr "Hálózat"
-
-#
-# File: src/glosung.c, line: 220
-#: ../ui/preferences.glade:226
-msgid "Herrnhuter Losungen"
-msgstr "Az Útmutatóról"
-
-#
-# File: src/collections.c, line: 276
-#: ../ui/preferences.glade:229
-msgid "Bible 2.0"
-msgstr "Bible 2.0"
-
-#
-#
-#
 # File: ui/warning_dialog.glade, line: 15
-#: ../ui/warning_dialog.glade:15
 msgid ""
 "<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
 "risk detection you should NOT use this feature!"
@@ -179,7 +308,6 @@ msgstr ""
 #
 #
 # File: ui/warning_dialog.glade, line: 24
-#: ../ui/warning_dialog.glade:24
 msgid "Don't show this message again."
 msgstr "Ne jelenjen meg újra ez az üzenet."
 
@@ -187,15 +315,15 @@ msgstr "Ne jelenjen meg újra ez az üzenet."
 #
 #
 # File: ui/warning_dialog.glade, line: 28
-#: ../ui/warning_dialog.glade:28
 msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
 
 #
-# File: src/about.c, line: 54
-#~ msgid "Gods word for every day"
-#~ msgstr "Isten Igéje minden napra"
+# File: src/glosung.c, line: 257
+#, fuzzy
+#~ msgid "Start only  once a day"
+#~ msgstr "Indítás naponta egyszer"
 
 #
 # File: src/about.c, line: 86
@@ -216,11 +344,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Útmutató: (C) Herrnhuter Testvérgyülekezet\n"
 #~ "Bibliai szöveg: (C) Magyar Bibliatársulat, Budapest"
-
-#
-# File: src/download.c, line: 408
-#~ msgid "Couldn't resolve proxy"
-#~ msgstr "Proxy feloldása nem sikerült"
 
 #
 # File: src/glosung.c, line: 191
@@ -248,19 +371,9 @@ msgstr ""
 #~ msgstr "nap választása a naptárból"
 
 #
-# File: src/glosung.c, line: 197
-#~ msgid "_Today"
-#~ msgstr "_Ma"
-
-#
 # File: src/glosung.c, line: 198
 #~ msgid "Show losung of today"
 #~ msgstr "A mai ige megjelenítése"
-
-#
-# File: src/glosung.c, line: 199
-#~ msgid "_Next Day"
-#~ msgstr "_Következő nap"
 
 #
 # File: src/glosung.c, line: 200
@@ -268,29 +381,14 @@ msgstr ""
 #~ msgstr "A holnapi ige megjelenítése"
 
 #
-# File: src/glosung.c, line: 201
-#~ msgid "_Previous Day"
-#~ msgstr "_Előző nap"
-
-#
 # File: src/glosung.c, line: 202
 #~ msgid "Show losung of previous day"
 #~ msgstr "A tegnapi ige megjelenítése"
 
 #
-# File: src/glosung.c, line: 203
-#~ msgid "_Next Month"
-#~ msgstr "_Következő hónap"
-
-#
 # File: src/glosung.c, line: 205
 #~ msgid "Show losung of next month"
 #~ msgstr "A következő havi ige megjelenítése"
-
-#
-# File: src/glosung.c, line: 206
-#~ msgid "_Previous Month"
-#~ msgstr "_Előző hónap"
 
 #
 # File: src/glosung.c, line: 208
@@ -336,60 +434,6 @@ msgstr ""
 # File: src/glosung.c, line: 220
 #~ msgid "about Losungen"
 #~ msgstr "az Útmutatóról"
-
-#
-# File: src/glosung.c, line: 221
-#~ msgid "About _GLosung"
-#~ msgstr "GLosungról"
-
-#
-# File: src/glosung.c, line: 222
-#~ msgid "about GLosung"
-#~ msgstr "GLosungról"
-
-#
-# File: src/glosung.c, line: 304
-#~ msgid "en"
-#~ msgstr "en"
-
-#
-# File: src/glosung.c, line: 337
-#~ msgid ""
-#~ "No text files found!\n"
-#~ "Please install your prefered languages."
-#~ msgstr ""
-#~ "Szöveg fájl nem található!\n"
-#~ "Telepítse a preferált nyelvet."
-
-#
-# File: src/glosung.c, line: 532
-#~ msgid "No %s texts found for %d!"
-#~ msgstr "Nem található '%s' szöveg a %d-es/as évre!"
-
-#
-# File: src/glosung.c, line: 891
-#~ msgid "Calendar"
-#~ msgstr "Naptár"
-
-#
-# File: src/glosung.c, line: 1063
-#~ msgid "Languages"
-#~ msgstr "Nyelv"
-
-#
-# File: src/glosung.c, line: 1090
-#~ msgid "Installed Languages"
-#~ msgstr "Telepített nyelvek"
-
-#
-# File: src/losung.c, line: 166
-#~ msgid "No '%s' texts found for %d!\n"
-#~ msgstr "Nem található '%s' szöveg a %d-es/as évre!\n"
-
-#
-# File: src/parser.c, line: 378
-#~ msgid "Watchword for %A, %e. %B %Y"
-#~ msgstr "Napi ige a %A, %e. %B %Y-ra"
 
 #
 #
@@ -570,19 +614,6 @@ msgstr ""
 # File: src/glosung.c, line: 374
 #~ msgid "russian"
 #~ msgstr "orosz"
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "gtk-cancel"
-#~ msgstr "gtk-cancel"
 
 #
 #
