@@ -43,3 +43,21 @@ if env['PLATFORM'] != 'win32':
                     'settings.h',
                     'util.c',
                     'util.h'])
+
+gresource = env.Command ('resources.c', ['#/glosung.gresource.xml',
+                                   '#/ui/add_language.ui',
+                                   '#/ui/glosung.ui',
+                                   '#/ui/language_manager.ui',
+                                   '#/ui/preferences.ui',
+                                   '#/ui/warning_dialog.ui',
+                                   '#/ui/style.css',
+                                   '#/ui/icons/angle-left-solid.png',
+                                   '#/ui/icons/angle-right-solid.png',
+                                   '#/ui/icons/angles-down-solid.png',
+                                   '#/ui/icons/angles-left-solid.png',
+                                   '#/ui/icons/bars-solid.png',
+                                   '#/ui/icons/calendar-alt-regular.png',
+                                   '#/ui/icons/gear-solid.png',
+                                   '#/ui/icons/question-circle-regular.png'],
+          "glib-compile-resources --generate-source --target=$TARGET $SOURCE");
+#env.AlwaysBuild(gresource)
