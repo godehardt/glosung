@@ -197,6 +197,43 @@ set_headerbar_button (GtkBuilder *builder,
 } /* set_headerbar_button */
 
 
+#define DX 0 // index in GArray∗ scroll_collector
+#define DY 1 // index in GArray∗ scroll_collector
+
+gboolean
+scroll_cb (GtkEventControllerScroll *self,
+           gdouble                   dx,
+           gdouble                   dy,
+           gpointer                  user_data)
+{
+        GArray* scroll_collector = user_data;
+        gdouble *x = &g_array_index (scroll_collector, gdouble, DX);
+        *x = *x + dx;
+        gdouble *y = &g_array_index (scroll_collector, gdouble, DY);
+        *y = *y + dy;
+        // g_message ("%f - %f  -->  %f - %f", dx, dy, *x, *y);
+} /* scroll_cb */
+
+
+void
+scroll_end_cb (GtkEventControllerScroll* self,
+               gpointer user_data)
+{
+        GArray* scroll_collector = user_data;
+        gdouble *x = &g_array_index (scroll_collector, gdouble, DX);
+        gdouble *y = &g_array_index (scroll_collector, gdouble, DY);
+        // g_message ("%f - %f", *x, *y);
+        if (*x + *y > 0) {
+                next_day_cb (NULL, NULL);
+        } else {
+                prev_day_cb (NULL, NULL);
+        }
+
+        *x = .0;
+        *y = .0;
+} /* scroll_end_cb */
+
+
 static void
 activate (GtkApplication *app,
           gpointer        user_data)
@@ -313,6 +350,15 @@ activate (GtkApplication *app,
 
         /* We don't need the builder any more */
         g_object_unref (builder);
+
+        GArray *scroll_collector = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), 2);
+        gdouble zero = .0;
+        g_array_append_val (scroll_collector, zero);
+        g_array_append_val (scroll_collector, zero);
+        GtkEventController* scroll = gtk_event_controller_scroll_new (GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES | GTK_EVENT_CONTROLLER_SCROLL_DISCRETE);
+        g_signal_connect (G_OBJECT (scroll), "scroll", G_CALLBACK (scroll_cb), scroll_collector);
+        g_signal_connect (G_OBJECT (scroll), "scroll_end", G_CALLBACK (scroll_end_cb), scroll_collector);
+        gtk_widget_add_controller (window, scroll);
 
         const GActionEntry app_entries[] =
         {
