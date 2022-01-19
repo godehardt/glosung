@@ -1,5 +1,5 @@
 /* settings.h
- * Copyright (C) 2010-2021 Eicke Godehardt
+ * Copyright (C) 2010-2022 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@ gboolean   is_proxy_in_use    ();
 void       set_proxy_in_use   (gboolean use_proxy);
 gchar*     get_proxy          ();
 void       set_proxy          (const gchar *proxy);
+gchar*     get_herrnhuter_url ();
+void       set_herrnhuter_url (const gchar *url);
 gboolean   is_hide_warning    ();
 void       set_hide_warning   (gboolean hide_warning);
 GDateTime* get_last_usage     ();

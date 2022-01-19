@@ -1,5 +1,5 @@
 /* settings.c
- * Copyright (C) 2010-2021 Eicke Godehardt
+ * Copyright (C) 2010-2022 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,19 +20,18 @@
 #define PACKAGE "glosung"
 
 #include "settings.h"
-#ifndef WIN32
+#ifdef WIN32
+	#include "gconf-client.h"
+#else
 	#include <gconf/gconf-client.h>
-	#include <gtk/gtk.h>
 #endif
 
 
-#if (GTK_MINOR_VERSION >= (10) && ! defined (WIN32))
+#if (! defined (WIN32) && ! defined (__APPLE__))
   #define VERSE_LINK 1
 #endif
 
-#ifndef WIN32
-	static GConfClient *client = NULL;
-#endif /* WIN32 */
+static GConfClient *client = NULL;
 
 #define INIT_CLIENT() \
 	if (! client) { \
@@ -43,70 +42,70 @@
 gboolean
 is_proxy_in_use ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/use_proxy", NULL);
-#else
-	return FALSE;
-#endif /* WIN32 */
 } /* use_proxy */
 
 
 void
 set_proxy_in_use (gboolean use_proxy)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/use_proxy", use_proxy, NULL);
-#endif /* WIN32 */
 } /* set_proxy_in_use */
 
 
 gchar*
 get_proxy ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/proxy", NULL);
-#else
-	return "";
-#endif /* WIN32 */
 } /* get_proxy */
 
 
 void
 set_proxy (const gchar *proxy)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_string
 		(client, "/apps/" PACKAGE "/proxy", proxy, NULL);
-#endif /* WIN32 */
 } /* set_proxy */
+
+
+gchar*
+get_herrnhuter_url ()
+{
+        INIT_CLIENT ();
+        return gconf_client_get_string
+                (client, "/apps/" PACKAGE "/losungen-url", NULL);
+} /* get_herrnhuter_url */
+
+
+void
+set_herrnhuter_url (const gchar *url)
+{
+        INIT_CLIENT ();
+        gconf_client_set_string
+                (client, "/apps/" PACKAGE "/losungen-url", url, NULL);
+} /* set_herrnhuter_url */
 
 
 gboolean
 is_hide_warning ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/hide_warning", NULL);
-#else
-	return FALSE;
-#endif /* WIN32 */
 } /* is_hide_warning */
 
 
 void
 set_hide_warning (gboolean hide_warning)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/hide_warning", hide_warning, NULL);
-#endif /* WIN32 */
 } /* set_hide_warning */
 
 
@@ -114,7 +113,6 @@ GDateTime*
 get_last_usage ()
 {
     GDateTime *last_time = NULL;
-#ifndef WIN32
 	INIT_CLIENT ();
 	gchar *last_time_str = gconf_client_get_string
 			(client, "/apps/" PACKAGE "/last_time", NULL);
@@ -122,7 +120,6 @@ get_last_usage ()
 		last_time = g_date_time_new_from_iso8601 (last_time_str, NULL);
 	}
 	g_free (last_time_str);
-#endif /* WIN32 */
 	return last_time;
 } /* get_last_usage */
 
@@ -130,105 +127,85 @@ get_last_usage ()
 void
 set_last_usage (const GDateTime *date)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gchar *time_str = g_date_time_format_iso8601 ((GDateTime *)date);
 	gconf_client_set_string
 			(client, "/apps/" PACKAGE "/last_time", time_str, NULL);
 	g_free (time_str);
-#endif /* WIN32 */
 } /* set_last_usage */
 
 
 gchar*
 get_language ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/language", NULL);
-#else
-	return NULL;
-#endif /* WIN32 */
 } /* get_language */
 
 
 void
 set_language (const gchar *language)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_string
 	     (client, "/apps/" PACKAGE "/language", language, NULL);
-#endif /* WIN32 */
 } /* set_language */
 
 
 gboolean
 is_calender_double_click ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/calendar_close_by_double_click", NULL);
-#else
-	return FALSE;
-#endif /* WIN32 */
 } /* is_calender_double_click */
 
 
 void
 set_calender_double_click (gboolean calendar_close_by_double_click)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/calendar_close_by_double_click", calendar_close_by_double_click, NULL);
-#endif /* WIN32 */
 } /* set_calender_double_click */
 
 
 gboolean
 is_link_sword ()
 {
-#if (defined (VERSE_LINK) && ! defined (WIN32))
+#ifdef VERSE_LINK
 	INIT_CLIENT ();
 	return gconf_client_get_bool (client, "/apps/" PACKAGE "/link_sword", NULL);
 #else
 	return FALSE;
-#endif /* VERSE_LINK, WIN32 */
+#endif /* VERSE_LINK */
 } /* is_link_sword */
 
 
 void
 set_link_sword (gboolean link_sword)
 {
-#if (defined (VERSE_LINK) && ! defined (WIN32))
+#ifdef VERSE_LINK
 	INIT_CLIENT ();
 	gconf_client_set_bool
 		(client, "/apps/" PACKAGE "/link_sword", link_sword, NULL);
-#endif /* VERSE_LINK, WIN32 */
+#endif /* VERSE_LINK */
 } /* set_link_sword */
 
 
 gchar*
 get_font ()
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	return gconf_client_get_string
 		(client, "/apps/" PACKAGE "/font", NULL);
-#else
-	return NULL;
-#endif /* WIN32 */
 } /* get_font */
 
 
 void
 set_font (const gchar *font)
 {
-#ifndef WIN32
 	INIT_CLIENT ();
 	gconf_client_set_string
 	     (client, "/apps/" PACKAGE "/font", font, NULL);
-#endif /* WIN32 */
 } /* set_font */
