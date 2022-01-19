@@ -8,6 +8,7 @@
     <file>ui/icons/angles-right-solid.png</file>
     <file>ui/icons/bars-solid.png</file>
     <file>ui/icons/calendar-alt-regular.png</file>
+    <file>ui/icons/clone-regular.png</file>
     <file>ui/icons/gear-solid.png</file>
     <file>ui/icons/question-circle-regular.png</file>
     <file preprocess="xml-stripblanks">ui/add_language.ui</file>
