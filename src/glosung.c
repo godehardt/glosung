@@ -126,7 +126,6 @@ void prev_month_cb        (GtkWidget *w,   gpointer data);
 void property_cb          (GtkWidget *w,   gpointer data);
 void today_cb             (GtkWidget *w,   gpointer data);
 static void update_language_store();
-//static void window_scroll_cb     (GtkWidget      *widget, GdkEventScroll *event, gpointer data);
 static gboolean check_new_date_cb (gpointer data);
 
 
@@ -151,22 +150,35 @@ activate_quit (GSimpleAction *action,
 
 
 static void
+do_copy (GtkWidget *w)
+{
+        GdkClipboard* clipboard;
+
+        clipboard = gdk_display_get_clipboard (gtk_widget_get_display (w));
+        // clipboard = gdk_display_get_primary_clipboard ();
+        gdk_clipboard_set_text (clipboard, losung_simple_text);
+} /* do_copy */
+
+
+static void
 activate_copy (GSimpleAction *action,
                GVariant      *parameter,
                gpointer       app)
 {
-        GdkClipboard* clipboard;
-        GList *list;
-
-        list = gtk_application_get_windows (GTK_APPLICATION (app));
+        GList *list = gtk_application_get_windows (GTK_APPLICATION (app));
         if (! list) {
                 return;
         }
 
-        clipboard = gdk_display_get_clipboard (gtk_widget_get_display (GTK_WIDGET (list->data)));
-        // clipboard = gdk_display_get_primary_clipboard ();
-        gdk_clipboard_set_text (clipboard, losung_simple_text);
+        do_copy (GTK_WIDGET (list->data));
 } /* activate_copy */
+
+
+G_MODULE_EXPORT void
+copy_cb (GtkWidget *w, gpointer data)
+{
+        do_copy (w);
+} /* copy_cb */
 
 
 static gint
@@ -197,8 +209,9 @@ set_headerbar_button (GtkBuilder *builder,
 } /* set_headerbar_button */
 
 
-#define DX 0 // index in GArray∗ scroll_collector
-#define DY 1 // index in GArray∗ scroll_collector
+#define DX 0 // index in GArray∗ scroll_collector for x value
+#define DY 1 // index in GArray∗ scroll_collector for y value
+#define MODIFIER 2 // index in GArray∗ scroll_collector for current modifier key
 
 gboolean
 scroll_cb (GtkEventControllerScroll *self,
@@ -212,6 +225,7 @@ scroll_cb (GtkEventControllerScroll *self,
         gdouble *y = &g_array_index (scroll_collector, gdouble, DY);
         *y = *y + dy;
         // g_message ("%f - %f  -->  %f - %f", dx, dy, *x, *y);
+        return TRUE;
 } /* scroll_cb */
 
 
@@ -220,18 +234,77 @@ scroll_end_cb (GtkEventControllerScroll* self,
                gpointer user_data)
 {
         GArray* scroll_collector = user_data;
-        gdouble *x = &g_array_index (scroll_collector, gdouble, DX);
-        gdouble *y = &g_array_index (scroll_collector, gdouble, DY);
+        gdouble *x   = &g_array_index (scroll_collector, gdouble, DX);
+        gdouble *y   = &g_array_index (scroll_collector, gdouble, DY);
+        gdouble *mod = &g_array_index (scroll_collector, gdouble, MODIFIER);
+
         // g_message ("%f - %f", *x, *y);
         if (*x + *y > 0) {
-                next_day_cb (NULL, NULL);
+                if (*mod == GDK_CONTROL_MASK) {
+                        next_month_cb (NULL, NULL);
+                } else {
+                        next_day_cb (NULL, NULL);
+                }
         } else {
-                prev_day_cb (NULL, NULL);
+                if (*mod == GDK_CONTROL_MASK) {
+                        prev_month_cb (NULL, NULL);
+                } else {
+                        prev_day_cb (NULL, NULL);
+                }
         }
 
         *x = .0;
         *y = .0;
 } /* scroll_end_cb */
+
+
+gboolean
+key_pressed_cb (GtkEventControllerKey* self,
+                guint keyval,
+                guint keycode,
+                GdkModifierType state,
+                gpointer user_data)
+{
+        // g_message ("%d %d %d (%d)", keyval, keycode, state, GDK_CONTROL_MASK);
+        if (state == GDK_CONTROL_MASK) {
+                if (keycode == 114 /* Right */ || keycode == 116 /* Down */) {
+                        next_month_cb (NULL, NULL);
+                        return TRUE;
+                } else if (keycode == 113 /* Left */ || keycode == 111 /* Up */) {
+                        prev_month_cb (NULL, NULL);
+                        return TRUE;
+                }
+        } else {
+                if (keycode == 114 /* Right */ || keycode == 116 /* Down */) {
+                        next_day_cb (NULL, NULL);
+                        return TRUE;
+                } else if (keycode == 113 /* Left */ || keycode == 111 /* Up */) {
+                        prev_day_cb (NULL, NULL);
+                        return TRUE;
+                }
+        }
+        if (keycode == 37) { // Control
+                GArray* scroll_collector = user_data;
+                gdouble *mod = &g_array_index (scroll_collector, gdouble, MODIFIER);
+                *mod = (gdouble) GDK_CONTROL_MASK;
+        }
+        return FALSE;
+} /* key_pressed_cb */
+
+
+void
+key_released_cb (GtkEventControllerKey* self,
+                guint keyval,
+                guint keycode,
+                GdkModifierType state,
+                gpointer user_data)
+{
+        if (keycode == 37) { // Control
+                GArray* scroll_collector = user_data;
+                gdouble *mod = &g_array_index (scroll_collector, gdouble, MODIFIER);
+                *mod = .0;
+        }
+} /*key_released_cb*/
 
 
 static void
@@ -272,9 +345,6 @@ activate (GtkApplication *app,
         /* Connect signal handlers to the constructed widgets. */
         GObject *window = gtk_builder_get_object (builder, "window");
         gtk_window_set_application (GTK_WINDOW (window), app);
-        // g_signal_connect (G_OBJECT (window), "scroll_event",
-        //                   G_CALLBACK (window_scroll_cb),
-        //                   NULL);
 
         label [TITLE] = GTK_WIDGET (gtk_builder_get_object (builder, "date"));
 
@@ -313,6 +383,7 @@ activate (GtkApplication *app,
         set_headerbar_button (builder, "next_day");
         set_headerbar_button (builder, "next_month");
         set_headerbar_button (builder, "calendar");
+        set_headerbar_button (builder, "copy");
 
         /* start timeout for detecting date change */
 	timeout = g_timeout_add_seconds (UPDATE_TIME, check_new_date_cb, NULL);
@@ -351,14 +422,20 @@ activate (GtkApplication *app,
         /* We don't need the builder any more */
         g_object_unref (builder);
 
-        GArray *scroll_collector = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), 2);
+        GArray *scroll_collector = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), 3);
         gdouble zero = .0;
+        g_array_append_val (scroll_collector, zero);
         g_array_append_val (scroll_collector, zero);
         g_array_append_val (scroll_collector, zero);
         GtkEventController* scroll = gtk_event_controller_scroll_new (GTK_EVENT_CONTROLLER_SCROLL_BOTH_AXES | GTK_EVENT_CONTROLLER_SCROLL_DISCRETE);
         g_signal_connect (G_OBJECT (scroll), "scroll", G_CALLBACK (scroll_cb), scroll_collector);
         g_signal_connect (G_OBJECT (scroll), "scroll_end", G_CALLBACK (scroll_end_cb), scroll_collector);
-        gtk_widget_add_controller (window, scroll);
+        gtk_widget_add_controller (GTK_WIDGET (window), scroll);
+
+        GtkEventController* key = gtk_event_controller_key_new ();
+        g_signal_connect (G_OBJECT (key), "key-pressed", G_CALLBACK (key_pressed_cb), scroll_collector);
+        g_signal_connect (G_OBJECT (key), "key-released", G_CALLBACK (key_released_cb), scroll_collector);
+        gtk_widget_add_controller (GTK_WIDGET (window), key);
 
         const GActionEntry app_entries[] =
         {
@@ -1010,6 +1087,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
                         gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
+                        gtk_widget_show (GTK_WIDGET (warning));
 /*
 			gint res = gtk_dialog_run (warning);
 			gtk_window_destroy (GTK_WINDOW (warning));
@@ -1286,29 +1364,6 @@ update_language_store ()
                 g_string_free (years, TRUE);
         }
 } /* update_language_store */
-
-
-/*
-static void
-window_scroll_cb (GtkWidget      *widget,
-                  GdkEventScroll *event,
-                  gpointer        user_data)
-{
-	if (event->state & GDK_CONTROL_MASK) {
-		if (event->direction == GDK_SCROLL_UP) {
-			prev_month_cb (widget, user_data);
-		} else {
-			next_month_cb (widget, user_data);
-		}
-	} else {
-		if (event->direction == GDK_SCROLL_UP) {
-			prev_day_cb (widget, user_data);
-		} else {
-			next_day_cb (widget, user_data);
-		}
-	}
-}
-*/
 
 
 static gboolean
