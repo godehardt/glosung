@@ -1,4 +1,11 @@
-glosung (3.6.6~focal) focal; urgency=low
+glosung (4.0.0~focal) focal; urgency=low
+
+  * major upgrade as migrated to gtk4
+  * update Herrnhut download url
+
+ -- Eicke Godehardt <sf@godehardt.org>  Thu, 03 Mar 2022 11:19:29 +0100
+
+glosung (3.6.6~bionic2) bionic; urgency=low
 
   * several config/build fixes (thanks Andreas Kemnade)
 
