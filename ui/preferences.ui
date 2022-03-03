@@ -146,10 +146,10 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="download_url_entry">
+                      <object class="GtkEntry" id="herrnhut_url_entry">
                         <property name="focusable">1</property>
                         <property name="tooltip-text" translatable="yes">Enter Download URL for Losung XML file</property>
-                        <property name="placeholder-text">https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip</property>
+                        <signal name="changed" handler="herrnhut_url_changed_cb" swapped="no"/>
                         <layout>
                           <property name="column">1</property>
                           <property name="row">0</property>

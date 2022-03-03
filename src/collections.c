@@ -21,11 +21,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
 #include "collections.h"
 #include "download.h"
+
 
 static GPtrArray *sources = NULL;
 

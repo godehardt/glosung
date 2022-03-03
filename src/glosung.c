@@ -728,6 +728,8 @@ property_cb (GtkWidget *w, gpointer data)
                 (gtk_builder_get_object (builder, "proxy_checkbox"));
         GtkWidget *proxy_entry = GTK_WIDGET
                 (gtk_builder_get_object (builder, "proxy_entry"));
+        GtkWidget *herrnhut_url_entry = GTK_WIDGET
+                (gtk_builder_get_object (builder, "herrnhut_url_entry"));
 
         GtkWidget *combo = GTK_WIDGET
                 (gtk_builder_get_object (builder, "language_combo"));
@@ -782,6 +784,12 @@ property_cb (GtkWidget *w, gpointer data)
                 (gtk_builder_get_object (builder, "sword_checkbox")),
                         FALSE);
 #endif
+        gchar *herrnhut_url = get_herrnhuter_url ();
+        if (! herrnhut_url) {
+                gtk_entry_set_placeholder_text (GTK_ENTRY (herrnhut_url_entry), "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip");
+        } else {
+                gtk_editable_set_text (GTK_EDITABLE (herrnhut_url_entry), herrnhut_url);
+        }
 
         gtk_widget_show (preferences);
 } /* property_cb */
@@ -810,6 +818,17 @@ proxy_changed_cb (GtkWidget *entry, gpointer data)
         const gchar *proxy = gtk_editable_get_text (GTK_EDITABLE (entry));
         set_proxy (proxy);
 } /* proxy_changed_cb */
+
+
+/*
+ * callback function for preferences dialog.
+ */
+G_MODULE_EXPORT void
+herrnhut_url_changed_cb (GtkWidget *entry, gpointer data)
+{
+        const gchar *url = gtk_editable_get_text (GTK_EDITABLE (entry));
+        set_herrnhuter_url (url);
+} /* herrnhut_url_changed_cb */
 
 
 /*

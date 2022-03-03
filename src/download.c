@@ -1,5 +1,5 @@
 /* download.c
- * Copyright (C) 2006-2021 Eicke Godehardt
+ * Copyright (C) 2006-2022 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 #include "download.h"
 #include "collections.h"
 #include "settings.h"
+
 
 //#define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
 #define LOSUNGEN_URL "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip"
@@ -156,7 +157,12 @@ to_file_losungen (Memory mem, const guint year)
 static void
 download_losungen (guint year)
 {
-        gchar *url   = g_strdup_printf (LOSUNGEN_URL, year);
+        gchar *url;
+        url = get_herrnhuter_url ();
+        if (! url) {
+                url = LOSUNGEN_URL;
+        }
+        url = g_strdup_printf (url, year);
         Memory mem = real_download (url);
 	g_free (url);
 
