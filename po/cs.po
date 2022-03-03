@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-12 14:48+0100\n"
+"POT-Creation-Date: 2022-01-18 10:57+0100\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -400,6 +400,12 @@ msgid "Next Month"
 msgstr "Následující _měsíc"
 
 #
+# File: src/glosung.c, line: 213
+#, fuzzy
+msgid "Copy Text"
+msgstr "_Kopírovat text"
+
+#
 #
 #
 #
@@ -666,11 +672,6 @@ msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
 # File: src/glosung.c, line: 228
 #~ msgid "Quit the application"
 #~ msgstr "Ukončit aplikaci"
-
-#
-# File: src/glosung.c, line: 213
-#~ msgid "_Copy text"
-#~ msgstr "_Kopírovat text"
 
 #
 # File: src/glosung.c, line: 194

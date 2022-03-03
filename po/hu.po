@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-12 14:48+0100\n"
+"POT-Creation-Date: 2022-01-18 10:57+0100\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -215,6 +215,12 @@ msgid "Next Month"
 msgstr "_Következő hónap"
 
 #
+# File: src/glosung.c, line: 212
+#, fuzzy
+msgid "Copy Text"
+msgstr "_Szöveg másolása"
+
+#
 #
 #
 # File: src/glosung.c, line: 1090
@@ -399,11 +405,6 @@ msgstr ""
 # File: src/glosung.c, line: 210
 #~ msgid "Quit the application"
 #~ msgstr "Kilépés a programból"
-
-#
-# File: src/glosung.c, line: 212
-#~ msgid "_Copy text"
-#~ msgstr "_Szöveg másolása"
 
 #
 # File: src/glosung.c, line: 213
