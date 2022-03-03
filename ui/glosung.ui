@@ -201,6 +201,19 @@
                 </child>
               </object>
             </child>
+            <child>
+              <object class="GtkButton" id="copy">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Copy Text</property>
+                <signal name="clicked" handler="copy_cb" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="resource">/org/godehardt/glosung/ui/icons/clone-regular.png</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
       </object>
