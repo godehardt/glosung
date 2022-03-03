@@ -40,9 +40,9 @@ about (GtkWidget *app)
                 NULL
         };
         const gchar *artists [] = {
-                "Icons: Font Awesome https://fontawesome.com/license",
                 "Watchwords: (C) Moravian Church https://www.losungen.de",
                 "Bible 2.0: (C) Bible 2.0 Team http://www.bible20.net",
+                "Icons: Font Awesome https://fontawesome.com/license",
                 NULL
         };
         gchar *translators =
