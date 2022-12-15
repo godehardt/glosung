@@ -1,4 +1,4 @@
-glosung (4.0.0~focal) focal; urgency=low
+glosung (4.0.0~impish) impish; urgency=low
 
   * major upgrade as migrated to gtk4
   * update Herrnhut download url
