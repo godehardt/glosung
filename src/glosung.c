@@ -248,7 +248,7 @@ scroll_end_cb (GtkEventControllerScroll* self,
                 } else {
                         next_day_cb (NULL, NULL);
                 }
-        } else {
+        } else if (*x + *y < 0) {
                 if (*mod == GDK_CONTROL_MASK) {
                         prev_month_cb (NULL, NULL);
                 } else {
@@ -325,7 +325,6 @@ activate (GtkApplication *app,
 
         AdwStyleManager *manager = adw_style_manager_get_default ();
         dark_mode = adw_style_manager_get_dark (manager);
-        g_message ("dark mod %d", dark_mode);
 
         g_signal_connect (manager, "notify::dark", G_CALLBACK (notify_dark_cb), NULL);
 
