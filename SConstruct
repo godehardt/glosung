@@ -18,7 +18,7 @@
 
 import os
 
-version = '4.0.0'
+version = '4.0.1'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -96,7 +96,7 @@ if env['PLATFORM'] == 'win32':
         env.ParseConfig ('pkg-config gtk4 libxml-2.0 libcurl --cflags --libs')
         Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk4 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl --cflags --libs')
+        env.ParseConfig('pkg-config gtk4 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl libadwaita-1 --cflags --libs')
 #        Tool('posix')(env)
 
 linkflags.append ('-lgmodule-export-2.0')
@@ -122,7 +122,8 @@ env.Install (dir = install_dir + pixmap_dir,
         source = [
                 'herrnhut.png',
                 'glosung.png',
-                'glosung-big.png'])
+                'glosung-big.png',
+                'glosung-big-white.png'])
 env.Install (dir = install_dir + data_dir,
         source = [])
 
@@ -136,6 +137,7 @@ if env['PLATFORM'] != 'win32':
                     'SConstruct',
                     'herrnhut.png',
                     'glosung-big.png',
+                    'glosung-big-white.png',
                     'glosung.desktop',
                     'glosung.png',
                     'glosung.gresource.xml',
@@ -146,13 +148,21 @@ if env['PLATFORM'] != 'win32':
                     'ui/warning_dialog.ui',
                     'ui/style.css',
                     'ui/icons/angle-left-solid.png',
+                    'ui/icons/angle-left-solid-white.png',
                     'ui/icons/angle-right-solid.png',
+                    'ui/icons/angle-right-solid-white.png',
                     'ui/icons/angles-down-solid.png',
+                    'ui/icons/angles-down-solid-white.png',
                     'ui/icons/angles-left-solid.png',
+                    'ui/icons/angles-left-solid-white.png',
                     'ui/icons/bars-solid.png',
+                    'ui/icons/bars-solid-white.png',
                     'ui/icons/calendar-alt-regular.png',
+                    'ui/icons/calendar-alt-regular-white.png',
                     'ui/icons/gear-solid.png',
+                    'ui/icons/gear-solid-white.png',
                     'ui/icons/question-circle-regular.png',
+                    'ui/icons/question-circle-regular-white.png',
                     'debian/glosung.files',
                     'debian/control',
                     'debian/changelog',

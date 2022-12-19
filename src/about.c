@@ -19,6 +19,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib/gi18n.h>
+#include <adwaita.h>
 
 #include "about.h"
 #include "util.h"
@@ -48,9 +49,18 @@ about (GtkWidget *app)
         gchar *translators =
             "Marek Drápal\nNicolas\nEmanuel Feruzi\nMáté Nagy\nEicke Godehardt";
 
-        GdkPaintable *logo = gtk_picture_get_paintable (
-                GTK_PICTURE (gtk_picture_new_for_filename
-                        (PACKAGE_PIXMAPS_DIR "/glosung-big.png")));
+        AdwStyleManager *manager = adw_style_manager_get_default ();
+
+        GdkPaintable *logo;
+        if (adw_style_manager_get_dark (manager)) {
+                logo = gtk_picture_get_paintable (
+                        GTK_PICTURE (gtk_picture_new_for_filename
+                                (PACKAGE_PIXMAPS_DIR "/glosung-big-white.png")));
+        } else {
+                logo = gtk_picture_get_paintable (
+                        GTK_PICTURE (gtk_picture_new_for_filename
+                                (PACKAGE_PIXMAPS_DIR "/glosung-big.png")));
+        }
 
         gtk_show_about_dialog (GTK_WINDOW (app),
                  "authors", authors,

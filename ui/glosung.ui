@@ -85,7 +85,11 @@
                 <signal name="clicked" handler="lang_manager_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/bars-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/bars-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -98,7 +102,11 @@
                 <signal name="clicked" handler="property_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/gear-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/gear-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -114,7 +122,11 @@
                 </style>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/question-circle-regular.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/question-circle-regular</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -131,7 +143,11 @@
                 <signal name="clicked" handler="prev_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-left-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/angles-left-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -144,7 +160,11 @@
                 <signal name="clicked" handler="prev_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/angle-left-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/angle-left-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -157,7 +177,11 @@
                 <signal name="clicked" handler="today_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-down-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/angles-down-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -170,7 +194,11 @@
                 <signal name="clicked" handler="next_day_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/angle-right-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/angle-right-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -183,7 +211,11 @@
                 <signal name="clicked" handler="next_month_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/angles-right-solid.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/angles-right-solid</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -196,7 +228,11 @@
                 <signal name="clicked" handler="calendar_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/calendar-alt-regular.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/calendar-alt-regular</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>
@@ -209,7 +245,11 @@
                 <signal name="clicked" handler="copy_cb" swapped="no"/>
                 <child>
                   <object class="GtkImage">
-                    <property name="resource">/org/godehardt/glosung/ui/icons/clone-regular.png</property>
+                    <binding name="resource">
+                      <closure type="gchararray" function="get_button_icon_name">
+                        <constant type="gchararray">/org/godehardt/glosung/ui/icons/clone-regular</constant>
+                      </closure>
+                    </binding>
                   </object>
                 </child>
               </object>

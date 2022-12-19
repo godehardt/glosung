@@ -33,6 +33,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <adwaita.h>
 
 #include "parser.h"
 #include "download.h"
@@ -89,6 +90,7 @@ static Source    *local_collections;
 static gchar     *lang = NULL;
 static GHashTable*lang_translations;
 static Source    *server_list = NULL;
+static gboolean   dark_mode;
 
 #if ! GTK_CHECK_VERSION(2,20,0)
 	/* compatibility with older of Gtk+ */
@@ -138,6 +140,7 @@ void proxy_toggled_cb       (GtkWidget *toggle,   gpointer data);
 void proxy_changed_cb       (GtkWidget *toggle,   gpointer data);
 void sword_cb               (GtkWidget *toggle,   gpointer data);
 
+gchar* get_button_icon_name (gpointer   x,        gpointer basename);
 
 
 static void
@@ -308,10 +311,23 @@ key_released_cb (GtkEventControllerKey* self,
 
 
 static void
+notify_dark_cb (GtkWidget *widget, gpointer data)
+{
+        g_message("notify dark mode");
+}
+
+
+static void
 activate (GtkApplication *app,
           gpointer        user_data)
 {
         guint timeout;
+
+        AdwStyleManager *manager = adw_style_manager_get_default ();
+        dark_mode = adw_style_manager_get_dark (manager);
+        g_message ("dark mod %d", dark_mode);
+
+        g_signal_connect (manager, "notify::dark", G_CALLBACK (notify_dark_cb), NULL);
 
         lang_translations = init_languages ();
         local_collections = get_local_collections ();
@@ -986,7 +1002,7 @@ today_cb (GtkWidget *w, gpointer data)
         date = g_date_time_new_now_local ();
 
         show_text (date);
-        if (calendar != NULL) {
+        if (calendar != NULL && GTK_IS_CALENDAR (calendar)) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), date);
         }
 } /* today_cb */
@@ -1000,7 +1016,7 @@ next_day_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_days (date, 1);
         show_text (new_date);
-        if (calendar != NULL) {
+        if (calendar != NULL && GTK_IS_CALENDAR (calendar)) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* next_day_cb */
@@ -1014,7 +1030,7 @@ prev_day_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_days (date, -1);
         show_text (new_date);
-        if (calendar != NULL) {
+        if (calendar != NULL && GTK_IS_CALENDAR (calendar)) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* prev_day_cb */
@@ -1028,7 +1044,7 @@ next_month_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_months (date, 1);
         show_text (new_date);
-        if (calendar != NULL) {
+        if (calendar != NULL && GTK_IS_CALENDAR (calendar)) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* next_month_cb */
@@ -1042,7 +1058,7 @@ prev_month_cb (GtkWidget *w, gpointer data)
 {
         GDateTime *new_date = g_date_time_add_months (date, -1);
         show_text (new_date);
-        if (calendar != NULL) {
+        if (calendar != NULL && GTK_IS_CALENDAR (calendar)) {
                 gtk_calendar_select_day (GTK_CALENDAR (calendar), new_date);
         }
 } /* prev_month_cb */
@@ -1415,3 +1431,19 @@ check_new_date_cb (gpointer first)
         }
         return TRUE;
 } /* check_new_date_cb */
+
+
+/*
+ * function to get icon name based on dark mode, called from within glosung.ui
+ */
+G_MODULE_EXPORT gchar*
+get_button_icon_name (gpointer x, gpointer basename)
+{
+        // g_message ("dark mod %d", dark_mode);
+        // g_message ("%s", g_strdup_printf ("%s.png", basename));
+        if (dark_mode) {
+                return g_strdup_printf ("%s-white.png", (char*)basename);
+        } else {
+                return g_strdup_printf ("%s.png", (char*)basename);
+        }
+} /* get_butten_icon_name */
