@@ -14,19 +14,22 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+
     - name: Install Dependencies
       run: sudo apt-get install -y flatpak flatpak-builder
+
     - name: Build C/C++ Application
       run: |
         mkdir build
         cd build
-        cmake ..
         make
 
     - name: Create Flatpak Bundle
       run: flatpak-builder --repo=repo my-app flatpak.json
+
     - name: Publish Flatpak Package
       run: flatpak build-export repo my-app
+
     - name: Commit and Push Flatpak Repository
       run: |
         git config --local user.email "action@github.com"
