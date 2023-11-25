@@ -1,0 +1,41 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      run: sudo apt-get install -y flatpak flatpak-builder
+
+    - name: Build C/C++ Application
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+
+    - name: Create Flatpak Bundle
+      run: flatpak-builder --repo=repo my-app flatpak.json
+
+    - name: Publish Flatpak Package
+      run: flatpak build-export repo my-app
+
+    - name: Commit and Push Flatpak Repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update Flatpak repository"
+        git push origin main
+        
