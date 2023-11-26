@@ -1,9 +1,10 @@
-name: C/C++ Build
+name: C/C++ CI Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -11,15 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Install Build Tools
-      run: sudo apt-get install -y build-essential
-
-    - name: Build Project
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        make
+    - uses: actions/checkout@v3
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
