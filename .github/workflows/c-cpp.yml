@@ -22,7 +22,6 @@ jobs:
       run: |
         mkdir build
         cd build
-        make
 
     - name: Create Flatpak Bundle
       run: flatpak-builder --repo=repo my-app flatpak.json
