@@ -21,3 +21,12 @@ jobs:
       run: make check
     - name: make distcheck
       run: make distcheck
+
+jobs_t:
+
+    - name: Cache
+      uses: actions/cache@v3.3.2
+      with: .\src\about.c
+    path: .\src\about.c
+    key: cache-hit
+          
