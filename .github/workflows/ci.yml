@@ -7,8 +7,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-f_job_f:
-name: first
+my_first_job:
+name: My first job
   build:
 
     runs-on: ubuntu-latest
@@ -24,8 +24,8 @@ name: first
     - name: make distcheck
       run: make distcheck
 
-s_job_s:
-
+my_second_job:
+  name: My second job
     - name: Cache
       uses: actions/cache@v3.3.2
       with: .\src\about.c
