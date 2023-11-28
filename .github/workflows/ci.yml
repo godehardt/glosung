@@ -24,8 +24,6 @@ jobs:
     - name: Cache
     - uses: actions/cache@v3.3.2
        with:
-         path: 
-         key: 
          enableCrossOsArchive: true
          lookup-only: true
     - name: Download a Build Artifact
