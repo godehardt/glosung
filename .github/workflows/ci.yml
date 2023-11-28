@@ -1,20 +1,35 @@
-name: Reusable workflow example
+name: C/C++ CI Build
 
 on:
-  workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-  triage:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/labeler@v4
+    - uses: actions/checkout@v3
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
+      
+    - name: Cache
+       uses: actions/cache@v3.3.2
+       with:
+         path: 
+         key: 
+         enableCrossOsArchive: true
+         lookup-only: true
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.1.1
       with:
-        repo-token: ${{ secrets.token }}
-        configuration-path: ${{ inputs.config-path }}
+        name: test
+        path: .github\workflows
+          
