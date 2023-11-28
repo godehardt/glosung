@@ -23,12 +23,5 @@ jobs:
       run: make distcheck
     - name: Cache
     - uses: actions/cache@v3.3.2
-       with:
-         enableCrossOsArchive: true
-         lookup-only: true
-    - name: Download a Build Artifact
-    - uses: actions/download-artifact@v2.1.1
-      with:
-    - name: test
-        path: .github\workflows
+       
           
