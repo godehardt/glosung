@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-f_jobs_f:
+f_job_f:
 name: first
   build:
 
@@ -24,7 +24,7 @@ name: first
     - name: make distcheck
       run: make distcheck
 
-s_jobs_s:
+s_job_s:
 
     - name: Cache
       uses: actions/cache@v3.3.2
