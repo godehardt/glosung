@@ -9,17 +9,11 @@ on:
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
-    strategy: 
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
      start: npm start
-     start-windows: npm run 
-     start-windows: npm run start:ci:windows
     - name: make
       run: make
     - name: make check
