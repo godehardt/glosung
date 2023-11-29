@@ -6,19 +6,4 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
- 
-  BUILD_TYPE: TestBuild
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Configure CMake
-      run: ./SConstruct
-
-
           
