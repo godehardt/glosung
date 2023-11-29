@@ -13,5 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: glosung.gresource.xml
-      run: ./echo.sh
+    - name: glosung.echo.txt
+      run: ./echo.txt
