@@ -1,9 +1,25 @@
-name: CI
+name: C/C++ CI Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "master" ]
 
-          
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: autostart.c
+      run: ./autostart.c
+    - name: autostart.h
+      run: ./autostart.h
+    - name: collection.c
+      run: ./collection.c
+    - name: collection.h
+      run: ./collection.h
+
+      
