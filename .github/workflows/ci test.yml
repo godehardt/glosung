@@ -13,13 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: autostart.c
-      run: ./autostart.c
-    - name: autostart.h
-      run: ./autostart.h
-    - name: collection.c
-      run: ./collection.c
-    - name: collection.h
-      run: ./collection.h
-
-      
+    - name: glosung.gresource.xml
+      run: ./gresource.xml
