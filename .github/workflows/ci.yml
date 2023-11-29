@@ -1,12 +1,13 @@
-name: Docker Image CI
+name: C/C++ CI Build
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ "master" ]
 
 jobs:
+my_first_job:
 
   build:
 
@@ -14,6 +15,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
+
+my_second_job:
+  name: My second job
+    - name: Cache
+      uses: actions/cache@v3.3.2
+      with: .\src\about.c
+    path: .\src\about.c
+    key: cache-hit
           
