@@ -13,5 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: glosung.echo.txt
-      run: ./echo.txt
+    - name: util
+      run: ./src\util.h
