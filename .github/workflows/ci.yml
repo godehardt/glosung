@@ -21,7 +21,7 @@ jobs:
       run: .
 
     - name: Build
-      run: .\glosung\src
+      run: .\glosung\src\SConscript
 
     - name: Test
       working-directory: ${{github.workspace}}/build
