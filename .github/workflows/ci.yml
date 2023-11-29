@@ -17,11 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build
-      run: C:\Users\Nued Amanuel\Desktop\Thesis\GLösung\glosung\src
+    - name: Configure CMake
+      run: ./SConstruct
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      run: ctest -C ${{env.BUILD_TYPE}}
 
           
