@@ -18,8 +18,8 @@ jobs:
         version: 1.0
 
     - name: Build
-      run: .scons
+      run: scons
 
     - name: Deploy
-      run: .scons install
+      run: scons install
       
