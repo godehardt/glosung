@@ -1,4 +1,4 @@
-name: C/C++ CI Build
+name: C CI Build
 
 on:
   push:
@@ -8,18 +8,18 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: autostart.c
-      run: ./autostart.c
-    - name: autostart.h
-      run: ./autostart.h
-    - name: collection.c
-      run: ./collection.c
-    - name: collection.h
-      run: ./collection.h
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: scons debhelper intltool libgtk-4-dev libadwaita-1-dev libxml2-dev libcurl4-gnutls-dev libgconf2-dev gettext
+        version: 1.0
 
+    - name: Build
+      run: .scons
+
+    - name: Deploy
+      run: .scons install
       
