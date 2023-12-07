@@ -17,8 +17,8 @@ jobs:
         packages: scons debhelper intltool libgtk-4-dev libadwaita-1-dev libxml2-dev libcurl4-gnutls-dev libgconf2-dev gettext
         version: 1.0
 
-build-app:
-    needs: build
+  build-app:
+     needs: build
     runs-on: ubuntu-latest
 
     steps:
