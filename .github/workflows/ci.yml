@@ -21,7 +21,7 @@ jobs:
           version: 1.0
           
       - name: Build Scons
-        run: Scons install
+        run: Scons
 
   build-app:
     needs: build
