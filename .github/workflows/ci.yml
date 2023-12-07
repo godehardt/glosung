@@ -20,8 +20,8 @@ jobs:
           packages: scons debhelper intltool libgtk-4-dev libadwaita-1-dev libxml2-dev libcurl4-gnutls-dev libgconf2-dev gettext
           version: 1.0
 
-      - name: Build Scons
-        run: Scons
+      - name: Install Scons
+        run: Scons install
 
   build-app:
     needs: build
@@ -40,7 +40,3 @@ jobs:
 
       - name: Flatpak Builder
         uses: flatpak/flatpak-github-actions@v6.3
- 
-      - name: Deploy
-        run: scons install
-      
