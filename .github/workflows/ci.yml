@@ -44,11 +44,11 @@ jobs:
   release:
      needs: build-app
      runs-on: ubuntu-latest
-  
+
      steps:
        - name: Create GitHub Release
          id: create-new-relase
-         uses: actions/create-release@v1
+         uses: actions/create-release@v2
          env:
            GITHUB_TOKEN: ${{ secrets.TOKEN }}
          with:
