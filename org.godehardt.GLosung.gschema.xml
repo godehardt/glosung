@@ -1,0 +1,80 @@
+<schemalist>
+  <schema path="/org/godehardt/GLosung/"       
+         id="org.godehardt.glosung">
+    <key name="proxy" type="s">
+      <default>''</default>
+      <summary>Which proxy to use</summary>
+      <description>
+        Using a proxy instead of directly talking to the server,
+        e.g. in case you live in a country, where being a Christian
+        is dangerous.
+      </description>
+    </key>
+    <key name="use-proxy" type="b">
+      <default>false</default>
+      <summary>Use of proxy</summary>
+      <description>
+        Specific proxy settings.
+      </description>
+    </key>
+
+    <key name="losungen-url" type="s">
+      <default>''</default>
+      <summary>Url to download Losungen from</summary>
+      <description>
+        Url to download Losungen provided by Moravian Church Germany.
+      </description>
+    </key>
+
+    <key name="hide-warning" type="b">
+      <default>false</default>
+      <summary>Don't remind of beeing persecuted</summary>
+      <description>
+        Don't show the reminder, that having a Bible or biblical text
+        might be problematic in some countries.
+      </description>
+    </key>
+
+    <key name="last-time-opened" type="s">
+      <default>''</default>
+      <summary>Time stamp of last usage</summary>
+      <description>
+        Time stamp of last usage as ISO 8601.
+      </description>
+    </key>
+
+    <key name="language" type="s">
+      <default>''</default>
+      <summary>Language of the text</summary>
+      <description>
+        Language of the text to be shown.
+      </description>
+    </key>
+
+    <key name="calendar-close-by-double-click" type="b">
+      <default>true</default>
+      <summary>Close calendar on double click</summary>
+      <description>
+        Specify whether to close the calendar by double clicking
+        on a Specific date.
+      </description>
+    </key>
+
+    <key name="link-sword" type="b">
+      <default>false</default>
+      <summary>Link GLosung to Sword application</summary>
+      <description>
+        Link GLosung to open Sword application to investigate the
+        biblical context of the shown verse.
+      </description>
+    </key>
+
+    <key name="font" type="s">
+      <default>''</default>
+      <summary>Font to be used</summary>
+      <description>
+        Text font of the shown biblical texts.
+      </description>
+    </key>
+  </schema>
+</schemalist>
