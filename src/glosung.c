@@ -414,7 +414,7 @@ activate (GtkApplication *app,
         gtk_css_provider_load_from_resource (provider, "/org/godehardt/glosung/ui/style.css");
         gtk_style_context_add_provider_for_display (display, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        gtk_widget_show (GTK_WIDGET (window));
+        gtk_widget_set_visible (GTK_WIDGET (window), TRUE);
         // gtk_window_set_default_icon_from_file
         //         (PACKAGE_PIXMAPS_DIR "glosung.png", NULL);
 
@@ -429,7 +429,7 @@ activate (GtkApplication *app,
                                // G_CALLBACK (gtk_widget_destroy), NULL);
                                // G_CALLBACK (lang_manager_cb), NULL);
                                // CALLBACK (gtk_main_quit), NULL);
-                gtk_widget_show (error_dialog);
+                gtk_widget_set_visible (error_dialog, TRUE);
         } else {
                 show_text (date);
         }
@@ -580,7 +580,7 @@ show_text (GDateTime *new_date)
                 g_signal_connect (G_OBJECT (error_dialog), "response",
                                   G_CALLBACK (no_languages_cb), NULL);
 
-                gtk_widget_show (error_dialog);
+                gtk_widget_set_visible (error_dialog, TRUE);
                 // FIXME: needed? core dumb
                 // g_object_unref (new_date);
                 return;
@@ -611,12 +611,12 @@ show_text (GDateTime *new_date)
                         (GTK_LINK_BUTTON (label [OT_LOC_SWORD]),
                          ww->ot.location_sword);
                 if (show_sword) {
-                        gtk_widget_hide (label [OT_LOC]);
-                        gtk_widget_show (label [OT_LOC_SWORD]);
+                        gtk_widget_set_visible (label [OT_LOC], FALSE);
+                        gtk_widget_set_visible (label [OT_LOC_SWORD], TRUE);
                 }
         } else {
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_show (label [OT_LOC]);
+                gtk_widget_set_visible (label [OT_LOC_SWORD], FALSE);
+                gtk_widget_set_visible (label [OT_LOC], TRUE);
         }
 #endif
         gtk_label_set_text (GTK_LABEL (label [OT_LOC]), ww->ot.location);
@@ -638,12 +638,12 @@ show_text (GDateTime *new_date)
                         (GTK_LINK_BUTTON (label [NT_LOC_SWORD]),
                          ww->nt.location_sword);
                 if (show_sword) {
-                        gtk_widget_hide (label [NT_LOC]);
-                        gtk_widget_show (label [NT_LOC_SWORD]);
+                        gtk_widget_set_visible (label [NT_LOC], FALSE);
+                        gtk_widget_set_visible (label [NT_LOC_SWORD], TRUE);
                 }
         } else {
-                gtk_widget_hide (label [NT_LOC_SWORD]);
-                gtk_widget_show (label [NT_LOC]);
+                gtk_widget_set_visible (label [NT_LOC_SWORD], FALSE);
+                gtk_widget_set_visible (label [NT_LOC], TRUE);
         }
 #endif
         gtk_label_set_text (GTK_LABEL (label [NT_LOC]), ww->nt.location);
@@ -659,7 +659,7 @@ show_text (GDateTime *new_date)
                 g_signal_connect (G_OBJECT (comment), "response",
                                   G_CALLBACK (gtk_window_destroy), NULL);
 
-                gtk_widget_show (comment);
+                gtk_widget_set_visible (comment, TRUE);
         }
 
         if (ww->selective_reading && ww->continuing_reading) {
@@ -671,7 +671,7 @@ show_text (GDateTime *new_date)
                 g_free (text);
         } else {
                 gtk_label_set_text  (GTK_LABEL (label [READING]), "");
-                gtk_widget_hide (label [READING]);
+                gtk_widget_set_visible (label [READING], FALSE);
         }
 
         for (gint i = 0; i < NUMBER_OF_LABELS; i++) {
@@ -806,7 +806,8 @@ property_cb (GtkWidget *w, gpointer data)
                 gtk_editable_set_text (GTK_EDITABLE (herrnhut_url_entry), herrnhut_url);
         }
 
-        gtk_widget_show (preferences);
+        gtk_window_set_transient_for (GTK_WINDOW (preferences), GTK_WINDOW (app));
+        gtk_widget_set_visible (preferences, TRUE);
 } /* property_cb */
 
 
@@ -946,15 +947,15 @@ sword_cb (GtkWidget *toggle, gpointer data)
 #ifdef VERSE_LINK
         set_link_sword (show_sword);
         if (show_sword) {
-                gtk_widget_hide (label [OT_LOC]);
-                gtk_widget_show (label [OT_LOC_SWORD]);
-                gtk_widget_hide (label [NT_LOC]);
-                gtk_widget_show (label [NT_LOC_SWORD]);
+                gtk_widget_set_visible (label [OT_LOC], FALSE);
+                gtk_widget_set_visible (label [OT_LOC_SWORD], TRUE);
+                gtk_widget_set_visible (label [NT_LOC], FALSE);
+                gtk_widget_set_visible (label [NT_LOC_SWORD], TRUE);
         } else {
-                gtk_widget_hide (label [OT_LOC_SWORD]);
-                gtk_widget_show (label [OT_LOC]);
-                gtk_widget_hide (label [NT_LOC_SWORD]);
-                gtk_widget_show (label [NT_LOC]);
+                gtk_widget_set_visible (label [OT_LOC_SWORD], FALSE);
+                gtk_widget_set_visible (label [OT_LOC], TRUE);
+                gtk_widget_set_visible (label [NT_LOC_SWORD], FALSE);
+                gtk_widget_set_visible (label [NT_LOC], TRUE);
         }
 #endif
 } /* sword_cb */
@@ -986,7 +987,7 @@ calendar_cb (GtkWidget *w, gpointer data)
                                 "day_selected", // day_selected_double_click
                                 G_CALLBACK (calendar_select_cb), dialog);
 
-        gtk_widget_show (dialog);
+        gtk_widget_set_visible (dialog, TRUE);
 } /* calendar_cb */
 
 
@@ -1121,7 +1122,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
                         gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
-                        gtk_widget_show (GTK_WIDGET (warning));
+                        gtk_widget_set_visible (GTK_WIDGET (warning), TRUE);
 /*
 			gint res = gtk_dialog_run (warning);
 			gtk_window_destroy (GTK_WINDOW (warning));
@@ -1138,7 +1139,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
                 	     (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
                 	      GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
                 	      get_last_error_message (), error);
-                	gtk_widget_show (GTK_WIDGET (msg));
+                	gtk_widget_set_visible (GTK_WIDGET (msg), TRUE);
 //                 	gtk_window_destroy (GTK_WINDOW (msg));
                 	return;
                 }
@@ -1198,7 +1199,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
 
-        gtk_widget_show (dialog);
+        gtk_widget_set_visible (dialog, TRUE);
 } /* lang_manager_cb */
 
 
@@ -1257,7 +1258,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (language_changed), year_combo);
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
-        gtk_widget_show (dialog);
+        gtk_widget_set_visible (dialog, TRUE);
 
 /* FIXME gtk4 use callback
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
