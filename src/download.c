@@ -159,7 +159,7 @@ download_losungen (guint year)
 {
         gchar *url;
         url = get_herrnhuter_url ();
-        if (! url) {
+        if (! *url) { // empty string, same as: url[0] != '\0'
                 url = LOSUNGEN_URL;
         }
         url = g_strdup_printf (url, year);
