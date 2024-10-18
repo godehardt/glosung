@@ -18,7 +18,7 @@
 
 import os
 
-version = '4.0.1'
+version = '4.1'
 
 # Stores signatures in ".sconsign.dbm"
 # in the top-level SConstruct directory.
@@ -44,12 +44,14 @@ env = Environment (
 if env['PLATFORM'] == 'win32':
 	prefix      = ARGUMENTS.get ('PREFIX', '')
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
+	schema_dir  = ''
 	pixmap_dir  = ''
 	data_dir    = '.'
 	doc_dir     = ''
 else:
 	prefix      = ARGUMENTS.get ('PREFIX', '/usr')
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
+	schema_dir  = prefix + '/share/glib-2.0/schemas/'
 	pixmap_dir  = prefix + '/share/glosung/'
 	data_dir    = prefix + '/share/glosung'
 	doc_dir     = '/share/doc/glosung-' + version
@@ -96,7 +98,7 @@ if env['PLATFORM'] == 'win32':
         env.ParseConfig ('pkg-config gtk4 libxml-2.0 libcurl --cflags --libs')
         Tool('mingw')(env)
 else:
-        env.ParseConfig('pkg-config gtk4 libxml-2.0 gconf-2.0 gmodule-export-2.0 libcurl libadwaita-1 --cflags --libs')
+        env.ParseConfig('pkg-config gtk4 libxml-2.0 gio-2.0 gmodule-export-2.0 libcurl libadwaita-1 --cflags --libs')
 #        Tool('posix')(env)
 
 linkflags.append ('-lgmodule-export-2.0')
@@ -118,6 +120,8 @@ env.Install (dir = install_dir + prefix + doc_dir,
 
 env.Install (dir = install_dir + prefix + '/share/applications',
           source = 'glosung.desktop')
+env.Install (dir = install_dir + schema_dir,
+          source = 'org.godehardt.GLosung.gschema.xml')
 env.Install (dir = install_dir + pixmap_dir,
         source = [
                 'herrnhut.png',

@@ -482,7 +482,7 @@ int main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
-        GtkApplication *app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_FLAGS_NONE);
+        GtkApplication *app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_DEFAULT_FLAGS);
         g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
         g_signal_connect (app, "handle-local-options", G_CALLBACK (handle_local_options), NULL);
 
@@ -571,7 +571,7 @@ show_text (GDateTime *new_date)
         }
 
         if (ww == NULL) {
-                GtkWidget *error_dialog = gtk_message_dialog_new
+                GtkWidget *error_dialog = gtk_message_dialog_new // new: gtk_alert_dialog_new
                         (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                         _("No %s texts found for %d!"),
@@ -771,9 +771,9 @@ property_cb (GtkWidget *w, gpointer data)
         }
 
         if (font != NULL) {
-                gtk_font_chooser_set_font (GTK_FONT_CHOOSER
-                        (gtk_builder_get_object (builder, "fontbutton")),
-                        font);
+                gtk_font_dialog_button_set_font_desc (GTK_FONT_DIALOG_BUTTON
+                        (gtk_builder_get_object (builder, "font_dialog_btn")),
+                        pango_font_description_from_string (font));
         }
         GLosungAutostartType autostart = is_in_autostart ();
         if (autostart != GLOSUNG_NO_AUTOSTART) {
@@ -870,9 +870,9 @@ lang_changed_cb (GtkWidget *combo, gpointer data)
 G_MODULE_EXPORT void
 font_sel_cb (GtkWidget *gfc, gpointer data)
 {
-        // TODO check wether gtk_font_chooser_get_font_desc is better
-        const gchar* font_name = gtk_font_chooser_get_font
-                (GTK_FONT_CHOOSER (gfc));
+        const gchar* font_name = pango_font_description_to_string (
+                gtk_font_dialog_button_get_font_desc (
+                        GTK_FONT_DIALOG_BUTTON (gfc)));
         if (font_name != NULL
             && (font == NULL || strcmp (font, font_name) != 0))
         {
@@ -1103,6 +1103,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
                 g_print ("download %d\n", response);
 
                 gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
+                g_print ("lang index %d\n", index);
                 if (index == -1) {
                 	return;
                 }
@@ -1122,6 +1123,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
                         gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
 			GtkDialog *warning = GTK_DIALOG
 			   (gtk_builder_get_object (builder, "warning_dialog"));
+                        gtk_window_set_transient_for (warning, app);
                         gtk_widget_set_visible (GTK_WIDGET (warning), TRUE);
 /*
 			gint res = gtk_dialog_run (warning);
@@ -1133,6 +1135,7 @@ lang_manager_response (GtkWidget *w, gpointer data)
 */
 		}
 
+                g_print ("now download: %s (%d)\n", langu, year);
 	        int error = download (server_list, langu, year);
                 if (error) {
                 	GtkWidget *msg = gtk_message_dialog_new
@@ -1199,6 +1202,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
 
+        gtk_window_set_transient_for (dialog, app);
         gtk_widget_set_visible (dialog, TRUE);
 } /* lang_manager_cb */
 
@@ -1237,7 +1241,8 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBox *lang_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "lang_frame"));
-        GtkComboBoxText *lang_combo =
+        //GtkComboBoxText *
+        lang_combo =
 		GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
         gtk_box_append (lang_frame, GTK_WIDGET (lang_combo));
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);

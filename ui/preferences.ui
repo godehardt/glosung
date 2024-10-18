@@ -61,11 +61,11 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFontButton" id="fontbutton">
-                        <property name="focusable">1</property>
-                        <property name="receives-default">1</property>
-                        <property name="font">Sans 12</property>
-                        <signal name="font-set" handler="font_sel_cb" swapped="no" />
+                      <object class="GtkFontDialogButton" id="font_dialog_btn">
+                        <property name="dialog">
+                          <object class="GtkFontDialog" id="font_dialog" />
+                        </property>
+                        <signal name="notify" handler="font_sel_cb" swapped="no" />
                         <layout>
                           <property name="column">1</property>
                           <property name="row">1</property>
