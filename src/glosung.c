@@ -482,7 +482,7 @@ int main (int argc, char **argv)
         bind_textdomain_codeset (PACKAGE, "UTF-8");
         textdomain (PACKAGE);
 
-        GtkApplication *app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_DEFAULT_FLAGS);
+        app = gtk_application_new ("org.godehardt.glosung", G_APPLICATION_DEFAULT_FLAGS);
         g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
         g_signal_connect (app, "handle-local-options", G_CALLBACK (handle_local_options), NULL);
 
@@ -731,7 +731,8 @@ property_cb (GtkWidget *w, gpointer data)
 
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/preferences.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder,
+                "/org/godehardt/glosung/ui/preferences.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
@@ -799,12 +800,15 @@ property_cb (GtkWidget *w, gpointer data)
 #endif
         gchar *herrnhut_url = get_herrnhuter_url ();
         if (! herrnhut_url) {
-                gtk_entry_set_placeholder_text (GTK_ENTRY (herrnhut_url_entry), "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip");
+                gtk_entry_set_placeholder_text (GTK_ENTRY (herrnhut_url_entry),
+                        "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip");
         } else {
                 gtk_editable_set_text (GTK_EDITABLE (herrnhut_url_entry), herrnhut_url);
         }
 
-        gtk_window_set_transient_for (GTK_WINDOW (preferences), GTK_WINDOW (app));
+        gtk_window_set_transient_for (
+                GTK_WINDOW (preferences),
+                GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
         gtk_widget_set_visible (preferences, TRUE);
 } /* property_cb */
 
