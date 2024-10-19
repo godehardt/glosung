@@ -1,4 +1,12 @@
-glosung (4.0.1~jammy) jammy; urgency=low
+glosung (4.1~noble) noble; urgency=low
+
+  * support Ubuntu 24.4 and newer
+  * migrate from deprecated glib settings backend
+  * offer scalable icon
+
+ -- Eicke Godehardt <sf@godehardt.org>  Tue, 15 Oct 2024 11:21:33 +0100
+
+glosung (4.0.1~mantic) mantic; urgency=low
 
   * support dark mode
   * fix jumping back one day every now and then
