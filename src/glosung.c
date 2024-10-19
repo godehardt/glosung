@@ -1162,23 +1162,22 @@ lang_manager_response (GtkWidget *w, gpointer data)
         } else {
                 g_print ("%d\n", response);
         }
-}
+} /* lang_manager_response */
 
 
 G_MODULE_EXPORT void
 lang_manager_cb (GtkWidget *w, gpointer data)
 {
-        GtkWidget    *dialog;
-
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/language_manager.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder,
+                "/org/godehardt/glosung/ui/language_manager.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }
         // gtk_builder_connect_signals (builder, NULL);
-        dialog = GTK_WIDGET
+        GtkWidget *dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "language_manager_dialog"));
 
         GtkScrolledWindow *scroll = GTK_SCROLLED_WINDOW
@@ -1204,7 +1203,9 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
 
-        gtk_window_set_transient_for (dialog, app);
+        gtk_window_set_transient_for (
+                GTK_WINDOW (dialog),
+                GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
         gtk_widget_set_visible (dialog, TRUE);
 } /* lang_manager_cb */
 
@@ -1212,17 +1213,16 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
-        GtkWidget    *dialog;
-
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
-        gboolean result = gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/add_language.ui", NULL);
+        gboolean result = gtk_builder_add_from_resource (builder,
+                "/org/godehardt/glosung/ui/add_language.ui", NULL);
         if (! result) {
                 g_message ("Error while loading UI definition file");
                 return;
         }
         // gtk_builder_connect_signals (builder, NULL);
-        dialog = GTK_WIDGET
+        GtkWidget *dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
         GtkBox *source_frame = GTK_BOX
@@ -1265,6 +1265,10 @@ add_lang_cb (GtkWidget *w, gpointer data)
                           G_CALLBACK (language_changed), year_combo);
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (lang_manager_response), NULL);
+
+        gtk_window_set_transient_for (
+                GTK_WINDOW (dialog),
+                GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
         gtk_widget_set_visible (dialog, TRUE);
 
 /* FIXME gtk4 use callback
