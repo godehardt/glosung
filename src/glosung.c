@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2022 Eicke Godehardt
+ * Copyright (C) 1999-2024 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -777,15 +777,13 @@ property_cb (GtkWidget *w, gpointer data)
         }
         GLosungAutostartType autostart = is_in_autostart ();
         if (autostart != GLOSUNG_NO_AUTOSTART) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                        (gtk_builder_get_object (builder,
-                                                "autostart_checkbox")),
+                gtk_check_button_set_active (GTK_CHECK_BUTTON
+                        (gtk_builder_get_object (builder, "autostart_checkbox")),
                         TRUE);
         }
         if (autostart == GLOSUNG_AUTOSTART_ONCE) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
-                        (gtk_builder_get_object (builder,
-                                                "autostart_once_checkbox")),
+                gtk_check_button_set_active (GTK_CHECK_BUTTON
+                        (gtk_builder_get_object (builder, "autostart_once_checkbox")),
                         TRUE);
         }
 #ifdef VERSE_LINK
