@@ -1,6 +1,7 @@
 /usr/bin/glosung
 /usr/bin/losung
 /usr/share/applications/glosung.desktop
+/usr/share/glib-2.0/schemas/org.godehardt.GLosung.gschema.xml
 /usr/share/glosung/glosung.png
 /usr/share/glosung/glosung-big.png
 /usr/share/locale/cs/LC_MESSAGES/glosung.mo
