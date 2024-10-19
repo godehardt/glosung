@@ -8,6 +8,10 @@ po/messages.pot
 ._*
 .vscode
 *.glade
+*old*
+*orig*
+*copy*
+ui/icons/*.svg
 
 # generated
 src/resources.c
