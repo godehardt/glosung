@@ -1,5 +1,5 @@
 /* about.c
- * Copyright (C) 2007-2022 Eicke Godehardt
+ * Copyright (C) 2007-2024 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,11 +62,11 @@ about (GtkWidget *app)
                                 (PACKAGE_PIXMAPS_DIR "/glosung-big.png")));
         }
 
-        gtk_show_about_dialog (GTK_WINDOW (app),
+        gtk_show_about_dialog (GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))),
                  "authors", authors,
                  "artists", artists,
                  "comments", _("Gods word for every day"),
-                 "copyright", "(C) 1999-2022 Eicke Godehardt",
+                 "copyright", "(C) 1999-2024 Eicke Godehardt",
                  // "logo-icon-name", PACKAGE_PIXMAPS_DIR "/glosung-big.png",
                  "logo", logo,
                  "name", APPNAME,
