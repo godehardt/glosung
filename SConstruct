@@ -46,6 +46,7 @@ if env['PLATFORM'] == 'win32':
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
 	schema_dir  = ''
 	pixmap_dir  = ''
+	icon_dir    = ''
 	data_dir    = '.'
 	doc_dir     = ''
 else:
@@ -53,6 +54,7 @@ else:
 	install_dir = ARGUMENTS.get ('DESTDIR', '')
 	schema_dir  = prefix + '/share/glib-2.0/schemas/'
 	pixmap_dir  = prefix + '/share/glosung/'
+	icon_dir    = prefix + '/share/icons/hicolor/'
 	data_dir    = prefix + '/share/glosung'
 	doc_dir     = '/share/doc/glosung-' + version
 
@@ -119,7 +121,7 @@ env.Install (dir = install_dir + prefix + doc_dir,
           source = ['AUTHORS', 'COPYING', 'ChangeLog', 'INSTALL', 'README'])
 
 env.Install (dir = install_dir + prefix + '/share/applications',
-          source = 'glosung.desktop')
+          source = 'org.godehardt.glosung.desktop')
 env.Install (dir = install_dir + schema_dir,
           source = 'org.godehardt.GLosung.gschema.xml')
 env.Install (dir = install_dir + pixmap_dir,
@@ -128,6 +130,10 @@ env.Install (dir = install_dir + pixmap_dir,
                 'glosung.png',
                 'glosung-big.png',
                 'glosung-big-white.png'])
+env.Install (dir = install_dir + icon_dir + 'scalable/apps/',
+          source = 'glosung.svg')
+env.Install (dir = install_dir + icon_dir + '48x48/apps/',
+          source = 'glosung.png')
 env.Install (dir = install_dir + data_dir,
         source = [])
 
