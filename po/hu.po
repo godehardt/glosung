@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.5.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 10:57+0100\n"
+"POT-Creation-Date: 2024-10-22 12:54+0200\n"
 "PO-Revision-Date: 2010-07-27 13:38+0100\n"
 "Last-Translator: Máté Nagy <mathe-x@users.sourceforge.net>\n"
 "Language-Team: hungarian <hu@li.org>\n"
@@ -298,12 +298,18 @@ msgid "host[:port]"
 msgstr "hoszt[:port]"
 
 #
+# File: ../ui/warning_dialog.ui, line: 5
+msgid "Warning"
+msgstr ""
+
+#
 #
 #
 # File: ui/warning_dialog.glade, line: 15
+#, fuzzy
 msgid ""
-"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-"risk detection you should NOT use this feature!"
+"If you live in a persecuted country and do not wish to risk detection you "
+"should NOT use this feature!"
 msgstr ""
 "<b>Figyelem:</b> ha Ön olyan országban él, ahol kereszt(y)én(y) üldözés "
 "van,\n"
@@ -324,6 +330,30 @@ msgstr "Ne jelenjen meg újra ez az üzenet."
 msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
 "Jelölje be a négyzetet, ha nem szeretné többet ezt a dialógusablakot látni"
+
+#
+# File: ../ui/warning_dialog.ui, line: 38
+msgid "Proceed"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 42
+msgid "Reject warning and proceed downloading"
+msgstr ""
+
+#
+#
+#
+# File: ui/warning_dialog.glade, line: 15
+#, fuzzy
+#~ msgid ""
+#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to "
+#~ "risk detection you should NOT use this feature!"
+#~ msgstr ""
+#~ "<b>Figyelem:</b> ha Ön olyan országban él, ahol kereszt(y)én(y) üldözés "
+#~ "van,\n"
+#~ "és nem akarja megkockáztatni, hogy felfedezzék, akkor NE használja ezt a "
+#~ "funkciót!"
 
 #
 # File: src/glosung.c, line: 257

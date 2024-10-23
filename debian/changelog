@@ -1,7 +1,7 @@
 glosung (4.1~noble) noble; urgency=low
 
   * support Ubuntu 24.4 and newer
-  * migrate from deprecated glib settings backend
+  * migrate from deprecated settings backend
   * offer scalable icon
 
  -- Eicke Godehardt <sf@godehardt.org>  Tue, 15 Oct 2024 11:21:33 +0100

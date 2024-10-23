@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 10:57+0100\n"
+"POT-Creation-Date: 2024-10-22 12:54+0200\n"
 "PO-Revision-Date: 2006-11-29 22:30+0100\n"
 "Last-Translator: Nicolas <nicolas@yosch.org>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -292,20 +292,35 @@ msgid "host[:port]"
 msgstr ""
 
 #
-# File: ui/warning_dialog.glade, line: 15
-msgid ""
-"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-"risk detection you should NOT use this feature!"
+# File: ../ui/warning_dialog.ui, line: 5
+msgid "Warning"
 msgstr ""
 
 #
-# File: ui/warning_dialog.glade, line: 24
+# File: ../ui/warning_dialog.ui, line: 16
+msgid ""
+"If you live in a persecuted country and do not wish to risk detection you "
+"should NOT use this feature!"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 17
 msgid "Don't show this message again."
 msgstr ""
 
 #
-# File: ui/warning_dialog.glade, line: 28
+# File: ../ui/warning_dialog.ui, line: 19
 msgid "Check this box if you do not want to see this dialog again"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 38
+msgid "Proceed"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 42
+msgid "Reject warning and proceed downloading"
 msgstr ""
 
 #

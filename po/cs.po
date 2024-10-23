@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 10:57+0100\n"
+"POT-Creation-Date: 2024-10-22 12:54+0200\n"
 "PO-Revision-Date: 2010-01-22 22:24+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: czech <cs@li.org>\n"
@@ -497,12 +497,18 @@ msgid "host[:port]"
 msgstr "počítač[:port]"
 
 #
+# File: ../ui/warning_dialog.ui, line: 5
+msgid "Warning"
+msgstr ""
+
+#
 #
 #
 # File: ui/warning_dialog.glade, line: 15
+#, fuzzy
 msgid ""
-"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-"risk detection you should NOT use this feature!"
+"If you live in a persecuted country and do not wish to risk detection you "
+"should NOT use this feature!"
 msgstr ""
 "<b>Varování:</b> Pokud žijete v zemi kde jsou křesťané pronásledováni\n"
 "a nechcete riskovat dopadení NEPOUŽÍVEJTE tuto funkci!"
@@ -520,6 +526,28 @@ msgstr "Později již nezobrazovat tuto zprávu."
 # File: ui/warning_dialog.glade, line: 28
 msgid "Check this box if you do not want to see this dialog again"
 msgstr "Zaškrtněte pokud již nechcete zobrazovat tento dialog"
+
+#
+# File: ../ui/warning_dialog.ui, line: 38
+msgid "Proceed"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 42
+msgid "Reject warning and proceed downloading"
+msgstr ""
+
+#
+#
+#
+# File: ui/warning_dialog.glade, line: 15
+#, fuzzy
+#~ msgid ""
+#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to "
+#~ "risk detection you should NOT use this feature!"
+#~ msgstr ""
+#~ "<b>Varování:</b> Pokud žijete v zemi kde jsou křesťané pronásledováni\n"
+#~ "a nechcete riskovat dopadení NEPOUŽÍVEJTE tuto funkci!"
 
 #
 # File: src/glosung.c, line: 257

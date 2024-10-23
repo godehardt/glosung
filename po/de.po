@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: glosung 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 10:57+0100\n"
+"POT-Creation-Date: 2024-10-22 12:54+0200\n"
 "PO-Revision-Date: 2022-01-18 10:58+0100\n"
 "Last-Translator: Eicke Godehardt <sf at godehardt.org>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -461,12 +461,18 @@ msgid "host[:port]"
 msgstr "host[:port]"
 
 #
+# File: ../ui/warning_dialog.ui, line: 5
+msgid "Warning"
+msgstr ""
+
+#
 #
 #
 # File: ui/warning_dialog.glade, line: 15
+#, fuzzy
 msgid ""
-"<b>Warning:</b> If you live in a persecuted country and do not wish to\n"
-"risk detection you should NOT use this feature!"
+"If you live in a persecuted country and do not wish to risk detection you "
+"should NOT use this feature!"
 msgstr ""
 "<b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt werden "
 "könnten und nicht riskieren wollen entdeckt zu werden, sollten sie diese "
@@ -486,6 +492,29 @@ msgstr "Diese Meldung nicht mehr anzeigen."
 msgid "Check this box if you do not want to see this dialog again"
 msgstr ""
 "Schalten sie das Häkchen an, wenn sie diesen Dialog nicht mehr sehen möchten"
+
+#
+# File: ../ui/warning_dialog.ui, line: 38
+msgid "Proceed"
+msgstr ""
+
+#
+# File: ../ui/warning_dialog.ui, line: 42
+msgid "Reject warning and proceed downloading"
+msgstr ""
+
+#
+#
+#
+# File: ui/warning_dialog.glade, line: 15
+#, fuzzy
+#~ msgid ""
+#~ "<b>Warning:</b> If you live in a persecuted country and do not wish to "
+#~ "risk detection you should NOT use this feature!"
+#~ msgstr ""
+#~ "<b>Warnung:</b> Wenn sie in ihrem Land wegen ihrer Religion verfolgt "
+#~ "werden könnten und nicht riskieren wollen entdeckt zu werden, sollten sie "
+#~ "diese Funktion NICHT verwenden!"
 
 #
 # File: src/glosung.c, line: 257
