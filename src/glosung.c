@@ -420,7 +420,7 @@ activate (GtkApplication *app,
 
         if (local_collections->languages->len == 0) {
                 GtkWidget *error_dialog = gtk_message_dialog_new
-                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
+                        (GTK_WINDOW (window), GTK_DIALOG_DESTROY_WITH_PARENT,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                          _("No text files found!\n"
                            "Please install your prefered languages."));
@@ -572,7 +572,8 @@ show_text (GDateTime *new_date)
 
         if (ww == NULL) {
                 GtkWidget *error_dialog = gtk_message_dialog_new // new: gtk_alert_dialog_new
-                        (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
+                        (GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))),
+                         GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
                          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
                         _("No %s texts found for %d!"),
                         (gchar*) g_hash_table_lookup (lang_translations, lang),
@@ -975,7 +976,9 @@ calendar_cb (GtkWidget *w, gpointer data)
                 GTK_DIALOG (dialog),
                 gtk_button_new_with_label ("_Close"),
                 GTK_RESPONSE_CLOSE);
-        gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app));
+        gtk_window_set_transient_for (
+                GTK_WINDOW (dialog),
+                GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
 
         calendar = gtk_calendar_new ();
         gtk_calendar_set_show_day_names (GTK_CALENDAR (calendar), TRUE);
@@ -1092,77 +1095,85 @@ static GtkListStore    *store;
 
 
 static void
-lang_manager_response (GtkWidget *w, gpointer data)
+init_download_cb (GtkWidget *w, gpointer data)
 {
         gint response = GPOINTER_TO_INT (data);
-        if (response == GTK_RESPONSE_NONE) {
+        if (w) {
                 gtk_window_destroy (GTK_WINDOW (w));
+        }
+        if (response == GTK_RESPONSE_CANCEL) {
+                return;
         } else if (response == GTK_RESPONSE_DELETE_EVENT) {
                 // Window close button.  No reaction needed?!?
-        } else if (response == 1) {
-                add_lang_cb (w, w);
-        } else if (response == 2) {
-                g_print ("download %d\n", response);
-
-                gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
-                g_print ("lang index %d\n", index);
-                if (index == -1) {
-                	return;
-                }
-                GPtrArray *langs = source_get_languages (server_list);
-                if (langs->len > 0 && index > 0) {
-                	index--;
-                }
-        	gchar *langu = g_ptr_array_index (langs, index);
-
-                GPtrArray *vc_s = source_get_collections (server_list, langu);
-                gint i = gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
-		guint year = VC (g_ptr_array_index (vc_s, i))->year;
-
-		if (! is_hide_warning ()) {
-                        GtkBuilder* builder = gtk_builder_new ();
-                        gtk_builder_set_translation_domain (builder, PACKAGE);
-                        gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
-			GtkDialog *warning = GTK_DIALOG
-			   (gtk_builder_get_object (builder, "warning_dialog"));
-                        gtk_window_set_transient_for (warning, app);
-                        gtk_widget_set_visible (GTK_WIDGET (warning), TRUE);
-/*
-			gint res = gtk_dialog_run (warning);
-			gtk_window_destroy (GTK_WINDOW (warning));
-//		        gtk_window_destroy (GTK_WINDOW (dialog));
-		        if (res == GTK_RESPONSE_CANCEL) {
-		        	return;
-		        }
-*/
-		}
-
-                g_print ("now download: %s (%d)\n", langu, year);
-	        int error = download (server_list, langu, year);
-                if (error) {
-                	GtkWidget *msg = gtk_message_dialog_new
-                	     (GTK_WINDOW (app), GTK_DIALOG_DESTROY_WITH_PARENT,
-                	      GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
-                	      get_last_error_message (), error);
-                	gtk_widget_set_visible (GTK_WIDGET (msg), TRUE);
-//                 	gtk_window_destroy (GTK_WINDOW (msg));
-                	return;
-                }
-
-                source_add_collection (local_collections, langu, year);
-		source_finialize      (local_collections);
-
-		update_language_store ();
-		if (local_collections->languages->len == 1) {
-			lang = langu;
-			set_language (lang);
-		}
-                gtk_window_destroy (GTK_WINDOW (w));
-                show_text (date);
-        } else {
-                g_print ("%d\n", response);
+                return;
         }
-} /* lang_manager_response */
+
+        gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo));
+        if (index == -1) {
+                return;
+        }
+        GPtrArray *langs = source_get_languages (server_list);
+        if (langs->len > 0 && index > 0) {
+                index--;
+        }
+        gchar *langu = g_ptr_array_index (langs, index);
+
+        GPtrArray *vc_s = source_get_collections (server_list, langu);
+        gint i = gtk_combo_box_get_active (GTK_COMBO_BOX (year_combo));
+        guint year = VC (g_ptr_array_index (vc_s, i))->year;
+
+        int error = download (server_list, langu, year);
+        if (error) {
+                GtkWidget *msg = gtk_message_dialog_new
+                        (GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))), GTK_DIALOG_DESTROY_WITH_PARENT,
+                         GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s (%d)",
+                         get_last_error_message (), error);
+                gtk_widget_set_visible (GTK_WIDGET (msg), TRUE);
+//                 	gtk_window_destroy (GTK_WINDOW (msg));
+                return;
+        }
+
+        source_add_collection (local_collections, langu, year);
+        source_finialize      (local_collections);
+
+        update_language_store ();
+        if (local_collections->languages->len == 1) {
+                lang = langu;
+                set_language (lang);
+        }
+        show_text (date);
+} /* init_download_cb */
+
+
+static void
+download_lang_cb (GtkWidget *w, gpointer data)
+{
+        gint response = GPOINTER_TO_INT (data);
+        if (response == GTK_RESPONSE_CANCEL) {
+                gtk_window_destroy (GTK_WINDOW (w));
+                return;
+        } else if (response == GTK_RESPONSE_DELETE_EVENT) {
+                // Window close button.  No reaction needed?!?
+                return;
+        }
+
+        if (! is_hide_warning ()) {
+                GtkBuilder* builder = gtk_builder_new ();
+                gtk_builder_set_translation_domain (builder, PACKAGE);
+                gtk_builder_add_from_resource (builder, "/org/godehardt/glosung/ui/warning_dialog.ui", NULL);
+                GtkDialog *warning = GTK_DIALOG
+                        (gtk_builder_get_object (builder, "warning_dialog"));
+                gtk_window_set_transient_for (
+                        GTK_WINDOW (warning),
+                        GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
+                gtk_widget_set_visible (GTK_WIDGET (warning), TRUE);
+
+                g_signal_connect (G_OBJECT (warning), "response",
+                                  G_CALLBACK (init_download_cb), NULL);
+        } else {
+                init_download_cb (w, GINT_TO_POINTER (GTK_RESPONSE_OK));
+        }
+} /* download_lang_cb */
 
 
 G_MODULE_EXPORT void
@@ -1201,7 +1212,7 @@ lang_manager_cb (GtkWidget *w, gpointer data)
         gtk_scrolled_window_set_child (scroll, list);
 
         g_signal_connect (G_OBJECT (dialog), "response",
-                          G_CALLBACK (lang_manager_response), NULL);
+                          G_CALLBACK (add_lang_cb), NULL);
 
         gtk_window_set_transient_for (
                 GTK_WINDOW (dialog),
@@ -1213,6 +1224,15 @@ lang_manager_cb (GtkWidget *w, gpointer data)
 static void
 add_lang_cb (GtkWidget *w, gpointer data)
 {
+        gint response = GPOINTER_TO_INT (data);
+        if (response == GTK_RESPONSE_CANCEL) {
+                gtk_window_destroy (GTK_WINDOW (w));
+                return;
+        } else if (response == GTK_RESPONSE_DELETE_EVENT) {
+                // Window close button.  No reaction needed?!?
+                return;
+        }
+
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
         gboolean result = gtk_builder_add_from_resource (builder,
@@ -1264,7 +1284,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
         g_signal_connect (G_OBJECT (lang_combo), "changed",
                           G_CALLBACK (language_changed), year_combo);
         g_signal_connect (G_OBJECT (dialog), "response",
-                          G_CALLBACK (lang_manager_response), NULL);
+                          G_CALLBACK (download_lang_cb), NULL);
 
         gtk_window_set_transient_for (
                 GTK_WINDOW (dialog),
@@ -1283,7 +1303,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 G_MODULE_EXPORT void
 show_warning_cb (GtkWidget *w, gpointer data)
 {
-        gboolean on = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+        gboolean on = gtk_check_button_get_active (GTK_CHECK_BUTTON (w));
 
 	set_hide_warning (on);
 } /* show_warning_cb */

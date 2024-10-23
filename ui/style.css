@@ -2,6 +2,10 @@
     margin: 25px;
 }
 
+#dialog-content {
+    margin: 15px;
+}
+
 grid, .grid {
     margin: 10px;
 }

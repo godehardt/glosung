@@ -52,8 +52,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="1">button_add</action-widget>
-      <action-widget response="none" default="true">button_close</action-widget>
+      <action-widget response="ok">button_add</action-widget>
+      <action-widget response="cancel" default="true">button_close</action-widget>
     </action-widgets>
   </object>
 </interface>

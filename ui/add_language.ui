@@ -77,8 +77,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="2">button_download</action-widget>
-      <action-widget response="none" default="true">button_cancel</action-widget>
+      <action-widget response="ok">button_download</action-widget>
+      <action-widget response="cancel" default="true">button_cancel</action-widget>
     </action-widgets>
   </object>
 </interface>
