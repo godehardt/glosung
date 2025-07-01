@@ -3,7 +3,7 @@ Maintainer: Eicke Godehardt <dev@godehardt.org>
 Section: gnome
 Priority: extra
 Standards-Version: 2.0
-Build-Depends: scons, debhelper, intltool, libgtk-4-dev (>= 4.10), libadwaita-1-dev, libxml2-dev, libcurl4-gnutls-dev | libcurl3-dev, libgconf2-dev, gettext
+Build-Depends: scons, debhelper, intltool, libgtk-4-dev (>= 4.10), libadwaita-1-dev, libxml2-dev, libcurl4-gnutls-dev | libcurl3-dev, gettext
 
 Package: glosung
 Architecture: any

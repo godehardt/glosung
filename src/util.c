@@ -74,15 +74,14 @@ file_exist (gchar* path, gchar* filename)
 void
 show_uri (GtkWidget *window, gchar *uri, gpointer data)
 {
-	/* FIXME: handle return in 
-	gtk_show_uri_full (GTK_WINDOW (window), (const char*) uri, GDK_CURRENT_TIME, NULL, callback, NULL);
-	if (result) {
-		return;
-	}
-	*/
+	// gtk_show_uri (GTK_WINDOW (window), (const char*) uri, GDK_CURRENT_TIME);
+	gtk_uri_launcher_launch (
+		gtk_uri_launcher_new (uri),
+		GTK_WINDOW (window),
+		NULL, NULL, NULL);
 
-	gtk_show_uri (GTK_WINDOW (window), (const char*) uri, GDK_CURRENT_TIME);
-
+	return;
+	//FIXME: code below...
 
 	/* this is only executed for older gtk+ or if gtk_show_uri failed */
 	if (strncmp (uri, "http://", 7) == 0) {
@@ -103,7 +102,7 @@ show_uri (GtkWidget *window, gchar *uri, gpointer data)
 						"%s", error->message);
 			g_signal_connect (G_OBJECT (msg), "response",
 								G_CALLBACK (gtk_window_destroy), NULL);
-			gtk_widget_show (msg);
+			gtk_window_present (GTK_WINDOW (msg));
 			g_error_free (error);
 		}
 			return;
@@ -136,7 +135,7 @@ show_uri (GtkWidget *window, gchar *uri, gpointer data)
 				g_signal_connect
 					(G_OBJECT (msg), "response",
 						G_CALLBACK (gtk_window_destroy),NULL);
-				gtk_widget_show (msg);
+				gtk_window_present (GTK_WINDOW (msg));
 				g_error_free (error);
 			}
 		}

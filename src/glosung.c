@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2024 Eicke Godehardt
+ * Copyright (C) 1999-2025 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,10 +71,10 @@ static const int WRAP_LENGTH = 47;
 
 static gboolean   once = FALSE;
 
-static GtkWidget *app;
-static GDateTime *date;
-static GtkWidget *calendar;
-static GtkWidget *label [NUMBER_OF_LABELS];
+static GtkApplication *app;
+static GDateTime      *date;
+static GtkWidget      *calendar;
+static GtkWidget      *label [NUMBER_OF_LABELS];
 
 static gchar     *new_lang = NULL;
 static gchar     *font = NULL;
@@ -119,7 +119,7 @@ void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
 static void sources_changed      (GtkWidget *w,   gpointer data);
 static void language_changed     (GtkWidget *w,   gpointer data);
-void lang_manager_cb      (GtkWidget *w,   gpointer data);
+void lang_manager_cb      (GtkApplication *app,   gpointer data);
 void next_day_cb          (GtkWidget *w,   gpointer data);
 void next_month_cb        (GtkWidget *w,   gpointer data);
 static void no_languages_cb      (GtkWidget *w,   gpointer data);
@@ -1088,7 +1088,7 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-static GtkComboBox     *lang_combo;
+static GtkComboBoxText *lang_combo;
 static GtkComboBoxText *year_combo;
 static GtkWidget       *download_button;
 static GtkListStore    *store;
@@ -1177,7 +1177,7 @@ download_lang_cb (GtkWidget *w, gpointer data)
 
 
 G_MODULE_EXPORT void
-lang_manager_cb (GtkWidget *w, gpointer data)
+lang_manager_cb (GtkApplication *app, gpointer data)
 {
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
@@ -1247,19 +1247,21 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         GtkBox *source_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "source_frame"));
-        GtkComboBoxText *source_combo =
-		GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
+
+        GListStore *source_model = g_list_store_new (G_TYPE_STRING);
+        GtkDropDown *source_combo =
+		GTK_DROP_DOWN (gtk_drop_down_new (G_LIST_MODEL (source_model), NULL));
         gtk_box_append (source_frame, GTK_WIDGET (source_combo));
-        gtk_combo_box_text_append_text (source_combo, "");
+        g_list_store_append (source_model, "");
 
         GPtrArray *sources = get_sources ();
         for (gint i = 0; i < sources->len; i++) {
                 Source *cs = (Source*) g_ptr_array_index (sources, i);
                 if (cs->type != SOURCE_LOCAL) {
-                        gtk_combo_box_text_append_text (source_combo, cs->name);
+                        g_list_store_append (source_model, cs->name);
                 }
         }
-        gtk_combo_box_set_active (GTK_COMBO_BOX (source_combo), 0);
+        gtk_drop_down_set_selected (GTK_DROP_DOWN (source_combo), 0);
 
         GtkBox *lang_frame = GTK_BOX
                 (gtk_builder_get_object (builder, "lang_frame"));
@@ -1279,7 +1281,7 @@ add_lang_cb (GtkWidget *w, gpointer data)
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
 
-        g_signal_connect (G_OBJECT (source_combo), "changed",
+        g_signal_connect (G_OBJECT (source_combo), "activate",
                           G_CALLBACK (sources_changed), lang_combo);
         g_signal_connect (G_OBJECT (lang_combo), "changed",
                           G_CALLBACK (language_changed), year_combo);
