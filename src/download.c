@@ -1,5 +1,5 @@
 /* download.c
- * Copyright (C) 2006-2024 Eicke Godehardt
+ * Copyright (C) 2006-2026 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 
 //#define LOSUNGEN_URL "http://www.brueder-unitaet.de/download/Losung_%d_XML.zip"
 #define LOSUNGEN_URL "https://www.losungen.de/fileadmin/media-losungen/download/Losung_%d_XML.zip"
-#define BIBLE20_BASE_URL "http://bible2.net/service/TheWord/twd11/?format=csv"
+#define BIBLE20_BASE_URL "https://bible2.net/service/TheWord/twd11?format=csv"
 
 static gchar      *glosung_dir = NULL;
 static int         error = 0;
@@ -227,6 +227,7 @@ real_download (const gchar *url)
                                   (void *)&chunk);
                 curl_easy_setopt (curl_handle, CURLOPT_USERAGENT,
                                   "glosung/" VERSION);
+                // curl_easy_setopt (curl_handle, CURLOPT_VERBOSE, 1L);
 		gchar *proxy = get_proxy();
 		if (is_proxy_in_use () && proxy && strlen (proxy) > 0) {
 			curl_easy_setopt (curl_handle, CURLOPT_PROXY, proxy);
@@ -264,6 +265,7 @@ analyse_bible20_list (Source* cs, Memory mem)
 	g_assert (mem.size > 0);
 
 	gchar** lines = g_strsplit (mem.memory, "\n", -1);
+
         gint col_year    = 0;
         gint col_lang    = 0;
         gint col_url     = 0;
