@@ -1,5 +1,5 @@
 # SConstruct
-# Copyright (C) 1999-2025 Eicke Godehardt
+# Copyright (C) 1999-2026 Eicke Godehardt
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -152,6 +152,7 @@ if env['PLATFORM'] != 'win32':
                     'glosung.svg',
                     'glosung.gresource.xml',
                     'org.godehardt.glosung.desktop',
+                    'org.godehardt.GLosung.gschema.xml',
                     'ui/add_language.ui',
                     'ui/glosung.ui',
                     'ui/language_manager.ui',
