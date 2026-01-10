@@ -1,5 +1,5 @@
 /* glosung.c
- * Copyright (C) 1999-2025 Eicke Godehardt
+ * Copyright (C) 1999-2026 Eicke Godehardt
 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,8 +117,8 @@ void about_cb             (GtkWidget *w,   gpointer data);
 void calendar_cb          (GtkWidget *w,   gpointer data);
 void calendar_select_cb   (GtkWidget *cal, gpointer data);
 static GString* create_years_string (gchar *lang);
-static void sources_changed      (GtkWidget *w,   gpointer data);
-static void language_changed     (GtkWidget *w,   gpointer data);
+static void sources_changed      (GObject *gobject, GParamSpec *pspec, gpointer data);
+static void language_changed     (GObject *gobject, GParamSpec *pspec, gpointer data);
 void lang_manager_cb      (GtkApplication *app,   gpointer data);
 void next_day_cb          (GtkWidget *w,   gpointer data);
 void next_month_cb        (GtkWidget *w,   gpointer data);
@@ -748,17 +748,17 @@ property_cb (GtkWidget *w, gpointer data)
         GtkWidget *herrnhut_url_entry = GTK_WIDGET
                 (gtk_builder_get_object (builder, "herrnhut_url_entry"));
 
-        GtkWidget *combo = GTK_WIDGET
+        GtkDropDown *combo = GTK_DROP_DOWN
                 (gtk_builder_get_object (builder, "language_combo"));
+        GtkStringList *lang_list = GTK_STRING_LIST (gtk_drop_down_get_model (combo));
         for (gint i = 0; i < (local_collections->languages)->len; i++) {
                 gchar *langu = g_ptr_array_index
                                 (local_collections->languages, i);
-                gtk_combo_box_text_append_text
-                        (GTK_COMBO_BOX_TEXT (combo),
-                                g_hash_table_lookup (lang_translations, langu));
+                gtk_string_list_append (lang_list, 
+                        g_hash_table_lookup (lang_translations, langu));
                 if (strcmp (lang, langu) == 0) {
-                        gtk_combo_box_set_active
-                                (GTK_COMBO_BOX (combo), i);
+                        gtk_drop_down_set_selected
+                                (GTK_DROP_DOWN (combo), i);
                 }
         }
 
@@ -1088,10 +1088,10 @@ calendar_select_cb (GtkWidget *calendar, gpointer data)
 
 
 
-static GtkComboBoxText *lang_combo;
-static GtkComboBoxText *year_combo;
-static GtkWidget       *download_button;
-static GtkListStore    *store;
+static GtkDropDown  *lang_combo;
+static GtkDropDown  *year_combo;
+static GtkWidget    *download_button;
+static GtkListStore *store;
 
 
 static void
@@ -1177,7 +1177,7 @@ download_lang_cb (GtkWidget *w, gpointer data)
 
 
 G_MODULE_EXPORT void
-lang_manager_cb (GtkApplication *app, gpointer data)
+lang_manager_cb (GtkApplication *w, gpointer data)
 {
         GtkBuilder* builder = gtk_builder_new ();
         gtk_builder_set_translation_domain (builder, PACKAGE);
@@ -1245,52 +1245,42 @@ add_lang_cb (GtkWidget *w, gpointer data)
         GtkWidget *dialog = GTK_WIDGET
                 (gtk_builder_get_object (builder, "add_language_dialog"));
 
-        GtkBox *source_frame = GTK_BOX
-                (gtk_builder_get_object (builder, "source_frame"));
-
-        GListStore *source_model = g_list_store_new (G_TYPE_STRING);
-        GtkDropDown *source_combo =
-		GTK_DROP_DOWN (gtk_drop_down_new (G_LIST_MODEL (source_model), NULL));
-        gtk_box_append (source_frame, GTK_WIDGET (source_combo));
-        g_list_store_append (source_model, "");
+        GtkDropDown *source_combo = GTK_DROP_DOWN
+                (gtk_builder_get_object (builder, "source_combo"));
+        GtkStringList *source_list = GTK_STRING_LIST
+                (gtk_drop_down_get_model (source_combo));
+      
+        gtk_string_list_append (source_list, "");
 
         GPtrArray *sources = get_sources ();
         for (gint i = 0; i < sources->len; i++) {
                 Source *cs = (Source*) g_ptr_array_index (sources, i);
                 if (cs->type != SOURCE_LOCAL) {
-                        g_list_store_append (source_model, cs->name);
+                        gtk_string_list_append (source_list, cs->name);
                 }
         }
         gtk_drop_down_set_selected (GTK_DROP_DOWN (source_combo), 0);
 
-        GtkBox *lang_frame = GTK_BOX
-                (gtk_builder_get_object (builder, "lang_frame"));
-        //GtkComboBoxText *
-        lang_combo =
-		GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
-        gtk_box_append (lang_frame, GTK_WIDGET (lang_combo));
-        gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
+        // GtkDropDown *
+        lang_combo = GTK_DROP_DOWN
+                (gtk_builder_get_object (builder, "lang_combo"));
+        // GtkDropDown *
+        year_combo = GTK_DROP_DOWN
+                (gtk_builder_get_object (builder, "year_combo"));
 
-        GtkBox *year_frame = GTK_BOX
-                (gtk_builder_get_object (builder, "year_frame"));
         download_button = GTK_WIDGET
                 (gtk_builder_get_object (builder, "button_download"));
-	year_combo = GTK_COMBO_BOX_TEXT (gtk_combo_box_text_new ());
-        gtk_box_append (year_frame, GTK_WIDGET (year_combo));
-        gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
 
-        gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
-
-        g_signal_connect (G_OBJECT (source_combo), "activate",
+        g_signal_connect (G_OBJECT (source_combo), "notify::selected",
                           G_CALLBACK (sources_changed), lang_combo);
-        g_signal_connect (G_OBJECT (lang_combo), "changed",
+        g_signal_connect (G_OBJECT (lang_combo), "notify::selected",
                           G_CALLBACK (language_changed), year_combo);
         g_signal_connect (G_OBJECT (dialog), "response",
                           G_CALLBACK (download_lang_cb), NULL);
 
         gtk_window_set_transient_for (
                 GTK_WINDOW (dialog),
-                GTK_WINDOW (gtk_application_get_active_window (GTK_APPLICATION (app))));
+                GTK_WINDOW (w));
         gtk_widget_set_visible (dialog, TRUE);
 
 /* FIXME gtk4 use callback
@@ -1320,30 +1310,39 @@ no_languages_cb (GtkWidget *w, gpointer data)
 
 
 static void
-sources_changed (GtkWidget *w, gpointer data)
+sources_changed (GObject *gobject, GParamSpec *pspec, gpointer data)
 {
-        GtkComboBoxText *lang_combo = GTK_COMBO_BOX_TEXT (data);
-        while (gtk_combo_box_get_active (GTK_COMBO_BOX (lang_combo)) != -1) {
-                gtk_combo_box_text_remove (lang_combo, 0);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), 0);
+        GtkDropDown *source_combo = GTK_DROP_DOWN (gobject);
+        GtkDropDown *lang_combo = GTK_DROP_DOWN (data);
+
+        // empty languages, after sources changed
+        GListModel *model = gtk_drop_down_get_model (lang_combo);
+        GtkStringList *lang_list;
+        if (model != NULL && GTK_IS_STRING_LIST (model)) {
+                lang_list = GTK_STRING_LIST (model);
+                while (g_list_model_get_n_items (model) > 0) {
+                        gtk_string_list_remove (lang_list, 0);
+                }
         }
 
-        gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
-        if (index == 0) {
+        guint index = gtk_drop_down_get_selected (source_combo);
+        server_list = g_ptr_array_index (get_sources (), index);
+        GPtrArray *langs = source_get_languages (server_list);
+
+        if (index == 0) { // deselect source
+                gtk_string_list_append (lang_list, "");
                 gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), FALSE);
-                gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
+                // gtk_string_list_append (year_list, "");
+                // gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
         }
-
-        server_list = g_ptr_array_index (get_sources (), index);
-        GPtrArray *langs = source_get_languages (server_list);
 
         if (! langs) {
         	return;
         }
         if (langs->len > 1) {
-                gtk_combo_box_text_append_text (lang_combo, "");
+                gtk_string_list_append (lang_list, "");
         }
         for (gint i = 0; i < langs->len; i++) {
         	gchar *lang_code = (gchar*) g_ptr_array_index (langs, i);
@@ -1353,28 +1352,42 @@ sources_changed (GtkWidget *w, gpointer data)
         		// continue;
         		langu = lang_code;
         	}
-                gtk_combo_box_text_append_text (lang_combo, langu);
+                gtk_string_list_append (lang_list, langu);
         }
-        gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), 0);
+        gtk_drop_down_set_selected (GTK_DROP_DOWN (lang_combo), 0);
         gtk_widget_set_sensitive (GTK_WIDGET (lang_combo), TRUE);
 } /* sources_changed */
 
 
 static void
-language_changed (GtkWidget *w, gpointer data)
+language_changed (GObject *gobject, GParamSpec *pspec, gpointer data)
 {
-        GtkComboBoxText *year_combo = GTK_COMBO_BOX_TEXT (data);
-        while (gtk_combo_box_get_active  (GTK_COMBO_BOX (year_combo)) != -1) {
-               gtk_combo_box_text_remove (year_combo, 0);
-               gtk_combo_box_set_active  (GTK_COMBO_BOX (year_combo), 0);
+        GtkDropDown *dropdown = GTK_DROP_DOWN (gobject);
+        GtkDropDown *year_combo = GTK_DROP_DOWN (data);
+        GtkStringList *year_list;
+        const char *text;
+
+        guint index  = gtk_drop_down_get_selected (dropdown);
+        GListModel *lang_model = gtk_drop_down_get_model (dropdown);
+        GObject *item = gtk_drop_down_get_selected_item (dropdown);
+
+        // empty years, after language changed
+        GListModel *model = gtk_drop_down_get_model (year_combo);
+        if (model != NULL && GTK_IS_STRING_LIST (model)) {
+                year_list = GTK_STRING_LIST (model);
+                while (g_list_model_get_n_items (model) > 0) {
+                        gtk_string_list_remove (year_list, 0);
+                }
         }
 
-        gint index  = gtk_combo_box_get_active (GTK_COMBO_BOX (w));
-        if (index == -1) {
-        	return;
+        if (GTK_IS_STRING_OBJECT (item)) {
+                text = gtk_string_object_get_string(GTK_STRING_OBJECT(item));
+        } else {
+                return;
         }
-        gchar *text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (w));
+
         if (index == 0 && g_str_equal ("", text)) {
+                gtk_string_list_append (year_list, "");
                 gtk_widget_set_sensitive (GTK_WIDGET (year_combo), FALSE);
                 gtk_widget_set_sensitive (GTK_WIDGET (download_button), FALSE);
                 return;
@@ -1390,9 +1403,9 @@ language_changed (GtkWidget *w, gpointer data)
         for (gint i = 0; i < vc_s->len; i++) {
                 gchar *year = g_strdup_printf
                 	("%d", VC (g_ptr_array_index (vc_s, i))->year);
-                gtk_combo_box_text_append_text (year_combo, year);
+                gtk_string_list_append (year_list, year);
         }
-        gtk_combo_box_set_active (GTK_COMBO_BOX (year_combo), 0);
+        gtk_drop_down_set_selected (GTK_DROP_DOWN (year_combo), 0);
         gtk_widget_set_sensitive (GTK_WIDGET (year_combo), TRUE);
         gtk_widget_set_sensitive (GTK_WIDGET (download_button), TRUE);
 } /* language_changed */

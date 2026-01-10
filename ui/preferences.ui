@@ -42,8 +42,12 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkComboBoxText" id="language_combo">
-                        <signal name="changed" handler="lang_changed_cb" swapped="no" />
+                      <object class="GtkDropDown" id="language_combo">
+                        <signal name="activate" handler="lang_changed_cb" swapped="no" />
+                        <property name="model">
+                          <object class="GtkStringList">
+                          </object>
+                        </property>
                         <layout>
                           <property name="column">1</property>
                           <property name="row">0</property>

@@ -21,7 +21,12 @@
               <object class="GtkBox" id="source_frame">
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkDropDown" id="source_combo">
+                    <property name="model">
+                      <object class="GtkStringList">
+                      </object>
+                    </property>
+                  </object>
                 </child>
               </object>
             </child>
@@ -34,7 +39,16 @@
               <object class="GtkBox" id="lang_frame">
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkDropDown" id="lang_combo">
+                    <property name="sensitive">FALSE</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item> </item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
                 </child>
               </object>
             </child>
@@ -47,7 +61,16 @@
               <object class="GtkBox" id="year_frame">
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkDropDown" id="year_combo">
+                    <property name="sensitive">FALSE</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item> </item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
                 </child>
               </object>
             </child>
