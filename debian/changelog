@@ -1,3 +1,9 @@
+glosung (4.2~questing) questing; urgency=low
+
+  * work on more GTK4 decprecation
+
+ -- Eicke Godehardt <sf@godehardt.org>  Sat, 10 Jan 2026 19:14:28 +0100
+
 glosung (4.1~noble) noble; urgency=low
 
   * support Ubuntu 24.4 and newer

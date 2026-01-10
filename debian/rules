@@ -1,51 +1,19 @@
 #!/usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+%:
+	dh $@
 
-build:
-	dh_testdir
-#	scons --debug=findlibs
+# 1. build step (build-arch)
+override_dh_auto_build:
 	scons
 
-clean::
+# 2. clean step (scons -c)
+override_dh_auto_clean:
 	scons -c
-	dh_clean
+	rm -rf .sconsign.dblite # delete SCons left overs
 
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-	scons DESTDIR=`pwd`/debian/glosung install
-	mv `pwd`/debian/glosung/usr/share/doc/glosung-* `pwd`/debian/glosung/usr/share/doc/glosung
-#	scons DESTDIR=`pwd`/debian/tmp install
-#	$(MAKE) DESTDIR=`pwd`/debian/tmp $@
-#	dh_movefiles
-
-# Build architecture-independent files here.
-binary-indep: install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: install
-	dh_testdir
-	dh_testroot
-	dh_installdebconf
-	dh_installdocs 
-	dh_installmenu
-#	dh_undocumented -p glosung	glosung.1
-	dh_installchangelogs
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdirs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-#	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+# 3. installation step
+# DESTDIR wird von Debian vorgegeben (meist debian/<paketname>)
+override_dh_auto_install:
+	scons install prefix=/usr DESTDIR=debian/$(shell dh_listpackages)
+	mv debian/glosung/usr/share/doc/glosung-* debian/glosung/usr/share/doc/glosung
